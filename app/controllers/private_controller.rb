@@ -35,9 +35,9 @@ class PrivateController < ApplicationController
   end
   def statistics
     @log_week = current_firm.logs.where(:log_date => (Time.now.beginning_of_week + 1.second)..(Time.now.end_of_day)).group("date(log_date)").sum(:hours)
- 	  @logs_project = current_firm.logs.where(['log_date > ? AND project_id NOT ?', Time.now.beginning_of_week, nil]).group("project").sum(:hours)
+ 	  @logs_project = current_firm.logs.where(['log_date > ? AND project_id IS NOT ?', Time.now.beginning_of_week, nil]).group("project").sum(:hours)
     
-    @logs_customer = current_firm.logs.where(['log_date > ? AND customer_id NOT ?', Time.now.beginning_of_week, nil]).group("customer").sum(:hours)
+    @logs_customer = current_firm.logs.where(['log_date > ? AND customer_id IS NOT ?', Time.now.beginning_of_week, nil]).group("customer").sum(:hours)
     @logs_user = current_firm.logs.where(['log_date > ?', Time.now.beginning_of_week]).group("user").sum(:hours)
   end
 
