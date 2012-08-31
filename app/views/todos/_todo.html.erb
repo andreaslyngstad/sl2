@@ -1,0 +1,52 @@
+
+ <% if todo.due_to_day == true %>
+<div class="info task_info green" id="todo_<%=todo.id%>" data-due="<%= todo.due.strftime("%Y%j")%>"> 
+	<% elsif todo.overdue == true  %>
+	<div class="info task_info red" id="todo_<%=todo.id%>" data-due="<%= todo.due.strftime("%Y%j")%>"> 
+		<% else %>
+	<div class="info task_info" id="todo_<%=todo.id%>" data-due="<%= todo.due.strftime("%Y%j")%>"> 	
+		<% end %>
+  <% if todo.completed == false %>
+  <input class="done_box" id="<%=todo.id%>" type="checkbox"/>
+  <% else %>
+  <input class="done_box" id="<%=todo.id%>" type="checkbox" checked="checked"/>
+  <% end %>
+ <div class="name_todo"><%= todo.name %> </div>
+   
+  <div class="project_todo smaller"><%=todo.project.name%></div>
+  <div class="user_todo smaller"><% if !todo.user.nil? %><%= todo.user.name %><% end %></div>
+  
+  <div class="date_all"><%= todo.due.strftime('%d.%m.%y')%> </div>
+   <div class="delete_edit">
+  <span class="open_todo_update edit" id="todo_update" data-id="<%= todo.id %>" data-object="todo">edit</span>
+  <%= link_to "delete", todo, :confirm => "Are you sure?", :title => "Delete task", :method => :delete, :class => "delete_todo delete", :remote => true%>
+</div>
+  </div>
+ <div class="dialog_form" id="todo_update_<%= todo.id %>_form" title="Update task" style="display:none;">
+ <%= form_for todo do |f| %>
+ <li><%= f.label :name %><%= f.text_field :name %></li>
+ <% if !todo.project.nil? %>
+          <li><%= f.label :user_id %><%= f.select(:user_id, current_firm.users.map {|user| [user.name, user.id]}, {:prompt => "Select user"}, {:class => "selector"})%></li>
+          <% end %>
+          <% if !todo.project.nil? and todo.project.customer.nil? %>
+          <li><%= f.label :customer_id %><%= f.select(:customer_id, current_firm.customers.map {|customer| [customer.name, customer.id]}, {:prompt => "Select customer"}, {:class => "selector"})%></li>
+          <% end %> 
+          <% if todo.project.nil? %>
+          
+         <li><%= f.label :project_id %><%= f.select(:project_id, current_firm.projects.map {|project| [project.name, project.id]}, {:prompt => "Select project"}, {:class => "selector"})%></li>   
+         <% if todo.project.customer.nil? %>
+         <li><%= f.label :customer_id %><%= f.select(:customer_id, current_firm.customers.map {|customer| [customer.name, customer.id]}, {:prompt => "Select customer"}, {:class => "selector"})%></li>
+          <% end %>
+          <% end %>
+          
+
+          
+          <li><%= f.label :due %><%= f.text_field :due, :value => todo.due.strftime("%Y-%m-%d"), :id => "date_todo_#{todo.id}" %></li>
+          <li><%= f.submit "Save", :class => 'submit' %></li>
+ 
+  <% end %>
+  
+
+ 
+  </div>
+

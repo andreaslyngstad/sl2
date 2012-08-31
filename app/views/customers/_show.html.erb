@@ -1,0 +1,98 @@
+<div id="left">
+	<div class="inner">
+<div class="show-view">
+<div class="list_header orange_bgr">
+	<%= link_to "Back", customers_path, :class => "back_button" %>
+	
+		<%=h @customer.name %>
+</div>
+<div id="description">
+  
+	<%=h @customer.name %><br/>
+	Phone:
+	<%=h @customer.phone %><br/>
+	Email:
+	<%= mail_to "#{@customer.email}" %><br/>
+	Address:
+	<%=h @customer.address %><br/>
+
+</div>
+<div class="graphs">Grafer</div>
+
+
+   <nav id="sub_tabs">
+  <ul>
+    
+    <li class=""><a href="#tabs-1">Projects</a></li>
+    <li><a href="#tabs-2">Logs</a></li>
+    <li><a href="#tabs-3">Employees</a></li>
+  </ul>
+  <span class="nav_line"></span>
+    </nav>
+  <div class="boxes">
+  <div class="tab_box" id="tabs-1"> 
+  	<div id="listing_projects">
+  	<div class="log_menu">
+  	 
+    <div class="add_some">
+       <a id="dialog_project" data-object="project">Add another</a>
+      <div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
+      <%= form_for(@project) do |p| %>
+      <%= p.hidden_field :customer_id %>
+      <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
+      <li><%= p.label :description %><%= p.text_field :description %></li>
+      <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date"   %></li>
+      <li><%= p.submit 'Save', :class => 'submit' %></li>
+      <% end %>
+      </div>
+    </div>
+    </div>
+    
+    	<div class="info" >
+  <div class="name_todo info_head">Name</div>
+  <div class="project_desc info_head">Description</div>
+  <div class="date_all info_head">Due</div>
+
+	</div>
+      <%= render @projects %>
+    </div>
+  </div>
+  <div class="tab_box hide" id="tabs-2">
+ 	<%= render "logs/logs_menu" %>
+  	<div class="listing_logs">
+    	<%= render "logs/list_header" %>
+      <%= render @logs %>
+    </div>
+  </div>
+  <div class="tab_box hide" id="tabs-3">
+   	<div id="listing_employees">
+	<div class="log_menu">
+	<div class="add_some">
+       <a id="dialog_employees">Add another</a>
+        <div id="dialog_employees_form" class="dialog_form" title="Create new employee" style="display:none;">  
+      <%= form_for(@employee) do |f| %>
+      <%= f.hidden_field :customer_id %>
+      <li><%= f.label :name %><%= f.text_field :name, :class => "required", :minlength => "2"%></li>
+      <li><%= f.label :phone %><%= f.text_field :phone %></li>
+      <li><%= f.label :email %><%= f.text_field :email %></li>
+      <li><%= f.submit "save", :class => 'submit' %></li>
+      <% end %>
+      </div>
+    </div>
+    </div>
+  
+    
+      <div class="info" > 
+	<div class="name_todo info_head">Name</div>
+	<div class="project_todo info_head">Phone</div>
+	<div class="user_todo info_head">Email</div>
+  </div>
+      <%= render @employees %>
+    </div>
+   </div>
+	</div>
+	</div>
+  </div>
+
+</div>
+

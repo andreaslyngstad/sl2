@@ -1,0 +1,66 @@
+/*timesheet begin*/
+.timesheet{
+float: left;
+
+}
+table.timesheet_table {
+width:100%;
+border-top:1px solid #e5eff8;
+border-right:1px solid #e5eff8;
+
+border-collapse:collapse;
+}
+table.timesheet_table td {
+padding:.3em 1em;
+
+}
+
+table.timesheet_table tr{
+border-bottom:1px solid #e5eff8;
+
+}
+table.timesheet_table tbody tr td.number {
+text-align:center;
+vertical-align: middle;
+padding: 8px 5px 8px 0;
+}
+table.timesheet_table tbody tr td.number input {
+border: 1px solid #CCC;
+padding: 5px 2px;
+width: 50px;
+line-height: 1em;
+color: #666;
+font-size: 18px;
+font-weight: bold;
+margin: 0px;
+
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+-o-border-radius: 3px;
+-ms-border-radius: 3px;
+-khtml-border-radius: 3px;
+border-radius: 3px;
+text-align: right;
+}
+
+table.timesheet_table .timesheet_day {
+
+
+font-size: 12px;
+
+}
+td.timesheet_project{
+text-align:left;
+font-size: 12px;  
+}
+table.timesheet_table .timesheet_day{
+padding:10px 0 10px 0;
+}
+table.timesheet_table .timesheet_project{
+width: 100px;
+}
+
+table.timesheet_table tfoot td.timesheet_total {
+text-align: center;
+}
+/*timesheet end*/

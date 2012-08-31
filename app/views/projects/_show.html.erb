@@ -1,0 +1,195 @@
+<div id="left">
+	<div class="inner">
+		 <div class="show-view">
+<div class="list_header orange_bgr">
+	<%= link_to "Back", projects_path, :class => "back_button" %>
+	<%= @project.name %>
+</div>
+<div id="description">
+	<%= @project.description %>
+</div>
+<div class="show_statistics_wrapper">
+	<div class="show_statistics_header ">Total hours</div>
+	<div class="show_statistics_header ">Tasks done</div>
+	<div class="show_statistics_header three_box ">Milestones</div>
+	<div class="show_statistics_header">Users</div>
+	<div class="statistics_unit one_number white">
+			<%= time_diff(@hours) %>
+  			</div>
+  	
+	<div id="todos_chart">
+		<div class="statistics_unit one_number tasks_percent white">		
+			<% if !@project.todos.blank? %>
+			<%= done_not_done(@done_todos, @not_done_todos) %>
+			<% end %>
+		</div>
+	</div>
+	
+	<div id="milestones_chart">
+		<div class="left_slider" data-dir="left"><span class="arrow-w"></span></div>
+		<div class="milestone_slider">
+		<% @project.milestones.order("due ASC").each do |milestone|%>
+		<% if milestone.passed %>
+		<div class="statistics_unit passed yellow">
+			<%= milestone.due %><br/>
+			<%= milestone.goal %>
+		</div>
+		<% else %>
+		<div class="statistics_unit upcomming green_gr" id="comming_tasks">
+			<%= milestone.due %><br/>
+			<%= milestone.goal %>
+		</div>
+		<% end %>
+		<% end %>
+		
+	</div>
+	<div class="right_slider" data-dir="right"><span class="arrow-e"></span></div>
+	</div>
+	<div class="statistics_unit users_count one_number white">
+			<%= @project.users.count %>
+  			</div>
+	</div>
+ 
+  <nav id="sub_tabs">
+    <ul>
+    <li class=""><a href="#tabs-1">Tasks</a></li>
+    <li class=""><a href="#tabs-2">Milestones</a></li>
+    <li class=""><a href="#tabs-3">Logs</a></li>
+    <li class=""><a href="#tabs-4">Users</a></li>
+    </ul>
+    <span class="nav_line"></span>
+    </nav>
+    <div class="boxes">
+    <div class="tab_box" id="tabs-1">
+    	<div id="todos_list">
+    	<div class="log_menu">
+  <span class="add_some">  
+    <a id="dialog_task">Add another</a>
+   
+    <div id="dialog_task_form" class="dialog_form" title="Create new task" style="display:none;">
+        <%= form_for @project.todos.build do |f| %>
+        <%= f.hidden_field :project_id %>
+        <%= f.hidden_field :firm_id, :value => current_firm.id%>
+          <li><%= f.label :name %><%= f.text_field :name %></li>
+          <li><%= f.label :user_id %>
+            <select id="todo_user_id" class="selector" name="todo[user_id]"><option value="">Select user</option>
+              <%for user in @users do %>
+              <option value="<%=user.id.to_i%>"
+              <%if user == current_user%>selected="<%=current_user.id.to_i%><%end%>">
+              <%= user.name %></option>
+              <% end %>
+            </select> </li>
+          <% if @project.customer.nil? %>
+          <li><%= f.label :customer_id %><%= f.select(:customer_id, current_firm.customers.map {|customer| [customer.name, customer.id]}, {:prompt => "Select customer"}, {:class => "selector"})%></li>
+          <% else %>
+          <%= f.hidden_field :customer_id, :value => @project.customer.id%>
+          <% end %> 
+          <li><%= f.label :due %><%= f.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_task_date" %></li>
+          <li><%= f.submit "Save", :class => 'submit' %></li>
+      <% end %>
+    </div>
+  </span>
+   </div>
+  
+   <div class="info" > 
+   	<div style="min-height: 10px;min-width: 25px;float:left;"></div>
+	<div class="name_todo info_head">Task</div>
+	<div class="project_todo info_head">Project</div>
+	<div class="user_todo info_head">Assigned to</div>
+	
+	
+  <div class="date_all info_head">Due</div>
+  </div>
+    <div id="not_done_tasks">
+    <%= render :partial => @not_done_todos %>
+    </div>
+    <br/>
+    <div id="done_tasks">
+    	<div style="min-height: 10px;min-width: 25px;float:left;"></div>
+    	<div class=" info_head">Done</div>
+      <%= render :partial => @done_todos %>
+    </div> 
+  </div>
+  
+  </div>
+  
+    
+  <div class="tab_box hide" id="tabs-2">
+  	<div id="listing_milestones">
+  	<div class="log_menu">
+    <span class="add_some">
+      <a id="dialog_milestone">Add another</a>
+      
+      <div id="dialog_milestone_form" class="dialog_form" title="Create new milestone" style="display:none;">
+        <%= form_for Milestone.new(:project => @project) do |n| %>
+      <%= n.hidden_field :project_id %>
+      <%= n.hidden_field :firm_id, :value => current_firm.id%>
+      <li><%= n.label :goal %><%= n.text_field :goal, :class => "required", :minlength => "2", :AUTOCOMPLETE => "OFF" %></li>
+      <li><%= n.label :due %><%= n.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_milestone_date" %></li> 
+      <li><%= n.submit "Save", :class => 'submit'%></li> 
+       <% end %>
+    </div>
+  </span>
+  </div>
+    	<div class="info" >   
+  <div class="name_milestone info_head">Goal</div>
+  <div class="date_all info_head">Due</div>
+  
+  </div>
+   <%= render :partial => @milestones   %>
+     
+    </div>
+    
+   
+  
+  </div> 
+  <div class="tab_box hide" id="tabs-3">
+	<%= render "logs/logs_menu" %>
+  	<div class="listing_logs">
+    	<%= render "logs/list_header" %>
+      <%= render @logs %>
+    </div>
+  </div> 
+  <div class="tab_box hide" id="tabs-4">
+  	<div id="users_list_header">
+  		<div class="members_header">
+  			Squad on this project
+  		</div>
+  		<div class="not_members_header">
+  			Available squaders
+  		</div>
+  	</div>
+  
+	<div id="users_list">
+	
+    <div id="members" class="droppable members">
+    	<% @members.each do |user| %>
+    	<div class="user_info edit white draggable member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @project.id %>"> 
+    <%= image(user, "image64") %>
+    <%= user.name %>
+    </div>
+      <% end %>
+    </div>
+	
+	
+    <div id="not_members" class="droppable">
+      <% @not_members.each do |user| %>
+      <div class="user_info edit white draggable not_member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @project.id %>"> 
+     <%= image(user, "image64") %>
+     <%= user.name %>
+    </div> 
+    <% end %>
+    </div> 
+</div>
+  </div> 
+  </div>
+</div>  
+</div>  
+</div>  
+</div>  
+    
+    
+  
+
+
+

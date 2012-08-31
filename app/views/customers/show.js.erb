@@ -1,0 +1,21 @@
+$(".flash_notice").empty();
+
+$(".show-view").empty();
+$(".show-view").append("<%= escape_javascript(render :partial => "customers/show", :locals => {:customer => @customer}) %>");
+$("#dialog_project").UIdialogs_links();
+$("#dialog_project_form").UIdialogs();
+$(".open_project_update").UIdialogs_edit_links();
+$(".activate_projects_no_button").activate_projects_no_button();
+$( "#tabs" ).tabs({ cache: true },
+  {spinner: '<%= image_tag "spinner2.gif"%>'},
+   {
+      ajaxOptions: {
+        
+        error: function( xhr, status, index, anchor ) {
+          $( anchor.hash ).html(
+            "Couldn't load this tab. We'll try to fix this as soon as possible. ");
+        }
+      }
+    });
+$(".back_button").button()
+$('.spinning').hide();

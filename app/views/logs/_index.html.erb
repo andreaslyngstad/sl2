@@ -1,0 +1,20 @@
+
+
+<div class="list_header_log orange_bgr">
+<div id="form_holder">
+<%if !@log.nil?%>
+	<%= render :partial => "stop_tracking", :locals => {:log => @log}%>
+<%else%> 
+     <%= render :partial => "start_tracking", :locals => {:log => @log_new}%>
+<% end %>
+   </div>
+   </div>	
+   <%= render "logs/logs_menu" %>
+   <div class="listing_logs"> 
+ 	
+ 	<%= render "logs/list_header" %>
+    <%= render @logs %>
+
+    </div>
+
+

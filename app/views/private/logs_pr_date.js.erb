@@ -1,0 +1,7 @@
+<% @logs = Log.all %>
+$(".listing_logs").empty();
+$(".listing_logs").append("<%= escape_javascript(render(:partial => "logs/list_header")) %>")
+$(".listing_logs").append("<%= escape_javascript(render(:partial => @logs)) %>");
+$(".open_log_update").UIdialogs_edit_logs_links();
+$("#dialog_log").UIdialogs_links();
+$(".spinning").hide();

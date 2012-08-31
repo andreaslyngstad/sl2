@@ -1,0 +1,20 @@
+<div id="left">
+	<%= render "home_header" %>
+	<div class="timesheet">
+  		<%= render "timesheet_header" %>
+  	</div>
+	<div id="calendar">
+<%= calendar_for @logs, :year => @date.year, :month => @date.month do |calendar| %>
+    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
+    <% calendar.day(:day_method => :log_date) do |date, logs| %>
+      <%= date.day %>
+      <ul>
+          <li> <%= link_to "test", timesheet_logs_day_path(@user, (date))  %></li>     
+      </ul>
+    <% end %>
+  <% end %>
+	</div>
+
+</div>
+
+	 
