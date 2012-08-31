@@ -1,0 +1,7 @@
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: blog_production
+  pool: 5
+  username: blog
+  password:
