@@ -13,6 +13,11 @@ gem "paperclip"
 gem "cancan"
 gem 'newrelic_rpm'
 gem "watu_table_builder", :require => "table_builder", :git => "git://github.com/watu/table_builder.git"
+
+group :production do
+  gem 'pg'
+end
+
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
@@ -21,13 +26,11 @@ group :assets do
 end
 
 group :development, :test do
- 
   gem 'quiet_assets'
   gem 'debugger'
   gem 'minitest'
   gem 'factory_girl'
-  gem 'turn'
-  
+  gem 'turn' 
 end
 
 # Use unicorn as the web server

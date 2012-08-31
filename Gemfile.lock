@@ -105,6 +105,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (>= 0.0.2)
       mime-types
+    pg (0.13.2)
     polyglot (0.3.3)
     quiet_assets (1.0.0)
       rails (~> 3.1)
@@ -173,6 +174,7 @@ DEPENDENCIES
   minitest
   newrelic_rpm
   paperclip
+  pg
   quiet_assets
   rack-ssl
   rails (= 3.2.1)
