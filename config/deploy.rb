@@ -1,4 +1,9 @@
 require "bundler/capistrano"
+require "rvm/capistrano"
+
+set :rvm_ruby_string, 'ruby-1.9.2-p290'
+set :rvm_type, :user  # Don't use system-wide RVM
+load 'deploy/assets'
 
 server "50.57.155.135:2805", :web, :app, :db, primary: true
 
@@ -31,8 +36,11 @@ namespace :deploy do
     put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
     puts "Now edit the config files in #{shared_path}."
   end
+  
    after "deploy:setup", "deploy:setup_config"
     
+  
+   
    desc "Symlink shared configs and folders on each release."
    task :symlink_config, roles: :app do
    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
@@ -49,4 +57,5 @@ namespace :deploy do
   end
   before "deploy", "deploy:check_revision"
 after "deploy", "deploy:cleanup"
+
 end
