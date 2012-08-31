@@ -3,10 +3,10 @@ role :app, application
 role :web, application
 role :db,  application, :primary => true
 
-
-set :repository,  "set your repository location here"
-
 set :scm, :git
+set :repository,  "git@github.com:andreaslyngstad/sl2.git"
+
+
 
 set :user, "squadlink"
 set :use_sudo, false

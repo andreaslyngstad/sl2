@@ -15,5 +15,3 @@
 /tmp
 
 /config/database.yml
-.sass-cache/
-public/assets/
