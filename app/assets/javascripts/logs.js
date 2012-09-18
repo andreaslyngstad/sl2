@@ -162,5 +162,9 @@ $(".slider_range").slider({
         slide: slideTime
     });
     $(".open_tracking_select").UIdialogs_tracking_logs_links();
-    
+ 
+  $('#range_button').button().click(function() {
+  $('#range_form').submit();
+  return false;
+});
 })

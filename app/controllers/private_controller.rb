@@ -228,11 +228,9 @@ class PrivateController < ApplicationController
 #   
  end
   def logs_pr_date
-    
     @firm = current_user.firm
     @customers = @firm.customers.includes(:employees)
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
-    
 	    if params[:time] == "to_day"
 	    time_range = (Time.now.midnight)..(Time.now.midnight + 1.day)
 	    elsif params[:time] == "this_week"
@@ -257,9 +255,9 @@ class PrivateController < ApplicationController
 	    time_range = (Time.now.beginning_of_year - 1.year)..(Time.now.beginning_of_year - 1.second)
 	   
 	    end
-	    puts "test"
-	   #find_logs_on(params[:url], time_range)
-	   @logs = "Log.all"
+	    
+	   find_logs_on(params[:url], time_range)
+	   
   end
   def log_range
   	@firm = current_user.firm
@@ -273,6 +271,19 @@ class PrivateController < ApplicationController
   	
    find_logs_on(params[:url], time_range)
    
+  end
+  
+  def find_logs_on(url, time_range)
+    if url == "logs"
+      logs_on = current_user
+    elsif url == "customers"
+      logs_on = Customer.find(params[:id])  
+    elsif url == "users"
+      logs_on = User.find(params[:id])
+    elsif url == "projects"
+      logs_on = Project.find(params[:id])
+    end
+      @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee )
   end
   
   def mark_todo_done
@@ -308,18 +319,7 @@ class PrivateController < ApplicationController
   	
   end
   
-def find_logs_on(url, time_range)
-    if url == "logs"
-      logs_on = current_user
-    elsif url == "customers"
-      logs_on = Customer.find(params[:id])  
-    elsif url == "users"
-      logs_on = User.find(params[:id])
-    elsif url == "projects"
-      logs_on = Project.find(params[:id])
-    end
-      @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee )
-  end
+
 end
 
    

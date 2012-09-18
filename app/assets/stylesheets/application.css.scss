@@ -165,13 +165,13 @@ width: 980px;
 
 }
 #navigation li{
-	background: #0095CD;
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#4D90FE),to(#4787ED));
+	background: #4D90FE;
+/*	background-image: -webkit-gradient(linear,left top,left bottom,from(#4D90FE),to(#4787ED));
   background-image: -webkit-linear-gradient(top,#4D90FE,#4787ED);
   background-image: -moz-linear-gradient(top,#4D90FE,#4787ED);
   background-image: -ms-linear-gradient(top,#4D90FE,#4787ED);
   background-image: -o-linear-gradient(top,#4D90FE,#4787ED);
-  background-image: linear-gradient(top,#4D90FE,#4787ED);
+  background-image: linear-gradient(top,#4D90FE,#4787ED);*/
 	font-size:20px;
 	height:75px;
 	list-style-type:none;
@@ -336,13 +336,14 @@ background: #FCD7DB;
 background-color: #FCD7DB;
 }
 
-.orange_bgr{
-background: 			#F78D1D;
+.orange_bgr {
+  background:       #F78D1D;
+/* background: 			#F78D1D;
 background: -webkit-gradient(linear,left top,left bottom,
 color-stop(0, 		#FAA51A),
 color-stop(1, 		#F47A20));
 background: -moz-linear-gradient(top,  #FAA51A,  #F47A20);
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FAA51A', EndColorStr='#F47A20')";
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FAA51A', EndColorStr='#F47A20')"; */
 			
 }
 
@@ -686,16 +687,6 @@ float:left;
 margin-right:7px;
 }
 
-.log_form #log_event, .log_form, .log_form_rec #log_event, .log_form_rec, .stopwatch, .tracking_select  {
-border-bottom-left-radius: 5px 5px;
-border-bottom-right-radius: 5px 5px;
-border-top-left-radius: 5px 5px;
-border-top-right-radius: 5px 5px;
--moz-border-radius-bottomleft: 5px 5px;
--moz-border-radius-bottomright: 5px 5px;
--moz-border-radius-topleft: 5px 5px;
--moz-border-radius-topright: 5px 5px;
-}
 .log_form #new_log, .log_form_rec #new_log{
 margin: 10px auto 0 auto;
 width:700px;
@@ -737,7 +728,7 @@ width: 600px;
 background-color:#FCD7DB;
 }
 .blue{
-  background-color:#ebf4fb;
+  background-color:#BFD6FF;
 }
 .green{
   background-color:#B0FFA8;
@@ -829,19 +820,19 @@ margin:0px;
 .tab_list, .archive_tab_list{	
 	padding: 0px 0 0 10px;
 	list-style:none;
-	height: 20px;
+	height: 40px;
 	border: 1px solid #DCDBDC;
 	color:#000;
-		
+  line-height: 40px;
 }
 .tab_list{
 background: 			#e6e6e6;
-		background: -webkit-gradient(linear,left top,left bottom,
+/*		background: -webkit-gradient(linear,left top,left bottom,
 		color-stop(0, 		#e6e6e6),
 		color-stop(1, 		#ECECEC));
 		background: -moz-linear-gradient(top,  #e6e6e6,  #ECECEC);
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#e6e6e6', EndColorStr='#ECECEC')";	
-}
+*/}
 .archive_tab_list{
 background: 			#FFF2F5;
 		background: -webkit-gradient(linear,left top,left bottom,
@@ -891,9 +882,8 @@ font-size:12px;
 .log_menu{
 float: left;
 width:970px;
-padding:5px ;
-vertical-align: top;
-background:#eee;
+padding:10px 5px 10px 5px;
+background:#fff;
 }
 .range{
 float: left;
@@ -901,8 +891,8 @@ height: 35px;
 
 }
 
-.range_date  {width:90px; height:35px; padding:4px 0 1px 5px ;  margin:0; color: #777;}
-input.button {height:36px; }
+.range_date  {width:90px; height:35px; padding: 0 0 0 5px;line-height: 1.4; font-size: 15px; color: #777;}
+
 .listing_logs, #listing_milestones, #todos_list, #listing_projects, #listing_employees{
 padding-left: 5px;
 }
@@ -1241,45 +1231,11 @@ background:#323CED;
 padding:10px; font-size:15px;
 letter-spacing: 1px;
 color: white;
-
-background: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.27, rgb(30,38,189)),
-    color-stop(0.7, rgb(58,72,230)),
-    color-stop(0.85, rgb(14,51,237))
-    
-);
-
-background: -moz-linear-gradient(
-    center bottom,
-    rgb(30,38,189) 27%,
-    rgb(58,72,230) 70%,
-    rgb(14,51,237) 85%
-);
-
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-
 }
 .timesheet .submit:hover, .firm_account .submit:hover, .firm_preferences .submit:hover{
-background:#2933E6;
+background:#0B16DB;
 letter-spacing: 1px;
-background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.27, #2933E6),
-    color-stop(0.7, #3A48E6),
-    color-stop(0.85, #2245F2)
-);
-background-image: -moz-linear-gradient(
-    center bottom,
-    #2933E6 27%,
-    #3A48E6 70%,
-    #2245F2 85%
-);
+
 }	
 .error_message {font-size: 12px; color: red;float:right; padding-right: 50px;}
 .field_error input { border:1px solid red; }

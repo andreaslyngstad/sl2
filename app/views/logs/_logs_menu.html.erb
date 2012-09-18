@@ -1,7 +1,7 @@
 <div class="log_menu">
    
    <div class="add_some">
-       <a id="dialog_log">Add another</a> 
+       <a id="dialog_log">Add log</a> 
       <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
       
       <%= form_for(Log.new) do |l| %>
@@ -71,14 +71,14 @@
     <% end %>
    </div>
     
-    </div><div class="range" >
-    	   
-    <%= form_tag('/log_range', :remote => true) do -%>
-    <%= hidden_field_tag "url", url_splitter(request.fullpath) %>
-    <%= hidden_field_tag "id", url_splitter2(request.fullpath) %>
-    <%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date", :style => "font-size:80%;"%>
-	<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date", :style => "font-size:80%;"  %>
-   	<%= submit_tag 'Find', :class => "button" %></div>
+    </div><div class="range" >	   
+	    <%= form_tag('/log_range', :id => "range_form", :remote => true) do -%>
+	    <%= hidden_field_tag "url", url_splitter(request.fullpath) %>
+	    <%= hidden_field_tag "id", url_splitter2(request.fullpath) %>
+	    <%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date"%>
+		<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date"  %>
+	   	<a id="range_button">Find</a>
+   	</div>
  <% end -%>
     <div class="logs_pr_date">
       <select class="small_selector" id="logs_pr_date_select" data-url="<%= url_splitter(request.fullpath) %>" data-id="<%= url_splitter2(request.fullpath) %>">
