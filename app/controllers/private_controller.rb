@@ -290,14 +290,21 @@ class PrivateController < ApplicationController
     @firm = current_user.firm
     @todo = Todo.find(params[:id])
     @project = @todo.project
+    @user = @todo.user
     if @todo.completed == true
       @todo.completed = false
     else
       @todo.completed = true
     end
     @todo.update_attributes(params[:todo])
+    if @project
     @done_todos = @project.todos.where(["completed = ?", true]).includes(:user)
-    @not_done_todos = @project.todos.where(["completed = ?", false]).includes(:user) 
+    @not_done_todos = @project.todos.where(["completed = ?", false]).includes(:user)
+    end
+    if @user
+    @done_todos = @user.todos.where(["completed = ?", true])
+    @not_done_todos = @user.todos.where(["completed = ?", false])
+    end    
     respond_to do |format|
       format.js
     end

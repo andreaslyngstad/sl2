@@ -40,7 +40,7 @@ module ApplicationHelper
   	not_done = not_done_todos.count	
   	donepr = (done / (done + not_done).to_f)*100
   	not_donepr = (not_done / (done + not_done).to_f)*100
-  	 donepr.round(2).to_s + "%"
+  	donepr.round(2).to_s + "%"
   	 #image_tag("https://chart.googleapis.com/chart?cht=p&chs=200x125&chco=FAAABE|ADFAAA&chd=t:#{not_donepr},#{donepr}&chdl=Not%20done%20tasks|Done%20tasks", :style => {:width => 200, :height=>125} )
   end
  	def url_splitter(url)

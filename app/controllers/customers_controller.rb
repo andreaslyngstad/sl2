@@ -9,7 +9,7 @@ class CustomersController < ApplicationController
     @customer = current_firm.customers.find(params[:id])
     @customers = current_firm.customers
     @logs = @customer.logs.includes([:todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
-    
+    @user = current_user
     @log = Log.new(:customer => @customer)
     @employees = @customer.employees
     @employee = Employee.new(:customer => @customer)

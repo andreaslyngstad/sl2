@@ -5,8 +5,8 @@ class LogsController < ApplicationController
   def index
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
     @customers = current_firm.customers
-    
-    @logs = current_user.logs.where(:log_date => time_range_to_day).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee )
+    @user = current_user
+    @logs = current_firm.logs.where(:log_date => time_range_to_day).order("updated_at DESC").includes(:project, :todo, :user, :customer, :employee )
     if !current_user.logs.blank?
     @log = Log.where("end_time IS ?",nil).last
     if @log.nil?

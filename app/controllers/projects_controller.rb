@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-  	
+  	@user = current_user
     @project = current_firm.projects.find(params[:id])
     @users = @project.users
     @milestone = Milestone.new(:project => @project)

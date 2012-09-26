@@ -138,14 +138,22 @@ jQuery.fn.UIdialogs_links = function(){
     });
 
 }; 
-jQuery.fn.activate_projects = function(){
+jQuery.fn.activate_projects = function(){	
 	$(this).button().click(function(){
+		if (confirm("The project, all its tasks, logged hours and milestones will be arcivated. You'll find the project in the arcivated projects page, where you can reopen it or delete it.")){
+		$('.spinning').show();
+		var id = $(this).attr("data-id")
+  	$.get("/activate_projects/" + id)}
+    });	
+};
+jQuery.fn.reopen_project = function(){	
+	$(this).click(function(){
 		$('.spinning').show();
 		var id = $(this).attr("data-id")
   	$.get("/activate_projects/" + id)
-    });
-	
+    });	
 };
+    
 jQuery.fn.activate_projects_no_button = function(){
 	$(this).click(function(){
 		$('.spinning').show();
@@ -307,7 +315,9 @@ $(document).ready(function() {
  	$(".tracking_log").submitWithAjax();
 	$("#form_holder").find(".edit_log").submitWithAjax();
 	
+	$(".button").button();
 	$(".activate_project").activate_projects();
+	$(".reopen_project").reopen_project();
 	$(".activate_projects_no_button").activate_projects_no_button();
 	
 

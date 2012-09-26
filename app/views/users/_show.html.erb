@@ -42,7 +42,6 @@
   		<div class="log_menu">
     <span class="add_some">  
     <a id="dialog_task">Add another</a>
-   
     <div id="dialog_task_form" class="dialog_form" title="Create new task" style="display:none;">
         <%= form_for @user.todos.build do |f| %>
         <%= f.hidden_field :user_id %>

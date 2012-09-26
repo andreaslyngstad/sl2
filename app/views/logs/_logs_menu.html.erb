@@ -4,12 +4,8 @@
        <a id="dialog_log">Add log</a> 
       <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
       
-      <%= form_for(Log.new) do |l| %>
-      <% if url_splitter(request.fullpath) == "get_logs_user"%>
+      <%= form_for(Log.new) do |l| %>    
       	<%= l.hidden_field :user_id, :value => @user.id %>
-      <% else %>
-    	<%= l.hidden_field :user_id, :value => current_user.id %>
-      <% end %>
         <li><%= l.label :log %><%= l.text_field(:event, :class => "required", :minlength => "2", :AUTOCOMPLETE => "OFF") %></li>
         <li><div class="date_on_log"><%= l.label :date %><%= l.text_field(:log_date, :value => time_zone_now.strftime("%Y-%m-%d"), :class => "date", :id => "log_date_new") %></div></li>
         <li style="margin-bottom: 0px;"><%= l.label :from %><%= l.label :to, :style => "margin-left: 30px;" %></li>

@@ -12,8 +12,9 @@ html, body{
   background-color: #ddd;
   }
 html, body a{text-decoration: none; color:#000;}
+html, body a:hover{text-decoration: underline; color:#000;}
 html, body, ul, li{list-style-type:none;}
-html, body a img{border: 0px;}
+
 input{border:1px solid #999;}
 .bold{
 font-weight: bold;
@@ -1001,7 +1002,7 @@ width: 32px;
 }
 .date_and_times_on_log{
   width: 115px;
-  font-size: 10px;
+  font-size: 9px;
   border-right: 1px solid #E5E5E5;
    
 }
