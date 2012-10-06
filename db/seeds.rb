@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -5,19 +6,36 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+#!/bin/env ruby
+Firm.delete_all
+Log.delete_all
+Customer.delete_all
+User.delete_all
+Employee.delete_all
+class Array
+  def / len
+  a = []
+  each_with_index do |x,i|
+  a << [] if i % len == 0
+  a.last << x
+  end
+  a
+  end
+end
 puts "setting up first firm"
-firm1 = Firm.create! :name => "lizz", :subdomain => "lizz"
+firm1 = Firm.create! :name => "Lizz", :subdomain => "lizz"
 puts 'New firm created: ' << firm1.name
-firm2 = Firm.create! :name => "lekk betong", :subdomain => "lekk_betong"
+firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekk_betong"
 puts 'New firm created: ' << firm2.name
 puts 'SETTING UP EXAMPLE USERS'
-user1 = User.create! :name => 'andreas lyngstad', :firm_id => "1", :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :manager => true
+user1 = User.create! :name => 'andreas lyngstad', :firm_id => "1", :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 puts 'New user created: ' << user1.name
-user2 = User.create! :name => 'Axel pharo', :firm_id => "2", :email => 'axel@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :manager => true
+user2 = User.create! :name => 'Axel pharo', :firm_id => "1", :email => 'axel@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 puts 'New user created: ' << user2.name
-user3 = User.create! :name => 'Tiril Pharo', :firm_id => "1", :email => 'tiril@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :manager => false
+user3 = User.create! :name => 'Tiril Pharo', :firm_id => "1", :email => 'tiril@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 puts 'New user created: ' << user3.name
-user4 = User.create! :name => 'Astrid pharo', :firm_id => "2", :email => 'astrid@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :manager => false
+user4 = User.create! :name => 'Astrid pharo', :firm_id => "1", :email => 'astrid@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 puts 'New user created: ' << user4.name
 
 puts "Setting up customers"
@@ -30,6 +48,12 @@ puts 'New customer created: ' << customers3.name
 customers4 = Customer.create! :name => "Trine Vind", :firm_id => "2", :phone => "96979892", :email => "Trine@vind.no"
 puts 'New customer created: ' << customers4.name
 
+open("db/seeds/customers") do |customers|
+  customers.read.each_line do |customer|
+    customer_made = Customer.create!(:name => customer, :firm_id => "1")
+    puts "Made customer : "<< customer_made.name
+end
+end
 puts "Setting up Employees"
 
 employees1 = Employee.create! :name => "Per Bråhten", :customer_id => "1", :phone => "96979892", :email => "per@braten.no"
@@ -57,21 +81,33 @@ puts 'New project created: ' << projects2.name
 projects3 = Project.create! :name => "fix moped", :firm_id => "1", :customer_id => "2", :active => true, :due => Time.now + 3000000
 puts 'New project created: ' << projects3.name
 
-projects4 = Project.create! :name => "clean house", :firm_id => "2", :active => true, :due => Time.now + 3000000
+projects4 = Project.create! :name => "clean house", :firm_id => "1", :active => true, :due => Time.now + 3000000
 puts 'New project created: ' << projects4.name
-projects5 = Project.create! :name => "fix barn", :firm_id => "2", :active => true, :due => Time.now + 3000000
+projects5 = Project.create! :name => "fix barn", :firm_id => "1", :active => true, :due => Time.now + 3000000
 puts 'New project created: ' << projects5.name
-projects6 = Project.create! :name => "Paint fence", :firm_id => "2", :active => true, :due => Time.now + 3000000, :customer_id => "4"
+projects6 = Project.create! :name => "Paint fence", :firm_id => "1", :active => true, :due => Time.now + 3000000, :customer_id => "4"
 puts 'New project created: ' << projects6.name
+open("db/seeds/projects") do |projects|
+  projects.read.each_line do |project|
+    
+    n = project.chomp.split("|")
+    c = n[0]
+    p = n[1]
+    
+    projects_made = Project.create!(:name => c, :description => p , :firm_id => "1", :active => true, :due => Time.now + 3000000)
+    puts "Made Project : " << projects_made.name
+    Membership.create!(:user_id => 1, :project_id => projects_made.id)
+  end
+end
 
 puts "Setting up todos"
 todo1 = Todo.create! :name => "Sell music", :firm_id => "1", :project_id => "1", :due => Time.now + 3000000, :completed => false
 puts 'New todo created: ' << todo1.name
-todo2 = Todo.create! :name => "Fill water", :firm_id => "2", :project_id => "4", :due => Time.now + 3000000, :completed => false
+todo2 = Todo.create! :name => "Fill water", :firm_id => "1", :project_id => "4", :due => Time.now + 3000000, :completed => false
 puts 'New todo created: ' << todo2.name
 todo3 = Todo.create! :name => "Record music", :firm_id => "1", :project_id => "1", :due => Time.now + 3000000, :completed => false
 puts 'New todo created: ' << todo3.name
-todo4 = Todo.create! :name => "Moan loan", :firm_id => "2", :project_id => "4", :due => Time.now + 3000000, :completed => false
+todo4 = Todo.create! :name => "Moan loan", :firm_id => "1", :project_id => "4", :due => Time.now + 3000000, :completed => false
 puts 'New todo created: ' << todo4.name
 todo5 = Todo.create! :name => "Camshaft", :firm_id => "1", :project_id => "2", :due => Time.now + 3000000, :completed => false
 puts 'New todo created: ' << todo5.name

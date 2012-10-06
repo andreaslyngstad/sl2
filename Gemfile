@@ -28,9 +28,15 @@ end
 group :development, :test do
   gem 'quiet_assets'
   gem 'debugger'
-  gem 'minitest'
-  gem 'factory_girl'
-  gem 'turn' 
+  
+  gem "rspec-rails", "~> 2.0"
+  gem 'capybara'
+  gem "factory_girl_rails", "~> 4.0"
+  #gem 'turn' 
+  #gem "spork-minitest", "~> 1.0.0.beta1"
+  gem 'database_cleaner'
+  gem "selenium-webdriver"
+  gem "selenium-client"
 end
 
 # Use unicorn as the web server

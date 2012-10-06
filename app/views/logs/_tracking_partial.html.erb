@@ -54,7 +54,7 @@
            <div id="tracking_customer_employee">
           <%= n.label :customer %>
           	<%= n.select(:customer_id, @customers.map {|customer| [truncate_string(customer.name), customer.id]},
-          	{ :include_blank => "None"}, :class => "small_selector", :id => "log_customer_id_#{log.id}", :log => "#{log.id}" )%>
+          	{ :include_blank => "None"}, :class => "searchable", :id => "log_customer_id_#{log.id}", :log => "#{log.id}" )%>
        <%= n.label :employee %>
        <select class="small_selector" id="log_employee_id_<%= log.id %>" log="<%= log.id %>" name="log[employee_id]">
             

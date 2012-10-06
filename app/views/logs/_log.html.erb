@@ -42,7 +42,7 @@
        <li id="slider_range_<%= log.id %>" log="<%= log.id %>"></li>
         
         <li><%= f.label :project %>
-         <select class="big_select" id="log_project_id" log="<%= log.id %>" name="log[project_id]">
+         <select class="searchable" id="log_project_id" log="<%= log.id %>" name="log[project_id]">
            <option value="" data-customer="">None</option>
            <% @all_projects.each do |project| %>
                 <% if project == log.project  %>

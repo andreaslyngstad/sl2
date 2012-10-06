@@ -17,7 +17,7 @@ class Log < ActiveRecord::Base
     time 		= (time - seconds) / 60
     minutes    	=  (time % 60).to_i
     time 		= (time - minutes) / 60
-    hours      	=  (time % 24).to_i
+    hours      	=  (time).to_i
     if minutes == 0 
     	return hours.to_s + ":00"
     elsif minutes < 10
@@ -35,8 +35,7 @@ class Log < ActiveRecord::Base
   	self.hours = end_time - begin_time
   	end
   end
-  
-  
+
   def time
   	end_time - begin_time
   end

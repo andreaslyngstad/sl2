@@ -1,8 +1,5 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
-
-
-
     resources :firms
     resources :public do
       member do
@@ -10,9 +7,6 @@ Squadlink::Application.routes.draw do
         post "create_first_user"
      end
   end    
-  
-  
-  
   devise_for  :users,
               :path_names => { :sign_up => "register" },
               :controllers => {

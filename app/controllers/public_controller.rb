@@ -1,7 +1,7 @@
 class PublicController < ApplicationController
   skip_before_filter :authenticate_user!, :find_firm
   layout "registration"
-
+  respond_to :html
 
   def index
 
@@ -26,7 +26,8 @@ class PublicController < ApplicationController
 
         if @user.save
           flash[:notice] = "Registration successful."
-          redirect_to statistics_path
+          sign_in(@user)
+          respond_with @user, :location => after_sign_in_path_for(@user)
         else
         	flash[:error] = "Registration could not be saved because:"
           render :action => 'first_user'

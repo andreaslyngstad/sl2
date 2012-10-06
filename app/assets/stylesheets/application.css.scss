@@ -12,7 +12,7 @@ html, body{
   background-color: #ddd;
   }
 html, body a{text-decoration: none; color:#000;}
-html, body a:hover{text-decoration: underline; color:#000;}
+html, body a:hover {text-decoration: underline; color:#000;}
 html, body, ul, li{list-style-type:none;}
 
 input{border:1px solid #999;}
@@ -261,6 +261,9 @@ float: right;
 
 }
 /* dialog_form. */
+.ui-dialog, .ui-dialog-content {
+    overflow: visible !important
+}
 .dialog_form ul {padding:0}
 .dialog_form li          {margin-bottom:12px; }
 .dialog_form input       {width:369px;padding: 5px;}

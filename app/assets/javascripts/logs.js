@@ -21,7 +21,7 @@ jQuery.fn.UIdialogs_tracking_logs_links = function(){
   	$(".open_tracking_select").toggleClass("close_tracking_select");
     var data_id = $(this).attr('data-id')
     var form_id = '#form_holder'
-    $("select.small_selector").selectmenu({width:200});
+    
     // get todo and saving log when selecting project
 	    $(form_id).find("select#log_project_id").change(function(){
 		    Change_select($(this).attr("log"), this.value.toString(), "project_select_tracking")
@@ -71,7 +71,7 @@ jQuery.fn.UIdialogs_log_links = function(){
   var form = '#' + $(this).attr('id') + '_form'
   $(this).button().click(function(){
   	$(form).find(".date").datepicker({dateFormat: "yy-mm-dd"}).attr( 'readOnly' , 'true' );
-  	$(form).find(".big_select").selectmenu({width:369});
+  	
     $(form).select_projects_customers();
     });
 
