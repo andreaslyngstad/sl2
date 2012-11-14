@@ -1,18 +1,34 @@
 baseurl = location.protocol + '//' + location.host + location.pathname;
 $(function() {
 	old_url = $.param.fragment(baseurl, location.href, 2);
-	var text = old_url.match(/customers/i) || old_url.match(/projects/i) || old_url.match(/archive/i) || old_url.match(/users/i) ||  old_url.match(/statistics/i) ||  old_url.match(/logs/i);
-	var text2 = old_url.match(/reports/i) || old_url.match(/timesheets/i) || old_url.match(/account/i) || old_url.match(/home_user/i) ||  old_url.match(/statistics/i) ||  old_url.match(/firm_edit/i)||  old_url.match(/timesheet_logs_day/i);
+	var text = 	old_url.match(/customers/i) || 
+				old_url.match(/projects/i) || 
+				old_url.match(/archive/i) || 
+				old_url.match(/users/i) ||  
+				old_url.match(/home/i) ||  
+				old_url.match(/logs/i);
+	var text2 = old_url.match(/reports/i) || 
+				old_url.match(/timesheets/i) || 
+				old_url.match(/account/i) || 
+				old_url.match(/home_user/i) ||  
+				old_url.match(/statistics/i) ||  
+				old_url.match(/firm_edit/i)||  
+				old_url.match(/firm_update/i) || 
+				old_url.match(/timesheet_logs_day/i)||
+				old_url.match(/timesheet_month/i)
+				;
 	if (!(text2 == null)){
 		var tab_text = text2.toString().charAt(0).toUpperCase() + text2.toString().substr(1);
 		$("#html_tabs a.current_link").removeClass("current_link");	
 		$("#html_tabs a:contains(" + tab_text + ")").addClass("current_link");
 		if(tab_text == "Home_user" ){$("#html_tabs a:contains(User)").addClass("current_link");}
 		if(tab_text == "Firm_edit" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
+		if(tab_text == "Firm_update" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Timesheet_logs_day" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
+		if(tab_text == "Timesheet_month" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
 	}
 	if (text == null){
-		$('#navigation li#statistics_navi').addClass("current_main")
+		$('#navigation li#home_navi').addClass("current_main")
 		// $("#pointer-text").text("Statistics");
 		
 		// var pos = "0"
@@ -21,6 +37,9 @@ $(function() {
 	}else{
 	var cap_text = text.toString();
 	$('#navigation li#' + cap_text +'_navi').addClass("current_main")
+	if(cap_text == "archive"){
+		$('#navigation li#projects_navi').addClass("current_main")
+	}
 //	$("#pointer-text").text(cap_text);
 	// if(cap_text == "Statistics")
 	// {var pos = "0"} 

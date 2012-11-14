@@ -1,5 +1,5 @@
 <div class="signup signup_firm">
-<%= form_for :firm, :url => firms_path,  :html => { :class => "register_firm", :id => "register_firm" } do |firm| %>
+<%= form_for :firm, :url => create_firm_path,  :html => { :class => "register_firm", :id => "register_firm" } do |firm| %>
  	<div class="signup-form-field">
     <%= firm.label :Firm_name %>
     <%= firm.text_field :name, :class => "required form-input", :AUTOCOMPLETE => "OFF" %>

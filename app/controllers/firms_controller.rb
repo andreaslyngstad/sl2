@@ -1,7 +1,7 @@
 class FirmsController < ApplicationController
   authorize_resource :firm
   
-  skip_before_filter :authenticate_user!, :only => [:create]
+  skip_before_filter :authenticate_user!
   skip_before_filter :find_firm
   # GET /firms
   # GET /firms.xml
@@ -38,40 +38,19 @@ class FirmsController < ApplicationController
   end
 
   # GET /firms/1/edit
-  def edit
-    @firm = Firm.find(params[:id])
+  def firm_edit
+    @firm = current_firm
   end
-
-  # POST /firms
-  # POST /firms.xml
-  def create
-    @firm = Firm.new(params[:firm])
-	@firm.subdomain = @firm.subdomain.downcase
-    respond_to do |format|
-      if @firm.save
-        flash[:notice] = 'Firm was successfully created! Now create the first user.'
-        format.html { redirect_to(register_user_path(@firm)) }
-        
-      else
-      	flash[:error] = 'Firm could not be created'
-        format.html { render "public/register", :layout => "registration"}
-        format.xml  { render :xml => @firm.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /firms/1
-  # PUT /firms/1.xml
-  def update
-    @firm = Firm.find(params[:id])
-
+  def firm_update
+    @firm = current_firm
     respond_to do |format|
       if @firm.update_attributes(params[:firm])
-        flash[:notice] = flash_helper('Firm was successfully updated.')
+        flash[:notice] = flash_helper('Account was successfully updated.')
         format.html { redirect_to account_path }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        flash[:error] = 'Firm could not be updated'
+        format.html { render :action => "firm_edit" }
         format.xml  { render :xml => @firm.errors, :status => :unprocessable_entity }
       end
     end

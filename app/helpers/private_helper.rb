@@ -15,6 +15,10 @@ module PrivateHelper
 		hours = log_project.detect { |key,v| key.to_i == project.id}
 		hours ? time_diff(hours[1]) : "<span style='color:grey;'>0:00</span>".html_safe
 	end
+	def logs_day_of_mounth_hours(logs, date)
+		hours = logs.detect { |key,v| Date.parse(key) == date}
+		hours ? "<span style='font-size:20px;'>#{time_diff(hours[1])}</span>".html_safe : "<span style='color:grey;'>0:00</span>".html_safe
+	end
 	def days_of_week
 	  ["Monday","Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 	end

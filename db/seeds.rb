@@ -26,7 +26,7 @@ end
 puts "setting up first firm"
 firm1 = Firm.create! :name => "Lizz", :subdomain => "lizz"
 puts 'New firm created: ' << firm1.name
-firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekk_betong"
+firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong"
 puts 'New firm created: ' << firm2.name
 puts 'SETTING UP EXAMPLE USERS'
 user1 = User.create! :name => 'andreas lyngstad', :firm_id => "1", :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
@@ -75,17 +75,24 @@ puts 'New employees created: ' << employees8.name
 
 puts "Setting up projects"
 projects1 = Project.create! :name => "lizz", :firm_id => "1", :active => true, :due => Time.now + 3000000
+Membership.create!(:user_id => 1, :project_id => projects1.id)
 puts 'New project created: ' << projects1.name
 projects2 = Project.create! :name => "fix car", :firm_id => "1", :customer_id => "1", :active => true, :due => Time.now + 3000000
+Membership.create!(:user_id => 1, :project_id => projects2.id)
 puts 'New project created: ' << projects2.name
 projects3 = Project.create! :name => "fix moped", :firm_id => "1", :customer_id => "2", :active => true, :due => Time.now + 3000000
+Membership.create!(:user_id => 1, :project_id => projects3.id)
 puts 'New project created: ' << projects3.name
 
 projects4 = Project.create! :name => "clean house", :firm_id => "1", :active => true, :due => Time.now + 3000000
+Membership.create!(:user_id => 1, :project_id => projects4.id)
 puts 'New project created: ' << projects4.name
+
 projects5 = Project.create! :name => "fix barn", :firm_id => "1", :active => true, :due => Time.now + 3000000
+Membership.create!(:user_id => 1, :project_id => projects5.id)
 puts 'New project created: ' << projects5.name
 projects6 = Project.create! :name => "Paint fence", :firm_id => "1", :active => true, :due => Time.now + 3000000, :customer_id => "4"
+Membership.create!(:user_id => 1, :project_id => projects6.id)
 puts 'New project created: ' << projects6.name
 open("db/seeds/projects") do |projects|
   projects.read.each_line do |project|
@@ -115,14 +122,15 @@ todo6 = Todo.create! :name => "Cyllinder", :firm_id => "1", :project_id => "2", 
 puts 'New todo created: ' << todo6.name
 
 puts "Setting up logs"
-time4daysago = Time.now - 4.days
-time6daysago = Time.now - 6.days
-timeyesterday = Time.now - 1.days
-log1 = Log.create! :user_id => "1", :event => "Sell DDE", :firm_id => "1", :project_id => "1", :todo_id => "1", :tracking => false, :log_date => Time.now, :begin_time => Time.now, :end_time => Time.now + 1.hours
-log2 = Log.create! :user_id => "1", :event => "Sell Dumdumboys", :firm_id => "1", :project_id => "1", :todo_id => "1", :tracking => false, :log_date => Time.now, :begin_time => Time.now + 1.hours, :end_time => Time.now + 3.hours
-log3 = Log.create! :user_id => "1", :event => "Record nicolai", :firm_id => "1", :project_id => "1", :todo_id => "2", :tracking => false, :log_date => Time.now, :begin_time => Time.now + 3.hours, :end_time => Time.now + 5.hours
-log4 = Log.create! :user_id => "1", :event => "Record slalom", :firm_id => "1", :project_id => "1", :todo_id => "2", :tracking => false, :log_date => Time.now, :begin_time => Time.now + 5.hours, :end_time => Time.now + 6.hours
-log5 = Log.create! :user_id => "1", :event => "Making poster", :firm_id => "1", :project_id => "1", :tracking => false, :log_date => Time.now, :begin_time => Time.now + 1.hours, :end_time => Time.now + 3.hours
+time4daysago = Time.zone.today - 4.days
+time6daysago = Time.zone.today - 6.days
+timeyesterday = Time.zone.today - 1.days
+today = Time.zone.today - 1.days + 1.days
+log1 = Log.create! :user_id => "1", :event => "Sell DDE", :firm_id => "1", :project_id => "1", :todo_id => "1", :tracking => false, :log_date => today, :begin_time => Time.now, :end_time => Time.now + 1.hours
+log2 = Log.create! :user_id => "1", :event => "Sell Dumdumboys", :firm_id => "1", :project_id => "1", :todo_id => "1", :tracking => false, :log_date => today, :begin_time => Time.now - 1.hours, :end_time => Time.now
+log3 = Log.create! :user_id => "1", :event => "Record nicolai", :firm_id => "1", :project_id => "1", :todo_id => "2", :tracking => false, :log_date => today, :begin_time => Time.now - 3.hours, :end_time => Time.now
+log4 = Log.create! :user_id => "1", :event => "Record slalom", :firm_id => "1", :project_id => "1", :todo_id => "2", :tracking => false, :log_date => today, :begin_time => Time.now - 5.hours, :end_time => Time.now
+log5 = Log.create! :user_id => "1", :event => "Making poster", :firm_id => "1", :project_id => "1", :tracking => false, :log_date => today, :begin_time => Time.now + 1.hours, :end_time => Time.now + 3.hours
 log6 = Log.create! :user_id => "2", :event => "Sell nicolai", :firm_id => "1", :project_id => "1", :tracking => false, :log_date => time4daysago, :begin_time => time4daysago, :end_time => time4daysago + 5.hours
 log7 = Log.create! :user_id => "2", :event => "Sell nicolai", :firm_id => "1", :project_id => "1", :tracking => false, :log_date => time4daysago, :begin_time => time4daysago + 5.hours, :end_time => time4daysago + 7.hours
 log8 = Log.create! :user_id => "2", :event => "Unscrew", :firm_id => "1", :project_id => "2", :todo_id => "5", :tracking => false, :log_date => time4daysago, :begin_time => time4daysago, :end_time => time4daysago + 1.hours

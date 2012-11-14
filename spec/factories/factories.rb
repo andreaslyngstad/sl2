@@ -4,19 +4,45 @@ FactoryGirl.define do
   sequence(:name) { |n|"name#{n}"}
   sequence(:subdomain) { |n| "subdomain#{n}"}
   sequence(:email) { |n| "foo#{n}@example.com" }
-end
-FactoryGirl.define do 
+ 
   factory :firm do
-    name
-    subdomain 
+   name
+   subdomain
   end
-end
-FactoryGirl.define do 
+
+
   factory :user do
     name
     password "foobar"
     password_confirmation { |u| u.password }
     email
     firm
+  end 
+
+  factory :project do
+    name
+    active true
+  end  
+
+  factory :log do
+    event "customer man"
+    begin_time "2012-10-24 16:08:07 +0200"
+    end_time "2012-10-24 16:09:07 +0200"
+  end  
+
+  factory :milestone do
+    goal "This is the goal"
+  end  
+
+  factory :todo do
+    name "Todo today"
+  end  
+
+  factory :employee do
+    name "employee guy"
+  end  
+
+  factory :customer do
+    name "customer man"
   end  
 end

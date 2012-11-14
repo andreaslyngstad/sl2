@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration
 	    t.string  :role
       t.string 	:phone
       t.string 	:name
-      t.integer :firm_id
+      t.integer :firm_id, :null => false
       t.float   :hourly_rate
       t.timestamps
       t.string :loginable_type, :limit => 40

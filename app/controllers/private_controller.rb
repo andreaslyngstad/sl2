@@ -2,37 +2,11 @@ class PrivateController < ApplicationController
    
       authorize_resource :firm
 
-  # skip_before_filter :find_firm, :only => :statistics
-
-  def index
-    @customers = Customer.search(params[:search])
-    @customer = Customer.new
-  end
-
+  # skip_before_filter :find_firm, :only => :home
 
   def account
+  end
   
-  	@firm = current_firm
-  	@user = current_user
-  end
-  def firm_edit
-  
-  end
-  def firm_update
-    @firm = current_firm
-
-    respond_to do |format|
-      if @firm.update_attributes(params[:firm])
-        flash[:notice] = flash_helper('Firm was successfully updated.')
-        format.html { redirect_to account_path }
-        format.xml  { head :ok }
-      else
-      	
-        format.html { render :action => "firm_edit" }
-        format.xml  { render :xml => @firm.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
   def statistics
     @log_week = current_firm.logs.where(:log_date => (Time.now.beginning_of_week + 1.second)..(Time.now.end_of_day)).group("date(log_date)").sum(:hours)
  	  @logs_project = current_firm.logs.where(['log_date > ? AND project_id IS NOT ?', Time.now.beginning_of_week, nil]).group("project").sum(:hours)
@@ -43,12 +17,12 @@ class PrivateController < ApplicationController
 
 
   def reports
-  	
   	 @users = current_firm.users
   	 @projects = current_firm.projects
   	 @customers = current_firm.customers
   end
-   def report_for
+  
+  def report_for
   	if !params[:user_id].blank?
   	@user = User.find(params[:user_id])
   	
@@ -65,9 +39,20 @@ class PrivateController < ApplicationController
   	@customer = Customer.find(params[:customer_id])
   	end
   end
+  
   def timesheets 
     @user = current_firm.users.find(params[:user_id])
-	  timesheet_variables(params)
+	  @users = current_firm.users
+     @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
+     range = Time.zone.today..Time.zone.today + 7.days
+     @log_project = @user.logs.where(:log_date => Time.zone.today..Time.zone.today + 7.days).group("project_id").sum(:hours)
+     @log_week = @user.logs.where(:log_date => range).group("date(log_date)").sum(:hours)
+     @log_week_project = @user.logs.where(:log_date => range).group("project_id").group("date(log_date)").sum(:hours)
+     @log_week_no_project = @user.logs.where(:log_date => range, :project_id => nil).group("date(log_date)").sum(:hours)
+     @projects = @user.projects
+     @all_projects = @projects
+     @customers = current_firm.customers
+     @log_total = @user.logs.where(:log_date => range).sum(:hours) 
   end
   
   def add_log_timesheet
@@ -101,20 +86,22 @@ class PrivateController < ApplicationController
 	def timesheet_logs_day
 		@users = current_firm.users
 		@user = current_firm.users.find(params[:user_id])
-		@logs = @user.logs.where(:log_date => params[:date].to_time..params[:date].to_time.end_of_day)
+		@logs = @user.logs.where(:log_date => params[:date])
 		@all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
 		@customers = current_firm.customers
 	end
+	
 	def timesheet_month
-	  range = (Time.now.beginning_of_week.to_date)..(Time.now.beginning_of_week.to_date + 7.days)
-	  @date = params[:date].to_time
+	  
+	  @date = params[:date] ? Date.parse(params[:date]) : Date.today
 	  @users = current_firm.users
     @user = current_firm.users.find(params[:user_id])
-    @logs = @user.logs.where(:log_date => params[:date].to_time.beginning_of_month..params[:date].to_time.end_of_month)
-    @logs_month = @user.logs.where(:log_date => range).group("date(log_date)").sum(:hours)
+    @logs_by_date = @user.logs.group("date(log_date)").sum(:hours)
+    
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
     @customers = current_firm.customers
 	end
+	
  	def add_hours_to_timesheet
  		@project = Project.find(params[:id])	
  		@date = params[:date]
@@ -123,11 +110,9 @@ class PrivateController < ApplicationController
  		@log.log_date = @date
  		@log.event = "Added on timesheet"
 		@log.begin = @date.beginning_of_day
-		@log.end =  @log.begin + params[:hours]
-		
+		@log.end =  @log.begin + params[:hours]	
  	end
  	
- 		
   def add_todo_to_logs
     @firm = current_user.firm
     if !params[:todo_id].nil?
@@ -150,83 +135,10 @@ class PrivateController < ApplicationController
     end
   end
 
-
- 
-  def activate_projects
-  	@project = Project.find(params[:id])
-  	if @project.active == true
-  	@project.active = false
-  	flash[:notice] = flash_helper("Project is made inactive.")
-  	else
-	@project.active = true
-	flash[:notice] = flash_helper("Project is made active.")
-	end  
-	@project.save
+  def timesheet_variables(params)
+     
   end
-  
 
-
- def timesheet_variables(params)
-     @users = current_firm.users
-     @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
-     range = (Time.now.beginning_of_week.to_date)..(Time.now.beginning_of_week.to_date + 7.days)
-     @log_project = @user.logs.where(:log_date => range).group("project_id").sum(:hours)
-     @log_week = @user.logs.where(:log_date => range).group("date(log_date)").sum(:hours)
-     @log_week_project = @user.logs.where(:log_date => range).group("project_id").group("date(log_date)").sum(:hours)
-     @log_week_no_project = @user.logs.where(:log_date => range, :project_id => nil).group("date(log_date)").sum(:hours)
-     @projects = @user.projects
-     @all_projects = @projects
-     @customers = current_firm.customers
-     @log_total = @user.logs.where(:log_date => range).sum(:hours) 
- end
-  def not_in_use
-    
- 
-  # def get_logs
-    # @firm = current_user.firm
-    # @customers = @firm.customers
-    # @customer = Customer.find(params[:customer_id])
-  	# @employees = @customer.employees
-    # @log = Log.new(:customer => @customer)
-    # @all_projects = current_user.projects.where(["customer_id IS ? OR customer_id IS ?", nil, @customer.id]).where(["active = ?", true])
-    # @logs = @customer.logs.where(:log_date => time_range_to_day).order("log_date DESC").includes([:todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
-  # end
-#   
-  # def get_logs_project
-  	# @firm = current_user.firm
-  	# @customers = @firm.customers.includes(:employees)
-  	# @project = Project.find(params[:project_id])
-  	# @log = Log.new(:project => @project)
-  	# @logs = @project.logs.where(:log_date => time_range_to_day).order("log_date DESC").includes([:user, :todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
-  	# @all_projects = current_user.projects.where(["active = ?", true])
-  	# @todos = @project.todos.where(["completed = ?", false]).includes(:user)
-#   	
-  # end
-#   
-  # def get_logs_user
-  	# @firm = current_user.firm
-  	# @customers = @firm.customers.includes(:employees)
-  	# @user = User.find(params[:user_id])
-  	# @log = Log.new(:user => @user)
-  	# @logs = @user.logs.where(:log_date => time_range_to_day).order("log_date DESC").includes([:user, :todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
-  	# @all_projects = current_user.projects.where(["active = ?", true])
-#   	
-  # end
-#   
-  # def get_users_project
-  	# @firm = current_user.firm
-  	# @project = Project.find(params[:project_id])
-  	# @members = @project.users
-    # @not_members = @firm.users - @members
-  # end
-#   
-  # def get_employees
-    # @firm = current_user.firm
-    # @customer = Customer.find(params[:customer_id])
-    # @employees = @customer.employees
-  # end
-#   
- end
   def logs_pr_date
     @firm = current_user.firm
     @customers = @firm.customers.includes(:employees)
@@ -234,28 +146,20 @@ class PrivateController < ApplicationController
 	    if params[:time] == "to_day"
 	    time_range = (Time.now.midnight)..(Time.now.midnight + 1.day)
 	    elsif params[:time] == "this_week"
-	    time_range = (Time.now.beginning_of_week)..(Time.now.midnight + 1.day)
-	    
+	    time_range = (Time.now.beginning_of_week)..(Time.now.midnight + 1.day)   
 	    elsif params[:time] == "this_month"
-	    time_range = (Time.now.beginning_of_month)..(Time.now.midnight + 1.day)
-	  
+	    time_range = (Time.now.beginning_of_month)..(Time.now.midnight + 1.day)	  
 	    elsif params[:time] == "this_year"
-	    time_range = (Time.now.beginning_of_year)..(Time.now.midnight + 1.day)
-	   
+	    time_range = (Time.now.beginning_of_year)..(Time.now.midnight + 1.day)   
 	    elsif params[:time] == "yesterday"
-	    time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
-	   
+	    time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)   
 	    elsif params[:time] == "last_week"
-	    time_range = (Time.now.beginning_of_week - 7.day)..(Time.now.beginning_of_week - 1.second)
-	    
+	    time_range = (Time.now.beginning_of_week - 7.day)..(Time.now.beginning_of_week - 1.second)   
 	    elsif params[:time] == "last_month"
-	    time_range = (Time.now.beginning_of_month - 1.month)..(Time.now.beginning_of_month - 1.second)
-	    
+	    time_range = (Time.now.beginning_of_month - 1.month)..(Time.now.beginning_of_month - 1.second)   
 	    elsif params[:time] == "last_year"
-	    time_range = (Time.now.beginning_of_year - 1.year)..(Time.now.beginning_of_year - 1.second)
-	   
-	    end
-	    
+	    time_range = (Time.now.beginning_of_year - 1.year)..(Time.now.beginning_of_year - 1.second)   
+	    end  
 	   find_logs_on(params[:url], time_range)
 	   
   end
@@ -322,11 +226,8 @@ class PrivateController < ApplicationController
   		flash[:notice] = flash_helper("#{@user.name} is a member of the #{@project.name} project.")
   	end
   	@members = @project.users
-  	@not_members = @firm.users - @members
-  	
+  	@not_members = @firm.users - @members	
   end
-  
-
 end
 
    

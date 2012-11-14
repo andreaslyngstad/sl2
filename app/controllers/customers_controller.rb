@@ -8,7 +8,7 @@ class CustomersController < ApplicationController
   def show
     @customer = current_firm.customers.find(params[:id])
     @customers = current_firm.customers
-    @logs = @customer.logs.includes([:todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
+    @logs = @customer.recent_logs.includes([:todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
     @user = current_user
     @log = Log.new(:customer => @customer)
     @employees = @customer.employees
@@ -75,7 +75,6 @@ class CustomersController < ApplicationController
     @customer.destroy
       respond_to do |format|
       flash[:notice] = flash_helper('Customer was successfully deleted.')
-     format.html { redirect_to projects_path }
       format.js
     end
    

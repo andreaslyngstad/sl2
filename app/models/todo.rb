@@ -9,7 +9,7 @@ class Todo < ActiveRecord::Base
   
   
   def due_to_day
-    Time.now.in_time_zone.strftime("%Y%j") == due.strftime("%Y%j") && completed == false
+    Time.now.strftime("%Y%j") == due.strftime("%Y%j") && completed == false
   end
   
   def overdue

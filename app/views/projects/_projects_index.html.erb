@@ -8,11 +8,10 @@
   <span class='delete-tabs-list'></span>
     <% end %>
 
- <span class='open_project_update edit-tabs-list edit' id="project_update" data-id="<%= project.id %>" data-object="project" title="Edit project"></span>
-   
- <a class="activate_project" data-object="project" data-id="<%= project.id.to_s %>">Archive</a>
+  <span class='open_project_update button edit' id="project_update" data-id="<%= project.id %>" data-object="project" title="Edit project">Edit</span>  
+ <a class="activate_project button" data-object="project" data-id="<%= project.id.to_s %>">Archive</a>
  <div class="dialog_form" id="project_update_<%= project.id %>_form" title="Update project" style="display:none;">
-      <%= form_for([@firm, project], :url =>  update_index_path(project)) do |f| %>
+      <%= form_for(project) do |f| %>
       <ul>
       <li><%= f.label :name %><%= f.text_field :name %></li>
       <li><%= f.label :description %><%= f.text_field :description %></li>

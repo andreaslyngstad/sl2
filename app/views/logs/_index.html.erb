@@ -1,6 +1,6 @@
 
 
-<div class="list_header_log orange_bgr">
+<div class="list_header_log hor_scroll_200 orange_bgr">
 <div id="form_holder">
 <%if !@log.nil?%>
 	<%= render :partial => "stop_tracking", :locals => {:log => @log}%>
@@ -9,11 +9,15 @@
 <% end %>
    </div>
    </div>	
-   <%= render "logs/logs_menu" %>
+   
+   	<div id="index_log_header" class="hor_scroll_200">
+     <%= render "logs/logs_menu" %>
+     </div>
+     <div id="index_logs">
    <div class="listing_logs"> 
- 	
- 	<%= render "logs/list_header" %>
+	<%= render "logs/list_header" %> 
     <%= render @logs %>
-
     </div>
 
+   </div>
+   

@@ -8,7 +8,6 @@ class UsersController < ApplicationController
   	@firm = current_firm
     @users = @firm.users.all
     @user = User.new
-   
   end
 
   # GET /users/1
@@ -78,13 +77,11 @@ class UsersController < ApplicationController
       respond_to do |format|
     if @user.update_attributes(params[:user])
       flash[:notice] = flash_helper("Successfully updated profile.")
-      format.html { redirect_to(user_path(@user))}
       format.js
     else
     	
       format.js { render "shared/validate_update" }
       flash[:notice] = flash_helper("something went wrong #{@user.errors}")
-      format.html { redirect_to(edit_user_path(@user))}
     end
     end
   end

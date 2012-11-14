@@ -3,7 +3,7 @@ class CreateTodos < ActiveRecord::Migration
     create_table :todos do |t|
       t.string :name
       t.integer :user_id
-      t.integer :firm_id
+      t.integer :firm_id, :null => false
       t.integer :project_id
       t.integer :customer_id
       t.date :due

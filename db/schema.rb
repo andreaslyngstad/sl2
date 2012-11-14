@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.string   "phone"
     t.string   "email"
     t.string   "address"
-    t.integer  "firm_id"
+    t.integer  "firm_id",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.string   "name"
     t.string   "phone"
     t.string   "email"
-    t.integer  "customer_id"
+    t.integer  "customer_id", :null => false
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -53,15 +53,15 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   create_table "logs", :force => true do |t|
     t.string   "event"
     t.integer  "customer_id"
-    t.integer  "user_id"
-    t.integer  "firm_id"
+    t.integer  "user_id",     :null => false
+    t.integer  "firm_id",     :null => false
     t.integer  "project_id"
     t.integer  "employee_id"
     t.integer  "todo_id"
     t.boolean  "tracking"
     t.datetime "begin_time"
     t.datetime "end_time"
-    t.datetime "log_date"
+    t.date     "log_date"
     t.float    "hours"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.boolean  "active"
     t.float    "budget"
     t.float    "hour_price"
-    t.integer  "firm_id"
+    t.integer  "firm_id",     :null => false
     t.integer  "customer_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   create_table "todos", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.integer  "firm_id"
+    t.integer  "firm_id",     :null => false
     t.integer  "project_id"
     t.integer  "customer_id"
     t.date     "due"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.string   "role"
     t.string   "phone"
     t.string   "name"
-    t.integer  "firm_id"
+    t.integer  "firm_id",                                              :null => false
     t.float    "hourly_rate"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false

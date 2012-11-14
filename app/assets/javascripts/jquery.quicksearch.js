@@ -18,6 +18,7 @@
 				this.style.display = "";
 			},
 			hide: function () {
+				
 				this.style.display = "none";
 			},
 			prepareQuery: function (val) {
@@ -46,6 +47,7 @@
 					noresults = false;
 				} else {
 					options.hide.apply(rowcache[i]);
+					
 				}
 			}
 			

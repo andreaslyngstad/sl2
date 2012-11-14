@@ -17,7 +17,7 @@ jQuery.fn.validates_uniqe = function(){
 	$(".signup-form-field-subdomain em").remove();
  	$(".signup-form-field-subdomain").append("<em class='error'>This field is required.</em>");
  	}
- 	else if (/^[a-z0-9\_]+$/i.test(value) == false){
+ 	else if (/^[a-z0-9]+$/i.test(value) == false){
  	$(".signup-form-field-subdomain em").remove();
  	$(".signup-form-field-subdomain").append("<em class='error'>No spesial charaters or spaces.</em>");	
  		

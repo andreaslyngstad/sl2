@@ -63,16 +63,29 @@ class User < ActiveRecord::Base
     return token_user
   end
 
-   def self.find_for_database_authentication(conditions)
-   self.where(:email => conditions[:email]).first
-  end
+   # def self.find_for_database_authentication(conditions)
+   # self.where(:email => conditions[:email]).first
+  # end
  
   
   def role?(role)
       return self.roles.nil? ? false : self.roles.include?(role.to_s)
   end
   
-  
-
+  def self.chart_user_lables(firm)
+    firm.users.map do |user|
+       user.name.gsub(/["]/, "'")  
+    end
+  end
+  def self.dates_without_data(range,firm)
+      users = chart_user_lables(firm)
+      date_hours_empty = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
+        users.each do |user|
+          (range).each do |day|
+          date_hours_empty[user][day] = 0
+        end
+      end
+      date_hours_empty
+  end
   
 end

@@ -7,7 +7,7 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :active
       t.float :budget
       t.float :hour_price
-      t.integer :firm_id
+      t.integer :firm_id, :null => false
       t.integer :customer_id
       t.timestamps
     end

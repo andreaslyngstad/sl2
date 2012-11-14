@@ -12,7 +12,7 @@ class SessionsController < Devise::SessionsController
   #   sign_in(resource_name, resource)
   #  if subdomain.present?
   #    set_flash_message(:notice, :signed_in) if is_navigational_format?
-  #    redirect_to statistics_url
+  #    redirect_to home_url
   #  else
   #    user = current_user
   #    sign_out(current_user)
@@ -37,7 +37,7 @@ class SessionsController < Devise::SessionsController
       sign_in(token_user)
 
        flash[:notice] = "Signed in successfully"
-      redirect_to statistics_path
+      redirect_to home_path
     else
       flash[:alert] = "Login could not be validated"
       redirect_to root_url

@@ -9,7 +9,7 @@
      </div>
    <div class="date_and_times_on_log">
    	<% if !log.end_time.nil? %>
-    <%= ftz(log.log_date).strftime('%d.%m.%y') %> 
+    <%= log.log_date.strftime('%d.%m.%y') %> 
     <%= ftz(log.begin_time).strftime('%H:%M')%>-<%= ftz(log.end_time).strftime('%H:%M')%>
     <div class="total_log_time"><%= log.total_time %></div>  
     

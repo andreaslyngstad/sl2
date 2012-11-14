@@ -24,7 +24,7 @@ module SubdomainLogin
   end
 
   def sign_in_and_redirect(user, firm)
-  redirect_to statistics_path(:subdomain => firm.subdomain)
+  redirect_to home_path(:subdomain => firm.subdomain)
   sign_in(user)
   end
 end

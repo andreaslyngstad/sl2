@@ -18,7 +18,7 @@ class Firm < ActiveRecord::Base
   has_many :projects
   validates_presence_of :name
  
-  validates_format_of :subdomain, :with => /^[a-z0-9\_]+$/i
+  validates_format_of :subdomain, :with => /^[a-z0-9]+$/i
  
   validates :subdomain, :presence => true, :uniqueness => true,  :subdomain_exclutions => :true
   

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://firm.lvh.me:3001/" />
+<title>log_crud</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">log_crud</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/logs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=log_event</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=commit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Running</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=commit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Log was successfully saved.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.ui-button-text</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@id='log_event'])[3]</td>
+	<td>test2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=log_date_new</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=10</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='new_log']/li[5]/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='new_log']/li[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='commit'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>test2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//span[@id='log_update'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@id='log_event'])[4]</td>
+	<td>test_edit</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='commit'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>test_edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#log_info_1 &gt; div.delete_edit &gt; a.delete_log</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Log was deleted.</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

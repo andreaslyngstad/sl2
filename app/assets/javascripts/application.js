@@ -13,17 +13,21 @@
 //= require jquery.searchabledropdown-1.0.7.src.js
 //= require jquery.quicksearch
 //= require navigation
+//= require scrolling
 
 //= require logs
 //= require log_tracking
-//= require raphael-min
-//= require elycharts.min
 //= require tabs
 //= require employees
-//= require charts
 //= require timesheet
 //= require jquery.jclock
 //= require ui-combobox.js
+//= require nvd3/lib/d3.v2.min
+
+//= require nvd3/nv.d3
+//= require nvd3/src/models/linePlusBarWithFocusChart
+//= require sl_graphs
+
 //= require_self
 
 jQuery.ajaxSetup({ 
@@ -85,6 +89,12 @@ jQuery.fn.UIdialogs = function(){
       resizable: false,
       width: 400,
       modal: true,
+      open: function(event, ui) {
+        $(event.target).parent().css('position', 'fixed');
+        $(event.target).parent().css('top', '100px');
+        $(event.target).parent().css('left', '200px');
+        
+    },
       close: function(event, ui) { 
       	
       	$(this).find(".hasDatepicker").datepicker( "destroy" );
@@ -137,6 +147,7 @@ jQuery.fn.UIdialogs_links = function(){
        $(form).children(".new_" + object).validateWithErrors();
      
       $(form).dialog( "open" );
+    
     });
 
 }; 
@@ -158,9 +169,11 @@ jQuery.fn.reopen_project = function(){
     
 jQuery.fn.activate_projects_no_button = function(){
 	$(this).click(function(){
+		if (confirm("The project, all its tasks, logged hours and milestones will be arcivated. You'll find the project in the arcivated projects page, where you can reopen it or delete it.")){
+		
 		$('.spinning').show();
 		var id = $(this).attr("data-id")
-  	$.get("/activate_projects/" + id)
+  	$.get("/activate_projects/" + id)}
     });
 	
 };
@@ -174,7 +187,7 @@ jQuery.fn.UIdialogs_edit_links = function(){
     
     $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
     $(form_id).children(".edit_" + object).validateWithErrors();
-   
+   	$(form_id).children("ul li").css("display", "");
     $(form_id).UIdialogs();
     $(form_id).dialog( "open" );
     });
@@ -367,6 +380,8 @@ $(".range_date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true
     });
 
 //non-ajax search
-   $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li'); 
+   $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li', {
+   	
+   }); 
 
 })

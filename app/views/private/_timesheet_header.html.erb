@@ -1,7 +1,10 @@
 <div class="log_menu">
    
    <div class="add_some_timesheet">
-       Timesheet for <%= @user.name %> <%= link_to "month", timesheet_month_path(@user, Time.now.to_date) %>
+       Timesheet for <%= @user.name %> 
+       
+       <%= link_to "month", timesheet_month_path(@user, Time.now.to_date) %>
+       <%= link_to "week", timesheets_path(@user) %>
    </div>
    <div class="add_some_timesheet_buttons">
        <a id="dialog_log">Log more hours</a> 

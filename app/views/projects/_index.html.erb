@@ -8,7 +8,7 @@
 		<%= link_to "Archived projects", archive_path, :id => "archive"%>
 		
 		<div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
-      <%= form_for([@firm, @project], :url =>  create_index_path) do |p| %>
+      <%= form_for(@project) do |p| %>
     
       <li><%= p.label :name %><%= p.text_field :name, :class => "required"%></li>
       <li><%= p.label :description %><%= p.text_field :description %></li>
@@ -21,6 +21,7 @@
 	        <input type="text" name="search" AUTOCOMPLETE=OFF value="" title="search" id="id_search_list">
 	    </div>
 	</div>
+	<div id="cus_pro_us_listing_container">
   <ul id="cus_pro_us_listing">
   	
     <% for project in @projects %>
@@ -28,12 +29,10 @@
   <div class="tab_list_text">
  <%= link_to project.name, project_path(project) %>
    </div>
-  	
-
  <span class='open_project_update button edit' id="project_update" data-id="<%= project.id %>" data-object="project" title="Edit project">Edit</span>
    
  <div class="dialog_form" id="project_update_<%= project.id %>_form" title="Update project" style="display:none;">
-      <%= form_for([@firm, project], :url =>  update_index_path(project)) do |f| %>
+      <%= form_for(project) do |f| %>
       <ul>
       <li><%= f.label :name %><%= f.text_field :name %></li>
       <li><%= f.label :description %><%= f.text_field :description %></li>
@@ -47,6 +46,7 @@
 </li>
 <% end %>
   </ul>
+  </div>
   </div>
   </div>
 </div>

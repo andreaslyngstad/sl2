@@ -4,7 +4,7 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :name
       t.string :phone
       t.string :email
-      t.integer :customer_id
+      t.integer :customer_id, :null => false
 
       t.timestamps
     end

@@ -1,6 +1,6 @@
 class Log < ActiveRecord::Base
 	
-  #validate :end_time_before_begin_time, :presence_of_event
+  validate :end_time_before_begin_time
   belongs_to :customer
   belongs_to :user
   belongs_to :firm
@@ -60,7 +60,7 @@ class Log < ActiveRecord::Base
 	end
   
   def end_time_before_begin_time
-    errors.add(:end_time, "You end before you begin. Please change the from and to fields") if
+    errors.add(:end_time, "You end before you begin.") if
     if tracking != true
     (end_string=(end_time) < begin_string=(begin_time))
     end
@@ -70,6 +70,24 @@ class Log < ActiveRecord::Base
   	validates_presence_of :event
   	end
   end
+  def log_date_format
+    log_date.strftime("%Y%m%d")
+  end
   
+  def self.chart_data(firm, start = 3.weeks.ago)
+    
+    logs = Log.logs_by_day(start, firm)
+    # a = []
+    # users = firm.users.all   
+    (start.to_date..Date.today).map do |date|
+      
+      end
+  end
+  def self.hours_by_day_and_user(firm, range)
+    logs = firm.logs.where(log_date: range).includes(:user).group([:log_date, :user_id]).select("sum(hours) as total_hours, log_date, user_id")     
+  end
+  def self.hours_by_day_and_project(firm, range)
+    logs = firm.logs.where(log_date: range).includes(:project).group([:log_date, :project_id]).select("sum(hours) as total_hours, log_date, project_id")     
+  end
 end
-
+ 

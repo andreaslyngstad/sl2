@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.2.8'
 gem 'eventmachine'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,7 +12,6 @@ gem "devise"
 gem "paperclip"
 gem "cancan"
 gem 'newrelic_rpm'
-gem "watu_table_builder", :require => "table_builder", :git => "git://github.com/watu/table_builder.git"
 
 group :production do
   gem 'pg'
@@ -28,8 +27,9 @@ end
 group :development, :test do
   gem 'quiet_assets'
   gem 'debugger'
-  
-  gem "rspec-rails", "~> 2.0"
+  gem 'thin'
+  gem "rspec-rails"
+  gem 'shoulda-matchers'
   gem 'capybara'
   gem "factory_girl_rails", "~> 4.0"
   #gem 'turn' 

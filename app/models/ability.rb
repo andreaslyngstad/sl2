@@ -2,10 +2,10 @@ class Ability
   include CanCan::Ability
   
   def initialize(user)
-     user ||= User.new
      
-     if user.role == "manager"
-       can :manage, Firm
+     
+     if user.role == "Admin"
+        can :manage, Firm
         can :manage, User, :firm => {:id => user.firm_id}
         can :manage, Customer, :firm => {:id => user.firm_id}
         can :manage, Project, :firm => {:id => user.firm_id}
@@ -17,12 +17,7 @@ class Ability
         can :read, Customer, :firm => {:id => user.firm_id}
         can :read, Project, :firm => {:id => user.firm_id}
         can :manage, Log, :firm => {:id => user.firm_id}
-       end   
-     
-          
-        
-     
-      
+       end     
       
      #    if user.manager? 
      #      can :manage, User
@@ -43,6 +38,4 @@ class Ability
        can :create, Firm
       end
    end
-  
- 
 end

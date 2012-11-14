@@ -6,7 +6,7 @@ class LogsController < ApplicationController
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
     @customers = current_firm.customers
     @user = current_user
-    @logs = current_firm.logs.where(:log_date => time_range_to_day).order("updated_at DESC").includes(:project, :todo, :user, :customer, :employee )
+    @logs = current_firm.logs.where(:log_date => Date.today).order("updated_at DESC").includes(:project, :todo, :user, :customer, :employee )
     if !current_user.logs.blank?
     @log = Log.where("end_time IS ?",nil).last
     if @log.nil?
@@ -22,35 +22,7 @@ class LogsController < ApplicationController
     end
   end
 
-  # GET /logs/1
-  # GET /logs/1.xml
-  def show
-    @log = Log.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @log }
-    end
-  end
-
-  # GET /logs/new
-  # GET /logs/new.xml
-  def new
-    @log = Log.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @log }
-    end
-  end
-
-  # GET /logs/1/edit
-  def edit
-    @log = Log.find(params[:id])
-  end
-
-  # POST /logs
-  # POST /logs.xml
+  
   def create
     
     @log = Log.new(params[:log])
@@ -71,7 +43,6 @@ class LogsController < ApplicationController
     respond_to do |format|
       if @log.save
         flash[:notice] = flash_helper('Log was successfully created.')
-        format.html { redirect_to(home_path(@log)) }
         format.xml  { render :xml => @log, :status => :created, :location => @log }
         format.js
       else
@@ -108,7 +79,6 @@ class LogsController < ApplicationController
     respond_to do |format|
       if @log.update_attributes!(params[:log])
         flash[:notice] = flash_helper("Log was successfully saved.")
-       
         format.js
       else
         format.js { render "shared/validate_update" }
@@ -138,9 +108,9 @@ class LogsController < ApplicationController
    	@log = Log.new(params[:log])
    	@log.user = current_user
     @log.firm = current_firm
-      @log.tracking = true
-      @log.begin_time = Time.now
-      @log.log_date = DateTime.now
+    @log.tracking = true
+    @log.begin_time = Time.now
+    @log.log_date = Date.today
       if params[:done]
 	      if !@log.todo.nil?
 	         @log.todo.completed = true
@@ -159,7 +129,7 @@ class LogsController < ApplicationController
   end
   def stop_tracking
 		 # End tracking
-	@all_projects =  current_user.projects.where(["active = ?", true])
+	  @all_projects =  current_user.projects.where(["active = ?", true])
     @customers = current_firm.customers
     @log_new = Log.new
   	@log = Log.find(params[:id])

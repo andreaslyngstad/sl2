@@ -5,7 +5,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :phone
       t.string :email
       t.string :address
-      t.integer :firm_id
+      t.integer :firm_id, :null => false
       t.timestamps
     end
   end

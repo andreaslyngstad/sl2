@@ -1,8 +1,8 @@
 module ApplicationHelper
-	def pick_color
-    a = ["red", "Orange", "Yellow ", "Green ", "Blue", "Indigo", "Violet", "#51E86F"]
-    return a
-  end
+	# def pick_color
+    # a = ["red", "Orange", "Yellow ", "Green ", "Blue", "Indigo", "Violet", "#51E86F"]
+    # return a
+  # end
   
 	def truncate_string(text, length = 18, truncate_string = '...')
      if text.nil? then return end

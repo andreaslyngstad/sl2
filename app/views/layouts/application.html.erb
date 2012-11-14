@@ -5,12 +5,12 @@
   <meta name="google-site-verification" content="ynxbxSS6ZtwG1WFHyqmWZ5ELrgNRADdhdEFebN11h5k" />
 
   <%= stylesheet_link_tag  'application' %>
-
+<%= javascript_include_tag "application"%>
    <%= csrf_meta_tag %>
    <link rel="shortcut icon" href="/favicon.png" />
    
 <%= yield :head %>
-<%= javascript_include_tag "application"%>
+
 
 
 </head>
@@ -21,25 +21,14 @@
 
 <div id="wrapper">
 <div id="all_container">
-	<div class="messages">
-		<span class="spinning" style="display:none;"></span>
-		<div id="flash_messages">	
-			<span class="flash_notice"><%= flash[:notice] %></span>
-			<span class="flash_error"><%= flash[:error] %></span>		
-		</div>
-		 <div id="user_nav_header">
-	<%= link_to "Sign out", sign_out_path %>
-	 	<span class="display_help" title="View page help">?</span>	
-	 		
-	</div>
-	
-	</div>
 	<%= yield(:help)%>
 
-	
-<div id="navigation">
+
+  
+
+<div id="navigation" class="hor_scroll">
 	<ul>
-      <li class="navigation" id="statistics_navi" pos="0"><a href="/statistics">Statistics</a></li>
+      <li class="navigation" id="home_navi" pos="0"><a href="/statistics">Home</a></li>
   	  <li class="navigation" id="logs_navi" pos="75"><a href="/logs">Logs</a></li>
   	  <li class="navigation" id="projects_navi" pos="150"><a href="/projects">Projects</a></li>
 	  <li class="navigation" id="customers_navi" pos="225"><a href="/customers">Customers</a></li>
@@ -50,13 +39,16 @@
 <div id="main_container">
 <%= yield %>
 </div>
-</div>
-</div>
-</div>
-<div id="footer">
 	
+</div>
+</div>
+</div>
+
+<div id="footer">
+<p>squadlink</p>
 </div>
 
 
 </body>
+
 </html>

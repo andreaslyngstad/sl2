@@ -16,5 +16,8 @@ module LogsHelper
     @customers = @firm.customers
   end
   
+  def log_hour_on_day(date, id)
+    TimeHelp.new.time_for_float_to_hours(Log.where(:log_date => date, :user_id => id).sum(:hours))
+  end
 end
   
