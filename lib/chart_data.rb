@@ -24,7 +24,7 @@ class ChartData
     if model == "user"
       models = User.chart_user_lables(firm)
     elsif model == "project"
-       @default = "Logs not assigned to a project"
+       @default = "No project"
       models = Project.chart_project_lables(firm)
       models << @default
     end
@@ -40,15 +40,15 @@ class ChartData
   def self.compile_hash(firm, range, model)
    key_user_value_date_hours = Hash.new
    if model == "user"
-   emty_hours = all_dates_all_no_hours(firm,range,model)
+   emtpy_hours = all_dates_all_no_hours(firm,range,model)
    log_hours = user_logs_by_day(Log.hours_by_day_and_user(firm, range))
    elsif model == "project"
-   emty_hours = all_dates_all_no_hours(firm,range,model)
+   emtpy_hours = all_dates_all_no_hours(firm,range,model)
    log_hours = project_logs_by_day(Log.hours_by_day_and_project(firm, range))
    end
-   emty_hours.each do |k,v|
+   emtpy_hours.each do |k,v|
      if log_hours.has_key?(k)
-      c = log_hours.values_at(k)[0].diff(emty_hours.values_at(k)[0])
+      c = log_hours.values_at(k)[0].diff(emtpy_hours.values_at(k)[0])
       key_user_value_date_hours[k] = c 
      end   
    end 
@@ -68,4 +68,27 @@ class ChartData
     end
     output << "];"
   end 
+  def self.project_pie_logs(firm, range)
+    logs = Log.hours_by_project(firm, range)
+    output = "[{ key: 'Cumulative Return', values: ["
+    logs.each do |log|
+      if !log.project.nil?
+        output << "{ 'label' :'" + log.project.name + "',"
+      else
+        output << "{ 'label' :'" + @default + "',"
+      end
+      output << "'value' : " + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + "},"
+    end
+    output << "]}]"
+  end
+  def self.user_pie_logs(firm, range)
+    logs = Log.hours_by_user(firm, range)
+    output = "[{ key: 'Cumulative Return', values: ["
+    logs.each do |log|
+      output << "{ 'label' :'" + log.user.name + "',"
+      output << "'value' : " + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + "},"
+    end
+    output << "]}]"
+  end
+ 
 end

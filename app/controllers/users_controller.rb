@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   def show
     @firm = current_firm
     @user = User.find(params[:id])
+    
     @done_todos = @user.todos.where(["completed = ?", true]).includes(:project, :user)
     @not_done_todos = @user.todos.where(["completed = ?", false]).includes(:project, :user)
     
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @user }
       format.js
     end
+    
   end
 
   # GET /users/new

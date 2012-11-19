@@ -2,14 +2,13 @@
 	
 	$(window).scroll(function (event) {
 		var x = $(this).scrollLeft();
+		
 		$(".hor_scroll").css("left", -x )
 		$(".hor_scroll_200").css("left", -x + 200 )
+		$(".hor_scroll_1180").css("left", -x + 1180 )
+		
 		$(".list_header").css("left", -x + 200 )
-	$(window).resize(function(event){
-		var height = $(window).height();
-		console.log(height)
-		console.log($(window).width())
-	})
+	
 
 });
 	

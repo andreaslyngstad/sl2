@@ -5,6 +5,8 @@
 @import "nv_d3";
 @import "jquery-ui-1.8.7custom";
 @import "tabs";
+@import "far_right_box";
+
 html, body{
   margin:0;
   padding:0;
@@ -227,9 +229,7 @@ max-width: 980px;
 #navigation li.current_main a{
   color:white;
   }
-.tab_box{
-  float:left;
-}
+
 #pointer {
 	
     background: url("pointer.png") no-repeat scroll left top transparent;
@@ -249,6 +249,7 @@ max-width: 980px;
 	float: left;
 	font-size: 20px;
 }
+
 
 .gravatar{
 
@@ -273,11 +274,19 @@ width: 100px;
 height: 100px;
 margin-right: 10px;
 }
+.user_description{
+  position:relative;
+  height: 150px;
+}
 .show_user_text{
-float: left;
+position:absolute;
+top:20px;
+right:20px;
 }
 .show_user_image{
-float: right;
+position:absolute;
+top:20px;
+left:20px;
 
 }
 /* dialog_form. */
@@ -382,19 +391,20 @@ background: -moz-linear-gradient(top,  #FAA51A,  #F47A20);
 	height:62px;
 	text-align:center;
 	width:100%;
-	min-width:980px
+	max-width:980px;
+	min-width:500px;
    
    
 }
 
 #html_tabs .content-wrapper {
 	padding:0px;
-	width:980px
+	
 }
 #html_tabs ul{
 padding: 34px 17px 0px;
 overflow: hidden;
-display: block;
+
 
 -webkit-margin-before: 1em;
 -webkit-margin-after: 1em;
@@ -450,37 +460,7 @@ border-color:#DCDBDC;
     border-style:solid;
     border-width:0px 1px 1px;
 }
-.show_statistics_header{
-  float:left;
-border:1px solid #B7B7B7;
-border-bottom:none;
-width: 100px;
-padding:10px;
-text-align:center;
-}
-.three_box{
-  width:344px;
-}
-.show_statistics_wrapper{
-  float:left;
-  width:852px;
-}
 
-.statistics_unit{
-float:left;
-border:1px solid #CB3900;
-height:50px;
-width: 100px;
-padding:10px;
-text-align:center;
-
-}
-.statistics_unit .unit{
-font-size: 12px;
-}
-.statistics_unit.one_number{
-  line-height:50px;
-}
 .yellow{
   color: #606060;
 border: solid 1px #B7B7B7;
@@ -533,11 +513,16 @@ float: left;
 border:1px solid #CB3900;
 }
 /*statistics end*/
+.show-view{
+margin-top:192px;
 
-
+}
+#show_content{
+  margin-bottom:0px;
+}
 
 #description{
-float:left;
+
 width:960px;
 
 padding:10px;
@@ -550,7 +535,68 @@ font-size:12px;
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#e6e6e6', EndColorStr='#ECECEC')";
 			
 }
+.show_statistics_wrapper{
+  width: 800px;
+ position:relative;
+  height:112px;
+}
+.show_statistics_header{
+  
+position:absolute;
+border:1px solid #B7B7B7;
+border-bottom:none;
+width: 100px;
+padding:10px;
+margin:0px;
+text-align:center;
+}
+.statistics_header_hours{
+  left:0px;
+}
+.statistics_header_done{
+  
+  left:122px;
+}
+.statistics_header_users{
+  
+  left:610px;
+}
+.three_box{
+  left:244px;
+  width:344px;
+}
 
+
+.statistics_unit{
+position:absolute;
+}
+.statistics_unit, .statistics_unit_milestone{
+height:50px;
+width: 100px;
+padding:10px;
+text-align:center;
+float:left;
+}
+.statistics_unit_milestone{
+float:left;
+}
+.statistics_unit_hours{
+top:40px;
+}
+.statistics_unit_users{
+ top:40px;
+ left:610px; 
+}
+.statistics_unit .unit{
+font-size: 12px;
+}
+.one_number{
+ 
+  line-height:50px;
+}
+.tab_box{
+
+}
 #charts{
 width: 798px;
 min-height: 130px;
@@ -558,21 +604,25 @@ min-height: 130px;
 }
 
 #todos_chart{
-float:left;
-width: 122px;
+  position:absolute;
+
+left: 122px;
+top:40px;
 
 }
 
 
 #milestones_chart{
+ 
   position:relative;
   border-top:1px solid #999;
   border-bottom:1px solid #999;
-  float:left;
   width: 366px;
   height:70px;
   overflow:hidden;
   font-size: 10px;
+  top:40px;
+  left:244px;
 }
 .milestone_slider{
   position:absolute;
@@ -656,7 +706,9 @@ width: 122px;
 	position:fixed;
 	top:125px;
 	z-index:1000;
-	min-width:958px;
+	width:100%;
+	max-width:958px;
+	min-width:500px;
 
 }
 .list_header .search{
@@ -857,13 +909,12 @@ max-width:980px;
 
 
 }
-.show-view{
-margin-top:192px;
 
-}
 #cus_pro_us_listing_container{
   margin-top:192px;
-  width:980px;
+  width:auto;
+  max-width:980px;
+  min-width:600px;
 }
 
 #cus_pro_us_listing{
@@ -1210,7 +1261,7 @@ padding:10px;
   -webkit-box-shadow: 0 0 10px#888;
   box-shadow: 0 0 10px #888;
   clear:both;
-  z-index:1000;
+  z-index:10000;
   position:fixed;
   bottom:0px;
   width:100%;

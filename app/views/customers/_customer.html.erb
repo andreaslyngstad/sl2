@@ -3,7 +3,8 @@
 <div class="tab_list_text">
   <%= link_to customer.name, customer_path(customer) %>
   </div>
-  <%= link_to(customer_path(customer), :confirm => "Are you sure? This will destroy all employees at this customer", :title => "Delete customer", :method => :delete, :remote => true) do%>
+
+    <%= link_to(customer_path(customer), :confirm => "Are you sure? This will destroy all employees at this customer", :title => "Delete customer", :method => :delete, :remote => true) do%>
   <span class='button'>Delete</span>
     <% end %>
 
@@ -20,4 +21,6 @@
     </div>
     <%= mail_to customer.email,"Email",:title => "Send a email", :class => "button"%>
 </li>
+
+
 

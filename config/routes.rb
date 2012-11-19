@@ -88,7 +88,9 @@ Squadlink::Application.routes.draw do
     #firms_controller
     match "/firm_update" => "firms#firm_update",  :as => :firm_update
     match "/firm_edit" => "firms#firm_edit",  :as => :firm_edit
-    
+    #roster
+    match "/roster_milestone" => "roster#get_milestones", :as => :roster_milestone
+    match "/roster_task" => "roster#get_tasks", :as => :roster_task
     resources :customers
     resources :employees
     resources :projects

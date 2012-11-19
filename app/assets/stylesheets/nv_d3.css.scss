@@ -25,20 +25,20 @@
   font-family: Tahoma, sans-serif;
   font-size: 15px;
 
-  transition: opacity 500ms linear;
-  -moz-transition: opacity 500ms linear;
-  -webkit-transition: opacity 500ms linear;
+  transition: opacity 100ms linear;
+  -moz-transition: opacity 100ms linear;
+  -webkit-transition: opacity 100ms linear;
 
-  transition-delay: 500ms;
-  -moz-transition-delay: 500ms;
-  -webkit-transition-delay: 500ms;
+  transition-delay: 100ms;
+  -moz-transition-delay: 100ms;
+  -webkit-transition-delay: 100ms;
 
   -moz-box-shadow: 4px 4px 8px rgba(0,0,0,.5);
   -webkit-box-shadow: 4px 4px 8px rgba(0,0,0,.5);
   box-shadow: 4px 4px 8px rgba(0,0,0,.5);
 
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  //-moz-border-radius: 10px;
+  //border-radius: 10px;
 
   pointer-events: none;
 
@@ -94,11 +94,11 @@ svg {
 
 svg text {
   font-family: Tahoma, sans-serif;
-  font-size: 15px;
+  font-size: 10px;
   
   /*color is fill*/
-  fill:#CB3900;
-  background-color:red;
+  //fill:#CB3900;
+  //background-color:red;
 }
 
 svg .title {
@@ -150,6 +150,7 @@ svg .title {
 
 .nvd3 .nv-axis path {
   fill: none;
+  display:none;
   stroke: #999;
   stroke-opacity: .75;
   shape-rendering: crispEdges;
@@ -166,7 +167,7 @@ svg .title {
 .nvd3 .nv-axis line {
   fill: none;
   stroke: #000;
-  stroke-opacity: .25;
+  stroke-opacity: .0;
   shape-rendering: crispEdges;
 }
 
@@ -176,6 +177,7 @@ svg .title {
 
 .nvd3 .nv-axis .nv-axisMaxMin text {
   font-weight: bold;
+  display:none;
   
 }
 
@@ -570,6 +572,7 @@ svg .title {
 */
 
 .nvd3.nv-ohlcBar .nv-ticks .nv-tick {
+
   stroke-width: 2px;
 }
 

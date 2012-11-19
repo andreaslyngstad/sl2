@@ -89,5 +89,11 @@ class Log < ActiveRecord::Base
   def self.hours_by_day_and_project(firm, range)
     logs = firm.logs.where(log_date: range).includes(:project).group([:log_date, :project_id]).select("sum(hours) as total_hours, log_date, project_id")     
   end
+  def self.hours_by_project(firm, range)
+     logs = firm.logs.where(log_date: range).includes(:project).group([:project_id]).select("sum(hours) as total_hours, project_id")     
+  end
+  def self.hours_by_user(firm, range)
+     logs = firm.logs.where(log_date: range).includes(:user).group([:user_id]).select("sum(hours) as total_hours, user_id")     
+  end
 end
  

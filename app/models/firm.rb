@@ -16,6 +16,7 @@ class Firm < ActiveRecord::Base
   has_many :todos
   has_many :logs
   has_many :projects
+  has_many :milestones
   validates_presence_of :name
  
   validates_format_of :subdomain, :with => /^[a-z0-9]+$/i

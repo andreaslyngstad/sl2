@@ -7,6 +7,7 @@
 //= require jquery.ui.slider
 //= require jquery.ui.datepicker
 //= require jquery.ui.selectmenu
+//= require jquery.ui.accordion
 //= require jquery.ui.autocomplete
 //= require jquery.validate
 //= require jquery.ba-bbq.min
@@ -14,6 +15,7 @@
 //= require jquery.quicksearch
 //= require navigation
 //= require scrolling
+//= require far_right
 
 //= require logs
 //= require log_tracking
@@ -187,7 +189,7 @@ jQuery.fn.UIdialogs_edit_links = function(){
     
     $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
     $(form_id).children(".edit_" + object).validateWithErrors();
-   	$(form_id).children("ul li").css("display", "");
+   	$(form_id).find("li").css("display", "");
     $(form_id).UIdialogs();
     $(form_id).dialog( "open" );
     });
@@ -214,6 +216,10 @@ jQuery.fn.current_link = function(){
   
   
 $(document).ready(function() {
+	 
+	 	
+
+	
 //	$(".searchable").searchable({
 //			appendto: "#dialog_log_form",
 //									// if list size are less than maxListSize, show them all

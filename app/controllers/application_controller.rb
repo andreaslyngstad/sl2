@@ -1,8 +1,10 @@
 
 class ApplicationController < ActionController::Base
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   require "./lib/timehelp"
 	include UrlHelper
 	include SubdomainLogin
+	
   before_filter :set_mailer_url_options, :find_firm
 	before_filter :authenticate_user!, :exept => [:after_sign_in_path_for, :sign_in_and_redirect, :check_firm_id, :current_subdomain]
   helper :layout
@@ -82,5 +84,9 @@ class ApplicationController < ActionController::Base
     end
     @firm = current_firm
     @customers = @firm.customers
+  end
+  def record_not_found
+    flash[:notice] = "No record found"
+    redirect_to action: :index
   end
 end

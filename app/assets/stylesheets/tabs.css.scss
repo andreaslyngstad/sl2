@@ -2,7 +2,7 @@
   display:none;
 }
 #sub_tabs{
- float: left;
+
 
   width:100%;
   font-family:Verdana,Helvetica,sans-serif;
@@ -18,14 +18,15 @@
 
 }
 #sub_tabs li {
-  float: left;
+  min-width:100px;
+  display: inline-block;
   margin: 0;
   padding: 0;
  /*--Subtract 1px from the height of the unordered list--*/
   line-height: 32px; /*--Vertically aligns the text within the tab--*/
  
   border: 1px solid #999;
-  border-left: none;
+  
   
   
   background: #e0e0e0;

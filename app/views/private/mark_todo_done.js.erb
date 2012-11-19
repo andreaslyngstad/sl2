@@ -1,5 +1,6 @@
 
 $("#todo_<%= escape_javascript( @todo.id.to_s) %>").remove();
+$("#roster_todo_<%= escape_javascript( @todo.id.to_s) %>").remove();
 <% if @todo.completed == true %>
 $("#done_tasks").append("<%= escape_javascript(render(:partial => @todo)) %>");
 
