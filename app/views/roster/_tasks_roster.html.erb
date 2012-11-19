@@ -1,0 +1,20 @@
+<ul>	
+  <% @tasks_overdue_and_to_day.each do |task|%>
+  <% if task.overdue %>
+  <li style="color:red" id="roster_todo_<%=task.id%>">
+  	<div class="row_task">
+	  	<input class="done_box" id="<%=task.id%>" type="checkbox"/>
+	  	<%= task.name %>
+  	</div> 
+  </li>
+  <%else%>
+  
+  <li style="color:green" id="roster_todo_<%=task.id%>">
+  	<div class="row_task">
+	  	<input class="done_box" id="<%=task.id%>" type="checkbox"/>
+	  	<%= task.name %>
+  	</div> 
+  </li>
+  <%end%>
+  <%end%>
+</ul>
