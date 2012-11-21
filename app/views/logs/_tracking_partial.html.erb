@@ -16,7 +16,7 @@
     <div class="tracking_select" style="display: none;">
 	<div id="tracking_project_task">
     <%= n.label :project %>
-         <select class="small_selector" id="log_project_id" log="<%= log.id %>" name="log[project_id]">
+         <select class="searchableS_tracking" id="logProjectIdTracking" log="<%= log.id %>" name="log[project_id]">
            <option value="" data-customer="">None</option>
            <% @all_projects.each do |project| %>
                 <% if project == log.project  %>
@@ -27,7 +27,7 @@
                  <% end %>
           </select>
           <div><%= n.label :Task %>
-          <select class="small_selector" id="log_todo_id_<%= log.id %>" log="<%= log.id %>" name="log[todo_id]">
+          <select class="searchableS_tracking" id="logTodoIdTracking<%= log.id %>" log="<%= log.id %>" name="log[todo_id]">
               <% if log.project.nil? %>
           <option value="" id="value">Select a project</option>
           <%else%>
@@ -54,9 +54,9 @@
            <div id="tracking_customer_employee">
           <%= n.label :customer %>
           	<%= n.select(:customer_id, @customers.map {|customer| [truncate_string(customer.name), customer.id]},
-          	{ :include_blank => "None"}, :class => "searchable", :id => "log_customer_id_#{log.id}", :log => "#{log.id}" )%>
+          	{ :include_blank => "None"}, :class => "searchableS_tracking", :id => "logCustomerIdTracking#{log.id}", :log => "#{log.id}" )%>
        <%= n.label :employee %>
-       <select class="small_selector" id="log_employee_id_<%= log.id %>" log="<%= log.id %>" name="log[employee_id]">
+       <select class="searchableS_tracking" id="logEmployeeIdTracking<%= log.id %>" log="<%= log.id %>" name="log[employee_id]">
             
             <% if !log.customer.nil? %>
              <option value>none</option>

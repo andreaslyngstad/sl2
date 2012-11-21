@@ -4,7 +4,7 @@
         <div class="projects_and_todos">
          <div id="project_on_log_select">
            <div class="log_form_label">Project</div>
-         <select class="log_project_class" id="log_project_id" log="<%= log.id %>" name="log[project_id]">
+         <select class="log_project_class" id="logProjectId" log="<%= log.id %>" name="log[project_id]">
            <option value="" data-customer="">none</option>
            <% @all_projects.each do |project| %>
            <% if !project.customer.nil? %>

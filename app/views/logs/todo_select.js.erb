@@ -1,16 +1,16 @@
 $(".flash_notice").empty();
 <% if @log.nil? %>
 var form	 = $(".new_log")
-var customer = form.find("#log_customer_id_")
-var employee = form.find("#log_employee_id_")
+var customer = form.find("#logCustomerId")
+var employee = form.find("#logEmployeeId")
 	
 <% else %>
 var form	 = $("#log_update_<%= escape_javascript(@log.id.to_s) %>_form")
-var customer = $("#log_customer_id_<%= escape_javascript(@log.id.to_s)%>")
-var employee = $("#log_employee_id_<%= escape_javascript(@log.id.to_s) %>")
+var customer = $("#logCustomerId<%= escape_javascript(@log.id.to_s)%>")
+var employee = $("#logEmployeeId<%= escape_javascript(@log.id.to_s) %>")
 
 <% end %>  
-  form.find(".big_select").selectmenu("destroy");
+ 
   customer.empty();
   employee.empty();
   <% if !@todo.nil? %>
@@ -38,6 +38,7 @@ var employee = $("#log_employee_id_<%= escape_javascript(@log.id.to_s) %>")
        <% end %>
      employee.append("<option value=''>Select a customer</option>");  
   <% end %>
-  form.find(".big_select").selectmenu({width:369});
+  form.find(".searchableS").trigger("liszt:updated");
   
+  form.reset();
 $(".spinning").hide();

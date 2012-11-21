@@ -42,7 +42,7 @@
        <li id="slider_range_<%= log.id %>" log="<%= log.id %>"></li>
         
         <li><%= f.label :project %>
-         <select class="searchable" id="log_project_id" log="<%= log.id %>" name="log[project_id]">
+         <select class="searchableSE" id="logProjectId<%= log.id %>" log="<%= log.id %>" name="log[project_id]">
            <option value="" data-customer="">None</option>
            <% @all_projects.each do |project| %>
                 <% if project == log.project  %>
@@ -62,7 +62,7 @@
             <% else %>
             <%= f.label :done?, :style => "margin-left: 255px;" %><%= check_box_tag "done" %>
             <% end %>
-            <select class="big_select" id="log_todo_id_<%= log.id %>" log="<%= log.id %>" name="log[todo_id]">
+            <select class="searchableSE" id="logTodoId<%= log.id %>" log="<%= log.id %>" name="log[todo_id]">
               <% if log.project.nil? %>
           <option value="" id="value">Select a project</option>
           <%else%>
@@ -77,7 +77,7 @@
           <% end %>
           </select></li>
           <li><%= f.label :customer %>
-            <select class="big_select" id="log_customer_id_<%= log.id %>" log="<%= log.id %>" name="log[customer_id]">
+            <select class="searchableSE" id="logCustomerId<%= log.id %>" log="<%= log.id %>" name="log[customer_id]">
               <% if !log.project.nil? and !log.project.customer.nil? %>
               <option value="<%=log.project.customer.id%>" selected="selected"><%=log.project.customer.name%></option>
               <% else %>
@@ -92,7 +92,7 @@
               <% end %>
             </select>
        <li><%= f.label :employee %>
-        <select class="big_select" id="log_employee_id_<%= log.id %>" log="<%= log.id %>" name="log[employee_id]">
+        <select class="searchableSE" id="logEmployeeId<%= log.id %>" log="<%= log.id %>" name="log[employee_id]">
             <option value>None</option>
             <% if !log.customer.nil? %>
             <% log.customer.employees.each do |employee| %>

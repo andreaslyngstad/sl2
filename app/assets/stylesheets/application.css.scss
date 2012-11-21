@@ -6,6 +6,8 @@
 @import "jquery-ui-1.8.7custom";
 @import "tabs";
 @import "far_right_box";
+@import "chosen";
+@import "jquery.ui.selectmenu";
 
 html, body{
   margin:0;
@@ -717,7 +719,7 @@ top:40px;
 	
 }
 #index_logs{
- margin-top:333px;
+ margin-top:340px;
  width:980px;
 }
 #index_log_header{
@@ -777,7 +779,9 @@ margin-right: 7px;
 
 }
 
-
+.searchableS_tracking{
+  width:200px;
+}
 .clock_start, .clock_rec{
 height: 35px;
 background: white;

@@ -1,16 +1,10 @@
 
-/*
-.map(function(series) {
-  series.values = series.values.map(function(d) {
-    return { x: d[0], y: d[1] }
-  });
-  return series;
-});
-*/
 
-//an example of harmonizing colors between visualizations
-//observe that Consumer Discretionary and Consumer Staples have 
-//been flipped in the second chart
+
+
+
+
+
 var userColorArray = [	"#393b79", 
 					"#5254a3", 
 					"#6b6ecf", 
@@ -54,8 +48,7 @@ var projectColorArray = ["#31a354", "#74c476", "#a1d99b","#2ca02c", "#98df8a","#
                  "#20B2AA",
                  "#008B8B",
                  "#008080"]
-var colors = d3.scale.category20();
-keyColor = function(d, i) {return colors(d.key)};
+
 
 nv.addGraph(function() {
   var chart = nv.models.stackedAreaChart()
@@ -109,17 +102,11 @@ nv.addGraph(function() {
                 .y(function(d) { return d[1] })
                 .color(projectColorArray)
                 //.clipEdge(true);
-
   chart.xAxis
       .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
-      
   chart.yAxis
       .tickFormat(d3.format(',.2f'));
-		
-  
-
   d3.select('#project_bar svg')
-  
     .datum(project_logs)
     .transition().duration(500).call(chart);
   nv.utils.windowResize(chart.update);

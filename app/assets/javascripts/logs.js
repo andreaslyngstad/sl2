@@ -1,5 +1,6 @@
 function Change_select(log_id, object_id, url){
 		$('.spinning').show();
+		console.log("log => " + log_id + " object_id => " + object_id);
 	    if (log_id === "") {
 	    	if(object_id === ""){
 		      $.get("/" + url + "/0/0"  )
@@ -19,22 +20,31 @@ jQuery.fn.UIdialogs_tracking_logs_links = function(){
   $(this).click(function(){
   	$(".tracking_select").slideToggle();
   	$(".open_tracking_select").toggleClass("close_tracking_select");
+  	  if ($(".open_tracking_select").hasClass("close_tracking_select")) {
+  	  	
+  	  	$("#index_log_header").animate({ top: 398}, 400) 
+          $("#index_logs").animate({marginTop: 460}, 400)
+  	  } else{
+  	  	 $("#index_log_header").animate({ top: 279}, 400) 
+          $("#index_logs").animate({marginTop: 340}, 400)
+  	  	
+  	  };
     var data_id = $(this).attr('data-id')
     var form_id = '#form_holder'
     
     // get todo and saving log when selecting project
-	    $(form_id).find("select#log_project_id").change(function(){
+	    $(form_id).find("select#logProjectIdTracking").change(function(){
 		    Change_select($(this).attr("log"), this.value.toString(), "project_select_tracking")
 	    });
-	    $(form_id).find("select#log_todo_id_" + data_id).change(function(){
+	    $(form_id).find("select#logTodoIdTracking" + data_id).change(function(){
 	   		Change_select($(this).attr("log"), this.value.toString(), "todo_select_tracking")
 	    });  
 	  // get employees and saving log when selecting customer
-	    $(form_id).find("select#log_customer_id_" + data_id).change(function(){
+	    $(form_id).find("select#logCustomerIdTracking" + data_id).change(function(){
 	    	Change_select($(this).attr("log"), this.value.toString(), "customer_select_tracking")
 	    }); 
 	    
-	    $(form_id).find("select#log_employee_id_" + data_id).change(function(){
+	    $(form_id).find("select#logEmployeeIdTracking" + data_id).change(function(){
 	    	Change_select($(this).attr("log"), this.value.toString(), "employee_select_tracking")
 	    });  
    });
@@ -44,22 +54,27 @@ jQuery.fn.UIdialogs_tracking_logs_links = function(){
 jQuery.fn.select_projects_customers = function() {
 	$(this).UIdialogs();
    	$(this).dialog( "open" );
+   	
    	var data_id = $(this).attr('data-id')
- 	$(this).find("select#log_project_id").change(function(){
-    Change_select($(this).attr("log"), this.value.toString(), "project_todos")
-	});
+ 	
 	if (data_id === undefined ) {
-   		$(this).find("select#log_todo_id_").change(function(){
+		$(this).find("select#logProjectId").change(function(){
+    	Change_select($(this).attr("log"), this.value.toString(), "project_todos")
+		});
+   		$(this).find("select#logTodoId").change(function(){
 	    Change_select("", this.value.toString(), "todo_select")
 	    });	
-   		$(this).find("select#log_customer_id_").change(function(){
+   		$(this).find("select#logCustomerId").change(function(){
     	Change_select("", this.value.toString(), "customer_employees")	
     	});
 	}else{
-	    $(this).find("select#log_todo_id_" + data_id).change(function(){
+		$(this).find("select#logProjectId" + data_id).change(function(){
+    	Change_select($(this).attr("log"), this.value.toString(), "project_todos")
+		});
+	    $(this).find("select#logTodoId" + data_id).change(function(){
 	    Change_select($(this).attr("log"), this.value.toString(), "todo_select")
    		});
-	    $(this).find("select#log_customer_id_" + data_id).change(function(){
+	    $(this).find("select#logCustomerId" + data_id).change(function(){
     	Change_select($(this).attr("log"), this.value.toString(), "customer_employees")
 		});
      }; 
@@ -93,7 +108,9 @@ jQuery.fn.UIdialogs_edit_logs_links = function(){
         slide: slideTime
     });
     $("#log_date_edit_" + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-    $(form_id).find(".big_select").selectmenu({width:369});
+    // $(form_id).find(".big_select").selectmenu({width:369});
+    $(form_id).find(".searchableSE").chosen();
+    
     $(form_id).select_projects_customers(data_id) 
     });
 
@@ -145,6 +162,11 @@ jQuery.fn.logs_pr_date_select = function(){
   };
 
 $(document).ready(function() {
+	$(".searchableS").chosen();
+	$(".searchableSE").chosen();
+	$(".searchableS_tracking").chosen();
+	$(".searchableS").trigger("liszt:updated");
+	
   $("select#logs_pr_date_select").logs_pr_date_select();
   $("#dialog_log").UIdialogs_log_links();
   

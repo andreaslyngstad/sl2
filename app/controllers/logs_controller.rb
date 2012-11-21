@@ -156,12 +156,10 @@ class LogsController < ApplicationController
     end
     
    def project_todos
-    check_log_status(params[:log_id])
-    
+    check_log_status(params[:log_id]) 
     if params[:project_id] != "0"
     @project = Project.find(params[:project_id])
     @todos = @project.todos.where(["completed = ?", false])
-    
     else
     @todos = "Select a project"
     end
@@ -194,12 +192,16 @@ class LogsController < ApplicationController
     if params[:project_id] != "0"
       @project = Project.find(params[:project_id])
       @todos = @project.todos.where(["completed = ?", false])
+     
       if !@log.nil?
         @log.project = @project 
+        @log.todo = nil
           if !@project.customer.nil?
             @log.customer = @project.customer
+            @log.employee = nil
           else
             @log.customer = nil
+            @log.employee = nil
           end
           
         @log.save
@@ -207,8 +209,10 @@ class LogsController < ApplicationController
     else
       @todos = "Select a project"
       if !@log.nil?
+      @log.todo = nil
       @log.project = nil
       @log.customer = nil
+      @log.employee = nil
       @log.save
       end
     end
@@ -238,39 +242,53 @@ class LogsController < ApplicationController
   end
   
   def customer_select_tracking
-  if params[:log_id] != "0"
-    @log = Log.find(params[:log_id])
-    end
-  if params[:customer_id] != "0"
-  @customer = Customer.find(params[:customer_id])
-  @employees = @customer.employees
-    if !@log.nil?
-    @log.customer = @customer 
-    @log.save
-    end
-  else
   
-    if !@log.nil?
-    @log.empolyee = nil
-    @log.customer = nil
-    @log.save
+    if params[:log_id] != "0"
+      @log = Log.find(params[:log_id])
+     
+      if params[:customer_id] != "0"
+        @customer = Customer.find(params[:customer_id])
+        @employees = @customer.employees 
+          # if @log.try(:customer) != @customer
+            # @log.empolyee = nil
+          # end
+        @log.customer = @customer
+        @log.employee = nil 
+        @log.save
+        flash[:notice] = flash_helper("Log was saved on #{@customer.name}.")
+      else
+        
+        @log.employee = nil
+        @log.customer = nil
+        @log.save  
+        flash[:notice] = flash_helper("Log was saved with no customer.") 
+      end
+    else
+      
+     if params[:customer_id] != "0"
+        @customer = Customer.find(params[:customer_id])
+        @employees = @customer.employees 
     end
-  end
+    end
   end
   def employee_select_tracking
     if params[:log_id] != "0"
     @log = Log.find(params[:log_id])
     end
-    if params[:customer_id] != "0"
+    if params[:employee_id] != "0"
       @employee = Employee.find(params[:employee_id])
       if !@log.nil?
         @log.employee = @employee 
         @log.save
+        flash[:notice] = flash_helper("Log was saved on #{@employee.name} @ #{@employee.customer.name}.")
+        
       end
     else
       if !@log.nil?
-        @log.empolyee = nil
+        @log.employee = nil
         @log.save
+        @customer = @log.try(:customer)      
+        flash[:notice] = flash_helper("Log was saved on #{@customer.name}.")
       end
     end
   end
