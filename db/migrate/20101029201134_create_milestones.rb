@@ -1,7 +1,7 @@
 class CreateMilestones < ActiveRecord::Migration
   def self.up
     create_table :milestones do |t|
-      t.string :goal
+      t.text :goal
       t.date :due
       t.integer :firm_id
       t.boolean :completed

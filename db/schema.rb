@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.string   "name"
     t.string   "phone"
     t.string   "email"
-    t.string   "address"
+    t.text     "address"
     t.integer  "firm_id",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   end
 
   create_table "logs", :force => true do |t|
-    t.string   "event"
+    t.text     "event"
     t.integer  "customer_id"
     t.integer  "user_id",     :null => false
     t.integer  "firm_id",     :null => false
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   end
 
   create_table "milestones", :force => true do |t|
-    t.string   "goal"
+    t.text     "goal"
     t.date     "due"
     t.integer  "firm_id"
     t.boolean  "completed"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.date     "due"
     t.boolean  "active"
     t.float    "budget"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   end
 
   create_table "todos", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "user_id"
     t.integer  "firm_id",     :null => false
     t.integer  "project_id"

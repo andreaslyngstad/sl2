@@ -1,7 +1,7 @@
 class CreateLogs < ActiveRecord::Migration
   def self.up
     create_table :logs do |t|
-      t.string :event
+      t.text :event
       t.integer :customer_id
       t.integer :user_id, :null => false
       t.integer :firm_id, :null => false

@@ -1,7 +1,7 @@
 class CreateTodos < ActiveRecord::Migration
   def self.up
     create_table :todos do |t|
-      t.string :name
+      t.text :name
       t.integer :user_id
       t.integer :firm_id, :null => false
       t.integer :project_id
