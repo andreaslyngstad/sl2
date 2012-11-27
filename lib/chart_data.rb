@@ -1,4 +1,8 @@
 class ChartData
+  include ActiveModel::Serializers::JSON
+
+  
+  
   
   def self.user_logs_by_day(logs)
     days_with_hours = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
@@ -57,38 +61,42 @@ class ChartData
    
   def self.user_logs_json_out(firm, range, model)
     key_user_value_date_hours = compile_hash(firm, range, model)
-    output = "[" 
+    output = '[' 
     key_user_value_date_hours.each do |name,dates|
-      output << "{ 'key' :" + "'" + name + "',"
-      output << "'values' : [" 
+      output << '{ "key" : ' + '"' + name + '", '
+      output << '"values" : [' 
       dates.sort_by{|k,v| k}.each do |date|
-        output << "[" + (Time.parse("#{date[0]}").to_i * 1000).to_s + "," + TimeHelp.new.time_to_hours_test(date[1]).to_s + "],"
-      end  
-      output << "]},"
+        output << '[' + (Time.parse("#{date[0]}").to_i * 1000).to_s + ',' + TimeHelp.new.time_to_hours_test(date[1]).to_s + '],'
+      end 
+      output.chop! 
+      output << ']},'
     end
-    output << "];"
+    output.chop!
+    output << ']'
   end 
   def self.project_pie_logs(firm, range)
     logs = Log.hours_by_project(firm, range)
-    output = "[{ key: 'Cumulative Return', values: ["
+    output = '[{ "key": "Projects logged hours", "values": ['
     logs.each do |log|
       if !log.project.nil?
-        output << "{ 'label' :'" + log.project.name + "',"
+        output << '{ "label" : "' + log.project.name + '",'
       else
-        output << "{ 'label' :'" + @default + "',"
+        output << '{ "label" : "' + @default + '",'
       end
-      output << "'value' : " + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + "},"
+      output << '"value" : ' + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + '},'
     end
-    output << "]}]"
+    output.chop!
+    output << ']}]'
   end
   def self.user_pie_logs(firm, range)
     logs = Log.hours_by_user(firm, range)
-    output = "[{ key: 'Cumulative Return', values: ["
+    output = '[{ "key" : "Users logged hours", "values" : ['
     logs.each do |log|
-      output << "{ 'label' :'" + log.user.name + "',"
-      output << "'value' : " + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + "},"
+      output << '{ "label" :"' + log.user.name + '",'
+      output << '"value" : ' + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + '},'
     end
-    output << "]}]"
+    output.chop!
+    output << ']}]'
   end
  
 end

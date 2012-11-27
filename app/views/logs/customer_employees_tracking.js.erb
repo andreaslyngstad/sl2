@@ -1,13 +1,11 @@
 $(".flash_notice").empty();
 <% if @log.nil? %>	
-var employee = $("#logEmployeeId")
+var employee = $("#logEmployeeIdTracking")
 var form	 = $("#start_tracking_form")	
 <% else %>
 var form	 = $("#log_update_<%= escape_javascript(@log.id.to_s) %>_form")
-var employee = $("#logEmployeeId<%= escape_javascript(@log.id.to_s) %>")
+var employee = $("#logEmployeeIdTracking<%= escape_javascript(@log.id.to_s) %>")
 <% end %>  
-
-
   employee.empty();
   <% if @employees.is_a? String %>
     employee.append("<option value=''>" + "<%= escape_javascript(@employees) %>" + "</option>");
@@ -21,5 +19,5 @@ var employee = $("#logEmployeeId<%= escape_javascript(@log.id.to_s) %>")
     <% end %>
     <% end %>
   <% end %>
-form.find(".searchableS_tracking").trigger("liszt:updated")
+form.find(employee).trigger("liszt:updated")
 $(".spinning").hide();

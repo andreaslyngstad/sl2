@@ -1,12 +1,12 @@
 $(".flash_notice").empty();
 <% if @log.nil? %>
-var customer = $("#logCustomerId")
-var employee = $("#logEmployeeId")
+var customer = $("#logCustomerIdTracking")
+var employee = $("#logEmployeeIdTracking")
 var form	 = $("#start_tracking_form")	
 <% else %>
 var form	 = $("#log_update_<%= escape_javascript(@log.id.to_s) %>_form")
-var customer = $("#logCustomerId<%= escape_javascript(@log.id.to_s)%>")
-var employee = $("#logEmployeeId<%= escape_javascript(@log.id.to_s) %>")
+var customer = $("#logCustomerIdTracking<%= escape_javascript(@log.id.to_s)%>")
+var employee = $("#logEmployeeIdTracking<%= escape_javascript(@log.id.to_s) %>")
 <% end %>  
  
   customer.empty();
@@ -37,8 +37,10 @@ var employee = $("#logEmployeeId<%= escape_javascript(@log.id.to_s) %>")
        <% end %>
      employee.append("<option value=''>Select a customer</option>");  
   <% end %>
- form.find(".searchableS_tracking").trigger("liszt:updated");
+
   <% if !@log.nil? %>
   $("#log_<%= escape_javascript(@log.id.to_s)%>").replaceWith("<%= escape_javascript(render(:partial => @log)) %>");
   <% end %>
+  
+ form.find(".searchableS_tracking").trigger("liszt:updated");
 $(".spinning").hide();

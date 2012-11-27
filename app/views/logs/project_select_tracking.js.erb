@@ -1,14 +1,14 @@
 $(".flash_notice").empty();
 <% if @log.nil? %>
-var customer = $("#logCustomerId")
-var employee = $("#logEmployeeId")
-var todo 	 = $("#logTodoId")
-var form	 = $("#start_tracking_form")	
+var customer = $("#logCustomerIdTracking")
+var employee = $("#logEmployeeIdTracking")
+var todo 	 = $("#logTodoIdTracking")
+var form	 = $(".start_tracking_form")	
 <% else %>
 var form	 = $("#log_update_<%= escape_javascript(@log.id.to_s) %>_form")
-var customer = $("#logCustomerId<%= escape_javascript(@log.id.to_s)%>")
-var employee = $("#logEmployeeId<%= escape_javascript(@log.id.to_s) %>")
-var todo 	 = $("#logTodoId<%= escape_javascript(@log.id.to_s) %>")
+var customer = $("#logCustomerIdTracking<%= escape_javascript(@log.id.to_s)%>")
+var employee = $("#logEmployeeIdTracking<%= escape_javascript(@log.id.to_s) %>")
+var todo 	 = $("#logTodoIdTracking<%= escape_javascript(@log.id.to_s) %>")
 <% end %>  
  
   todo.empty();

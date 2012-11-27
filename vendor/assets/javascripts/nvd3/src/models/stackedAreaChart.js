@@ -246,7 +246,7 @@ nv.models.stackedAreaChart = function() {
             return d
           });
 
-        //selection.transition().call(chart);
+        selection.transition().call(chart);
         chart(selection);
       });
 

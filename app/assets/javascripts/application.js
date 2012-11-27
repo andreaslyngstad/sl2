@@ -23,6 +23,8 @@
 //= require jquery.jclock
 
 //= require nvd3/lib/d3.v2 
+
+
 //= require nvd3/src/core
 //= require nvd3/src/utils
 //= require nvd3/src/models/axis
@@ -34,9 +36,10 @@
 //= require nvd3/src/models/stackedAreaChart
 //= require nvd3/src/models/pie
 //= require nvd3/src/models/pieChart
-
-//= require sl_graphs
-
+//= require nvd3/src/models/multiBar
+//= require nvd3/src/models/multiBarChart
+//= require legendChart
+//= require json_fetcher
 //= require_self
 
 jQuery.ajaxSetup({ 
@@ -231,7 +234,7 @@ $(this).next().remove();
   
 $(document).ready(function() {
 	
-	
+
 		  
 	$(".draggable").draggable(
 	  	{

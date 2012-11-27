@@ -228,6 +228,7 @@ class LogsController < ApplicationController
             @log.customer = @todo.customer
           else
             @log.customer = nil
+            @log.employee = nil
           end
         @log.save
       end
@@ -235,6 +236,7 @@ class LogsController < ApplicationController
       if !@log.nil?
         @log.todo = nil
         @log.customer = nil
+        @log.employee = nil
         @log.save
       end
     end

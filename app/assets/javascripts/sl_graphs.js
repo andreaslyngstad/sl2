@@ -2,9 +2,7 @@
 
 
 
-
-
-
+$(document).ready(function() {
 var userColorArray = [	"#393b79", 
 					"#5254a3", 
 					"#6b6ecf", 
@@ -24,9 +22,7 @@ var userColorArray = [	"#393b79",
 					"#8c6d31", 
 					"#bd9e39", 
 					"#e7ba52", 
-					"#e7cb94" ]
-					
-					
+					"#e7cb94" ];
 var projectColorArray = ["#31a354", "#74c476", "#a1d99b","#2ca02c", "#98df8a","#ADFF2F",
                 "#00FF00",
                 "#32CD32",
@@ -47,32 +43,86 @@ var projectColorArray = ["#31a354", "#74c476", "#a1d99b","#2ca02c", "#98df8a","#
                 "#8FBC8F",
                  "#20B2AA",
                  "#008B8B",
-                 "#008080"]
+                 "#008080"];
+var products_stacked, products_pie, user_stacked, user_pie, projects_bar
+ 
 
+
+$.getJSON('users_logs_chart.json', function(data) {
+  nv.addGraph(function() {
+    var chart = nv.models.legendChart()    
+    d3.select('#legend svg')
+    .datum(data)
+     });
+     
+     
+     
+  nv.addGraph(function() {
+    var chart = nv.models.stackedAreaChart()
+   				.margin({top: 10, bottom: 30, left: 40, right: 10})
+                  .showControls(false)
+                  .showLegend(true)
+                  .style('stacked')
+                  .x(function(d) { return d[0] })
+                  .y(function(d) { return d[1] })
+                  .color(userColorArray)
+                  .clipEdge(true)
+                  .interpolate("cardinal");
+
+    chart.xAxis
+        .showMaxMin(false)
+        .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+        
+    chart.yAxis
+        .tickFormat(d3.format(',.2f'));
+  	
+    d3.select('#user_bar svg')
+      .datum(data)
+      .transition().duration(5000).call(chart);
+      nv.utils.windowResize(chart.update);
+      chart.legend.dispatch.on('legendClick.there', function(e){
+  setTimeout(function() {
+    console.log(user_pie)
+        user_pie.update();
+      }, 100);
+});
+   users_stacked = chart
+    return chart;
+  });
+});
 
 nv.addGraph(function() {
   var chart = nv.models.stackedAreaChart()
  				.margin({top: 10, bottom: 30, left: 40, right: 10})
                 .showControls(false)
-                .showLegend(false)
+                .showLegend(true)
                 .style('stacked')
                 .x(function(d) { return d[0] })
                 .y(function(d) { return d[1] })
-                .color(userColorArray)
-                .clipEdge(true);
-
+                .color(projectColorArray)
+                .clipEdge(true)
+                
+                .interpolate("cardinal");
   chart.xAxis
-      .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
-      
+    .showMaxMin(false)
+    .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+  
   chart.yAxis
-      .tickFormat(d3.format(',.2f'));
-	
-  d3.select('#user_bar svg')
-    .datum(user_logs)
-      .transition().duration(500).call(chart);
-
+    .tickFormat(d3.format(',.2f'));
+  
+  d3.select('#project_stacked svg')
+    .datum(project_logs)
+    .transition().duration(500).call(chart);
+  
   nv.utils.windowResize(chart.update);
-
+  
+ chart.legend.dispatch.on('legendClick.updateExamples', function() {
+      setTimeout(function() {
+     	
+        products_pie.update();
+      }, 100);
+    });
+  products_stacked = chart
   return chart;
 });
 nv.addGraph(function() {
@@ -88,30 +138,35 @@ nv.addGraph(function() {
         .datum(user_logs_pie)
       .transition().duration(500)
         .call(chart);
-
+        nv.utils.windowResize(chart.update);
+     chart.legend.dispatch.on('legendClick.there', function(e){
+  setTimeout(function() {
+        users_stacked.update();
+      }, 100);
+});
+	user_pie = chart
   return chart;
 });
-
 nv.addGraph(function() {
-  var chart = nv.models.stackedAreaChart()
- 				.margin({top: 10, bottom: 30, left: 40, right: 10})
-                .showControls(false)
-                .showLegend(false)
-                .style('stacked')
-                .x(function(d) { return d[0] })
-                .y(function(d) { return d[1] })
-                .color(projectColorArray)
-                //.clipEdge(true);
-  chart.xAxis
-      .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
-  chart.yAxis
-      .tickFormat(d3.format(',.2f'));
-  d3.select('#project_bar svg')
-    .datum(project_logs)
-    .transition().duration(500).call(chart);
-  nv.utils.windowResize(chart.update);
+  var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLegend(true)
+      .margin({top: 10, bottom: 30, left: 40, right: 10})
+      .color(userColorArray)
+      .showLabels(false);
+
+    d3.select("#legend svg")
+        .datum(user_logs_pie)
+      .transition().duration(500)
+        .call(chart);
+        
+     
+  user_pie = chart
   return chart;
 });
+
+
 
 nv.addGraph(function() {
   var chart = nv.models.pieChart()
@@ -123,14 +178,43 @@ nv.addGraph(function() {
 
     d3.select("#project_pie svg")
         .datum(project_logs_pie)
-      .transition().duration(500)
+      	.transition().duration(500)
         .call(chart);
-
+	products_pie = chart
   return chart;
 });
-
-
-
+nv.addGraph(function() {
+  var chart = nv.models.multiBarChart()
+ 				.margin({top: 10, bottom: 30, left: 40, right: 10})
+                .showControls(true)
+                .showLegend(true)
+                
+                .x(function(d) { return d[0] })
+                .y(function(d) { return d[1] })
+                .color(projectColorArray)
+                .clipEdge(true);
+  chart.xAxis
+    .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+  
+  chart.yAxis
+    .tickFormat(d3.format(',.2f'));
+  
+  d3.select('#project_bar svg')
+    .datum(project_logs)
+    .transition().duration(500).call(chart);
+  
+  nv.utils.windowResize(chart.update);
+  
+ chart.legend.dispatch.on('legendClick.update', function() {
+      setTimeout(function() {
+     	console.log("products_stacked")
+        products_stacked.update();
+      }, 100);
+    });
+  products_stacked = chart
+  return chart;
+  });
+})
 
 
 

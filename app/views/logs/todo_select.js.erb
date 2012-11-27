@@ -39,6 +39,4 @@ var employee = $("#logEmployeeId<%= escape_javascript(@log.id.to_s) %>")
      employee.append("<option value=''>Select a customer</option>");  
   <% end %>
   form.find(".searchableS").trigger("liszt:updated");
-  
-  form.reset();
 $(".spinning").hide();

@@ -7,6 +7,7 @@ $(function() {
 				old_url.match(/users/i) ||  
 				old_url.match(/home/i) ||  
 				old_url.match(/logs/i);
+				
 	var text2 = old_url.match(/reports/i) || 
 				old_url.match(/timesheets/i) || 
 				old_url.match(/account/i) || 
@@ -17,6 +18,7 @@ $(function() {
 				old_url.match(/timesheet_logs_day/i)||
 				old_url.match(/timesheet_month/i)
 				;
+				
 	if (!(text2 == null)){
 		var tab_text = text2.toString().charAt(0).toUpperCase() + text2.toString().substr(1);
 		$("#html_tabs a.current_link").removeClass("current_link");	
@@ -26,7 +28,9 @@ $(function() {
 		if(tab_text == "Firm_update" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Timesheet_logs_day" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
 		if(tab_text == "Timesheet_month" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
-	}
+	}else{$("#html_tabs a:contains(Statistics)").addClass("current_link");
+		
+	};
 	if (text == null){
 		$('#navigation li#home_navi').addClass("current_main")
 		// $("#pointer-text").text("Statistics");

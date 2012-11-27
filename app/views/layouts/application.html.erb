@@ -3,29 +3,18 @@
   <title>Squadlink</title>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta name="google-site-verification" content="ynxbxSS6ZtwG1WFHyqmWZ5ELrgNRADdhdEFebN11h5k" />
-
-  <%= stylesheet_link_tag  'application' %>
-
-   <%= csrf_meta_tag %>
+  	<%= stylesheet_link_tag  'application' %>
+	<%= javascript_include_tag "application"%>
+   	<%= csrf_meta_tag %>
    <link rel="shortcut icon" href="/favicon.png" />
-   
 <%= yield :head %>
-
-
-
 </head>
-<body>
-  
+<body> 
  <div id="main">
 <%= render "layouts/header" %>
-
 <div id="wrapper">
 <div id="all_container">
 	<%= yield(:help)%>
-
-
-  
-
 <div id="navigation" class="hor_scroll">
 	<ul>
       <li class="navigation" id="home_navi" pos="0"><a href="/statistics">Home</a></li>
@@ -35,8 +24,6 @@
 	  <li class="navigation" id="users_navi" pos="300"><a href="/users">Users</a></li>
     </ul>
 </div>
-
-
 <div id="main_container">
 <%= yield %>
 </div>	
@@ -65,8 +52,6 @@
 		<div id="ajax-loader" style="margin: 0 auto;width:200px">
 		  	<%= image_tag("ajax-loader.gif")%>
 		</div>
-	
-		
 	</div>
 	<h3 class="milestone_accordion">Milestones</h3>
 	<div id="upcomming_milestones">
@@ -91,5 +76,5 @@
 
 
 </body>
-<%= javascript_include_tag "application"%>
+
 </html>

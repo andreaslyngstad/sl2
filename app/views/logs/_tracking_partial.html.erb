@@ -20,9 +20,9 @@
            <option value="" data-customer="">None</option>
            <% @all_projects.each do |project| %>
                 <% if project == log.project  %>
-                  <option value="<%= project.id %>" selected="selected"><%= truncate_string(project.name) %></option>
+                  <option value="<%= project.id %>" selected="selected"><%= project.name %></option>
                 <% else %>
-                  <option value="<%= project.id %>"><%= truncate_string(project.name) %></option>
+                  <option value="<%= project.id %>"><%= project.name %></option>
                   <% end %>
                  <% end %>
           </select>
@@ -32,11 +32,11 @@
           <option value="" id="value">Select a project</option>
           <%else%>
           <option value>none</option>
-          <% log.project.todos.each do |todo| %>
+          <% log.project.todos.not_complete.each do |todo| %>
           <% if todo == log.todo %>
-          <option value="<%= todo.id %>" selected="selected"><%=truncate_string(todo.name)%></option>
+          <option value="<%= todo.id %>" selected="selected"><%=todo.name%></option>
           <%else%>
-          <option value="<%= todo.id %>"><%= truncate_string(todo.name)%></option>
+          <option value="<%= todo.id %>"><%= todo.name%></option>
           <% end %>
           <% end %>
           <% end %>
@@ -53,7 +53,7 @@
            </div> </div>
            <div id="tracking_customer_employee">
           <%= n.label :customer %>
-          	<%= n.select(:customer_id, @customers.map {|customer| [truncate_string(customer.name), customer.id]},
+          	<%= n.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]},
           	{ :include_blank => "None"}, :class => "searchableS_tracking", :id => "logCustomerIdTracking#{log.id}", :log => "#{log.id}" )%>
        <%= n.label :employee %>
        <select class="searchableS_tracking" id="logEmployeeIdTracking<%= log.id %>" log="<%= log.id %>" name="log[employee_id]">
@@ -62,9 +62,9 @@
              <option value>none</option>
             <% log.customer.employees.each do |employee| %>
               <% if employee == log.employee %>
-          <option value="<%= employee.id %>" selected="selected"><%=truncate_string(employee.name)%></option>
+          <option value="<%= employee.id %>" selected="selected"><%=employee.name%></option>
           <%else%>
-          <option value="<%= employee.id %>"><%= truncate_string(employee.name)%></option>
+          <option value="<%= employee.id %>"><%= employee.name%></option>
           <% end %>
             <% end %>
             <%else%>

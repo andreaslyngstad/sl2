@@ -1,4 +1,4 @@
-
+<% javascript 'sl_graphs.js' %>
 <div id="left">
 <%= render "home_header" %>
   	<div class="html_tab_content" id="tabs-1"> 
@@ -78,31 +78,42 @@
   		
 
   	</div> -->
-  	<%= content_tag :div, "", id: "user_labels", data: {users: User.chart_user_lables(current_firm)} %>
+  	
 
-  	<div id="user_bar">
-  		<svg style="height:200px; width:600px;float:left"></svg>
+  	<div id="user_bar" style="float:left;">
+  		<h3>Hours by users.</h3>
+  		<svg style="height:300px;width:600px;"></svg>
   	</div>
   	<div id="user_pie">
-  		<svg style="height:200px; width:380px;float:left"></svg>
-  	</div>
-  	<div id="project_bar">
-  		<svg style="height:200px; width:600px; float:left"></svg>
-  	</div>
-  	<div id="project_pie">
-  		<svg style="height:200px; width:380px;float:left"></svg>
+  		
+  		<svg style="height:380px; width:380px;"></svg>
   	</div>
   	
+  	<div id="legend">
+  		
+  		<svg style="height:300px; width:600px; "></svg>
+  	</div>
+  	<div id="project_stacked">
+  		<h3>Hours by projects.</h3>
+  		<svg style="height:300px; width:600px; "></svg>
+  	</div>
+  	
+  	<div id="project_pie">
+  		<svg style="height:200px; width:380px;"></svg>
+  	</div>
+  	<div id="project_bar">
+  		<svg style="height:400px;"></svg>
+  	</div>
  </div>
 
 
 <script>
     <% range = 3.weeks.ago.to_date..Date.today %>
-	var project_logs = <%= ChartData.user_logs_json_out(current_firm, range, "project").html_safe%>;
-	var user_logs = <%= ChartData.user_logs_json_out(current_firm, range, "user").html_safe%>;
-	var project_logs_pie = <%= ChartData.project_pie_logs(current_firm, range).html_safe%>;
-	var user_logs_pie = <%= ChartData.user_pie_logs(current_firm, range).html_safe%>;
-	</script>    
+	var project_logs = <%= ChartData.user_logs_json_out(current_firm, range, "project").html_safe%>
+	var user_logs = <%= ChartData.user_logs_json_out(current_firm, range, "user").html_safe%>
+	var project_logs_pie = <%= ChartData.project_pie_logs(current_firm, range).html_safe%>
+	var user_logs_pie = <%= ChartData.user_pie_logs(current_firm, range).html_safe%>
+</script>    
 
 
 

@@ -36,6 +36,12 @@ Squadlink::Application.routes.draw do
   constraints(Subdomain) do
     root :to	=> "private#statistics"
     devise_for  :users
+    #chart_controller
+    match "users_logs_chart" => "charts#users_logs",  :as => :users_logs_chart
+    match "projects_logs_chart" => "charts#projects_logs"
+    match "projects_logs_pie_chart" => "charts#projects_logs_pie"
+    match "users_logs_pie_chart" => "charts#users_logs_pie"
+    
     #projects_controller
     match "/archive" => "projects#archive",  :as => :archive
     match "projects/update_index/:id" => "projects#update_index",  :as => :update_index
