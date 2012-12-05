@@ -11,11 +11,7 @@ class Project < ActiveRecord::Base
   scope :is_active, where(["active = ?", true])
   scope :is_inactive, where(["active = ?", false])
   
-  def self.chart_project_lables(firm)  
-      firm.projects.map do |project|
-       project.name.gsub(/["]/, "'")  
-    end
-  end
+  
 end
 
  

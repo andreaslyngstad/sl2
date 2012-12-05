@@ -13,8 +13,8 @@ class Milestone < ActiveRecord::Base
     where(:firm_id => firm.id, :project_id => user.projects).where(["due < ?",  Date.today])
   end
   
-  
-  def passed
-  	Time.now.in_time_zone > due
+  def overdue?
+    due < Date.today
   end
+  
 end

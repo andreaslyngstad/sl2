@@ -32,7 +32,7 @@ class Log < ActiveRecord::Base
   end
   def set_hours
   	if end_time?
-  	self.hours = end_time - begin_time
+  	self.hours = end_time  - begin_time
   	end
   end
 
@@ -74,26 +74,22 @@ class Log < ActiveRecord::Base
     log_date.strftime("%Y%m%d")
   end
   
-  def self.chart_data(firm, start = 3.weeks.ago)
-    
-    logs = Log.logs_by_day(start, firm)
-    # a = []
-    # users = firm.users.all   
-    (start.to_date..Date.today).map do |date|
-      
-      end
+  
+  def self.hours_by_day_and_model(firm, range, model)
+    model_id = model.to_s + "_id"
+    logs = firm.logs
+    .where(log_date: range)
+    .includes(model)
+    .group([:log_date, model_id.intern])
+    .select("sum(hours) as total_hours, log_date, #{model_id}")     
   end
-  def self.hours_by_day_and_user(firm, range)
-    logs = firm.logs.where(log_date: range).includes(:user).group([:log_date, :user_id]).select("sum(hours) as total_hours, log_date, user_id")     
+  def self.hours_by_model(firm, range, model)
+      model_id = model.to_s + "_id"
+     logs = firm.logs
+     .where(log_date: range).includes(model)
+     .group([model_id.intern])
+     .select("sum(hours) as total_hours, #{model_id}")    
   end
-  def self.hours_by_day_and_project(firm, range)
-    logs = firm.logs.where(log_date: range).includes(:project).group([:log_date, :project_id]).select("sum(hours) as total_hours, log_date, project_id")     
-  end
-  def self.hours_by_project(firm, range)
-     logs = firm.logs.where(log_date: range).includes(:project).group([:project_id]).select("sum(hours) as total_hours, project_id")     
-  end
-  def self.hours_by_user(firm, range)
-     logs = firm.logs.where(log_date: range).includes(:user).group([:user_id]).select("sum(hours) as total_hours, user_id")     
-  end
+  
 end
  

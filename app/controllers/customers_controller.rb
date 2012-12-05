@@ -8,13 +8,18 @@ class CustomersController < ApplicationController
   def show
     @customer = current_firm.customers.find(params[:id])
     @customers = current_firm.customers
+    
     @logs = @customer.recent_logs.includes([:todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
-    @user = current_user
     @log = Log.new(:customer => @customer)
+    
+    @done_todos = @customer.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
+    @not_done_todos = @customer.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC")
+    
+    
     @employees = @customer.employees
     @employee = Employee.new(:customer => @customer)
     @projects = @customer.projects.where(["active = ?", true]).includes(:customer, :todos)
-    
+    @users = current_firm.users
     @all_projects = current_firm.projects.where(["customer_id IS ? OR customer_id IS ? AND active = ?", nil, @customer.id, true])
     @project = Project.new(:customer => @customer)
     respond_to do |format|

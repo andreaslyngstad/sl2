@@ -4,4 +4,7 @@ $("#new_todo")[0].reset();
 $("#not_done_tasks").append("<%= escape_javascript(render(:partial => @todo)) %>");
 $(".tasks_percent").replaceWith("<div class='statistics_unit tasks_percent one_number white'><%= done_not_done(@done_todos, @not_done_todos) %></div>")  
 $(".open_todo_update").UIdialogs_edit_links();
+$(".searchableTaskCustomer").chosen();
+$(".roster_tasks").empty();
+$.getScript("/roster_task")
 $(".spinning").hide();

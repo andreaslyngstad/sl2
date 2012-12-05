@@ -4,10 +4,15 @@
   z-index:1001;
   width: 220px;
   background-color:white;
+  -moz-box-shadow: 0 0 5px #888;
+  -webkit-box-shadow: 0 0 5px#888;
+  box-shadow: 0 0 5px #888;
 }
 .far_right_container_min, .far_right_container_max{
   height: 29px;
- 
+  -moz-box-shadow: 0 0 5px #888;
+  -webkit-box-shadow: 0 0 5px#888;
+  box-shadow: 0 0 5px #888;
   line-height: 29px;
   color: #555;
 }
@@ -58,6 +63,7 @@
   border-bottom: solid #ddd 1px;
   padding:5px;
 }
+
 .row_milestone{
   padding: 5px;
   height:17px;

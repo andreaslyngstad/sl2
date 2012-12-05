@@ -10,6 +10,8 @@ $("#dialog_todo_form").UIdialogs();
 $(".tasks_percent").replaceWith("<div class='statistics_unit tasks_percent one_number white'><%= done_not_done(@done_todos, @not_done_todos) %></div>")  
 <% else %>
 $("#not_done_tasks").append("<%= escape_javascript(render(:partial => @todo)) %>");
+$(".roster_tasks").empty();
+$.getScript("/roster_task")
 $(".open_todo_update").UIdialogs_edit_links();
 $("#dialog_todo").UIdialogs_links();
 $("#dialog_todo_form").UIdialogs();

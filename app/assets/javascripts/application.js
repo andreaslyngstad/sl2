@@ -20,25 +20,27 @@
 //= require tabs
 //= require employees
 //= require timesheet
+//= require memberships
 //= require jquery.jclock
 
-//= require nvd3/lib/d3.v2 
+//= require nvd32/lib/d3.v2 
 
 
-//= require nvd3/src/core
-//= require nvd3/src/utils
-//= require nvd3/src/models/axis
-//= require nvd3/src/tooltip
-//= require nvd3/src/models/legend
-//= require nvd3/src/models/axis
-//= require nvd3/src/models/scatter
-//= require nvd3/src/models/stackedArea
-//= require nvd3/src/models/stackedAreaChart
-//= require nvd3/src/models/pie
-//= require nvd3/src/models/pieChart
-//= require nvd3/src/models/multiBar
-//= require nvd3/src/models/multiBarChart
-//= require legendChart
+//= require nvd32/src/core
+//= require nvd32/src/utils
+//= require nvd32/src/models/axis
+//= require nvd32/src/tooltip
+//= require nvd32/src/models/legend
+//= require nvd32/src/models/axis
+//= require nvd32/src/models/scatter
+//= require nvd32/src/models/stackedArea
+//= require nvd32/src/models/stackedAreaChart
+//= require nvd32/src/models/pie
+//= require nvd32/src/models/pieChart
+//= require nvd32/src/models/multiBar
+//= require nvd32/src/models/multiBarChart
+//= require colorArrays
+//= require stackedAndPie
 //= require json_fetcher
 //= require_self
 
@@ -159,7 +161,7 @@ jQuery.fn.UIdialogs_links = function(){
   	$(form).UIdialogs();
       $(date).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
        $(form).children(".new_" + object).validateWithErrors();
-     
+    
       $(form).dialog( "open" );
     
     });
@@ -232,46 +234,8 @@ $(this).next().remove();
 }
   
   
-$(document).ready(function() {
+$(document).ready(function() {	  
 	
-
-		  
-	$(".draggable").draggable(
-	  	{
-	  		containment: '#users_list',
-	  		
-	  		revert: true,
-	  		opacity: 0.7
-	  	}
-	  );
-    $("#members").droppable({
-  		
-		accept: ".not_member",
-      	drop: function(event,ui) { 
-	      	$('.spinning').show();
-	      	ui.draggable.addClass("member")
-	      	ui.draggable.removeClass("not_member") 
-	      	ui.draggable.draggable( 'option', 'revert', false );
-		    var user_id =  ui.draggable.attr("user_id");
-		    var project_id = ui.draggable.attr("project_id");
-		  	$.getScript("/membership/" + user_id + "/" + project_id);
-          	 }
-    });
-    $("#not_members").droppable(
-    	{
-    		accept: ".member",
-      		drop: function(event,ui) { 
-	      	$('.spinning').show(); 
-	      	ui.draggable.addClass("not_member")
-	      	ui.draggable.removeClass("member")  
-	      	ui.draggable.draggable( 'option', 'revert', false );
-	      	$("#not_members").find(".user_info:last")
-		    var user_id =  ui.draggable.attr("user_id");
-		    var project_id = ui.draggable.attr("project_id"); 
-		  	$.getScript("/membership/" + user_id + "/" + project_id);
-    		}
-    	}
-    );
 	$('.left_slider').click(function(){
 	  $(".milestone_slider").animate({"left": "+=122px"}, "slow");
 	});
@@ -317,6 +281,8 @@ $(document).ready(function() {
 	
  
   $(".small_selector").selectmenu({width:200});
+  $(".big_selector").selectmenu({width:369});
+  
   $(".range").find(":submit").button();
   $(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
   
@@ -345,7 +311,8 @@ $(document).ready(function() {
 //   $(".edit_project").validateWithErrors();
 //submitting new_todo
    	$(".new_todo").validateWithErrors();
-   	$(".edit_todo").validateWithErrors(); 
+   	$(".edit_todo").validateWithErrors();
+   	$(".searchableTaskCustomer").chosen();
 //submitting new_log
    	$(".new_log").validateWithErrors();
  	$(".tracking_log").submitWithAjax();

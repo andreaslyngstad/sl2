@@ -23,14 +23,73 @@
    <nav id="sub_tabs">
   <ul>
     
-    <li class=""><a href="#tabs-1">Projects</a></li>
-    <li><a href="#tabs-2">Logs</a></li>
-    <li><a href="#tabs-3">Employees</a></li>
+    <li><a href="#tabs-1">Tasks</a></li>
+    <li><a href="#tabs-2">Projects</a></li>
+    <li><a href="#tabs-3">Logs</a></li>
+    <li><a href="#tabs-4">Employees</a></li>
   </ul>
   <span class="nav_line"></span>
     </nav>
   <div class="boxes">
+  	
   <div class="tab_box" id="tabs-1"> 
+  	<div id="todos_list">
+    	<div class="log_menu">
+  <span class="add_some">  
+    <a id="dialog_task">Add another</a>
+    <div id="dialog_task_form" class="dialog_form" title="Create new task on <%= @customer.name %>" style="display:none;">
+        <%= form_for @customer.todos.build do |f| %>
+        <%= f.hidden_field :customer_id %>
+        <%= f.hidden_field :firm_id, :value => current_firm.id%>
+          <li><%= f.label :name %><%= f.text_area :name %></li>
+          <li><%= f.label :user_id %>
+            <select class="searchableTaskCustomer" name="todo[user_id]"><option value="">Select user</option>
+	          <%for user in @users do %>
+	          <option value="<%=user.id.to_i%>"<%if user == current_user%>selected="<%=current_user.id.to_i%>"<%end%>>
+	          <%= user.name %></option>
+	          <% end %>
+            </select> 
+          </li>
+	          <li><%= f.label :project_id %>
+	          	<select class="searchableTaskCustomer" name="todo[project_id]">
+	          		<option value="">Select project</option>
+		          	<% @all_projects.each do |project| %>
+		          	<option value="<%=project.id.to_i%>"><%= project.name %></option>
+		          	<% end %>
+	          	</select> 
+	          </li>
+          <li><%= f.label :due %><%= f.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_task_date" %></li>
+          <li><%= f.submit "Save", :class => 'submit' %></li>
+      <% end %>
+    </div>
+  </span>
+   </div>
+  
+   <div class="info" > 
+   	<div style="min-height: 10px;min-width: 25px;float:left;"></div>
+	<div class="name_todo info_head">Task</div>
+	<div class="project_todo info_head">Project</div>
+	<div class="user_todo info_head">Assigned to</div>
+	
+	
+  <div class="date_all info_head">Due</div>
+  </div>
+    <div id="not_done_tasks">
+    <%= render :partial => @not_done_todos %>
+    </div>
+    <br/>
+    <div id="done_tasks">
+    	<div style="min-height: 10px;min-width: 25px;float:left;"></div>
+    	<div class=" info_head">Done</div>
+      <%= render :partial => @done_todos %>
+    </div> 
+  </div>
+  
+  </div>	
+  
+  
+  
+  <div class="tab_box hide" id="tabs-2"> 
   	<div id="listing_projects">
   	<div class="log_menu">
   	 
@@ -52,19 +111,18 @@
   <div class="name_todo info_head">Name</div>
   <div class="project_desc info_head">Description</div>
   <div class="date_all info_head">Due</div>
-
 	</div>
       <%= render @projects %>
     </div>
   </div>
-  <div class="tab_box hide" id="tabs-2">
+  <div class="tab_box hide" id="tabs-3">
  	<%= render "logs/logs_menu" %>
   	<div class="listing_logs">
     	<%= render "logs/list_header" %>
       <%= render @logs %>
     </div>
   </div>
-  <div class="tab_box hide" id="tabs-3">
+  <div class="tab_box hide" id="tabs-4">
    	<div id="listing_employees">
 	<div class="log_menu">
 	<div class="add_some">

@@ -32,7 +32,7 @@ nv.models.stackedAreaChart = function() {
 
   xAxis
     .orient('bottom')
-    .tickPadding(7)
+    .tickPadding(5)
     ;
   yAxis
     .orient('left')
@@ -195,8 +195,7 @@ nv.models.stackedAreaChart = function() {
 
       var stackedWrap = g.select('.nv-stackedWrap')
           .datum(data);
-      //d3.transition(stackedWrap).call(stacked);
-      stackedWrap.call(stacked);
+      d3.transition(stackedWrap).call(stacked);
 
       //------------------------------------------------------------
 
@@ -211,9 +210,7 @@ nv.models.stackedAreaChart = function() {
 
       g.select('.nv-x.nv-axis')
           .attr('transform', 'translate(0,' + availableHeight + ')');
-      //d3.transition(g.select('.nv-x.nv-axis'))
-      g.select('.nv-x.nv-axis')
-        .transition().duration(0)
+      d3.transition(g.select('.nv-x.nv-axis'))
           .call(xAxis);
 
       yAxis
@@ -222,9 +219,7 @@ nv.models.stackedAreaChart = function() {
         .tickSize(-availableWidth, 0)
         .setTickFormat(stacked.offset() == 'expand' ? d3.format('%') : yAxisTickFormat);
 
-      //d3.transition(g.select('.nv-y.nv-axis'))
-      g.select('.nv-y.nv-axis')
-        .transition().duration(0)
+      d3.transition(g.select('.nv-y.nv-axis'))
           .call(yAxis);
 
       //------------------------------------------------------------
@@ -247,7 +242,6 @@ nv.models.stackedAreaChart = function() {
           });
 
         selection.transition().call(chart);
-        chart(selection);
       });
 
       legend.dispatch.on('legendClick', function(d,i) {
@@ -260,8 +254,7 @@ nv.models.stackedAreaChart = function() {
           });
         }
 
-        //selection.transition().call(chart);
-        chart(selection);
+        selection.transition().call(chart);
       });
 
       controls.dispatch.on('legendClick', function(d,i) {
@@ -285,8 +278,7 @@ nv.models.stackedAreaChart = function() {
             break;
         }
 
-        //selection.transition().call(chart);
-        chart(selection);
+        selection.transition().call(chart);
       });
 
       dispatch.on('tooltipShow', function(e) {

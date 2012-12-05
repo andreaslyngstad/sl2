@@ -37,10 +37,10 @@ Squadlink::Application.routes.draw do
     root :to	=> "private#statistics"
     devise_for  :users
     #chart_controller
-    match "users_logs_chart" => "charts#users_logs",  :as => :users_logs_chart
-    match "projects_logs_chart" => "charts#projects_logs"
-    match "projects_logs_pie_chart" => "charts#projects_logs_pie"
-    match "users_logs_pie_chart" => "charts#users_logs_pie"
+    match "users_logs" => "charts#users_logs",  :as => :users_logs
+    match "projects_logs" => "charts#projects_logs",  :as => :projects_logs
+    match "customers_logs" => "charts#customers_logs",  :as => :customers_logs
+    
     
     #projects_controller
     match "/archive" => "projects#archive",  :as => :archive

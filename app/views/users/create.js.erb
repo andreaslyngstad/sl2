@@ -3,4 +3,5 @@ $(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>")
 $("#new_user")[0].reset();
 $("#cus_pro_us_listing").append("<%= escape_javascript( render :partial => "user", :locals => { :user => @user })  %>");
 $(".open_user_update").UIdialogs_edit_links();
+$(".button").button();
 $(".spinning").hide();

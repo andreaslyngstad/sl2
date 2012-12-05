@@ -72,20 +72,4 @@ class User < ActiveRecord::Base
       return self.roles.nil? ? false : self.roles.include?(role.to_s)
   end
   
-  def self.chart_user_lables(firm)
-    firm.users.map do |user|
-       user.name.gsub(/["]/, "'")  
-    end
-  end
-  def self.dates_without_data(range,firm)
-      users = chart_user_lables(firm)
-      date_hours_empty = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
-        users.each do |user|
-          (range).each do |day|
-          date_hours_empty[user][day] = 0
-        end
-      end
-      date_hours_empty
-  end
-  
 end

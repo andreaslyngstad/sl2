@@ -1,119 +1,19 @@
 <% javascript 'sl_graphs.js' %>
-<div id="left">
-<%= render "home_header" %>
-  	<div class="html_tab_content" id="tabs-1"> 
-  	<!-- 	<div class="report_top">
-  			
-  			
-  			<% if @log_week.empty?  %>
-  		
-  			<div class="statistics_head">
-  			No hours is logged this week</div>
-  			<% else %>
-  			<div class="statistics_head">
-  			Total hours this week</div>
-  			<% @log_week.each do |date, hours|%>
-  			
-  			<div class="statistics_unit white">
-  					<%= date.to_time.strftime('%A') %><br/><%= time_diff(hours) %>
-  					
-  			</div>
-  			<% end %>
-  			<% end %>
-  		</div>
-  		<div class="report_middle">
-  			<% if @logs_project.empty?  %>
-  			<br/>
-  			
-  			<% else %>
-  			<div class="statistics_head">
-  			Hours for projects this week</div>
-  			<% @logs_project.each do |project, hours| %>
-  			<%= link_to(project_path(project)) do %>
-			<div class="statistics_unit white">
-  					<%= time_diff(hours) %><br/><span class="unit"><%= project.name%></span>
-  			</div>
-  			<% end %>
-  			<% end %>
-  			<% end %>
-  			
-  			
-  			
-  		</div>
-  		<div class="report_bottom">
-  			<% if @logs_customer.empty?  %>
-  			
-  			<% else %>
-  			<div class="statistics_head">
-  			Work for customers this week</div>
-  			
-  			<% @logs_customer.each do |customer, hours| %> 
-  			<%= link_to(customer_path(customer)) do %>  
-  			<div class="statistics_unit white">
-  					<%= time_diff(hours) %><br/><span class="unit"><%= customer.name%></span>
-  					
-  				</div>
-  			<% end %>
-  			<% end %>
-  			<% end %>
-  		</div>
-  		<div class="report_bottom">
-  			<% if @logs_customer.empty?  %>
-  			
-  			<% else %>
-  			<div class="statistics_head">
-  			Hours for each user this week</div>
-  			
-  			<% @logs_user.each do |user, hours| %> 
-  			<%= link_to(user_path(user)) do%>
-  			<div class="statistics_unit white">
-  				<%= time_diff(hours) %><br/><span class="unit"><%= user.name%></span>
-  					
-  				</div>
-  			<% end %>
-  			<% end %>
-  			<% end %>
-  		</div>
-  		
-  		
-
-  	</div> -->
-  	
-
-  	<div id="user_bar" style="float:left;">
-  		<h3>Hours by users.</h3>
-  		<svg style="height:300px;width:600px;"></svg>
+<% content_for :help do %>
+ <div class="page_help">
+	
+	<h2><img src="../system/info.png"/> Timesheet use.</h2>
+		<p>You can add hours to a project in two ways. </p> 
+		<ul>
+		<li>1. Add logs to your projets.</li>
+		<li>2. Add hours to projects directly in the timesheet, if you do not have any logs on the project at a spesific date.</li>
+		</ul>
+		</div>
+<% end %>
+  	<div id="stacked" style="float:left;">		
+  		<svg style="height:360px;width:600px;"></svg>
   	</div>
-  	<div id="user_pie">
-  		
+  	<div id="pie">	
   		<svg style="height:380px; width:380px;"></svg>
   	</div>
-  	
-  	<div id="legend">
-  		
-  		<svg style="height:300px; width:600px; "></svg>
-  	</div>
-  	<div id="project_stacked">
-  		<h3>Hours by projects.</h3>
-  		<svg style="height:300px; width:600px; "></svg>
-  	</div>
-  	
-  	<div id="project_pie">
-  		<svg style="height:200px; width:380px;"></svg>
-  	</div>
-  	<div id="project_bar">
-  		<svg style="height:400px;"></svg>
-  	</div>
- </div>
-
-
-<script>
-    <% range = 3.weeks.ago.to_date..Date.today %>
-	var project_logs = <%= ChartData.user_logs_json_out(current_firm, range, "project").html_safe%>
-	var user_logs = <%= ChartData.user_logs_json_out(current_firm, range, "user").html_safe%>
-	var project_logs_pie = <%= ChartData.project_pie_logs(current_firm, range).html_safe%>
-	var user_logs_pie = <%= ChartData.user_pie_logs(current_firm, range).html_safe%>
-</script>    
-
-
-
+	<ul id="legend"></ul>​

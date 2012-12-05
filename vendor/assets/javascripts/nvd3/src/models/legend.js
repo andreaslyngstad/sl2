@@ -5,7 +5,7 @@ nv.models.legend = function() {
   //------------------------------------------------------------
 
   var margin = {top: 5, right: 0, bottom: 5, left: 0}
-    , width = 1000
+    , width = 400
     , height = 20
     , getKey = function(d) { return d.key }
     , color = nv.utils.defaultColor()
@@ -54,7 +54,7 @@ nv.models.legend = function() {
           .attr('r', 5);
       seriesEnter.append('text')
           .attr('text-anchor', 'start')
-          .attr('dy', '.35em')
+          .attr('dy', '.32em')
           .attr('dx', '8');
       series.classed('disabled', function(d) { return d.disabled });
       series.exit().remove();
@@ -98,7 +98,6 @@ nv.models.legend = function() {
                           return prev + cur;
                         });
         }
-        
         //console.log(columnWidths, legendWidth, seriesPerRow);
 
         var xPositions = [];

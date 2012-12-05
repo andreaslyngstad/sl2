@@ -12,7 +12,7 @@ gem "devise"
 gem "paperclip"
 gem "cancan"
 gem 'newrelic_rpm'
-
+gem 'jbuilder'
 group :production do
   gem 'pg'
 end
@@ -38,6 +38,8 @@ group :development, :test do
   gem "selenium-webdriver"
   gem "selenium-client"
 end
+
+
 
 # Use unicorn as the web server
 # gem 'unicorn'

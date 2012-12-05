@@ -19,26 +19,18 @@
 			<%= done_not_done(@done_todos, @not_done_todos) %>
 			<% end %>
 		</div>
-	</div><div id="milestones_chart">
+	</div>
+	<div id="milestones_chart">
 		<div class="left_slider" data-dir="left"><span class="arrow-w"></span></div>
 		<div class="milestone_slider">
-		<% @project.milestones.order("due ASC").each do |milestone|%>
-		<% if milestone.passed %>
-		<div class="statistics_unit_milestone passed yellow">
-			<%= milestone.due %><br/>
-			<%= milestone.goal %>
-		</div>
-		<% else %>
-		<div class="statistics_unit_milestone upcomming green_gr" id="comming_tasks">
-			<%= milestone.due %><br/>
-			<%= milestone.goal %>
-		</div>
-		<% end %>
-		<% end %>
 		
+	<% @project.milestones.order("due ASC").each do |milestone|%>
+	<%= render :partial =>  "milestones/milestone_slider", :locals => { :milestone => milestone }  %>
+	<% end %>
 	</div>
 	<div class="right_slider" data-dir="right"><span class="arrow-e"></span></div>
-	</div><div class="statistics_unit users_count one_number white statistics_unit_users">
+	</div>
+	<div class="statistics_unit users_count one_number white statistics_unit_users">
 			<%= @project.users.count %>
   			</div>
 </div>
@@ -59,23 +51,29 @@
   <span class="add_some">  
     <a id="dialog_task">Add another</a>
    
-    <div id="dialog_task_form" class="dialog_form" title="Create new task" style="display:none;">
+    <div id="dialog_task_form" class="dialog_form" title="Create new task <%= @project.name %>" style="display:none;">
         <%= form_for @project.todos.build do |f| %>
         <%= f.hidden_field :project_id %>
         <%= f.hidden_field :firm_id, :value => current_firm.id%>
           <li><%= f.label :name %><%= f.text_field :name %></li>
           <li><%= f.label :user_id %>
-            <select id="todo_user_id" class="selector" name="todo[user_id]"><option value="">Select user</option>
-              <%for user in @users do %>
-              <option value="<%=user.id.to_i%>"
-              <%if user == current_user%>selected="<%=current_user.id.to_i%><%end%>">
-              <%= user.name %></option>
-              <% end %>
-            </select> </li>
+            <select class="searchableTaskCustomer" name="todo[user_id]"><option value="">Select user</option>
+	          <%for user in @users do %>
+	          <option value="<%=user.id.to_i%>"<%if user == current_user%>selected="<%=current_user.id.to_i%>"<%end%>>
+	          <%= user.name %></option>
+	          <% end %>
+            </select> 
+          </li>
           <% if @project.customer.nil? %>
-          <li><%= f.label :customer_id %><%= f.select(:customer_id, current_firm.customers.map {|customer| [customer.name, customer.id]}, {:prompt => "Select customer"}, {:class => "selector"})%></li>
+	          <li><%= f.label :customer_id %>
+	          	<select class="searchableTaskCustomer" name="todo[customer_id]">
+		          	<% current_firm.customers.each do |customer| %>
+		          	<option value="<%=customer.id.to_i%>"><%= customer.name %></option>
+		          	<% end %>
+	          	</select> 
+	          </li>
           <% else %>
-          <%= f.hidden_field :customer_id, :value => @project.customer.id%>
+          	<%= f.hidden_field :customer_id, :value => @project.customer.id%>
           <% end %> 
           <li><%= f.label :due %><%= f.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_task_date" %></li>
           <li><%= f.submit "Save", :class => 'submit' %></li>
@@ -117,7 +115,7 @@
         <%= form_for Milestone.new(:project => @project) do |n| %>
       <%= n.hidden_field :project_id %>
       <%= n.hidden_field :firm_id, :value => current_firm.id%>
-      <li><%= n.label :goal %><%= n.text_field :goal, :class => "required", :minlength => "2", :AUTOCOMPLETE => "OFF" %></li>
+      <li><%= n.label :goal %><%= n.text_area :goal, :class => "required", :minlength => "2" %></li>
       <li><%= n.label :due %><%= n.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_milestone_date" %></li> 
       <li><%= n.submit "Save", :class => 'submit'%></li> 
        <% end %>

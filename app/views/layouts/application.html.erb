@@ -27,43 +27,7 @@
 <div id="main_container">
 <%= yield %>
 </div>	
-<div class="far_right_container_min">
-  Squaders min <div class="open_chatbox">-</div>
-</div>
-<div class="far_right_container" >
-	<div class="far_right_container_max">
-  Squaders <div class="open_chatbox">-</div>
-</div>
-<div id="accordion">
-	<h3>Users</h3>
-  	<div id="signed_in_users">
-	  	<ul>
-		  <% current_firm.users.each do |user|%>
-		  <% if !user.current_sign_in_at.nil?%>
-		  <li style="color:green"><div class="row_user"><%= image(user, "image32") %><div class="user_row_name"><%= user.name %></div></div> </li>
-		  <%else%>
-		  <li style="color:red"><div class="row_user"><%= image(user, "image32") %><div class="user_row_name"><%= user.name %></div></div> </li>
-		  <%end%>
-		  <%end%>
-	  	</ul>
-	</div>
-	<h4 class="task_accordion">Tasks</h4>
-	<div id="upcomming_tasks">
-		<div id="ajax-loader" style="margin: 0 auto;width:200px">
-		  	<%= image_tag("ajax-loader.gif")%>
-		</div>
-	</div>
-	<h3 class="milestone_accordion">Milestones</h3>
-	<div id="upcomming_milestones">
-		<div id="ajax-loader" style="margin: 0 auto;width:200px">
-		<%= image_tag("ajax-loader.gif")%>
-	  </div>
-	</div>
-</div>
-  
-
-</div>
-
+<%= render "roster/roster"%>
 </div>
 
 </div>

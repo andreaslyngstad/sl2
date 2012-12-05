@@ -4,4 +4,5 @@ $("#user_<%= escape_javascript(@user.id.to_s)%>").replaceWith("<%= escape_javasc
 
 $("#user_<%= escape_javascript(@user.id.to_s)%>").find(".open_user_update").UIdialogs_edit_links();
 $("body").find(".dialog_form:last").remove();
+$(".button").button();
 $(".spinning").hide();

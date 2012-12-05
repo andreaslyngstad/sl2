@@ -25,7 +25,7 @@
 <br />
     <li>
     <%= f.label :customer_id %>
-    <%= f.select(:customer_id, @firm.customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer")%></li>
+    <%= f.select(:customer_id, @firm.customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer", :class => "searchableTaskCustomer")%></li>
 <br />
     <li>
 

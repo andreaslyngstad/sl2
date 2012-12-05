@@ -1,55 +1,48 @@
+require "symbol.rb"
 class ChartData
-  include ActiveModel::Serializers::JSON
-
-  
-  
-  
-  def self.user_logs_by_day(logs)
-    days_with_hours = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
-      logs.each do |log|
-        days_with_hours[log.user.name][log.log_date] = log.total_hours
-      end
-    days_with_hours
+  attr_accessor :firm, :range, :model
+  def initialize(firm,range,model)
+    @firm = firm
+    @range = range
+    @model = model  
   end
   
-  def self.project_logs_by_day(logs)
+  def logs_by_day(logs)
     days_with_hours = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
       logs.each do |log|
-        if !log.project.nil?
-          days_with_hours[log.project.name][log.log_date] = log.total_hours
+        if !log.send(@model).nil?
+          days_with_hours[log.send(@model).name][log.log_date] = log.total_hours
         else
-          days_with_hours[@default][log.log_date] = log.total_hours
+          days_with_hours["No " + @model.to_s][log.log_date] = log.total_hours
         end
       end
     days_with_hours
   end
   
-  def self.all_dates_all_no_hours(firm, range, model)
-    if model == "user"
-      models = User.chart_user_lables(firm)
-    elsif model == "project"
-       @default = "No project"
-      models = Project.chart_project_lables(firm)
-      models << @default
+  def chart_lables
+    @firm.send(@model.pluralize).map do |model_instance|
+       model_instance.name.gsub(/["]/, "'")  
     end
+  end
+  
+  def all_dates_no_hours
+    ms = []
+    ms << "No " + @model.to_s
+    models = ms + chart_lables
+    
     date_hours_empty = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}      
     models.each do |m|
-      (range).each do |day|
+      (@range).each do |day|
       date_hours_empty[m][day] = 0
       end
     end
     date_hours_empty
   end
   
-  def self.compile_hash(firm, range, model)
+  def compile_hash
    key_user_value_date_hours = Hash.new
-   if model == "user"
-   emtpy_hours = all_dates_all_no_hours(firm,range,model)
-   log_hours = user_logs_by_day(Log.hours_by_day_and_user(firm, range))
-   elsif model == "project"
-   emtpy_hours = all_dates_all_no_hours(firm,range,model)
-   log_hours = project_logs_by_day(Log.hours_by_day_and_project(firm, range))
-   end
+   emtpy_hours = all_dates_no_hours
+   log_hours = logs_by_day(Log.hours_by_day_and_model(@firm, @range, @model))
    emtpy_hours.each do |k,v|
      if log_hours.has_key?(k)
       c = log_hours.values_at(k)[0].diff(emtpy_hours.values_at(k)[0])
@@ -59,11 +52,11 @@ class ChartData
     key_user_value_date_hours
    end
    
-  def self.user_logs_json_out(firm, range, model)
-    key_user_value_date_hours = compile_hash(firm, range, model)
+  def stacked
+    key_user_value_date_hours = compile_hash
     output = '[' 
     key_user_value_date_hours.each do |name,dates|
-      output << '{ "key" : ' + '"' + name + '", '
+      output << '{ "key" : "' + name.gsub("\n", "") + '", ' 
       output << '"values" : [' 
       dates.sort_by{|k,v| k}.each do |date|
         output << '[' + (Time.parse("#{date[0]}").to_i * 1000).to_s + ',' + TimeHelp.new.time_to_hours_test(date[1]).to_s + '],'
@@ -74,29 +67,19 @@ class ChartData
     output.chop!
     output << ']'
   end 
-  def self.project_pie_logs(firm, range)
-    logs = Log.hours_by_project(firm, range)
-    output = '[{ "key": "Projects logged hours", "values": ['
+  
+  def pie
+    logs = Log.hours_by_model(@firm, @range, @model)
+    output = '[{ "key": "pie", "values": ['
     logs.each do |log|
-      if !log.project.nil?
-        output << '{ "label" : "' + log.project.name + '",'
+      if !log.send(model).nil?
+        output << '{ "label" : "' + log.send(model).name.gsub("\n", "") + '",'
       else
-        output << '{ "label" : "' + @default + '",'
+        output << '{ "label" : "No ' + model.to_s + '",'
       end
-      output << '"value" : ' + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + '},'
+       log.total_hours < 10.0 ? output << '"value" : 0.01},': output << '"value" : ' + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + '},'
     end
     output.chop!
     output << ']}]'
-  end
-  def self.user_pie_logs(firm, range)
-    logs = Log.hours_by_user(firm, range)
-    output = '[{ "key" : "Users logged hours", "values" : ['
-    logs.each do |log|
-      output << '{ "label" :"' + log.user.name + '",'
-      output << '"value" : ' + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + '},'
-    end
-    output.chop!
-    output << ']}]'
-  end
- 
+  end 
 end
