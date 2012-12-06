@@ -1,8 +1,3 @@
-var users_logsColorArray = ["#393b79","#5254a3", "#6b6ecf","#9c9ede","#7b4173","#a55194","#ce6dbd","#de9ed6","#843c39","#ad494a","#d6616b", 
-"#e7969c","#637939","#8ca252","#b5cf6b","#cedb9c","#8c6d31","#bd9e39","#e7ba52","#e7cb94"];
-var projects_logsColorArray = ["#31a354", "#74c476", "#a1d99b","#2ca02c","#42D624","#ADFF2F","#00FF00","#32CD32","#98FB98","#90EE90",
-"#00FA9A","#00FF7F","#3CB371","#2E8B57","#228B22","#008000","#006400","#9ACD32","#6B8E23","#808000","#556B2F", "#66CDAA","#8FBC8F",
-"#20B2AA","#008B8B","#008080"];
-var customers_logsColorArray = ["#31a354", "#74c476", "#a1d99b","#2ca02c","#42D624","#ADFF2F","#00FF00","#32CD32","#98FB98","#90EE90",
-"#00FA9A","#00FF7F","#3CB371","#2E8B57","#228B22","#008000","#006400","#9ACD32","#6B8E23","#808000","#556B2F", "#66CDAA","#8FBC8F",
-"#20B2AA","#008B8B","#008080"];
+var users_logsColorArray = $.xcolor.analogous("#a55194",20,20);
+var projects_logsColorArray = $.xcolor.analogous("#31a354",20,20);
+var customers_logsColorArray = $.xcolor.analogous("#547700",20,20);

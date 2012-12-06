@@ -22,7 +22,7 @@
 //= require timesheet
 //= require memberships
 //= require jquery.jclock
-
+//= require jquery.xcolor.min
 //= require nvd32/lib/d3.v2 
 
 
