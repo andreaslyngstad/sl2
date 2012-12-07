@@ -1,15 +1,13 @@
 <div class="log_menu">
 	<div class="range" >	   
-	    <%= form_tag('/log_range', :id => "range_form", :remote => true) do -%>
-	    <%= hidden_field_tag "url", url_splitter(request.fullpath) %>
-	    <%= hidden_field_tag "id", url_splitter2(request.fullpath) %>
-	    <div id="range_date_fields">
-		  	<%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date"%>
-			<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date"  %>
+	   
+	    <div id="range_date_fields_graphs">
+		  	<%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date_graphs"%>
+			<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date_graphs"  %>
 		</div>
-	   	<a id="range_button">Find</a>
+	  
    	</div>
- <% end -%>
+
     <div class="logs_pr_date">
   		<select class="small_selector" id="stats">
           	<option value="users_logs">Stats for users</option>

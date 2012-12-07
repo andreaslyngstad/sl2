@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
+  attr_accessible :name,:description,:due,:active,:budget,:hour_price,:firm_id,:customer_id,:created_at,:updated_at,:firm,:customer
   belongs_to :firm
   belongs_to :customer
   has_many :todos, :dependent => :destroy

@@ -1,4 +1,5 @@
 class Milestone < ActiveRecord::Base
+  attr_accessible :goal,:due,:firm_id,:completed,:project_id,:created_at,:updated_at, :project,:firm
   belongs_to :project
   belongs_to :user
   belongs_to :firm

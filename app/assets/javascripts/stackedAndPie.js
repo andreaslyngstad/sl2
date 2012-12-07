@@ -1,6 +1,101 @@
+
+
 function stackedAndPie(data, ColorArray) {
   	var labels = data.stacked.map(function(d){return d.key});
 	var pieIdIncrement = labels.length;
+	if(!Array.prototype.last) {
+    Array.prototype.last = function() {
+        return this[this.length - 1];
+    }
+}
+	data.stacked.map(function(d){
+		console.log(d.values.last())
+		
+		});
+	function disableSetter(area, id, graph, label){
+	  var dot = $("#" + id +".node .legend_dot")
+	  d3.select("#nv-series-" + id).attr("data", function(d){
+	    if(!(d3.select(area).selectAll(".nv-series").data().filter(function(e) { return !e.disabled }).length === 1))
+	    {
+	      d.disabled = !d.disabled;
+	      dot.toggleClass("disabled")
+	    }else
+	    {
+	      d.disabled = false;
+	      dot.removeClass("disabled")
+	    }
+	    graph.update()
+	    })
+	};
+	
+	function pieDisableSetter(area, stacked_svg, pie_svg, gr){
+		
+			var click = 'elementClick'
+			area.pie.dispatch.on(click, function(e) {
+	    	var id = e.index
+	    	var dot = $("#" + id +".node .legend_dot")
+        	var data = d3.select(stacked_svg).selectAll(".nv-series").data()
+        	var piedata = d3.select(pie_svg).selectAll(".nv-series").data()
+        if (data.filter(function(d) { return !d.disabled }).length === 1){
+          	piedata = piedata.map(function(d) {
+            d.disabled = false;
+          return d
+          });
+          	data = data.map(function(d) {
+            d.disabled = false; 
+          	$(".legend_dot").removeClass("disabled")
+            return d
+          });
+        }else{
+        	piedata = piedata.map(function(d, i) {
+          	d.disabled = (i != e.index);
+          	return d
+          		});
+          	data = data.map(function(d,i) {
+            d.disabled = (i != e.index);
+           	$(".legend_dot").addClass("disabled")
+           	dot.removeClass("disabled")
+            return d 
+          	});
+       		}
+       	pie_chart.update();
+        stacked_chart.update();
+          });
+		};	
+		function stackDisableSetter(area, stacked_svg, pie_svg){
+			var click = 'areaClick.toggle'
+	  		area.stacked.dispatch.on(click, function(e) {
+	    	var id = e.seriesIndex
+	    	var dot = $("#" + id +".node .legend_dot")
+        	var data = d3.select(stacked_svg).selectAll(".nv-series").data()
+        	var piedata = d3.select(pie_svg).selectAll(".nv-series").data()
+        if (data.filter(function(d) { return !d.disabled }).length === 1){
+          	piedata = piedata.map(function(d) {
+            d.disabled = false;
+          return d
+          });
+          	data = data.map(function(d) {
+            d.disabled = false; 
+          	$(".legend_dot").removeClass("disabled")
+            return d
+          });
+        }else{
+        	piedata = piedata.map(function(d, i) {
+          	d.disabled = (i != e.seriesIndex);
+          	return d
+          		});
+          	data = data.map(function(d,i) {
+            d.disabled = (i != e.seriesIndex);
+           	$(".legend_dot").addClass("disabled")
+           	dot.removeClass("disabled")
+            return d 
+          	});
+       		}
+       	pie_chart.update();
+        stacked_chart.update();
+          });
+	  		
+	  	}
 	nv.addGraph(function() {
 	    var chart = nv.models.stackedAreaChart()
 	   				.margin({top: 10, bottom: 30, left: 40, right: 10})
@@ -12,6 +107,7 @@ function stackedAndPie(data, ColorArray) {
 	                  .color(ColorArray)
 	                  .clipEdge(true)
 	                  .interpolate("cardinal");
+	    
 	    chart.xAxis
 	        .showMaxMin(false)
 	        .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
@@ -25,7 +121,9 @@ function stackedAndPie(data, ColorArray) {
 	    d3.selectAll(".nv-series").each(function(d,i) { 
 	    d3.select(this).attr("id", function() { return 'nv-series-' + i }) 
 	      }); 
-	   stacked = chart
+	     
+	   stacked_chart = chart
+	    stackDisableSetter(stacked_chart, "#stacked svg","#pie svg")        
 	   return chart; 
 	});
   
@@ -48,27 +146,16 @@ function stackedAndPie(data, ColorArray) {
 	    d3.select(this).attr("id", function() { return 'nv-series-' + i })
 	      
 	      });
+	  //hide original legend
 	    d3.selectAll(".nv-legendWrap").style("display","none")
-	  pie = chart
+	  pie_chart = chart
+	  pieDisableSetter(pie_chart, "#stacked svg","#pie svg")
 	  
 	  return chart;
 	});
 
-	function disableSetter(area, id, graph, label){
-	  var dot = $("#" + id +".node .legend_dot")
-	  d3.select("#nv-series-" + id).attr("data", function(d){
-	    if(!(d3.select(area).selectAll(".nv-series").data().filter(function(e) { return !e.disabled }).length === 1))
-	    {
-	      d.disabled = !d.disabled;
-	      dot.toggleClass("disabled")
-	    }else
-	    {
-	      d.disabled = false;
-	      dot.removeClass("disabled")
-	    }
-	    graph.update()
-	    })
-	};
+	
+//draw new legend
 	var div = d3.select("#legend").append("div").attr("class", "labels");
 	var li = div.selectAll("li")
 	   .data(labels)
@@ -98,10 +185,11 @@ function stackedAndPie(data, ColorArray) {
 	
 	d3.selectAll(".labels .node").on("click", function(d) {
 	    var id = $(this).attr("id");
-	    var pieId = parseInt(id) + parseInt(pieIdIncrement)
-	    
-	     disableSetter("#stacked svg", id, stacked)
-	     disableSetter("#pie svg", pieId, pie)   
+	    var pieId = parseInt(id) + parseInt(pieIdIncrement)  
+	     disableSetter("#stacked svg", id, stacked_chart)
+	     disableSetter("#pie svg", pieId, pie_chart)   
 	 });
+	
+	
 }
 
