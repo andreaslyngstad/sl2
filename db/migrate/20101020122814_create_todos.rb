@@ -6,6 +6,7 @@ class CreateTodos < ActiveRecord::Migration
       t.integer :firm_id, :null => false
       t.integer :project_id
       t.integer :customer_id
+      t.integer :done_by_user_id
       t.date :due
       t.boolean :completed
       t.timestamps

@@ -47,7 +47,11 @@ Squadlink::Application.routes.draw do
     match "projects/update_index/:id" => "projects#update_index",  :as => :update_index
     match "projects/create_index/" => "projects#create_index",  :as => :create_index
     match "/activate_projects/:id" => "projects#activate_projects", :as => :activate_projects
-  
+    #tabs_controller
+    match "/tabs/todos/:id/:class" => "tabs#todos", :as => :tabs_todos
+    match "/tabs/milestones/:id/:class" => "tabs#milestones", :as => :tabs_milestones
+    match "/tabs/logs/:id/:class" => "tabs#logs", :as => :tabs_logs
+    match "/tabs/users/:id/:class" => "tabs#users", :as => :tabs_users
     #logs_controller
     match "/customer_employees/:customer_id/:log_id" => "logs#customer_employees", :as => :customer_employees
     match "/customer_employees/:customer_id/" => "logs#customer_employees", :as => :customer_employees
@@ -67,7 +71,10 @@ Squadlink::Application.routes.draw do
     match "/project_todos/" => "logs#project_todos", :as => :project_todos
     match "/todo_select/:todo_id/:log_id" => "logs#todo_select", :as => :todo_select
     match "/todo_select/:todo_id" => "logs#todo_select", :as => :todo_select
-    
+    match "/get_logs_todo/:todo_id" => "logs#get_logs_todo", :as => :get_logs_todo
+    #todos_controller
+   
+    match "/mark_todo_done/:id/:done_by_user" => "todos#mark_todo_done", :as => :mark_todo_done
     #private_controller
     match "/statistics" => "private#statistics", :as => :statistics
     match "/reports" => 'private#reports', :as => :reports
@@ -82,9 +89,10 @@ Squadlink::Application.routes.draw do
     match "/logs_pr_date/:time/:url" => "private#logs_pr_date", :as => :logs_pr_date
     match "/logs_pr_date/:time/:url/:id" => "private#logs_pr_date", :as => :logs_pr_date
     match "/log_range/" => "private#log_range", :as => :log_range
-    match "/mark_todo_done/:id" => "private#mark_todo_done", :as => :mark_todo_done
+    
     match "/membership/:id/:project_id" => "private#membership", :as => :membership
     match "/get_logs/:customer_id" => "private#get_logs", :as => :get_logs
+    
     match "/get_logs_project/:project_id" => "private#get_logs_project", :as => :get_logs_project
     match "/get_users_project/:project_id" => "private#get_users_project", :as => :get_users_project
     match "/get_logs_user/:user_id" => "private#get_logs_user", :as => :get_logs_user

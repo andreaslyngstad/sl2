@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	 
 	 	$( "#accordion" ).accordion({
-            autoHeight: false
+             fillSpace: true
         });
 		
 		$(".task_accordion").one("click", function(){
@@ -27,7 +27,7 @@ $(document).ready(function() {
 	});
 $(window).resize();
 	$('.far_right_container').draggable(
-		{handle: ".far_right_container_min", 
+		{handle: ".far_right_container_max", 
 		 cursor: "move"});	
 		
 	

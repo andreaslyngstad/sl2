@@ -1,8 +1,8 @@
 <ul class="roster_tasks">	
   <% @tasks_overdue_and_to_day.each do |task|%>
-  <% if task.overdue %>
+
   <li id="roster_todo_<%=task.id%>">
-  	<div class="row_task red">
+  	<div class="row_task <% if task.overdue %> red <% else %> green<% end %>" >
 	  	<input class="done_box" id="<%=task.id%>" type="checkbox"/>
 	  	<% if task.project %>
 	  	<%= link_to task.name, project_path(task.project).to_s + "/#tabs-1" %>
@@ -11,18 +11,6 @@
 	  	<% end %>
   	</div> 
   </li>
-  <%else%>
-  
-  <li id="roster_todo_<%=task.id%>">
-  	<div class="row_task green">
-	  	<input class="done_box" id="<%=task.id%>" type="checkbox"/>
-	  	<% if task.project %>
-	  	<%= link_to task.name, project_path(task.project).to_s + "/#tabs-1" %>
-	  	<% else %>
-	  	<%= link_to task.name, customer_path(task.customer).to_s + "/#tabs-1" %>
-	  	<% end %>
-  	</div> 
-  </li>
-  <%end%>
+ 
   <%end%>
 </ul>

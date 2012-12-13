@@ -1,0 +1,6 @@
+var tab = $("li.active").children("a").attr("href")
+$(tab).append("<%= j( render :partial => "milestones/listing_milestones")  %>")
+$("#listing_milestones").append("<%= j( render @milestones)  %>")
+$("#dialog_milestone").UIdialogs_links();
+$(".open_milestone_update").UIdialogs_edit_links();
+$(".spinning").hide()

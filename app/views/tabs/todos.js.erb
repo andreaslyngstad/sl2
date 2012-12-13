@@ -1,0 +1,31 @@
+var tab = $("li.active").children("a").attr("href")
+$(tab).empty().append("<%= j( render :partial => "todos/listing_todos")  %>")
+$("#dialog_todo").UIdialogs_links();
+	$(".searchableTaskCustomer").chosen();
+$(".open_todo_update").UIdialogs_edit_links();
+jQuery.fn.submitDoneWithAjax = function(id) {
+   $.post("/todos/" + id, $(this).serialize(), null, "script");
+};
+
+
+ $(".done_box").live("click", function() { 
+  	 var id = $(this).attr("id")
+  	 $("#edit_done_todo_" + id).submitDoneWithAjax(id)
+  });
+ $(".logs_pluss").click(function() { 
+ 	$(".spinning").show();
+ 	$(this).hide()
+ 	$(this).next(".logs_minus").show()
+  	var id = $(this).attr("id")
+  		
+  	$.get("/get_logs_todo/" + id)
+  });
+   
+ $(".logs_minus").click(function() { 
+ 	var id = $(this).attr("id")
+ 	$("#todo_logs_"+ id ).slideUp()
+ 	$("#todo_logs_"+ id ).children().empty().remove()
+ 	$(this).hide()
+ 	$(this).prev(".logs_pluss").show()
+  });
+$(".spinning").hide()

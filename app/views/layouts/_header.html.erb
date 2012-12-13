@@ -10,9 +10,7 @@
 		  <%= current_firm.name %><br /> 
 		 <span style="font-size:12px;"> <%= current_user.name %>
 		  <%= Time.now.strftime('%d.%m.%y')%>|<span class="jclock"></span></span> 
-		  <% if url_splitter(request.fullpath) == "projects" || url_splitter(request.fullpath) == "customers" %> 
-		  true
-		  <%end%>
+		  
 		</div>
   	</div>
   	<div class="messages">

@@ -44,7 +44,7 @@ module ApplicationHelper
   	 #image_tag("https://chart.googleapis.com/chart?cht=p&chs=200x125&chco=FAAABE|ADFAAA&chd=t:#{not_donepr},#{donepr}&chdl=Not%20done%20tasks|Done%20tasks", :style => {:width => 200, :height=>125} )
   end
  	def url_splitter(url)
- 		url.split("/").second
+ 		url.split("/").first
  	end	 
  	def url_splitter2(url)
  		url.split("/").third

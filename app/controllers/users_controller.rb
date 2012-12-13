@@ -14,14 +14,9 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     @firm = current_firm
-    @user = User.find(params[:id])
-    
-    @done_todos = @user.todos.where(["completed = ?", true]).includes(:project, :user)
-    @not_done_todos = @user.todos.where(["completed = ?", false]).includes(:project, :user)
+    @klass = User.find(params[:id])
     
     @customers = @firm.customers.includes(:employees)
-    @log = Log.new(:user => @user)
-    @logs = @user.logs.where(:log_date => time_range_to_day).order("log_date DESC").includes([:user, :todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
     @all_projects = current_user.projects.where(["active = ?", true])
     respond_to do |format|
       format.html # show.html.erb

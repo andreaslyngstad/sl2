@@ -1,11 +1,9 @@
 class PublicController < ApplicationController
-  skip_before_filter :authenticate_user!, :find_firm
+  skip_before_filter :authenticate_user!, :all_users
   layout "registration"
   respond_to :html
 
   def index
-
-
   end
 
   def register

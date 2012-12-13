@@ -13,7 +13,7 @@
       <li><%= p.label :name %><%= p.text_field :name, :class => "required"%></li>
       <li><%= p.label :description %><%= p.text_field :description %></li>
       <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date" %></li>
-      <li><%= p.label :customer_id %><%= p.select(:customer_id, @firm.customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer")%></li>
+      <li><%= p.label :customer_id %><%= p.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer")%></li>
       <li><%= p.submit 'Save', :class => 'submit' %></li>
       <% end %>
       </div>
@@ -37,7 +37,7 @@
       <li><%= f.label :name %><%= f.text_field :name %></li>
       <li><%= f.label :description %><%= f.text_field :description %></li>
       <li><%= f.label :due %><%= f.text_field :due, :value => project.due.strftime("%Y-%m-%d"), :id => "date_project_#{project.id}"  %></li>
-       <li><%= f.label :customer_id %><%= f.select(:customer_id, @firm.customers.map {|customer| [customer.name, customer.id]}, {:include_blank => 'None'})%></li>
+       <li><%= f.label :customer_id %><%= f.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]}, {:include_blank => 'None'})%></li>
       <li><%= f.submit 'Save', :class => 'submit' %></li></ul>
       <% end %>
 </div>

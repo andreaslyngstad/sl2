@@ -1,17 +1,16 @@
 <div class="log_menu">
    <div class="add_some">
        <a id="dialog_log">Add log</a>
-       </div>
-        <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
-      
-      <%= form_for(Log.new) do |l| %>  
-   <%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
-    <% end %>
+   </div>
+   <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
+      	<%= form_for(Log.new) do |l| %>  
+  			<%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
+    	<% end %>
    </div>
     <div class="range" >	   
 	    <%= form_tag('/log_range', :id => "range_form", :remote => true) do -%>
-	    <%= hidden_field_tag "url", url_splitter(request.fullpath) %>
-	    <%= hidden_field_tag "id", url_splitter2(request.fullpath) %>
+	    <%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
+	    <%= hidden_field_tag "id", @klass ? @klass.id : "index"%>
 	    <div id="range_date_fields">
 		  	<%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date"%>
 			<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date"  %>
@@ -20,7 +19,7 @@
    	</div>
  <% end -%>
     <div class="logs_pr_date">
-      <select class="small_selector" id="logs_pr_date_select" data-url="<%= url_splitter(request.fullpath) %>" data-id="<%= url_splitter2(request.fullpath) %>">
+      <select class="small_selector" id="logs_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
            <option value="to_day">To day</option>
            <option value="this_week">This week</option>
            <option value="this_month">This month</option>
@@ -30,4 +29,5 @@
            <option value="last_month">Last month</option>
            <option value="last_year">Last year</option>   
           </select>
-    </div> </div>
+    </div> 
+</div>

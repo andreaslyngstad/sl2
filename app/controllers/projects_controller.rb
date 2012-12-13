@@ -1,11 +1,9 @@
 class ProjectsController < ApplicationController
-  load_and_authorize_resource :firm
-	
   def index
-  	@firm = current_firm
+  	
   	#make admin veiw all projects
     @projects = current_user.projects.is_active
-    @customers = @firm.customers
+    @customers = current_firm.customers
     @project = Project.new
     @todo = Todo.new
   end
@@ -33,25 +31,16 @@ class ProjectsController < ApplicationController
   end
 
   def show
-  	@user = current_user
-    @project = current_firm.projects.find(params[:id])
-    @users = @project.users
-    @milestone = Milestone.new(:project => @project)
-    @milestones = @project.milestones.order("due ASC")
-    @todo = Todo.new(:project => @project)
-    @done_todos = @project.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
-    @not_done_todos = @project.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC")
-    @hours = @project.logs.sum(:hours)
+    @klass = current_firm.projects.find(params[:id])
+    @hours = @klass.logs.sum(:hours)
+   
+    @done_todos = @klass.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
+    @not_done_todos = @klass.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC") 
     
-    @firm = current_user.firm
-    @customers = @firm.customers.includes(:employees)
-    @log = Log.new(:project => @project)
-    @logs = @project.recent_logs.includes([:user, :todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
-    @all_projects = current_user.projects.where(["active = ?", true])
-    @todos = @project.todos.where(["completed = ?", false]).includes(:user)
     
-    @members = @project.users
-    @not_members = @firm.users - @members
+   
+    @members = @klass.users
+    @not_members = all_users - @members
   end
 
   def create
@@ -69,9 +58,8 @@ class ProjectsController < ApplicationController
   end
   
   def update
-  	@firm = current_firm
     @project = Project.find(params[:id])
-    @customers = @firm.customers
+    @customers = current_firm.customers
     respond_to do |format|
       if @project.update_attributes(params[:project])
         flash[:notice] = flash_helper("Project was successfully saved.")

@@ -1,12 +1,12 @@
 class SessionsController < Devise::SessionsController
-  skip_before_filter :authenticate_user!
-  skip_before_filter :find_firm
+  skip_before_filter :authenticate_user!, :all_users
   def new
     resource = build_resource
     clean_up_passwords(resource)
     respond_with(resource, serialize_options(resource))
   end
   def create
+    
     subdomain = request.subdomain
     resource = warden.authenticate!(auth_options)
     sign_in(resource_name, resource)

@@ -1,6 +1,5 @@
 <li id="log_<%=log.id%>" style="width:800px; display:inline; float:left;"> 
   <div id="log_info_<%=log.id%>" class="log_info" data-log="<%= log.id %>">
-
   <%= log.event %>
   <span style="float:right; padding-right:70px;"><%= hours(log.end - log.begin)%>:<%= min(log.end - log.begin)%>:<%= sec(log.end - log.begin)%>  
   <%= log.begin.strftime('%H:%M')%>    
@@ -30,10 +29,8 @@
         none
         <% end %> 
       </div>
-      </div>
-      
+      </div>    
       </div>  
-   
     <div id="update_log_<%=log.id.to_s%>">
    <div id="update_log_form" style="display:none;">
      <div class="close_log_update" data-log="<%= log.id %>">close</div>

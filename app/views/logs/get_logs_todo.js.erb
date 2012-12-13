@@ -1,0 +1,4 @@
+$("#todo_logs_<%= escape_javascript(@todo.id.to_s)%>").append("<%= escape_javascript(render(:partial => @logs)) %>")
+$("#todo_logs_<%= escape_javascript(@todo.id.to_s)%>").slideDown()
+$(".open_log_update").UIdialogs_edit_logs_links()
+$(".spinning").hide();

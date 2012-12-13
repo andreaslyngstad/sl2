@@ -100,13 +100,14 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   create_table "todos", :force => true do |t|
     t.text     "name"
     t.integer  "user_id"
-    t.integer  "firm_id",     :null => false
+    t.integer  "firm_id",         :null => false
     t.integer  "project_id"
     t.integer  "customer_id"
+    t.integer  "done_by_user_id"
     t.date     "due"
     t.boolean  "completed"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|

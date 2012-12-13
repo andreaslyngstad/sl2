@@ -6,25 +6,20 @@ class CustomersController < ApplicationController
     @customer = Customer.new  
   end
   def show
-    @customer = current_firm.customers.find(params[:id])
+    @klass = current_firm.customers.find(params[:id])
     @customers = current_firm.customers
     
-    @logs = @customer.recent_logs.includes([:todo, :employee, {:customer => [:employees]}, {:project => [:customer, :todos]}])
-    @log = Log.new(:customer => @customer)
-    
-    @done_todos = @customer.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
-    @not_done_todos = @customer.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC")
     
     
-    @employees = @customer.employees
+    @employees = @klass.employees
     @employee = Employee.new(:customer => @customer)
-    @projects = @customer.projects.where(["active = ?", true]).includes(:customer, :todos)
+    @projects = @klass.projects.where(["active = ?", true]).includes(:customer, :todos)
     @users = current_firm.users
-    @all_projects = current_firm.projects.where(["customer_id IS ? OR customer_id IS ? AND active = ?", nil, @customer.id, true])
-    @project = Project.new(:customer => @customer)
+    @all_projects = current_firm.projects.where(["customer_id IS ? OR customer_id IS ? AND active = ?", nil, @klass.id, true])
+    @project = Project.new(:customer => @klass)
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @customer }
+      format.xml  { render :xml => @klass }
       format.js
     end
   end

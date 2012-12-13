@@ -1,8 +1,5 @@
 class PrivateController < ApplicationController
-   
-      authorize_resource :firm
 
-  # skip_before_filter :find_firm, :only => :home
 
   def account
   end
@@ -97,7 +94,6 @@ class PrivateController < ApplicationController
 	  @users = current_firm.users
     @user = current_firm.users.find(params[:user_id])
     @logs_by_date = @user.logs.group("date(log_date)").sum(:hours)
-    
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
     @customers = current_firm.customers
 	end
@@ -116,22 +112,22 @@ class PrivateController < ApplicationController
   def add_todo_to_logs
     @firm = current_user.firm
     if !params[:todo_id].nil?
-    @todo = Todo.find(params[:todo_id]) 
-    @log = Log.where("tracking = ?", true).last
-    @log.todo = @todo
-    @log.project = @todo.project
-    if !@todo.project.customer.nil?
-    @log.customer = @todo.project.customer
+      @todo = Todo.find(params[:todo_id]) 
+      @log = Log.where("tracking = ?", true).last
+      @log.todo = @todo
+      @log.project = @todo.project
+      if !@todo.project.customer.nil?
+        @log.customer = @todo.project.customer
+      else
+        @log.customer = nil
+      end
+      @log.save
     else
-    @log.customer = nil
-    end
-    @log.save
-    else
-    @log = Log.where("tracking = ?", true).last
-    @log.todo = nil
-    @log.project = nil
-    @log.customer = nil
-    @log.save
+      @log = Log.where("tracking = ?", true).last
+      @log.todo = nil
+      @log.project = nil
+      @log.customer = nil
+      @log.save
     end
   end
 
@@ -140,8 +136,7 @@ class PrivateController < ApplicationController
   end
 
   def logs_pr_date
-    @firm = current_user.firm
-    @customers = @firm.customers.includes(:employees)
+    @customers = current_firm.customers.includes(:employees)
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
 	    if params[:time] == "to_day"
 	    time_range = (Time.now.midnight)..(Time.now.midnight + 1.day)
@@ -160,59 +155,25 @@ class PrivateController < ApplicationController
 	    elsif params[:time] == "last_year"
 	    time_range = (Time.now.beginning_of_year - 1.year)..(Time.now.beginning_of_year - 1.second)   
 	    end  
-	   find_logs_on(params[:url], time_range)
-	   
+	   find_logs_on(params[:url], time_range) 
   end
   def log_range
-  	@firm = current_user.firm
-    @customers = @firm.customers.includes(:employees)
+    @customers = current_firm.customers.includes(:employees)
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
-    if params[:from] == params[:to]
-    	time_range = (Date.parse(params[:from]).midnight)..(Date.parse(params[:from]).midnight + 1.day - 1.second)
-    else
-  		time_range = ((Date.parse(params[:from]).midnight)..Date.parse(params[:to]).midnight + 1.day)
-  	end
-  	
-   find_logs_on(params[:url], time_range)
-   
+  	time_range = ((Date.parse(params[:from]).midnight - 1.day)..Date.parse(params[:to]).midnight)
+    find_logs_on(params[:url], time_range)
   end
   
   def find_logs_on(url, time_range)
-    if url == "logs"
-      logs_on = current_user
-    elsif url == "customers"
-      logs_on = Customer.find(params[:id])  
-    elsif url == "users"
-      logs_on = User.find(params[:id])
-    elsif url == "projects"
-      logs_on = Project.find(params[:id])
+    if url == "index"
+      logs_on = current_firm 
+    else
+      logs_on = eval(url).find(params[:id])
     end
-      @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee )
+    @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee )
   end
   
-  def mark_todo_done
-    @firm = current_user.firm
-    @todo = Todo.find(params[:id])
-    @project = @todo.project
-    @user = @todo.user
-    if @todo.completed == true
-      @todo.completed = false
-    else
-      @todo.completed = true
-    end
-    @todo.update_attributes(params[:todo])
-    if @project
-    @done_todos = @project.todos.where(["completed = ?", true]).includes(:user)
-    @not_done_todos = @project.todos.where(["completed = ?", false]).includes(:user)
-    end
-    if @user
-    @done_todos = @user.todos.where(["completed = ?", true])
-    @not_done_todos = @user.todos.where(["completed = ?", false])
-    end    
-    respond_to do |format|
-      format.js
-    end
-  end
+  
   
   def membership
   	@firm = current_user.firm

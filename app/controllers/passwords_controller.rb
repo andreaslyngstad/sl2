@@ -1,5 +1,5 @@
 class PasswordsController < Devise::PasswordsController
-  skip_before_filter :find_firm
+  skip_before_filter :all_users
   def update
       self.resource = resource_class.reset_password_by_token(params[resource_name])
       if resource.errors.empty?

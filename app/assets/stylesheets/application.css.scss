@@ -133,6 +133,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endC
 }
 
 .spinning {width:15px;height:15px;margin: 5px 0 0 15px;float: left;background: url('spinner.gif') no-repeat right !important; }
+.ajax-loader-big {background: url('ajax-loader-big.gif') no-repeat right !important; }
 #flash_messages{
 margin: 3px 0 0 15px;
 font-size:15px;
@@ -1105,7 +1106,8 @@ border-bottom: 1px solid #E5E5E5;
 /*all view*/
 .gravatar_on_log,.event_on_log,.pro_tod_cus_emp_on_log,
 .cus_emp_on_log, .pro_tod_on_log,.date_and_times_on_log, 
-.delete_edit, .name_todo, .name_todo_header,.name_milestone ,.date_all, .user_todo, .project_todo, .delete_edit_archive{
+.delete_edit, .name_todo, .name_todo_head, .name_todo_header,.name_milestone ,.date_all, .user_todo, .project_todo, 
+.delete_edit_archive, .logs_pluss, .logs_minus{
 display: inline-block;
   vertical-align:top;
 }
@@ -1163,10 +1165,30 @@ font-weight: bold;
 #done_tasks .name_todo, #done_tasks .user_todo, #done_tasks .date_all, #done_tasks .delete_edit{
   text-decoration:line-through;
 }
+.edit_todo{
+	margin: 0;
+	width: 13px;
+	display: inline;
+}
+.name_todo, .name_todo_head{
+ 	width: 487px;
+  	padding: 0 10px 0 0;
+}
+.name_todo_head{
+	margin-left:39px;
+}
+.logs_pluss, .logs_minus{
+ width: 10px;
+ color: green;
+ cursor:pointer;
 
-.name_todo{
- width: 487px;
-  padding: 0 10px 0 0;
+}
+.display_todo_logs{
+	-moz-box-shadow: 0 3px 10px 1px #888;
+  -webkit-box-shadow: 0 3px 10px 1px#888;
+  box-shadow: 0 3px 10px 1px #888;
+  padding: 15px 10px 10px 10px;
+  background-color: #EEEEEE;
 }
 .name_todo_header{
  width: 512px;

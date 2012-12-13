@@ -56,7 +56,7 @@ jQuery.fn.select_projects_customers = function() {
    	$(this).dialog( "open" );
    	
    	var data_id = $(this).attr('data-id')
- 	
+ 	console.log(data_id)
 	if (data_id === undefined ) {
 		$(this).find("select#logProjectId").change(function(){
     	Change_select($(this).attr("log"), this.value.toString(), "project_todos")
@@ -86,7 +86,18 @@ jQuery.fn.UIdialogs_log_links = function(){
   var form = '#' + $(this).attr('id') + '_form'
   $(this).button().click(function(){
   	$(form).find(".date").datepicker({dateFormat: "yy-mm-dd"}).attr( 'readOnly' , 'true' );
-  	
+  	var log_time_from = $("#log_times_from_").val();
+    var log_time_to = $("#log_times_to_").val();
+    $(form).children(".new_log").validateWithErrors()
+  	$(form).find(".slider_range").slider({
+        range: true,
+        min: 0,
+        max: 1439,
+        values: [ time_to_value(log_time_from), time_to_value(log_time_to) ],
+        step:10,
+        slide: slideTime
+    });
+    $(form).find(".searchableS").chosen();
     $(form).select_projects_customers();
     });
 
@@ -98,7 +109,9 @@ jQuery.fn.UIdialogs_edit_logs_links = function(){
     var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
     var log_time_from = $("#log_times_from_" + data_id).val();
     var log_time_to = $("#log_times_to_" + data_id).val();
-    $(form_id).children(".edit_log").validateWithErrors();
+    var klass = $(form_id).children().attr('class')
+    console.log( form_id)
+    $(form_id).children("."+ klass).validateWithErrors();
     $(form_id).find("#slider_range_" + data_id).slider({
         range: true,
         min: 0,
@@ -107,10 +120,8 @@ jQuery.fn.UIdialogs_edit_logs_links = function(){
         step:10,
         slide: slideTime
     });
-    $("#log_date_edit_" + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-    // $(form_id).find(".big_select").selectmenu({width:369});
+    $("#log_date_edit_" + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );  
     $(form_id).find(".searchableSE").chosen();
-    
     $(form_id).select_projects_customers(data_id) 
     });
 
@@ -162,31 +173,25 @@ jQuery.fn.logs_pr_date_select = function(){
   };
 
 $(document).ready(function() {
-	$(".searchableS").chosen();
-	$(".searchableSE").chosen();
 	$(".searchableS_tracking").chosen();
-	$(".searchableS").trigger("liszt:updated");
-	
-  $("select#logs_pr_date_select").logs_pr_date_select();
-  $("#dialog_log").UIdialogs_log_links();
-  
-  $(".open_log_update").UIdialogs_edit_logs_links();
-  $(".new_log").validateWithErrors();
-  $(".range").find(":submit").button();
-  $(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-  $(".range_date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-$(".slider_range").slider({
-        range: true,
-        min: 0,
-        max: 1439,
-        values: [ 740, 1020 ],
-        step:10,
-        slide: slideTime
-    });
-    $(".open_tracking_select").UIdialogs_tracking_logs_links();
- 
-  $('#range_button').button().click(function() {
-  $('#range_form').submit();
-  return false;
-});
+  	$("select#logs_pr_date_select").logs_pr_date_select();
+	$("#dialog_log").UIdialogs_log_links();
+	$(".open_log_update").UIdialogs_edit_logs_links();
+	$(".range").find(":submit").button();
+	$(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+	$(".range_date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+	$(".slider_range").slider({
+	        range: true,
+	        min: 0,
+	        max: 1439,
+	        values: [ 740, 1020 ],
+	        step:10,
+	        slide: slideTime
+	    });
+	$(".open_tracking_select").UIdialogs_tracking_logs_links();
+	 
+	$('#range_button').button().click(function() {
+	$('#range_form').submit();
+		return false;
+	});
 })

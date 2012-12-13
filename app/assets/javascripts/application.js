@@ -17,14 +17,14 @@
 //= require far_right
 //= require logs
 //= require log_tracking
-//= require tabs
+
 //= require employees
 //= require timesheet
+
 //= require memberships
 //= require jquery.jclock
 //= require jquery.xcolor.min
 //= require nvd32/lib/d3.v2 
-
 
 //= require nvd32/src/core
 //= require nvd32/src/utils
@@ -67,20 +67,14 @@ jQuery.fn.submitWithAjax = function() {
 };
 //submitting dialog forms with ajax
 jQuery.fn.submit_dialog_WithAjax = function() {
+	console.log(this.attr("action"))
     $.post(this.attr("action"), $(this).serialize(), null, "script");
     $('.spinning').show(); 
     $(".dialog_form").dialog("close")
     return false;
 };
 
-jQuery.fn.mark_todo_done = function (){
-  this.live('click', function() { 
-    $('.spinning').show();
-    var todo_id =  $(this).attr("id");
-  
-  $.getScript("/mark_todo_done/" + todo_id)
-    })
-};
+
 jQuery.fn.membership = function (){
   this.live('click', function() { 
     $('.spinning').show();
@@ -126,6 +120,7 @@ jQuery.fn.disableUIdialogs = function(){
 
 
 jQuery.fn.validateWithErrors = function(){
+	console.log(this.attr("id"))
     $(this).validate({
      submitHandler: function(form) {  
     $(form).submit_dialog_WithAjax();
@@ -153,14 +148,16 @@ jQuery.fn.validateNoSubmit = function(){
 };
 
 jQuery.fn.UIdialogs_links = function(){
+	$(this).button().click(function(){
   var form = '#' + $(this).attr('id') + '_form'
   var date = '#' + $(this).attr('id') + '_date'
   var object = $(this).attr("data-object")
- 
-  $(this).button().click(function(){
+ console.log(object)
+  
   	$(form).UIdialogs();
       $(date).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-       $(form).children(".new_" + object).validateWithErrors();
+      console.log($(form).find(".new_" + object))
+       $(form).find(".new_" + object).validateWithErrors();
     
       $(form).dialog( "open" );
     
@@ -200,9 +197,9 @@ jQuery.fn.UIdialogs_edit_links = function(){
     var data_id = $(this).attr('data-id')
     var object = $(this).attr("data-object")
     var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
-    
+   console.log($(form_id).find(".edit_" + object))
     $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-    $(form_id).children(".edit_" + object).validateWithErrors();
+    $(form_id).find(".edit_" + object).validateWithErrors();
    	$(form_id).find("li").css("display", "");
     $(form_id).UIdialogs();
     $(form_id).dialog( "open" );
@@ -221,7 +218,6 @@ jQuery.fn.current_link = function(){
 
 
 
-
 //ok
   
 ///////////////////////////////////////////////////////////////document.ready///////////////////////////////////////////////////////
@@ -236,6 +232,7 @@ $(this).next().remove();
   
 $(document).ready(function() {	  
 	
+   
 	$('.left_slider').click(function(){
 	  $(".milestone_slider").animate({"left": "+=122px"}, "slow");
 	});
@@ -253,7 +250,6 @@ $(document).ready(function() {
    $(".display_help").display_help();
 //jquery UI dialogs
 
-  $("#dialog_milestone").UIdialogs_links();
   
   $("#dialog_task").UIdialogs_links();
   
@@ -275,7 +271,7 @@ $(document).ready(function() {
   $(".open_project_update").UIdialogs_edit_links();
   $(".open_user_update").UIdialogs_edit_links();
   $(".open_customer_update").UIdialogs_edit_links();
-  $(".open_milestone_update").UIdialogs_edit_links();
+  
   $(".open_todo_update").UIdialogs_edit_links();
 	
 	
@@ -283,7 +279,6 @@ $(document).ready(function() {
   $(".small_selector").selectmenu({width:200});
   $(".big_selector").selectmenu({width:369});
   
-  $(".range").find(":submit").button();
   $(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
   
   $(".show_avatar_upload").click(function(){
@@ -297,24 +292,7 @@ $(document).ready(function() {
   	return false	
   });
   
-//submitting new_project
-  $(".new_project_form").validateWithErrors();
 
-//submitting new_employee   
-    $(".new_employee").validateWithErrors();
-//    $(".edit_employee").validateWithErrors();
-//submitting new_milestone  
-   $(".new_milestone").validateWithErrors();
-   $("#employee_formtastic").validateWithErrors();
-//submitting new_project
-   $(".new_project").validateWithErrors();
-//   $(".edit_project").validateWithErrors();
-//submitting new_todo
-   	$(".new_todo").validateWithErrors();
-   	$(".edit_todo").validateWithErrors();
-   	$(".searchableTaskCustomer").chosen();
-//submitting new_log
-   	$(".new_log").validateWithErrors();
  	$(".tracking_log").submitWithAjax();
 	$("#form_holder").find(".edit_log").submitWithAjax();
 	
@@ -337,20 +315,20 @@ $(document).ready(function() {
   
 	});
 
- $("input.done_box").mark_todo_done();
+
  $("input.membership").membership();
  $(".register_firm").validateNoSubmit();
  $(".first_user").validateNoSubmit();
 $(".range_date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
    
-   $(".slider_range").slider({
-        range: true,
-        min: 0,
-        max: 1439,
-        values: [ 740, 1020 ],
-        step:10,
-        slide: slideTime
-    });
+   // $(".slider_range").slider({
+        // range: true,
+        // min: 0,
+        // max: 1439,
+        // values: [ 740, 1020 ],
+        // step:10,
+        // slide: slideTime
+    // });
 
 //non-ajax search
    $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li', {

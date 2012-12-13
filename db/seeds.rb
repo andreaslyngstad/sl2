@@ -29,7 +29,7 @@ puts 'New firm created: ' << firm1.name
 firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong"
 puts 'New firm created: ' << firm2.name
 puts 'SETTING UP EXAMPLE USERS'
-user1 = User.create! :name => 'andreas lyngstad', :firm_id => "1", :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
+user1 = User.create! :name => 'Andreas Lyngstad', :firm_id => "1", :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 puts 'New user created: ' << user1.name
 user2 = User.create! :name => 'Axel pharo', :firm_id => "1", :email => 'axel@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 puts 'New user created: ' << user2.name

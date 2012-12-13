@@ -25,6 +25,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'bullet'
   gem 'quiet_assets'
   gem 'debugger'
   gem 'thin'
@@ -32,6 +33,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem "factory_girl_rails", "~> 4.0"
+  gem 'ruby-prof'
   #gem 'turn' 
   #gem "spork-minitest", "~> 1.0.0.beta1"
   gem 'database_cleaner'

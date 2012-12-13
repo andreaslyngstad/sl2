@@ -1,15 +1,15 @@
-
 class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   require "./lib/timehelp"
 	include UrlHelper
 	include SubdomainLogin
 	
-  before_filter :set_mailer_url_options, :find_firm
-	before_filter :authenticate_user!, :exept => [:after_sign_in_path_for, :sign_in_and_redirect, :check_firm_id, :current_subdomain]
+  before_filter :set_mailer_url_options, :all_users,
+  :authenticate_user!, 
+  :exept => [:after_sign_in_path_for, :sign_in_and_redirect, :check_firm_id, :current_subdomain]
   helper :layout
   helper_method :current_firm, :is_root_domain?, :can_sign_up?, :current_subdomain, :time_zone_now, :ftz, :time_range_to_day
-  skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
+  # skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
@@ -38,13 +38,7 @@ class ApplicationController < ActionController::Base
       return current_subdomain
   end
   
-  def find_firm
-    subdom = request.subdomain
-    if subdom.match(/^www|^WWW/)
-     subdom = subdom.gsub(/^www.|^WWW./, '')
-    end
-      @firm = Firm.find_by_subdomain(subdom) || not_found
-  end
+  
   
   def not_found
       raise ActionController::RoutingError.new('Not Found')
@@ -64,11 +58,16 @@ class ApplicationController < ActionController::Base
 	time.in_time_zone(current_firm.time_zone)
   end
   def current_firm
-    Firm.find_by_subdomain! request.subdomain
+    @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
     # return @current_firm if defined?(@current_firm)
     # @current_firm = current_user.firm
   end
-     
+  def all_users
+    @all_users ||= current_firm.users.order("name")
+  end  
+  def all_projects
+    @all_projects ||= current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
+  end  
   private
 
   def check_firm_id
@@ -82,8 +81,7 @@ class ApplicationController < ActionController::Base
     if params_log_id != "0"
     @log = Log.find(params_log_id)
     end
-    @firm = current_firm
-    @customers = @firm.customers
+    @customers = current_firm.customers
   end
   def record_not_found
     flash[:notice] = "No record found"

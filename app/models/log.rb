@@ -79,7 +79,8 @@ class Log < ActiveRecord::Base
   def self.hours_by_day_and_model(firm, range, model)
     model_id = model.to_s + "_id"
     logs = firm.logs
-    .where(log_date: range)
+    .where(:log_date => range)
+    .where(Log.arel_table[:end_time].not_eq(nil))
     .includes(model)
     .group([:log_date, model_id.intern])
     .select("sum(hours) as total_hours, log_date, #{model_id}")     

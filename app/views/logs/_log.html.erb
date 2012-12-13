@@ -2,7 +2,7 @@
  <div id="log_info_<%=log.id%>" class="info" data-log="<%= log.id %>">
  	<div class="gravatar_on_log">
  
- 	<%= image(log.user, "image32") %>
+ 	<%= link_to image(log.user, "image32"),user_path(log.user), :title => "#{log.user.name}" %>
  	</div>
   <div class="event_on_log">
     <%= log.event %>

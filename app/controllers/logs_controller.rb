@@ -3,12 +3,12 @@ class LogsController < ApplicationController
   # GET /logs
   # GET /logs.xml
   def index
-    @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
+    @all_projects = current_user.projects.where(["active = ?", true])
     @customers = current_firm.customers
-    @user = current_user
+    
     @logs = current_firm.logs.where(:log_date => Date.today).order("updated_at DESC").includes(:project, :todo, :user, :customer, :employee )
     if !current_user.logs.blank?
-    @log = Log.where("end_time IS ?",nil).last
+    @log = current_user.logs.where("end_time IS ?",nil).last
     if @log.nil?
        @log_new = Log.new
     end
@@ -169,7 +169,6 @@ class LogsController < ApplicationController
     if params[:log_id] != "0"
     @log = Log.find(params[:log_id])
     end
-    @firm = current_firm
     if params[:customer_id] != "0"
     @customer = Customer.find(params[:customer_id])
     @employees = @customer.employees
@@ -294,5 +293,10 @@ class LogsController < ApplicationController
       end
     end
   end
-	
+	def get_logs_todo
+	  @todo = Todo.find(params[:todo_id])
+	  @logs = @todo.logs
+	  @all_projects = current_user.projects.where(["active = ?", true])
+	  @customers = current_firm.customers
+	end
 end
