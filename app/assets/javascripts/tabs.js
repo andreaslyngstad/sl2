@@ -1,11 +1,7 @@
 $(document).ready(function() {
-	
   $(window).bind( 'hashchange', function(e) {
-  
     var url = e.fragment;
-    console.log(url)
     if (url !== ""){
-	    
 	    var id = ("#" + url)
 	    var get_url = $( 'a[href="#' + url + '"]' ).attr("data-url")
 	    $( '#sub_tabs li.active' ).removeClass( 'active' );
@@ -23,11 +19,9 @@ $(document).ready(function() {
 	{
 		$( '#sub_tabs li:first' ).addClass( 'active' );
 		var get_url = $( '#sub_tabs li:first' ).find("a").attr("data-url")
+		$(".spinning").show()
 		$.get(get_url)	
 	}
     })
-    
   $(window).trigger( 'hashchange' );
-  
-	
 })

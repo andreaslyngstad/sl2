@@ -4,9 +4,10 @@ class TabsController < ApplicationController
     @milestones = get_klass(params[:class]).find(params[:id]).milestones.order("due ASC")
   end
   def todos  
+    time_range = (Time.now.midnight - 7.day)..(Time.now.midnight + 7.day)
     @klass = get_klass(params[:class]).find(params[:id])
-    @done_todos = get_klass(params[:class]).find(params[:id]).todos.where(["completed = ?", true]).includes( {:user => [:memberships]}, :logs, :project).order("due ASC")
-    @not_done_todos = get_klass(params[:class]).find(params[:id]).todos.where(["completed = ?", false]).includes({:user => [:memberships]}, :logs, :project).order("due ASC") 
+    @done_todos = get_klass(params[:class]).find(params[:id]).todos.where(["completed = ?", true]).where(:due => time_range).includes( {:user => [:memberships]}, :logs, :project).order("due ASC")
+    @not_done_todos = get_klass(params[:class]).find(params[:id]).todos.where(["completed = ?", false]).where(:due => time_range).includes({:user => [:memberships]}, :logs, :project).order("due ASC") 
      @members = current_firm.users
   end
   def logs

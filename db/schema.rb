@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "customers", ["firm_id"], :name => "index_customers_on_firm_id"
+
   create_table "employees", :force => true do |t|
     t.string   "name"
     t.string   "phone"
@@ -31,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "employees", ["customer_id"], :name => "index_employees_on_customer_id"
 
   create_table "firms", :force => true do |t|
     t.string   "name"
@@ -67,12 +71,22 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "logs", ["customer_id"], :name => "index_logs_on_customer_id"
+  add_index "logs", ["employee_id"], :name => "index_logs_on_employee_id"
+  add_index "logs", ["firm_id"], :name => "index_logs_on_firm_id"
+  add_index "logs", ["project_id"], :name => "index_logs_on_project_id"
+  add_index "logs", ["todo_id"], :name => "index_logs_on_todo_id"
+  add_index "logs", ["user_id"], :name => "index_logs_on_user_id"
+
   create_table "memberships", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "memberships", ["project_id"], :name => "index_memberships_on_project_id"
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "milestones", :force => true do |t|
     t.text     "goal"
@@ -83,6 +97,9 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "milestones", ["firm_id"], :name => "index_milestones_on_firm_id"
+  add_index "milestones", ["project_id"], :name => "index_milestones_on_project_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
@@ -97,6 +114,9 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "projects", ["customer_id"], :name => "index_projects_on_customer_id"
+  add_index "projects", ["firm_id"], :name => "index_projects_on_firm_id"
+
   create_table "todos", :force => true do |t|
     t.text     "name"
     t.integer  "user_id"
@@ -104,11 +124,18 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.integer  "project_id"
     t.integer  "customer_id"
     t.integer  "done_by_user_id"
+    t.integer  "prior"
     t.date     "due"
     t.boolean  "completed"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  add_index "todos", ["customer_id"], :name => "index_todos_on_customer_id"
+  add_index "todos", ["done_by_user_id"], :name => "index_todos_on_done_by_user_id"
+  add_index "todos", ["firm_id"], :name => "index_todos_on_firm_id"
+  add_index "todos", ["project_id"], :name => "index_todos_on_project_id"
+  add_index "todos", ["user_id"], :name => "index_todos_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "role"
@@ -138,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["firm_id"], :name => "index_users_on_firm_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

@@ -1,14 +1,15 @@
 var tab = $("li.active").children("a").attr("href")
 $(tab).append("<%= j( render :partial => "logs/listing_logs")  %>")
-$("select#logs_pr_date_select").logs_pr_date_select();
 $("#dialog_log").UIdialogs_log_links();
-
-$('#range_button').button().click(function() {
-  $('#range_form').submit();
-  return false;
-});
 $("select#logs_pr_date_select").logs_pr_date_select();
 $(".small_selector").selectmenu({width:200});
-$(".range_date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+$(".range_date").datepicker({ 
+		dateFormat: "yy-mm-dd", 
+		onSelect: function() {
+			console.log("test")
+			$('#range_form').submit();
+		
+  		}
+  		}).attr( 'readOnly' , 'true' )
 $(".open_log_update").UIdialogs_edit_logs_links();
 $(".spinning").hide()

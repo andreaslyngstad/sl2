@@ -9,7 +9,7 @@ function stackedAndPie(data, ColorArray) {
     }
 }
 	data.stacked.map(function(d){
-		console.log(d.values.last())
+		
 		
 		});
 	function disableSetter(area, id, graph, label){

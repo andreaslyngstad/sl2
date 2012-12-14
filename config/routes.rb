@@ -86,9 +86,6 @@ Squadlink::Application.routes.draw do
     match "/account" => "private#account",  :as => :account
     match "/home_user" => "private#home_user",  :as => :home_user
     match "/upgrade" => "private#upgrade",  :as => :upgrade
-    match "/logs_pr_date/:time/:url" => "private#logs_pr_date", :as => :logs_pr_date
-    match "/logs_pr_date/:time/:url/:id" => "private#logs_pr_date", :as => :logs_pr_date
-    match "/log_range/" => "private#log_range", :as => :log_range
     
     match "/membership/:id/:project_id" => "private#membership", :as => :membership
     match "/get_logs/:customer_id" => "private#get_logs", :as => :get_logs
@@ -105,6 +102,12 @@ Squadlink::Application.routes.draw do
     #roster
     match "/roster_milestone" => "roster#get_milestones", :as => :roster_milestone
     match "/roster_task" => "roster#get_tasks", :as => :roster_task
+    #timerange
+    match "/logs_pr_date/:time/:url" => "timerange#logs_pr_date", :as => :logs_pr_date
+    match "/logs_pr_date/:time/:url/:id" => "timerange#logs_pr_date", :as => :logs_pr_date
+    match "/log_range/" => "timerange#log_range", :as => :log_range
+    match "/todo_range/" => "timerange#todo_range", :as => :todo_range
+    match "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date
     resources :customers
     resources :employees
     resources :projects

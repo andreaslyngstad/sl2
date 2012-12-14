@@ -8,6 +8,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.integer :firm_id, :null => false
       t.timestamps
     end
+    add_index :customers, :firm_id
   end
 
   def self.down

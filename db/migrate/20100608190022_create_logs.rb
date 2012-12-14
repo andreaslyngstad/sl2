@@ -15,6 +15,13 @@ class CreateLogs < ActiveRecord::Migration
       t.float :hours
       t.timestamps
     end
+    
+    add_index :logs, :firm_id
+    add_index :logs, :user_id
+    add_index :logs, :project_id
+    add_index :logs, :employee_id
+    add_index :logs, :todo_id
+    add_index :logs, :customer_id
   end
 
   def self.down

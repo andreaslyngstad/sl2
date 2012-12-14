@@ -16,9 +16,6 @@ function prepareAndCallJson(){
 $(document).ready(function() {	
 	var from = $(".one_month_back").data("lastmonth") 
 	var to = $(".one_month_back").data("today")
-	console.log(to)
-	console.log(from)
-
 	$.getJSON('/users_logs/' + from  + '/' + to + '.json', function(data) {
 	  stackedAndPie(data, users_logsColorArray)      
 	}); 

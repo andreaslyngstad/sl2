@@ -12,8 +12,7 @@ module LogsHelper
     if params_log_id != "0"
     @log = Log.find(params_log_id)
     end
-    @firm = current_firm
-    @customers = @firm.customers
+    @customers = current_firm.customers
   end
   
   def log_hour_on_day(date, id)

@@ -1,16 +1,40 @@
 <div id="todos_list">
+	<div class="one_week_back" data-lastweek="<%= Date.today - 1.week %>" data-nextweek="<%= Date.today + 1.week %>"></div>
 	<div class="log_menu">
 	  <span class="add_some">  
 	    <a id="dialog_todo" data-object="todo">Add another</a>
+	    <div class="range" >	   
+	    <%= form_tag('/todo_range', :id => "todo_range_form", :remote => true) do -%>
+	    <%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
+	    <%= hidden_field_tag "id", @klass ? @klass.id : "index"%>
+	    <div id="range_date_fields">
+		  	<%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "todo_range_date"%>
+			<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "todo_range_date"  %>
+		</div>
+		<% end %>
+   	</div>
+   	 <div class="logs_pr_date">
+      <select class="small_selector" id="todos_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
+           <option value="to_day">To day</option>
+           <option value="this_week">This week</option>
+           <option value="this_month">This month</option>
+           <option value="this_year">This year</option>   
+           <option value="yesterday">Yesterday</option>
+           <option value="last_week">Last week</option>
+           <option value="last_month">Last month</option>
+           <option value="last_year">Last year</option>   
+          </select>
+    </div> 
 	    <div id="dialog_todo_form" class="dialog_form" title="Create new task <%= @klass.name %>" style="display:none;">
 	    	<ul>
 	        <%= form_for @klass.todos.build do |f| %>
 	        <%= f.hidden_field :project_id %>
+	        <%= f.hidden_field :completed, :value => false%>
 	        <%= f.hidden_field :firm_id, :value => current_firm.id%>
 	          <li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
 	          <li><%= f.label :user_id %>
 	            <select class="searchableTaskCustomer" name="todo[user_id]"><option value="">Select user</option>
-		          <%for user in @members do %>
+		          <%for user in @all_users do %>
 		          <option value="<%=user.id.to_i%>"<%if user == current_user%>selected="<%=current_user.id.to_i%>"<%end%>>
 		          <%= user.name %></option>
 		          <% end %>

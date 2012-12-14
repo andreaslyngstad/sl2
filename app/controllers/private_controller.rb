@@ -135,46 +135,6 @@ class PrivateController < ApplicationController
      
   end
 
-  def logs_pr_date
-    @customers = current_firm.customers.includes(:employees)
-    @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
-	    if params[:time] == "to_day"
-	    time_range = (Time.now.midnight)..(Time.now.midnight + 1.day)
-	    elsif params[:time] == "this_week"
-	    time_range = (Time.now.beginning_of_week)..(Time.now.midnight + 1.day)   
-	    elsif params[:time] == "this_month"
-	    time_range = (Time.now.beginning_of_month)..(Time.now.midnight + 1.day)	  
-	    elsif params[:time] == "this_year"
-	    time_range = (Time.now.beginning_of_year)..(Time.now.midnight + 1.day)   
-	    elsif params[:time] == "yesterday"
-	    time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)   
-	    elsif params[:time] == "last_week"
-	    time_range = (Time.now.beginning_of_week - 7.day)..(Time.now.beginning_of_week - 1.second)   
-	    elsif params[:time] == "last_month"
-	    time_range = (Time.now.beginning_of_month - 1.month)..(Time.now.beginning_of_month - 1.second)   
-	    elsif params[:time] == "last_year"
-	    time_range = (Time.now.beginning_of_year - 1.year)..(Time.now.beginning_of_year - 1.second)   
-	    end  
-	   find_logs_on(params[:url], time_range) 
-  end
-  def log_range
-    @customers = current_firm.customers.includes(:employees)
-    @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
-  	time_range = ((Date.parse(params[:from]).midnight - 1.day)..Date.parse(params[:to]).midnight)
-    find_logs_on(params[:url], time_range)
-  end
-  
-  def find_logs_on(url, time_range)
-    if url == "index"
-      logs_on = current_firm 
-    else
-      logs_on = eval(url).find(params[:id])
-    end
-    @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee )
-  end
-  
-  
-  
   def membership
   	@firm = current_user.firm
   	@project = Project.find(params[:project_id])

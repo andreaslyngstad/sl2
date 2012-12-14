@@ -11,6 +11,8 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :customer_id
       t.timestamps
     end
+    add_index :projects, :firm_id
+    add_index :projects, :customer_id
   end
 
   def self.down

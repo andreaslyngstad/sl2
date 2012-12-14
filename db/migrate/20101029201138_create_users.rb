@@ -11,6 +11,8 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :loginable_id
       t.string :loginable_token
     end
+    add_index :users, :firm_id
+   
   end
 
   def self.down

@@ -9,6 +9,10 @@ class CreateMilestones < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :milestones, :firm_id
+    add_index :milestones, :project_id
+   
+
   end
 
   def self.down

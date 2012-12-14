@@ -7,10 +7,17 @@ class CreateTodos < ActiveRecord::Migration
       t.integer :project_id
       t.integer :customer_id
       t.integer :done_by_user_id
+      t.integer :prior
       t.date :due
       t.boolean :completed
       t.timestamps
     end
+    
+    add_index :todos, :firm_id
+    add_index :todos, :user_id
+    add_index :todos, :project_id
+    add_index :todos, :customer_id
+    add_index :todos, :done_by_user_id
   end
 
   def self.down

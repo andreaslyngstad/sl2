@@ -21,7 +21,7 @@
   <div class="project_todo smaller"><% if todo.project %><%=todo.project.name%><% end %></div>
   <div class="user_todo smaller"><% if todo.user %><%= todo.user.name %><% end %></div>
   
-  <div class="date_all"><%= todo.due.strftime('%d.%m.%y')%> </div>
+  <div class="date_all <% if todo.overdue %>red<% end %><% if todo.due_to_day %>green<% end %>"><%= todo.due.strftime('%d.%m.%y')%> </div>
    <div class="delete_edit">
   <span class="open_todo_update edit" id="todo_update" data-id="<%= todo.id %>" data-object="todo">edit</span>
   <%= link_to "delete", todo, :confirm => "Are you sure?", :title => "Delete task", :method => :delete, :class => "delete_todo delete", :remote => true%>

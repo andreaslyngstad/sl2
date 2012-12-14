@@ -177,9 +177,15 @@ $(document).ready(function() {
   	$("select#logs_pr_date_select").logs_pr_date_select();
 	$("#dialog_log").UIdialogs_log_links();
 	$(".open_log_update").UIdialogs_edit_logs_links();
-	$(".range").find(":submit").button();
 	$(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-	$(".range_date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+	$(".range_date").datepicker({ 
+		dateFormat: "yy-mm-dd", 
+		onSelect: function() {
+			console.log("test")
+			$('#range_form').submit();
+		
+  		}
+		}).attr( 'readOnly' , 'true' )
 	$(".slider_range").slider({
 	        range: true,
 	        min: 0,
@@ -189,9 +195,4 @@ $(document).ready(function() {
 	        slide: slideTime
 	    });
 	$(".open_tracking_select").UIdialogs_tracking_logs_links();
-	 
-	$('#range_button').button().click(function() {
-	$('#range_form').submit();
-		return false;
-	});
 })

@@ -15,9 +15,9 @@
 		  	<%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date"%>
 			<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date"  %>
 		</div>
-	   	<a id="range_button">Find</a>
+		<% end %>
    	</div>
- <% end -%>
+ 
     <div class="logs_pr_date">
       <select class="small_selector" id="logs_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
            <option value="to_day">To day</option>
