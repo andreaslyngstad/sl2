@@ -10,6 +10,7 @@
 @import "jquery.ui.selectmenu";
 @import "sl_graphs";
 
+
 html, body{
   margin:0;
   padding:0;
@@ -19,6 +20,11 @@ html, body{
  
   background-color: #ffffff;
   }
+textarea{
+	height: 200px;
+	width: 369px;
+}
+
 body a{text-decoration: none; color:#000;}
 body a:hover {text-decoration: underline; color:#000;}
 body, ul, li{list-style-type:none;}
@@ -233,19 +239,14 @@ max-width: 980px;
 #navigation li.current_main a{
   color:white;
   }
-
-#pointer {
-	
-    background: url("pointer.png") no-repeat scroll left top transparent;
-    
+#pointer {	
+    background: url("pointer.png") no-repeat scroll left top transparent;   
     height: 75px;
     display: inline;
     position: absolute;
-
     left:0;
     width: 200px;
     z-index: 10;
-
 }
 #pointer-text {
 	padding: 20px 0px 0 40px;
@@ -253,10 +254,7 @@ max-width: 980px;
 	float: left;
 	font-size: 20px;
 }
-
-
 .gravatar{
-
 display: inline-block;
 margin-right: 10px;
 width: 32px;
@@ -307,11 +305,6 @@ left:20px;
 .dialog_form input#user_roles_admin {width:15px; float:left;}
 .dialog_form input#user_roles_member {width:15px; float:left;}
 .dialog_form input#user_roles_external_user {width:15px; float:left;}
-
-
-
-
-
 #tabs{
 float:left;
 width:980px;
@@ -328,30 +321,16 @@ border-radius: 0px;
 -webkit-border-radius: 0px;
 border-radius: 0px;
 }
-
-
-
-
 input.error  {border:1px solid red }
-
 div.error{
   width:355px;
-  
   font-size:12px;
-  
   color:red;
   white-space:nowrap;
   padding-top: 2px;
   padding-right: 10px;
   padding-bottom: 2px;
-
-  
-  
 }
-
-
-
-
 .indicator {position:absolute; top:28px;left:180px;width:15px;height:15px; display:block; background: url('spinner.gif') no-repeat right !important; }
 a.quick_link {
 cursor: pointer; font-size:12px; color:red;
@@ -843,6 +822,15 @@ background-color:#FCD7DB;
 .green{
   background-color:#B0FFA8;
 }
+.todo_red{
+background-color:#FF3333;
+}
+.todo_yellow{
+background-color:#F2EA00;
+}
+.todo_green{
+background-color:#14F200;
+}
 input.start{
 cursor: pointer;
 background:url(start64.png);
@@ -1106,7 +1094,7 @@ border-bottom: 1px solid #E5E5E5;
 /*all view*/
 .gravatar_on_log,.event_on_log,.pro_tod_cus_emp_on_log,
 .cus_emp_on_log, .pro_tod_on_log,.date_and_times_on_log, 
-.delete_edit, .name_todo, .name_todo_head, .name_todo_header,.name_milestone ,.date_all, .user_todo, .project_todo, 
+.delete_edit, .name_todo, .name_todo_head, .name_todo_header,.name_milestone ,.date_all, .user_todo, .priority_todo, .customer_todo, .project_todo, 
 .delete_edit_archive, .logs_pluss, .logs_minus{
 display: inline-block;
   vertical-align:top;
@@ -1162,7 +1150,7 @@ font-weight: bold;
 
 /*log end*/
 /*Todo view begin*/
-#done_tasks .name_todo, #done_tasks .user_todo, #done_tasks .date_all, #done_tasks .delete_edit{
+#done_tasks .name_todo{
   text-decoration:line-through;
 }
 .edit_todo{
@@ -1171,11 +1159,11 @@ font-weight: bold;
 	display: inline;
 }
 .name_todo, .name_todo_head{
- 	width: 487px;
+ 	width: 377px;
   	padding: 0 10px 0 0;
 }
 .name_todo_head{
-	margin-left:39px;
+	margin-left:49px;
 }
 .logs_pluss, .logs_minus{
  width: 10px;
@@ -1194,12 +1182,16 @@ font-weight: bold;
  width: 512px;
   padding: 0 10px 0 0;
 }
-.user_todo{
- width: 150px;
+.user_todo, .customer_todo{
+ width: 130px;
 
 }
 .project_todo{
- width: 120px;
+ width: 100px;
+}
+.priority_todo{
+	width: 10px;
+	height: 20px;
 }
 .date_all{
 	width: 60px;
@@ -1432,4 +1424,8 @@ letter-spacing: 1px;
 .ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
 .ui-timepicker-div td { font-size: 12px; }
 
-
+input[type="radio"]{
+	vertical-align:middle; 
+	margin-bottom: 4px;
+	width: 10px;
+}

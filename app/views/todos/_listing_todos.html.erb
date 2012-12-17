@@ -32,20 +32,26 @@
 	        <%= f.hidden_field :completed, :value => false%>
 	        <%= f.hidden_field :firm_id, :value => current_firm.id%>
 	          <li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
+	          <li><%= f.label :Priority %>
+	          	<%= f.radio_button :prior, 1, :checked => true %><%= label :role, 'Normal' %>
+	          	<%= f.radio_button :prior, 2 %><%= label :role, 'Middle' %>
+	          	<%= f.radio_button :prior, 3 %><%= label :role, 'High' %>
+	          </li>
 	          <li><%= f.label :user_id %>
 	            <select class="searchableTaskCustomer" name="todo[user_id]"><option value="">Select user</option>
-		          <%for user in @all_users do %>
+		          <%for user in all_users do %>
 		          <option value="<%=user.id.to_i%>"<%if user == current_user%>selected="<%=current_user.id.to_i%>"<%end%>>
 		          <%= user.name %></option>
 		          <% end %>
 	            </select> 
 	          </li>
+	          
 	          <% if @klass.class == Customer %>
 	          <%= f.hidden_field :customer_id, :value => @klass.id%>
 	          <li><%= f.label :project_id %>
 		          	<select class="searchableTaskCustomer" name="todo[project_id]">
 		          		<option value="">Select project</option>
-			          	<% current_firm.projects.each do |project| %>
+			          	<% all_projects.each do |project| %>
 			          	<option value="<%=project.id.to_i%>"><%= project.name %></option>
 			          	<% end %>
 		          	</select> 
@@ -69,7 +75,7 @@
 		       <li><%= f.label :customer_id %>
 		          	<select class="searchableTaskCustomer" name="todo[customer_id]">
 		          		<option value="">Select customer</option>
-			          	<% current_firm.customers.each do |customer| %>
+			          	<% all_customers.each do |customer| %>
 			          	<option value="<%=customer.id.to_i%>"><%= customer.name %></option>
 			          	<% end %>
 		          	</select> 
@@ -77,13 +83,13 @@
 			   <li><%= f.label :project_id %>
 		          	<select class="searchableTaskCustomer" name="todo[project_id]">
 		          		<option value="">Select project</option>
-			          	<% current_firm.projects.each do |project| %>
+			          	<% all_projects.each do |project| %>
 			          	<option value="<%=project.id.to_i%>"><%= project.name %></option>
 			          	<% end %>
 		          	</select> 
 			   </li>
 			   <% end %>
-	          <li><%= f.label :due %><%= f.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_task_date" %></li>
+	          <li><%= f.label :due %><%= f.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_todo_date" %></li>
 	          <li><%= f.submit "Save", :class => 'submit' %></li>
 	      <% end %>
 	      </ul>
@@ -91,17 +97,19 @@
 	  </span>
    </div>
 	<div class="info"> 
+			
 		<div class="name_todo_head info_head">Task</div>
 		<div class="project_todo info_head">Project</div>
 		<div class="user_todo info_head">Assigned to</div>
+		<div class="customer_todo info_head">Customer</div>
 	  	<div class="date_all info_head">Due</div>
 	</div>
 	<div id="not_done_tasks">
-		<%= render @not_done_todos %>
+		<%= render :partial => "todos/todo", :collection => @not_done_todos, :as => :todo %>
 	</div>
 	    <br/>
 	<div id="done_tasks">	
 		<div class="name_todo_head info_head">Done</div>
-		<%= render @done_todos %>
+		<%= render :partial => "todos/todo" , :collection => @done_todos, :as => :todo %>
 	</div> 
 </div>

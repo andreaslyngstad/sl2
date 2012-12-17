@@ -1,9 +1,9 @@
-var object = "<%= escape_javascript(@model) %>"
-var id = "<%= escape_javascript(@model_instanse.id.to_s) %>"
+var object = "<%= escape_javascript(@klass.class.to_s.downcase) %>"
+var id = "<%= escape_javascript(@klass.id.to_s) %>"
 
 $("#" + object + "_update_" + id + "_form").UIdialogs();
 $("#" + object + "_update_" + id + "_form").children(".edit_" + object).validateWithErrors();
 $("#" + object + "_update_" + id + "_form").dialog( "open" );
-
-$("#" + object + "_update_" + id + "_form").prepend("<%= escape_javascript( render :partial => "shared/validation_error", :locals => { :object => @model_instanse })  %>");
+$("#" + object + "_update_" + id + "_form").find("#error_explanation").remove()
+$("#" + object + "_update_" + id + "_form").prepend("<%= escape_javascript( render :partial => "shared/validation_error", :locals => { :object => @klass })  %>");
 $(".spinning").hide();

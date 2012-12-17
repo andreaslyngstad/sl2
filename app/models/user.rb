@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   has_many :done_todos, :class_name => "Todo", :foreign_key => "done_by_user"
   belongs_to :firm
   validates_presence_of :name
-  validates :email, :presence => true, :uniqueness => true, :email_format => true
+  validates :email, :presence => true, :email_format => true
 
   
  # def user_role

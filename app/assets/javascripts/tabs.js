@@ -9,7 +9,6 @@ $(document).ready(function() {
 	    $(id).siblings().addClass("hide");
 	    $(id).removeClass("hide");
 	    $(".has_url").children().remove()
-	    console.log(get_url)
 	    if (typeof(get_url) !== "undefined"){
 	    	$(".spinning").show()
 	    	$.get(get_url)	

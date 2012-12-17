@@ -10,7 +10,7 @@ class ChartData
   def logs_by_day(logs)
     days_with_hours = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
       logs.each do |log|
-        if log.total_hours > 10.0
+        if log.total_hours.to_f > 10.0
         if log.send(@model) 
           days_with_hours[log.send(@model).name][log.log_date] = log.total_hours
         else
@@ -81,7 +81,7 @@ class ChartData
       else
         output << '{ "label" : "No ' + model.to_s + '",'
       end
-       log.total_hours < 10.0 ? output << '"value" : 0.01},': output << '"value" : ' + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + '},'
+       log.total_hours.to_f < 10.0 ? output << '"value" : 0.01},': output << '"value" : ' + TimeHelp.new.time_to_hours_test(log.total_hours).to_s + '},'
     end
     output.chomp!(',')
     output << ']}]'

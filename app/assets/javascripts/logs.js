@@ -107,22 +107,8 @@ jQuery.fn.UIdialogs_edit_logs_links = function(){
   $(this).click(function(){
     var data_id = $(this).attr('data-id')
     var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
-    var log_time_from = $("#log_times_from_" + data_id).val();
-    var log_time_to = $("#log_times_to_" + data_id).val();
-    var klass = $(form_id).children().attr('class')
-    console.log( form_id)
-    $(form_id).children("."+ klass).validateWithErrors();
-    $(form_id).find("#slider_range_" + data_id).slider({
-        range: true,
-        min: 0,
-        max: 1439,
-        values: [ time_to_value(log_time_from), time_to_value(log_time_to) ],
-        step:10,
-        slide: slideTime
-    });
-    $("#log_date_edit_" + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );  
-    $(form_id).find(".searchableSE").chosen();
-    $(form_id).select_projects_customers(data_id) 
+    $.get("/logs/" + data_id + "/edit/")
+    
     });
 
 };

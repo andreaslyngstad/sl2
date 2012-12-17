@@ -10,8 +10,6 @@
 		<%=h @klass.name %>
 </div>
 <div id="description">
-  
-	<%=h @klass.name %><br/>
 	Phone:
 	<%=h @klass.phone %><br/>
 	Email:
@@ -34,16 +32,9 @@
   </ul>
   <span class="nav_line"></span>
     </nav>
-  <div class="boxes">
-  	
-  <div class="tab_box has_url" id="tabs-1"> 
-  	
-  </div>	
-  <div class="tab_box hide has_url" id="tabs-2">
- 	
-  </div>
-  
-  
+  <div class="boxes">	
+  <div class="tab_box has_url" id="tabs-1"></div>	
+  <div class="tab_box hide has_url" id="tabs-2"></div>
   <div class="tab_box hide" id="tabs-3"> 
   	<div id="listing_projects">
   	<div class="log_menu">
@@ -54,7 +45,7 @@
       <%= form_for(@project) do |p| %>
       <%= p.hidden_field :customer_id %>
       <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
-      <li><%= p.label :description %><%= p.text_field :description %></li>
+      <li><%= p.label :description %><%= p.text_area :description %></li>
       <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date"   %></li>
       <li><%= p.submit 'Save', :class => 'submit' %></li>
       <% end %>

@@ -54,7 +54,8 @@ jQuery.fn.submitDoneWithAjax = function(id) {
   	 var id = $(this).attr("id")
   	 $("#edit_done_todo_" + id).submitDoneWithAjax(id)
   });
- $(".logs_pluss").click(function() { 
+ $(".logs_pluss").click(function() {
+ 	$(".flash_notice").empty() 
  	$(".spinning").show();
  	$(this).hide()
  	$(this).next(".logs_minus").show()
@@ -63,7 +64,8 @@ jQuery.fn.submitDoneWithAjax = function(id) {
   	$.get("/get_logs_todo/" + id)
   });
    
- $(".logs_minus").click(function() { 
+ $(".logs_minus").click(function() {
+ 	$(".flash_notice").empty() 
  	var id = $(this).attr("id")
  	$("#todo_logs_"+ id ).slideUp()
  	$("#todo_logs_"+ id ).children().empty().remove()

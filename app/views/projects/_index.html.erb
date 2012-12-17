@@ -9,12 +9,14 @@
 		
 		<div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
       <%= form_for(@project) do |p| %>
-    
-      <li><%= p.label :name %><%= p.text_field :name, :class => "required"%></li>
-      <li><%= p.label :description %><%= p.text_field :description %></li>
-      <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date" %></li>
-      <li><%= p.label :customer_id %><%= p.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer")%></li>
-      <li><%= p.submit 'Save', :class => 'submit' %></li>
+      <%= p.hidden_field :firm_id, :value => current_firm.id%>
+      <ul>
+	      <li><%= p.label :name %><%= p.text_field :name, :class => "required"%></li>
+	      <li><%= p.label :description %><%= p.text_area :description %></li>
+	      <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date" %></li>
+	      <li><%= p.label :customer_id %><%= p.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer")%></li>
+	      <li><%= p.submit 'Save', :class => 'submit' %></li>
+      </ul>
       <% end %>
       </div>
 	    <div class="search">
@@ -23,28 +25,7 @@
 	</div>
 	<div id="cus_pro_us_listing_container">
   <ul id="cus_pro_us_listing">
-  	
-    <% for project in @projects %>
-  <li class="tab_list" id="project_<%= project.id.to_s %>"> 
-  <div class="tab_list_text">
- <%= link_to project.name, project_path(project) %>
-   </div>
- <span class='open_project_update button edit' id="project_update" data-id="<%= project.id %>" data-object="project" title="Edit project">Edit</span>
-   
- <div class="dialog_form" id="project_update_<%= project.id %>_form" title="Update project" style="display:none;">
-      <%= form_for(project) do |f| %>
-      <ul>
-      <li><%= f.label :name %><%= f.text_field :name %></li>
-      <li><%= f.label :description %><%= f.text_field :description %></li>
-      <li><%= f.label :due %><%= f.text_field :due, :value => project.due.strftime("%Y-%m-%d"), :id => "date_project_#{project.id}"  %></li>
-       <li><%= f.label :customer_id %><%= f.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]}, {:include_blank => 'None'})%></li>
-      <li><%= f.submit 'Save', :class => 'submit' %></li></ul>
-      <% end %>
-</div>
-  <a class="activate_project button" data-object="project" data-id="<%= project.id.to_s %>">Archive</a>
-
-</li>
-<% end %>
+	<%= render :partial => "projects_index",  :collection => @projects, :as => :project  %>
   </ul>
   </div>
   </div>

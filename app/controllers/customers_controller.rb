@@ -1,7 +1,6 @@
 class CustomersController < ApplicationController
   load_and_authorize_resource :firm
   def index
-	  @firm = current_firm
     @customers = current_firm.customers.order("name ASC")
     @customer = Customer.new  
   end
@@ -33,11 +32,7 @@ class CustomersController < ApplicationController
   end
   
   def edit
-    @customers = current_firm.customers
-    @customer.firm = current_firm
     @customer = Customer.find(params[:id])
-    @logs = @customer.logs
-    @log = Log.new(:customer => @customer)
   end
 
   def create

@@ -1,36 +1,40 @@
-
-<ul class="form_layout_todo">
-   <li style="color:green">New todo</li> 
-<%= form_for([@firm, @todo]) do |f| %>
-  <% if @todo.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
-      <ul>
-    </div>
+<ul>
+ <%= form_for todo do |f| %>
+ 	<li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
+ 	<li><%= f.label :Priority %>
+	  	<%= f.radio_button :prior, 1 %><%= label :role, 'Normal' %>
+	  	<%= f.radio_button :prior, 2 %><%= label :role, 'Middle' %>
+	  	<%= f.radio_button :prior, 3 %><%= label :role, 'High' %>
+	</li>
+	<li><%= f.label :user_id %>
+		<select class="searchableTaskCustomer" name="todo[user_id]">
+    		<option value="">Select user</option>
+          	<% current_firm.users.each do |user| %>
+          	<option value="<%=user.id.to_i%>"<%if todo.user == user%> selected="<%=user.id.to_i%>"<%end%>>
+          		<%= user.name %></option>
+          	<% end %>
+         </select> 
+    </li>
+    <li><%= f.label :customer_id%>
+		<select class="searchableTaskCustomer" name="todo[customer_id]">
+			<option value="">Select customer</option>
+		  	<% current_firm.customers.each do |customer| %>
+		  	<option value="<%=customer.id.to_i%>"<%if todo.customer == customer%> selected="<%=customer.id.to_i%>"<%end%>>
+		  		<%= customer.name %></option>
+		  	<% end %>
+		</select> 
+    </li>
+    <li><%= f.label :project_id %>
+       	<select class="searchableTaskCustomer" name="todo[project_id]">
+       		<option value="">Select project</option>
+	          	<% current_firm.projects.each do |project| %>
+	          	<option value="<%=project.id.to_i%>"<%if todo.project == project%> selected="<%=project.id.to_i%>"<%end%>>
+	          		<%= project.name %>
+	          		</option>
+	          	<% end %>
+	    </select>
+	 </li>
+       <li><%= f.label :due %><%= f.text_field :due, :value => todo.due.strftime("%Y-%m-%d"), :id => "date_todo_#{todo.id}" %></li>
+       <li><%= f.submit "Save", :class => 'submit' %></li>
   <% end %>
-  
-    <li><%= f.label :name %>
-    <%= f.text_field :name %></li>
-<br />
-    <li>
-    <%= f.label :user_id %>
-    
-    <select id="todo_user_id" name="todo[user_id]" style="color:<%=current_user.user_color%>"><option value=""></option>
-      <%for user in @firm.users do %>
-      <option value="<%=user.id.to_i%>" style="color:<%=user.user_color%>" 
-      <%if user == current_user%>selected="<%=current_user.id.to_i%><%end%>">
-      <%= user.name %></option>
-      <% end %>
-     </select>
-<br />
-    <li>
-    <%= f.label :customer_id %>
-    <%= f.select(:customer_id, @firm.customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer", :class => "searchableTaskCustomer")%></li>
-<br />
-    <li>
-
-  
-    <%= f.submit "Save", :class => 'submit' %>
-
-<% end %>
-</ul>
+  </ul>

@@ -9,20 +9,7 @@ describe UsersController do
     @request.host = "#{@user.firm.subdomain}.example.com"
    
   end
-  describe "activate_users and deactivate_users" do
-    it "deactivate_users" do 
-      @user = FactoryGirl.create(:user)
-      expect{
-          get :activate_users, :id => @user.id
-        }.to change(User.where(:active => true),:count).by(-1)
-    end
-    it "activate_users" do 
-      @user = FactoryGirl.create(:user, :active => false)
-      expect{
-          get :activate_users, :id => @user.id
-        }.to change(User.where(:active => true),:count).by(1)
-    end
-  end
+  
   describe "GET #index" do
     it "should have a current_user" do
       subject.current_user.should_not be_nil
@@ -53,13 +40,13 @@ describe UsersController do
   end
   describe "POST create" do
     context "with valid attributes" do
-      it "creates a new contact" do
+      it "creates a new user" do
         expect{
           post :create, user: FactoryGirl.attributes_for(:user)
         }.to change(User,:count).by(1)
       end
       
-      it "redirects to the new contact" do
+      it "redirects to the new user" do
         post :create, user: FactoryGirl.attributes_for(:user)
         flash[:notice].should_not be_nil 
       end
@@ -71,9 +58,9 @@ describe UsersController do
   end
   
   context "valid attributes" do
-    it "located the requested @contact" do
+    it "located the requested @user" do
       put :update, id: @user, user: FactoryGirl.attributes_for(:user)
-      assigns(:user).should eq(@user)      
+      assigns(:user).should eq(@klass)      
     end
   
     it "changes @user's attributes" do
@@ -85,7 +72,7 @@ describe UsersController do
   context "invalid attributes" do
     it "locates the requested @user" do
       put :update, id: @user, user: FactoryGirl.attributes_for(:user, :name => nil)
-      assigns(:user).should eq(@user)      
+      assigns(:user).should eq(nil)      
     end
     
     it "does not change @user's attributes" do
@@ -102,13 +89,18 @@ end
       @user = FactoryGirl.create(:user)
     end
     
-    it "deletes the contact" do
+    it "deletes the user" do
       expect{
         delete :destroy, id: @user        
       }.to change(User,:count).by(-1)
     end
-      
-    it "redirects to contacts#index" do
+      it "deletes the current_user" do
+        @user = subject.current_user
+      expect{
+        delete :destroy, id: @user        
+      }.to change(User,:count).by(0)
+    end
+    it "redirects to user#index" do
       delete :destroy, id: @user
       response.should redirect_to users_url
     end

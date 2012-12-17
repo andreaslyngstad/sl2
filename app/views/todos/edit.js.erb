@@ -1,0 +1,5 @@
+var form_wrapper = $("#todo_update_<%= j (todo.id.to_s) %>_form")
+form_wrapper.empty().append("<%= j( render :partial => "form", :locals => {:todo => todo})  %>")
+form_wrapper.find(".edit_todo").validateWithErrors();
+$("#date_todo_<%= j (todo.id.to_s) %>").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' ); 
+form_wrapper.find("select").chosen();

@@ -9,16 +9,7 @@
     <% end %>
 
  <span class='open_customer_update button edit' id="customer_update" data-id="<%= customer.id %>" data-object="customer" title="Edit customer">Edit</span>
-  <div class="dialog_form" id="customer_update_<%= customer.id %>_form" title="Update customer" style="display:none;">
- <%= form_for(customer) do |f| %>
- <ul>
-   <li><%= f.label :name %><%= f.text_field :name, :class => "required", :minlength => "2"  %></li>
-   <li><%= f.label :phone %><%= f.text_field :phone %></li>
-   <li><%= f.label :email %><%= f.text_field :email %></li>
-   <li><%= f.label :address %><%= f.text_field :address %></li>
-   <li><%= f.submit 'Save', :class => 'submit' %></li></ul>
-    <% end %>
-    </div>
+  <div class="dialog_form" id="customer_update_<%= customer.id %>_form" title="Update customer" style="display:none;"></div>
     <%= mail_to customer.email,"Email",:title => "Send a email", :class => "button"%>
 </li>
 

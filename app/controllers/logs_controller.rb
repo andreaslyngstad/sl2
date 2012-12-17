@@ -22,28 +22,28 @@ class LogsController < ApplicationController
     end
   end
 
-  
+  def edit
+    @log = Log.find(params[:id])
+    @customers = current_firm.customers
+    @all_projects = current_user.projects.where(["active = ?", true])
+  end
   def create
     
-    @log = Log.new(params[:log])
-    @log.tracking = false
-    @all_projects =  current_user.projects.where(["active = ?", true])
+    @klass = Log.new(params[:log])
+    @klass.tracking = false
+    @all_projects = current_user.projects.where(["active = ?", true])
     @customers = current_firm.customers
     
-    @log.firm = current_firm
- 	 @model = "log"
-      @model_instanse = @log
+    @klass.firm = current_firm
     if params[:done]
-      if !@log.todo.nil?
-         @log.todo.completed = true
-         @log.todo.save
+      if !@klass.todo.nil?
+         @klass.todo.completed = true
+         @klass.todo.save
       end
     end
-    
     respond_to do |format|
-      if @log.save
+      if @klass.save
         flash[:notice] = flash_helper('Log was successfully created.')
-        format.xml  { render :xml => @log, :status => :created, :location => @log }
         format.js
       else
        format.js { render "shared/validate_create" }
@@ -54,25 +54,19 @@ class LogsController < ApplicationController
   # PUT /logs/1
   # PUT /logs/1.xml
   def update
-  	 	@log = Log.find(params[:id])
+  	 	@klass = Log.find(params[:id])
       @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
       @customers = current_firm.customers
       @projects = current_firm.projects.where(["active = ?", true])
      
-      @model = "log"
-      @model_instanse = @log
      # regular update 
-    if !@log.todo.nil?
+    if !@klass.todo.nil?
       if params[:done] == "1" 
-      	
-         @log.todo.completed = true
-         @log.todo.save!
-       
+         @klass.todo.completed = true
+         @klass.todo.save!
       elsif params[:done].nil?
-      	
-         @log.todo.completed = false
-         @log.todo.save!
-      
+         @klass.todo.completed = false
+         @klass.todo.save!
     end
     end
     

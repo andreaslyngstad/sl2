@@ -126,7 +126,7 @@ time4daysago = Time.zone.today - 4.days
 time6daysago = Time.zone.today - 6.days
 timeyesterday = Time.zone.today - 1.days
 today = Time.zone.today - 1.days + 1.days
-log1 = Log.create! :user_id => "1", :event => "Sell DDE", :firm_id => "1", :project_id => "1", :todo_id => "1", :tracking => false, :log_date => today, :begin_time => Time.now, :end_time => Time.now + 1.hours
+log1 = Log.create! :user_id => "1", :event => "Sell DDE", :firm_id => "1", :project_id => "1", :todo_id => "1", :tracking => false, :log_date => Time.zone.today - 1.days + 1.days, :begin_time => Time.now, :end_time => Time.now + 1.hours
 log2 = Log.create! :user_id => "1", :event => "Sell Dumdumboys", :firm_id => "1", :project_id => "1", :todo_id => "1", :tracking => false, :log_date => today, :begin_time => Time.now - 1.hours, :end_time => Time.now
 log3 = Log.create! :user_id => "1", :event => "Record nicolai", :firm_id => "1", :project_id => "1", :todo_id => "2", :tracking => false, :log_date => today, :begin_time => Time.now - 3.hours, :end_time => Time.now
 log4 = Log.create! :user_id => "1", :event => "Record slalom", :firm_id => "1", :project_id => "1", :todo_id => "2", :tracking => false, :log_date => today, :begin_time => Time.now - 5.hours, :end_time => Time.now

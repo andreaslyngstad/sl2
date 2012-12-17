@@ -3,11 +3,11 @@ class TimerangeController < ApplicationController
     if time == "to_day"
       time_range = (Time.now.midnight)..(Time.now.midnight + 1.day)
       elsif time == "this_week"
-      time_range = (Time.now.beginning_of_week)..(Time.now.midnight + 1.day)   
+      time_range = (Time.now.beginning_of_week)..(Time.now.end_of_week)   
       elsif time == "this_month"
-      time_range = (Time.now.beginning_of_month)..(Time.now.midnight + 1.day)   
+      time_range = (Time.now.beginning_of_month)..(Time.now.end_of_month)   
       elsif time == "this_year"
-      time_range = (Time.now.beginning_of_year)..(Time.now.midnight + 1.day)   
+      time_range = (Time.now.beginning_of_year)..(Time.now.end_of_year)   
       elsif time == "yesterday"
       time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)   
       elsif time == "last_week"

@@ -6,8 +6,7 @@ class CreateMemberships < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :memberships, :project_id
-    add_index :memberships, :user_id
+    add_index :memberships, [:project_id, :user_id], :unique => true
   end
 
   def self.down

@@ -1,19 +1,14 @@
-<ul class="form_layout">
-   
-   <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this todo from being saved:</h2>
-      <ul>
-    </div>
+<ul>
+  <%= form_for(user) do |f| %>	
+	  <li><%= f.label :name %><%= f.text_field :name%> </li>
+	  <li><%= f.label :email %><%= f.text_field :email %></li>
+	  <li><%= f.label :phone %><%= f.text_field :phone %></li>
+	  <li><%= f.label :password %><%= f.password_field :password, :class => "required", :minlength => "6" %></li>
+	  <li>
+	  	<p><%= f.radio_button :role, 'Admin' %> <%= label :role, 'Admin (can see and edit everything)' %></p>
+	  	<p><%= f.radio_button :role, 'Member' %> <%= label :role, 'Member (can see everything and edit projects where they are members)' %></p>
+	  	<p><%= f.radio_button :role, 'External user' %> <%= label :role, 'External user (can only see and edit projects where they are members)' %></p>
+	  </li>
+	  <li><%= f.submit "Save", :class => "submit" %></li>	
   <% end %>
-    <%= form_for(@user, :html => {:multipart => true}) do |f| %>
-    <li><%= f.label :name %><%= f.text_field :name%> </li>
-  <li><%= f.label :image %>
-		     <%= f.file_field :avatar%></li>
-  <li><%= f.label :email %><%= f.text_field :email %></li>
-  <li><%= f.label :password %><%= f.password_field :password %></li>
-  <li><%= f.label :password%><%= f.password_field :password_confirmation %></li>
-  <li><%= f.label :manager%><%= f.check_box :manager %></li>
-  <li><%= f.submit "Save", :class => "submit" %></li>
 </ul>
-<% end %>

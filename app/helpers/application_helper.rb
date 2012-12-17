@@ -1,8 +1,22 @@
 module ApplicationHelper
-	# def pick_color
-    # a = ["red", "Orange", "Yellow ", "Green ", "Blue", "Indigo", "Violet", "#51E86F"]
-    # return a
-  # end
+	
+  def current_firm
+    @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
+    # return @current_firm if defined?(@current_firm)
+    # @current_firm = current_user.firm
+  end
+  
+  def all_users
+    @all_users ||= current_firm.users.order("name")
+  end 
+   
+  def all_projects
+    @all_projects ||= current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
+  end 
+   
+  def all_customers
+    @all_customers ||= current_firm.customers.order("name")
+  end
   
 	def truncate_string(text, length = 18, truncate_string = '...')
      if text.nil? then return end
@@ -41,14 +55,23 @@ module ApplicationHelper
   	donepr = (done / (done + not_done).to_f)*100
   	not_donepr = (not_done / (done + not_done).to_f)*100
   	donepr.round(2).to_s + "%"
-  	 #image_tag("https://chart.googleapis.com/chart?cht=p&chs=200x125&chco=FAAABE|ADFAAA&chd=t:#{not_donepr},#{donepr}&chdl=Not%20done%20tasks|Done%20tasks", :style => {:width => 200, :height=>125} )
   end
  	def url_splitter(url)
  		url.split("/").first
  	end	 
  	def url_splitter2(url)
  		url.split("/").third
- 	end	 
+ 	end	
+ 	def todo_priority(prior)
+ 	  case
+ 	  when prior == 3
+ 	    "todo_red"
+ 	  when prior == 2
+ 	    "todo_yellow"
+ 	  when prior == 1
+ 	    "todo_green"
+ 	  end
+ 	end 
   #for devise
   def resource_name
     :user

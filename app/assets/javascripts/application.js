@@ -65,32 +65,24 @@ jQuery.fn.submitWithAjax = function() {
   })
   return this;
 };
-//submitting dialog forms with ajax
 jQuery.fn.submit_dialog_WithAjax = function() {
-	console.log(this.attr("action"))
     $.post(this.attr("action"), $(this).serialize(), null, "script");
     $('.spinning').show(); 
     $(".dialog_form").dialog("close")
     return false;
 };
-
-
 jQuery.fn.membership = function (){
   this.live('click', function() { 
     $('.spinning').show();
     var user_id =  $(this).attr("id");
-    var project_id = $(this).attr("project_id")
-  
+    var project_id = $(this).attr("project_id") 
   $.getScript("/membership/" + user_id + "/" + project_id)
     })
 };
-
 jQuery.fn.highlight = function (className)
 {
     return this.addClass(className);
 };
-
-
 jQuery.fn.UIdialogs = function(){
   $(this).dialog({
       autoOpen: false,
@@ -103,14 +95,10 @@ jQuery.fn.UIdialogs = function(){
     	offset: "500 0",
     	of: $('#navigation')
   		},
-      close: function(event, ui) { 
-      	
+      close: function(event, ui) { 	
       	$(this).find(".hasDatepicker").datepicker( "destroy" );
-    	
     	$("#logProjectId").val('').trigger("liszt:updated")
-    	
       	$(this).dialog("destroy"); 
-      	
       },
   });
 };
@@ -118,9 +106,7 @@ jQuery.fn.disableUIdialogs = function(){
   $(this).dialog("destroy");
 };
 
-
 jQuery.fn.validateWithErrors = function(){
-	console.log(this.attr("id"))
     $(this).validate({
      submitHandler: function(form) {  
     $(form).submit_dialog_WithAjax();
@@ -152,15 +138,10 @@ jQuery.fn.UIdialogs_links = function(){
   var form = '#' + $(this).attr('id') + '_form'
   var date = '#' + $(this).attr('id') + '_date'
   var object = $(this).attr("data-object")
- console.log(object)
-  
   	$(form).UIdialogs();
       $(date).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-      console.log($(form).find(".new_" + object))
        $(form).find(".new_" + object).validateWithErrors();
-    
       $(form).dialog( "open" );
-    
     });
 
 }; 
@@ -195,9 +176,13 @@ jQuery.fn.activate_projects_no_button = function(){
 jQuery.fn.UIdialogs_edit_links = function(){
   $(this).click(function(){
     var data_id = $(this).attr('data-id')
+    // get edit action via ajax for all in the ajax_form array
+    var ajax_form = ["project", "customer", "todo", "user"]
     var object = $(this).attr("data-object")
+    if ($.inArray(object, ajax_form) >= 0){
+    $.get("/"+ object +"s/" + data_id + "/edit/")
+    }
     var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
-   console.log($(form_id).find(".edit_" + object))
     $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
     $(form_id).find(".edit_" + object).validateWithErrors();
    	$(form_id).find("li").css("display", "");
@@ -222,13 +207,7 @@ jQuery.fn.current_link = function(){
   
 ///////////////////////////////////////////////////////////////document.ready///////////////////////////////////////////////////////
 
-$.fn.chosenDestroy = function () {
-$(this).show().removeClass('chzn-done');
-$(this).next().remove();
 
-  return $(this);
-}
-  
   
 $(document).ready(function() {	  
 	

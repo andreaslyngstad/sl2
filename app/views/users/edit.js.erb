@@ -1,0 +1,4 @@
+var form_wrapper = $("#user_update_<%= j (@user.id.to_s) %>_form")
+form_wrapper.empty().append("<%= j( render :partial => "form", :locals => {:user => @user})  %>")
+form_wrapper.find(".edit_user").validateWithErrors();
+form_wrapper.find("select").chosen();

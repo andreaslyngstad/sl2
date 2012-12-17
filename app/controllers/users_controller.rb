@@ -1,84 +1,46 @@
 class UsersController < ApplicationController 
 
   skip_before_filter :authenticate_user!, :only => [:valid]
-  
-  # GET /users
-  # GET /users.xml
+  respond_to :html, :js, :json
   def index
-  	@firm = current_firm
-    @users = @firm.users.all
-    @user = User.new
+    @users = current_firm.users.order(:name)
+    respond_with(@users)
   end
 
-  # GET /users/1
-  # GET /users/1.xml
   def show
-    @firm = current_firm
     @klass = User.find(params[:id])
-    
-    @customers = @firm.customers.includes(:employees)
-    @all_projects = current_user.projects.where(["active = ?", true])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-      format.js
-    end
-    
+    respond_with(@klass)
   end
 
-  # GET /users/new
-  # GET /users/new.xml
-  def new
-    @user = User.new
-    @users = @firm.users.all
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
-    end
-  end
-
-  # GET /users/1/edit
   def edit
-    @firm = current_firm
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
-  # POST /users
-  # POST /users.xml
-  
-    def create
-      @user = User.new(params[:user])
-      @user.firm = current_firm
-      @users = current_firm.users
-      @model = "user"
-      @model_instanse = @user
-       respond_to do |format|
-        if @user.save
-          flash[:notice] = flash_helper("Registration successful.")
-          format.html {redirect_to(users_path())}
-          format.js
-        else
-          format.js { render "shared/validate_create" }
-      end
-      end
+  def create
+    @klass = User.new(params[:user])
+     respond_to do |format|
+      if @klass.save
+        flash[:notice] = flash_helper("Registration successful.")
+        format.html {redirect_to(users_path())}
+        format.js
+      else
+        flash[:notice] = flash_helper("Something went wrong")
+        format.js { render "shared/validate_create" }
+    end
+    end
   end
 
   # PUT /users/1
   # PUT /users/1.xml
   def update
-     @users = current_firm.users.all
-     @user = User.find(params[:id])
-     @model = "user"
-     @model_instanse = @user
-      
+     @klass = User.find(params[:id])
       respond_to do |format|
-    if @user.update_attributes(params[:user])
+    if @klass.update_attributes(params[:user])
       flash[:notice] = flash_helper("Successfully updated profile.")
       format.js
     else
-    	
       format.js { render "shared/validate_update" }
-      flash[:notice] = flash_helper("something went wrong #{@user.errors}")
+      flash[:notice] = flash_helper("Something went wrong")
     end
     end
   end
@@ -89,7 +51,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
      respond_to do |format|
     if @user == current_user
-    flash[:notice] = flash_helper("You are logged in as #{@user.name}. You cannot delete your self.")
+    flash[:notice] = flash_helper("You are logged in as #{@user.name}. You cannot delete yourself.")
       format.html{ redirect_to(users_path())}
       format.js
     else

@@ -27,7 +27,7 @@ Squadlink::Application.routes.draw do
     	get "/validates_uniqe/:subdomain" => "public#validates_uniqe", :as => :validates_uniqe
 
   	end
-  resources :users, :only => [:index, :show, :create, :update, :destroy] do
+  resources :users, :only => [:index, :show, :edit, :create, :update, :destroy] do
     member do
      get :valid
     end

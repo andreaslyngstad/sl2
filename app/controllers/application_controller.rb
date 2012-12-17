@@ -3,12 +3,13 @@ class ApplicationController < ActionController::Base
   require "./lib/timehelp"
 	include UrlHelper
 	include SubdomainLogin
-	
-  before_filter :set_mailer_url_options, :all_users,
-  :authenticate_user!, 
+	before_filter :miniprofiler
+
+
+  before_filter :set_mailer_url_options, :authenticate_user!, 
   :exept => [:after_sign_in_path_for, :sign_in_and_redirect, :check_firm_id, :current_subdomain]
   helper :layout
-  helper_method :current_firm, :is_root_domain?, :can_sign_up?, :current_subdomain, :time_zone_now, :ftz, :time_range_to_day
+  helper_method :is_root_domain?, :can_sign_up?, :current_subdomain, :time_zone_now, :ftz, :time_range_to_day
   # skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -69,7 +70,9 @@ class ApplicationController < ActionController::Base
     @all_projects ||= current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
   end  
   private
-
+  def miniprofiler
+    Rack::MiniProfiler.authorize_request
+  end
   def check_firm_id
     return current_subdomain ? current_user.firm.id == current_subdomain.id : false
   end
