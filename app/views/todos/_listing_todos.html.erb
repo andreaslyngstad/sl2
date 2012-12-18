@@ -28,7 +28,6 @@
 	    <div id="dialog_todo_form" class="dialog_form" title="Create new task <%= @klass.name %>" style="display:none;">
 	    	<ul>
 	        <%= form_for @klass.todos.build do |f| %>
-	        <%= f.hidden_field :project_id %>
 	        <%= f.hidden_field :completed, :value => false%>
 	        <%= f.hidden_field :firm_id, :value => current_firm.id%>
 	          <li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
@@ -58,6 +57,7 @@
 			   </li>
 	          <% end %> 
 	          <% if @klass.class == Project%>
+	          <%= f.hidden_field :project_id, :value => @klass.id %>
 		          <% if @klass.customer.nil? %>
 			          <li><%= f.label :customer_id %>
 			          	<select class="searchableTaskCustomer" name="todo[customer_id]">

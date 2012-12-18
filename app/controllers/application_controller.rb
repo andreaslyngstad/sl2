@@ -80,12 +80,7 @@ class ApplicationController < ActionController::Base
   	Time.zone.today
   end
   
-  def check_log_status(params_log_id)
-    if params_log_id != "0"
-    @log = Log.find(params_log_id)
-    end
-    @customers = current_firm.customers
-  end
+  
   def record_not_found
     flash[:notice] = "No record found"
     redirect_to action: :index

@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   belongs_to :firm
   validates_presence_of :name
   validates :email, :presence => true, :email_format => true
-
+  
   
  # def user_role
  #   errors.add(:role, "Not a legal role") if 

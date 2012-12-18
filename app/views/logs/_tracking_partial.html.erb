@@ -18,7 +18,7 @@
     <%= n.label :project %>
          <select class="searchableS_tracking" id="logProjectIdTracking" log="<%= log.id %>" name="log[project_id]">
            <option value="" data-customer="">None</option>
-           <% @all_projects.each do |project| %>
+           <% all_projects.each do |project| %>
                 <% if project == log.project  %>
                   <option value="<%= project.id %>" selected="selected"><%= project.name %></option>
                 <% else %>
@@ -53,7 +53,7 @@
            </div> </div>
            <div id="tracking_customer_employee">
           <%= n.label :customer %>
-          	<%= n.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]},
+          	<%= n.select(:customer_id, all_customers.map {|customer| [customer.name, customer.id]},
           	{ :include_blank => "None"}, :class => "searchableS_tracking", :id => "logCustomerIdTracking#{log.id}", :log => "#{log.id}" )%>
        <%= n.label :employee %>
        <select class="searchableS_tracking" id="logEmployeeIdTracking<%= log.id %>" log="<%= log.id %>" name="log[employee_id]">

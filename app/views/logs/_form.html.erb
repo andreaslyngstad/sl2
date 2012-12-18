@@ -10,7 +10,7 @@
         <li><%= f.label :project %>
          <select class="searchableSE" id="logProjectId<%= @log.id %>" log="<%= @log.id %>" name="log[project_id]">
            <option value="" data-customer="">None</option>
-           <% @all_projects.each do |project| %>
+           <% all_projects.each do |project| %>
                 <% if project == @log.project  %>
                   <option value="<%= project.id %>" selected="selected"><%= project.name %></option>
                 <% else %>
@@ -19,7 +19,7 @@
                  <% end %>
           </select></li>
           <li><%= f.label :Task %>
-            <% if !@log.todo.nil? %>
+            <% if @log.todo %>
             <% if @log.todo.completed == true %>
             <%= f.label :done?, :style => "margin-left: 255px;" %><%= check_box_tag "done", 1 ,true %>
             <% else %>
@@ -32,12 +32,16 @@
               <% if @log.project.nil? %>
           <option value="" id="value">Select a project</option>
           <%else%>
-          <option value>None</option>
-          <% @log.project.todos.each do |todo| %>
-          <% if todo == @log.todo %>
-          <option value="<%= todo.id %>" selected="selected"><%=todo.name%></option>
+          
+          <% if @log.todo %>
+          <option value="<%= @log.todo.id %>" selected="selected"><%=@log.todo.name%></option>
+          <% @log.project.todos.not_complete.each do |tod| %> 
+          <option value="<%= tod.id %>"><%= tod.name%></option>
+          <% end %>
           <%else%>
-          <option value="<%= todo.id %>"><%= todo.name%></option>
+          <option value>None</option>
+          <% @log.project.todos.not_complete.each do |tod| %> 
+          <option value="<%= tod.id %>"><%= tod.name%></option>
           <% end %>
           <% end %>
           <% end %>
@@ -48,7 +52,7 @@
               <option value="<%=@log.project.customer.id%>" selected="selected"><%=@log.project.customer.name%></option>
               <% else %>
               <option value="">None</option>
-              <% @customers.each do |customer| %>
+              <% all_customers.each do |customer| %>
               <% if customer == @log.customer %>
               <option value="<%= customer.id %>" selected="selected"><%= customer.name %></option>
               <% else %>

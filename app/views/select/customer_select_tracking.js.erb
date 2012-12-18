@@ -1,0 +1,30 @@
+$(".flash_notice").empty();
+$(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>");
+<% if @log.nil? %>
+var employee = $("#logEmployeeIdTracking")
+var form	 = $("#start_tracking_form")	
+<% else %>
+var form	 = $("#log_update_<%= escape_javascript(@log.id.to_s) %>_form")
+var employee = $("#logEmployeeIdTracking<%= escape_javascript(@log.id.to_s) %>")
+<% end %>  
+ 
+  employee.empty();
+  <% if !@customer.nil? %>
+	    <% if @customer.employees.empty? %>
+	        employee.append("<option value=''>No employees</option>");
+	    <% else %>
+	      employee.append("<option value=''>Select a employee</option>");
+	      <% @customer.employees.each do |employees| %>
+	      employee.append("<option value='" + "<%= escape_javascript(employees.id.to_s) %>" + "'>" + "<%= escape_javascript(employees.name) %>" + "</option>");
+	    <% end %>
+	    <% end %>
+  <% else %>
+  	
+  		employee.append("<option value=''>Select a customer</option>");
+  <% end %>
+  
+  <% if !@log.nil? %>
+  $("#log_<%= escape_javascript(@log.id.to_s)%>").replaceWith("<%= escape_javascript(render(:partial => @log)) %>");
+  <% end %>
+  form.find(".searchableS_tracking").trigger("liszt:updated")
+$(".spinning").hide();

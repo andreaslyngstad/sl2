@@ -1,5 +1,4 @@
 <ul>
-<%= l.hidden_field :user_id, :value => current_user.id %>
 <li><%= l.label :log %><%= l.text_field(:event, :class => "required", :minlength => "2", :AUTOCOMPLETE => "OFF") %></li>
 <li><div class="date_on_log"><%= l.label :date %><%= l.text_field(:log_date, :value => Date.today.strftime("%Y-%m-%d"), :class => "date", :id => "log_date_new") %></div></li>
 <li style="margin-bottom: 0px;"><%= l.label :from %><%= l.label :to, :style => "margin-left: 30px;" %></li>
@@ -21,7 +20,7 @@
 <li><%= l.label :project %>
 	<select class="searchableS" id="logProjectId" log="" name="log[project_id]">
 	   <option value="">None</option>
-	   <% @all_projects.each do |project| %>
+	   <% all_projects.each do |project| %>
 	  <option value="<%= project.id %>"><%= truncate_string(project.name) %></option>
 	  <% end %>
 	</select>
@@ -53,7 +52,7 @@
 <li><%= l.label :employee %>
 	<select class="searchableS" id="logEmployeeId" name="log[employee_id]">
 		<option value="">None</option>
-		<% @customer.employees.each do |todo| %>
+		<% all_customer.employees.each do |todo| %>
 		  <option value="<%= todo.id %>"><%= truncate_string(todo.name) %></option>
 		  <% end %>
 	</select>
@@ -62,7 +61,7 @@
 <li><%= l.label :customer %>
 	<select class="searchableS" id="logCustomerId" log="" name="log[customer_id]">
 	  <option value="">None</option>
-	  <% @customers.each do |customer| %>
+	  <% all_customers.each do |customer| %>
 	  <option value="<%= customer.id %>"><%= truncate_string(customer.name).html_safe %></option>
 	  <% end %>
 	</select>

@@ -53,28 +53,24 @@ Squadlink::Application.routes.draw do
     match "/tabs/logs/:id/:class" => "tabs#logs", :as => :tabs_logs
     match "/tabs/users/:id/:class" => "tabs#users", :as => :tabs_users
     #logs_controller
-    match "/customer_employees/:customer_id/:log_id" => "logs#customer_employees", :as => :customer_employees
-    match "/customer_employees/:customer_id/" => "logs#customer_employees", :as => :customer_employees
     match "logs/start_tracking" => "logs#start_tracking",  :as => :start_tracking
     match "logs/stop_tracking/:id" => "logs#stop_tracking",  :as => :stop_tracking
-    match "/customer_select_tracking/:customer_id/:log_id" => "logs#customer_select_tracking", :as => :customer_select_tracking
-    match "/customer_select_tracking/:customer_id/" => "logs#customer_select_tracking", :as => :customer_select_tracking
-    match "/employee_select_tracking/:employee_id/:log_id" => "logs#employee_select_tracking", :as => :employee_select_tracking
-    match "/employee_select_tracking/:employee_id/" => "logs#employee_select_tracking", :as => :employee_select_tracking
-    match "/customer_employees/" => "logs#customer_employees", :as => :customer_employees
-    match "/project_todos/:project_id/:log_id" => "logs#project_todos", :as => :project_todos
-    match "/project_todos/:project_id" => "logs#project_todos", :as => :project_todos
-    match "/project_select_tracking/:project_id/:log_id" => "logs#project_select_tracking", :as => :project_select_tracking
-    match "/project_select_tracking/:project_id" => "logs#project_select_tracking", :as => :project_select_tracking
-    match "/todo_select_tracking/:todo_id/:log_id" => "logs#todo_select_tracking", :as => :todo_select_tracking
-    match "/todo_select_tracking/:todo_id" => "logs#todo_select_tracking", :as => :todo_select_tracking
-    match "/project_todos/" => "logs#project_todos", :as => :project_todos
-    match "/todo_select/:todo_id/:log_id" => "logs#todo_select", :as => :todo_select
-    match "/todo_select/:todo_id" => "logs#todo_select", :as => :todo_select
     match "/get_logs_todo/:todo_id" => "logs#get_logs_todo", :as => :get_logs_todo
-    #todos_controller
+    #select_controller
+    match "/customer_select/:customer_id/:log_id" => "select#customer_select", :as => :customer_select
+    
+    match "/customer_select_tracking/:customer_id/:log_id" => "select#customer_select_tracking", :as => :customer_select_tracking
    
-    match "/mark_todo_done/:id/:done_by_user" => "todos#mark_todo_done", :as => :mark_todo_done
+    match "/employee_select_tracking/:employee_id/:log_id" => "select#employee_select_tracking", :as => :employee_select_tracking
+     
+    match "/project_select/:project_id/:log_id" => "select#project_select", :as => :project_select
+    
+    match "/project_select_tracking/:project_id/:log_id" => "select#project_select_tracking", :as => :project_select_tracking
+    
+    match "/todo_select_tracking/:todo_id/:log_id" => "select#todo_select_tracking", :as => :todo_select_tracking
+ 
+    match "/todo_select/:todo_id/:log_id" => "select#todo_select", :as => :todo_select
+   
     #private_controller
     match "/statistics" => "private#statistics", :as => :statistics
     match "/reports" => 'private#reports', :as => :reports

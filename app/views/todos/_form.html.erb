@@ -1,5 +1,5 @@
-<ul>
  <%= form_for todo do |f| %>
+ <ul>
  	<li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
  	<li><%= f.label :Priority %>
 	  	<%= f.radio_button :prior, 1 %><%= label :role, 'Normal' %>
@@ -36,5 +36,5 @@
 	 </li>
        <li><%= f.label :due %><%= f.text_field :due, :value => todo.due.strftime("%Y-%m-%d"), :id => "date_todo_#{todo.id}" %></li>
        <li><%= f.submit "Save", :class => 'submit' %></li>
-  <% end %>
-  </ul>
+ </ul>
+  <% end %>  

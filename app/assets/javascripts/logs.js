@@ -59,23 +59,23 @@ jQuery.fn.select_projects_customers = function() {
  	console.log(data_id)
 	if (data_id === undefined ) {
 		$(this).find("select#logProjectId").change(function(){
-    	Change_select($(this).attr("log"), this.value.toString(), "project_todos")
+    	Change_select($(this).attr("log"), this.value.toString(), "project_select")
 		});
    		$(this).find("select#logTodoId").change(function(){
 	    Change_select("", this.value.toString(), "todo_select")
 	    });	
    		$(this).find("select#logCustomerId").change(function(){
-    	Change_select("", this.value.toString(), "customer_employees")	
+    	Change_select("", this.value.toString(), "customer_select")	
     	});
 	}else{
 		$(this).find("select#logProjectId" + data_id).change(function(){
-    	Change_select($(this).attr("log"), this.value.toString(), "project_todos")
+    	Change_select($(this).attr("log"), this.value.toString(), "project_select")
 		});
 	    $(this).find("select#logTodoId" + data_id).change(function(){
 	    Change_select($(this).attr("log"), this.value.toString(), "todo_select")
    		});
 	    $(this).find("select#logCustomerId" + data_id).change(function(){
-    	Change_select($(this).attr("log"), this.value.toString(), "customer_employees")
+    	Change_select($(this).attr("log"), this.value.toString(), "customer_select")
 		});
      }; 
 };
