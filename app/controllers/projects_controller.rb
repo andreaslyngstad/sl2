@@ -1,12 +1,5 @@
 class ProjectsController < ApplicationController
   def index
-  	
-  	#make admin veiw all projects
-    @projects = current_user.projects.is_active
-    
-    @customers = current_firm.customers
-    @project = Project.new
-    @todo = Todo.new
   end
   def edit
     @project = Project.find(params[:id])
@@ -45,6 +38,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(params[:project])
     @project.active = true
+    @project.firm = current_firm
     @project.users << current_user
       respond_to do |format|
       if @project.save
@@ -56,6 +50,7 @@ class ProjectsController < ApplicationController
   
   def update
     @project = Project.find(params[:id])
+    @project.firm = current_firm
     respond_to do |format|
       if @project.update_attributes(params[:project])
         flash[:notice] = flash_helper("Project was successfully saved.")

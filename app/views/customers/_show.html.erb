@@ -42,8 +42,7 @@
     <div class="add_some">
        <a id="dialog_project" data-object="project">Add another</a>
       <div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
-      <%= form_for(@project) do |p| %>
-      <%= p.hidden_field :customer_id %>
+      <%= form_for(@klass.projects.build) do |p| %>
       <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
       <li><%= p.label :description %><%= p.text_area :description %></li>
       <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date"   %></li>
@@ -68,8 +67,7 @@
 	<div class="add_some">
        <a id="dialog_employees">Add another</a>
         <div id="dialog_employees_form" class="dialog_form" title="Create new employee" style="display:none;">  
-      <%= form_for(@employee) do |f| %>
-      <%= f.hidden_field :customer_id %>
+      <%= form_for(@klass.employees.build) do |f| %>
       <li><%= f.label :name %><%= f.text_field :name, :class => "required", :minlength => "2"%></li>
       <li><%= f.label :phone %><%= f.text_field :phone %></li>
       <li><%= f.label :email %><%= f.text_field :email %></li>

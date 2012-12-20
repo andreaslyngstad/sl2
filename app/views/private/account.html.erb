@@ -1,34 +1,38 @@
-
-<div id="left">
 <%= render "home_header" %>
-
-  		<div class="firm_account">
-  			<ul>
-				<li><span class="preference_label">Sercure site:</span><%= current_firm.name %></li>
-				<li><span class="preference_label">Memeber since:</span><%= current_firm.created_at %></li>
-				<li><span class="preference_label">Plan:</span><%= current_firm.phone %></li>
-				
-			</ul>
-  			<%= link_to "Upgrade plan", upgrade_path, :class => "submit"%>
-  			</div>
-  			<div class="firm_preferences">
-  			<ul>
-				<li><span class="preference_label">Name:</span><%= current_firm.name %></span></li>
-				<li><span class="preference_label">Subdomain:</span><%= current_firm.subdomain %></li>
-				<li><span class="preference_label">Phone:</span><%= current_firm.phone %></li>
-				<li><span class="preference_label">Address:</span><%= current_firm.address %></li>
-				<li><span class="preference_label">Language:</span><%= current_firm.lang %></li>
-				<li><span class="preference_label">Currency:</span><%= current_firm.currency %></li>
-				<li><span class="preference_label">Time zone:</span><%= current_firm.time_zone %></li>
-				<li><span class="preference_label">Logo:</span><%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :original)) : ""%></li>    
-				<li><span class="preference_label">Background color:</span><span style="display: inline-block;width:100px;"><%= current_firm.background %></span><div class="text_style_color" style="background-color:<%= current_firm.background %>"></div></li>
-				<li><span class="preference_label">Text color:</span><span style="display: inline-block;width:100px;"><%= current_firm.color %></span><div class="text_style_color" style="background-color:<%= current_firm.color %>"></div></li>
-
-			</ul>
-			
-			<%= link_to "Edit preferences", firm_edit_path, :class => "submit"%>
-		   </div>
-  	
-  	
- </div>
-
+<% content_for :help do %>
+<div class="page_help">
+	<div class="page_help_container">
+		<h2><img src="../system/info.png"/> Timesheet use.</h2>
+		<p>You can add hours to a project in two ways. </p> 
+		<ul>
+			<li>1. Add logs to your projets.</li>
+			<li>2. Add hours to projects directly in the timesheet, if you do not have any logs on the project at a spesific date.</li>
+		</ul>
+	</div>
+</div>
+<% end %>
+<div id="left">
+	<div class="firm_account">
+		<ul>
+			<li><span class="preference_label">Sercure site:</span><%= current_firm.name %></li>
+			<li><span class="preference_label">Memeber since:</span><%= current_firm.created_at %></li>
+			<li><span class="preference_label">Plan:</span><%= current_firm.phone %></li>	
+		</ul>
+		<%= link_to "Upgrade plan", upgrade_path, :class => "submit"%>
+		</div>
+		<div class="firm_preferences">
+		<ul>
+			<li><span class="preference_label">Name:</span><%= current_firm.name %></span></li>
+			<li><span class="preference_label">Subdomain:</span><%= current_firm.subdomain %></li>
+			<li><span class="preference_label">Phone:</span><%= current_firm.phone %></li>
+			<li><span class="preference_label">Address:</span><%= current_firm.address %></li>
+			<li><span class="preference_label">Language:</span><%= current_firm.lang %></li>
+			<li><span class="preference_label">Currency:</span><%= current_firm.currency %></li>
+			<li><span class="preference_label">Time zone:</span><%= current_firm.time_zone %></li>
+			<li><span class="preference_label">Logo:</span><%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :original)) : ""%></li>    
+			<li><span class="preference_label">Background color:</span><span style="display: inline-block;width:100px;"><%= current_firm.background %></span><div class="text_style_color" style="background-color:<%= current_firm.background %>"></div></li>
+			<li><span class="preference_label">Text color:</span><span style="display: inline-block;width:100px;"><%= current_firm.color %></span><div class="text_style_color" style="background-color:<%= current_firm.color %>"></div></li>
+		</ul>	
+		<%= link_to "Edit preferences", firm_edit_path, :class => "submit"%>
+	</div>  	
+</div>

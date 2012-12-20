@@ -3,6 +3,7 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(params[:employee])
 	@customer = @employee.customer
+	@employee.firm = current_firm
     respond_to do |format|
       if @employee.save
         format.html { redirect_to(@employee, :notice => 'Employee was successfully created.') }
@@ -18,7 +19,7 @@ class EmployeesController < ApplicationController
  
   def update
     @employee = Employee.find(params[:id])
-    @firm = current_user.firm
+    @employee.firm = current_firm
     @customer = @employee.customer
     respond_to do |format|
       if @employee.update_attributes(params[:employee])

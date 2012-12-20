@@ -85,8 +85,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "memberships", ["project_id"], :name => "index_memberships_on_project_id"
-  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+  add_index "memberships", ["project_id", "user_id"], :name => "index_memberships_on_project_id_and_user_id", :unique => true
 
   create_table "milestones", :force => true do |t|
     t.text     "goal"

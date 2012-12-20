@@ -58,26 +58,22 @@ Squadlink::Application.routes.draw do
     match "/get_logs_todo/:todo_id" => "logs#get_logs_todo", :as => :get_logs_todo
     #select_controller
     match "/customer_select/:customer_id/:log_id" => "select#customer_select", :as => :customer_select
-    
     match "/customer_select_tracking/:customer_id/:log_id" => "select#customer_select_tracking", :as => :customer_select_tracking
-   
-    match "/employee_select_tracking/:employee_id/:log_id" => "select#employee_select_tracking", :as => :employee_select_tracking
-     
+    match "/employee_select_tracking/:employee_id/:log_id" => "select#employee_select_tracking", :as => :employee_select_tracking  
     match "/project_select/:project_id/:log_id" => "select#project_select", :as => :project_select
-    
     match "/project_select_tracking/:project_id/:log_id" => "select#project_select_tracking", :as => :project_select_tracking
-    
     match "/todo_select_tracking/:todo_id/:log_id" => "select#todo_select_tracking", :as => :todo_select_tracking
- 
     match "/todo_select/:todo_id/:log_id" => "select#todo_select", :as => :todo_select
+    #timesheets_controller
+    match "/timesheets/:user_id" => 'timesheets#timesheets', :as => :timesheets
+    match "/timesheet_logs_day/:user_id/:date" => 'timesheets#timesheet_logs_day', :as => :timesheet_logs_day
+    match "/timesheet_month/:user_id/:date" => "timesheets#timesheet_month", :as => :timesheet_month
+    match "/add_log_timesheet" => 'timesheets#add_log_timesheet', :as => :add_log_timesheet
    
     #private_controller
     match "/statistics" => "private#statistics", :as => :statistics
     match "/reports" => 'private#reports', :as => :reports
-    match "/timesheets/:user_id" => 'private#timesheets', :as => :timesheets
-    match "/timesheet_logs_day/:user_id/:date" => 'private#timesheet_logs_day', :as => :timesheet_logs_day
-    match "/timesheet_month/:user_id/:date" => "private#timesheet_month", :as => :timesheet_month
-    match "/add_log_timesheet" => 'private#add_log_timesheet', :as => :add_log_timesheet
+    
     match "/report_for" => 'private#report_for', :as => :reports_for
     match "/account" => "private#account",  :as => :account
     match "/home_user" => "private#home_user",  :as => :home_user

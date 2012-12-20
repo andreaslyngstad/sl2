@@ -7,7 +7,6 @@
 		<a id="dialog_user" data-object="user">Add new user</a>
 		<div id="dialog_user_form" class="dialog_form" title="Create new user" style="display:none;">
 		<%= form_for(current_firm.users.build, :url => {:controller => "users", :action => "create"}) do |f| %>
-		<%= f.hidden_field :firm_id, :value => current_firm.id%>
 		<ul> 
 		  <li><%= f.label :name %><%= f.text_field :name, :class => "required"%> </li>
 		  <li><%= f.label :email %><%= f.text_field :email, :class => "required", :email => "true" %></li>

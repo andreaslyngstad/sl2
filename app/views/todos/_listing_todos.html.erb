@@ -29,7 +29,6 @@
 	    	<ul>
 	        <%= form_for @klass.todos.build do |f| %>
 	        <%= f.hidden_field :completed, :value => false%>
-	        <%= f.hidden_field :firm_id, :value => current_firm.id%>
 	          <li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
 	          <li><%= f.label :Priority %>
 	          	<%= f.radio_button :prior, 1, :checked => true %><%= label :role, 'Normal' %>

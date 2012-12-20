@@ -37,6 +37,8 @@ user3 = User.create! :name => 'Tiril Pharo', :firm_id => "1", :email => 'tiril@l
 puts 'New user created: ' << user3.name
 user4 = User.create! :name => 'Astrid pharo', :firm_id => "1", :email => 'astrid@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 puts 'New user created: ' << user4.name
+user5 = User.create! :name => 'Andreas Lyngstad', :firm_id => "2", :email => 'andreaslyngstad@gmail.com', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
+puts 'New user created: ' << user1.name
 
 puts "Setting up customers"
 customers1 = Customer.create! :name => "Harald Bråhten", :firm_id => "1", :phone => "96979892", :email => "harald@braten.no"
@@ -88,10 +90,10 @@ projects4 = Project.create! :name => "clean house", :firm_id => "1", :active => 
 Membership.create!(:user_id => 1, :project_id => projects4.id)
 puts 'New project created: ' << projects4.name
 
-projects5 = Project.create! :name => "fix barn", :firm_id => "1", :active => true, :due => Time.now + 3000000
+projects5 = Project.create! :name => "fix barn", :firm_id => "2", :active => true, :due => Time.now + 3000000
 Membership.create!(:user_id => 1, :project_id => projects5.id)
 puts 'New project created: ' << projects5.name
-projects6 = Project.create! :name => "Paint fence", :firm_id => "1", :active => true, :due => Time.now + 3000000, :customer_id => "4"
+projects6 = Project.create! :name => "Paint fence", :firm_id => "2", :active => true, :due => Time.now + 3000000, :customer_id => "4"
 Membership.create!(:user_id => 1, :project_id => projects6.id)
 puts 'New project created: ' << projects6.name
 open("db/seeds/projects") do |projects|

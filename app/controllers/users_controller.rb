@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @klass = User.find(params[:id])
+    @kass = User.find(params[:id])
     respond_with(@klass)
   end
 
@@ -30,13 +30,12 @@ class UsersController < ApplicationController
     end
   end
 
-  # PUT /users/1
-  # PUT /users/1.xml
   def update
      @klass = User.find(params[:id])
       respond_to do |format|
     if @klass.update_attributes(params[:user])
       flash[:notice] = flash_helper("Successfully updated profile.")
+      format.html {redirect_to(user_path(@klass))}
       format.js
     else
       format.js { render "shared/validate_update" }
@@ -45,8 +44,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.xml
   def destroy
     @user = User.find(params[:id])
      respond_to do |format|

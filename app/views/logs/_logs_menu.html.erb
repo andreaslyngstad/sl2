@@ -3,7 +3,7 @@
        <a id="dialog_log">Add log</a>
    </div>
    <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
-      	<%= form_for(Log.new) do |l| %>  
+      	<%= form_for(@klass ? @klass.logs.build : Log.new) do |l| %>  
   			<%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
     	<% end %>
    </div>

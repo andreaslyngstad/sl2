@@ -1,7 +1,7 @@
 class LogsController < ApplicationController
 
   def index 
-    @logs = current_firm.logs.where(:log_date => Date.today).order("updated_at DESC").includes(:project, :todo, :user, :customer, :employee )
+    @logs = current_firm.logs.where(:log_date => Date.today).order("updated_at DESC").includes(:project, :todo, :user, :customer, :employee)
     if !current_user.logs.blank?
       @log = current_user.logs.where("end_time IS ?",nil).last
       if @log.nil?
@@ -50,6 +50,7 @@ class LogsController < ApplicationController
 	  LogWorker.check_todo_on_log(@log, params[:done]) unless @log.todo.nil? 
 	  update_responder(@log,params[:log])
   end
+  
   def get_logs_todo
     @todo = Todo.find(params[:todo_id])
     @logs = @todo.logs

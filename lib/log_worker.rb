@@ -4,6 +4,7 @@ module LogWorker
     log      = Log.new(params)
     log.user = user
     log.firm = firm
+    log.tracking = false
     if log.todo
       check_todo_on_log(log, done)
     end

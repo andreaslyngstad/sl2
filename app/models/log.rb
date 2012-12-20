@@ -1,6 +1,6 @@
 class Log < ActiveRecord::Base
-	attr_accessible :event,:customer_id,:user_id,:firm_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
-	 :hours,:created_at,:updated_at,:project,:customer,:firm,:user,:todo
+	attr_accessible :event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
+	 :hours,:created_at,:updated_at,:project,:customer,:user,:todo
   validate :end_time_before_begin_time
   belongs_to :customer
   belongs_to :user
@@ -11,7 +11,26 @@ class Log < ActiveRecord::Base
   belongs_to :employee
   
   before_save :set_hours
-
+  validate :log_made_on_current_firm
+  
+  def self.log_reflections
+    arr = reflections.collect{|a, b| b.class_name.downcase if b.macro==:belongs_to}.compact.uniq
+    arr.delete("firm")
+    arr
+  end
+  def check_if_current_firm 
+    Log.log_reflections.map do |ass|  
+      parent = eval(ass)
+      if parent && parent.firm != nil 
+         firm != parent.firm 
+      end
+    end 
+  end
+  def log_made_on_current_firm
+    errors.add(:firm_id, "is secure!") if
+    check_if_current_firm.include?(true) 
+  end
+  
   
   def time_diff(time)
   	seconds    	=  (time % 60).to_i
@@ -92,6 +111,4 @@ class Log < ActiveRecord::Base
      .group([model_id.intern])
      .select("sum(hours) as total_hours, #{model_id}")    
   end
-  
 end
- 

@@ -1,5 +1,5 @@
 class Customer < ActiveRecord::Base
-  attr_accessible :name,:phone,:email,:address,:firm_id,:created_at,:updated_at
+  attr_accessible :name,:phone,:email,:address,:created_at,:updated_at
   belongs_to :firm
   has_many :logs
   has_many :todos
@@ -7,4 +7,5 @@ class Customer < ActiveRecord::Base
   has_many :projects
   has_many :employees, :dependent => :destroy
   validates_presence_of :name
+  
 end

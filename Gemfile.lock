@@ -30,6 +30,10 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    better_errors (0.3.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
+    binding_of_caller (0.6.8)
     builder (3.0.4)
     bullet (4.2.0)
       uniform_notifier
@@ -50,6 +54,7 @@ GEM
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
     cocaine (0.4.2)
+    coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -206,6 +211,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_errors
+  binding_of_caller
   bullet
   cancan
   capistrano

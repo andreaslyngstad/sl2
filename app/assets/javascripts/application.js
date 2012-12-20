@@ -49,11 +49,28 @@ jQuery.ajaxSetup({
 })
 //display help
 jQuery.fn.display_help = function(){
-  $(this).click(function(){
-    $(".page_help").slideToggle()
-   
-    });
-  
+ 
+ 	
+  	if ($(".page_help").length !== 0){ 	
+  		$(this).show()
+  		console.log($(".page_help"))
+    $(this).toggle(
+    	function(){
+    	var help_height = $(".page_help").height()
+	    	$(".page_help").show()
+	    	$("#left").css("margin-top", help_height + 70)
+	    	$(".ver_down_on_help").css("top",help_height  )
+	    	$(".list_header").css("top",help_height )  	
+    	},
+    	function(){
+	    	$(".page_help").hide()
+	    	$("#left").css("margin-top",188)
+	    	$(".ver_down_on_help").css("top",125 )
+		    $(".list_header").css("top",125 )
+    	}
+    );
+   }
+    
 };
 
 //submitting forms with ajax
@@ -141,6 +158,7 @@ jQuery.fn.UIdialogs_links = function(){
   	$(form).UIdialogs();
       $(date).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
        $(form).find(".new_" + object).validateWithErrors();
+       $(form).find("select").chosen()
       $(form).dialog( "open" );
     });
 
@@ -203,6 +221,7 @@ jQuery.fn.current_link = function(){
 
 
 
+
 //ok
   
 ///////////////////////////////////////////////////////////////document.ready///////////////////////////////////////////////////////
@@ -227,6 +246,7 @@ $(document).ready(function() {
    
    $("#html_tabs a").current_link();
    $(".display_help").display_help();
+  
 //jquery UI dialogs
 
   

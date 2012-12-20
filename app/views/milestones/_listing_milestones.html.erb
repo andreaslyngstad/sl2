@@ -5,8 +5,6 @@
       <div id="dialog_milestone_form" class="dialog_form" title="Create new milestone" style="display:none;">
       	<ul>
         <%= form_for @klass.milestones.build do |n| %>
-      <%= n.hidden_field :project_id %>
-      <%= n.hidden_field :firm_id, :value => current_firm.id%>
       <li><%= n.label :goal %><%= n.text_area :goal, :class => "required", :minlength => "2" %></li>
       <li><%= n.label :due %><%= n.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_milestone_date" %></li> 
       <li><%= n.submit "Save", :class => 'submit'%></li> 

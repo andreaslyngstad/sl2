@@ -85,10 +85,10 @@ margin: auto;
 }
 
 
-
-.page_help{
+.page_help_container{
+	width:1110px;
   text-decoration: none;
- display:none;
+ 
  margin: 145px 15px 15px 15px;
  padding: 20px;
  background: #FDFFCF;
@@ -96,6 +96,14 @@ margin: auto;
  -moz-border-radius: 5px;
 -webkit-border-radius: 5px;
 border-radius: 5px;
+}
+.page_help{
+  position: fixed;
+  top:0px;
+  width:1180px;
+  display:none;
+  background-color: #FFFFFF;
+  z-index: 100;
 }
 .display_help:hover{
  text-decoration: underline;
@@ -367,7 +375,9 @@ background: -moz-linear-gradient(top,  #FAA51A,  #F47A20);
 
 
 #html_tabs{
-
+position:fixed;
+  top:125px;
+  z-index:1000;
 	border-bottom:1px solid #CB3900;
 	border-top:1px solid #f2853c;
 	color:white;
@@ -435,6 +445,9 @@ margin: 0px;
 	color:#222 !important;
 	
 
+}
+.home_content{
+	margin-top: 188px;
 }
 .report_top, .report_middle, .report_bottom{
 float:left;

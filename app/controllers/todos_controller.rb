@@ -5,7 +5,7 @@ class TodosController < ApplicationController
         flash[:notice] = flash_helper('Todo was successfully created.')
         format.js
       else       
-        format.js
+        format.js { render "shared/validate_create" }
       end
     end
   end
@@ -17,7 +17,7 @@ class TodosController < ApplicationController
         flash[:notice] = flash_helper('Todo was successfully updated.')
         format.js
       else
-        format.js
+        format.js { render "shared/validate_update" }
       end
     end
   end

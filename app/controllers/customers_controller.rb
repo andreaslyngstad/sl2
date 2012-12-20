@@ -36,8 +36,7 @@ class CustomersController < ApplicationController
   end
 
   def create
-  	@firm = current_firm
-    @customer = Customer.new(params[:customer])
+    @customer = Customer.new(params[:customer]) 
     @customer.firm = current_firm
     respond_to do |format|
       if @customer.save
@@ -51,8 +50,6 @@ class CustomersController < ApplicationController
 
   def update
     @customer = Customer.find(params[:id])
-    @firm = current_firm
-    
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
         flash[:notice] = flash_helper("#{@customer.name}" + " was successfully updated.")

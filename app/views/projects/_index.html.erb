@@ -1,4 +1,14 @@
-	
+<% content_for :help do %>
+<div class="page_help">
+	<div class="page_help_container">
+		<h2><img src="../system/info.png"/>  Projects</h2>
+		<p>Here you can see all your projects</p> 
+		<p>Search by typing in the searchbox</p>
+		<p>You can edit or archive the projects</p>
+		<p>By clicking on the project name, you'll go to that projects page</p>
+	</div>
+</div>
+<% end %>	
 <div id="left">
 	<div class="inner">
 		<div class="index-view">
@@ -8,13 +18,12 @@
 		<%= link_to "Archived projects", archive_path, :id => "archive"%>
 		
 		<div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
-      <%= form_for(@project) do |p| %>
-      <%= p.hidden_field :firm_id, :value => current_firm.id%>
+      <%= form_for(current_firm.projects.build) do |p| %>
       <ul>
 	      <li><%= p.label :name %><%= p.text_field :name, :class => "required"%></li>
 	      <li><%= p.label :description %><%= p.text_area :description %></li>
 	      <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date" %></li>
-	      <li><%= p.label :customer_id %><%= p.select(:customer_id, @customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer")%></li>
+	      <li><%= p.label :customer_id %><%= p.select(:customer_id, all_customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer", :class => "searchable")%></li>
 	      <li><%= p.submit 'Save', :class => 'submit' %></li>
       </ul>
       <% end %>
@@ -25,7 +34,7 @@
 	</div>
 	<div id="cus_pro_us_listing_container">
   <ul id="cus_pro_us_listing">
-	<%= render :partial => "projects_index",  :collection => @projects, :as => :project  %>
+	<%= render :partial => "projects_index",  :collection => all_projects, :as => :project  %>
   </ul>
   </div>
   </div>

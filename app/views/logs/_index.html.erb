@@ -1,4 +1,4 @@
-<div class="list_header_log hor_scroll_200 orange_bgr">
+<div class="list_header_log hor_scroll_200 orange_bgr ver_down_on_help">
 	<div id="form_holder">
 		<%if !@log.nil?%>
 			<%= render :partial => "stop_tracking", :locals => {:log => @log}%>
@@ -7,7 +7,7 @@
 		<% end %>
 	</div>
 </div>	
-<div id="index_log_header" class="hor_scroll_200">
+<div id="index_log_header" class="hor_scroll_200 ver_down_on_help">
 	<%= render "logs/logs_menu" %>
 </div>
 <div id="index_logs">

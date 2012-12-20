@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   require "./lib/timehelp"
 	include UrlHelper
-	include SubdomainLogin
 	before_filter :miniprofiler
 
 

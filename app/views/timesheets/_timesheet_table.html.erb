@@ -27,14 +27,14 @@
 	</td>
 <% end %>
 </tr>
-<td class="timesheet_project"><%= select_tag :project_id, options_from_collection_for_select(@projects, "id", "name"), :class => "small_selector", 
+<td class="timesheet_project"><%= select_tag :project_id, options_from_collection_for_select(@projects, "id", "name"), 
   		:id => "timeheet_project_select", :data_url => url_splitter(request.fullpath), :prompt =>  'Select Project' %></td>
 <% @dates.each do |date| %>
 	<td class="number">
-<input class="form-input" id="" data-project="<%=  %>" data-date="<%= date %>" name="" size="3" type="text" value="<%= %>">
+<input class="form-input" id="" data-project="<%=  %>" data-date="<%= date %>" name="" size="3" type="text" value="<%= %>" disabled>
 		</td>
 		<% end %>	
-		<td class="number"> save </td>			
+		<td class="number" > save </td>			
 <tr>
 	  <tfoot>
 	<td class="timesheet_project"><b>Total</b></td>
