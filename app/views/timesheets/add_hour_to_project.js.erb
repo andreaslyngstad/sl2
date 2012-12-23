@@ -1,0 +1,16 @@
+console.log("test")
+var field = $(".project_date_<%= j(@log.project.id.to_s)%>_<%= j(@log.log_date.to_s)%>")
+var total_project = $(".project_total_<%= j(@log.project.id.to_s)%>")
+var total_date 
+var prehours_total_project = total_project.attr("data-time")
+var posthours_total_project = parseFloat(prehours_total_project) + parseFloat(<%= j( @log.hours.to_s )%>)
+console.log(posthours_total_project)
+var prehours = field.attr("data-time")
+var posthours = parseFloat(prehours) + parseFloat(<%= j( @log.hours.to_s )%>)
+
+total_project.empty().append(secondsToString(posthours_total_project))
+total_project.attr("data-time",posthours_total_project)
+field.empty().append(secondsToString(posthours))
+
+
+$('.spinning').hide();

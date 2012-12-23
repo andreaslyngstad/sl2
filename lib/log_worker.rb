@@ -2,7 +2,9 @@ module LogWorker
   extend self
   def create(params, done, user, firm)
     log      = Log.new(params)
+    unless log.user
     log.user = user
+    end
     log.firm = firm
     log.tracking = false
     if log.todo

@@ -53,10 +53,8 @@ jQuery.fn.UIdialogs_tracking_logs_links = function(){
 
 jQuery.fn.select_projects_customers = function() {
 	$(this).UIdialogs();
-   	$(this).dialog( "open" );
-   	
+   	$(this).dialog( "open" );	
    	var data_id = $(this).attr('data-id')
- 	console.log(data_id)
 	if (data_id === undefined ) {
 		$(this).find("select#logProjectId").change(function(){
     	Change_select($(this).attr("log"), this.value.toString(), "project_select")

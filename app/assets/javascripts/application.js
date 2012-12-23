@@ -41,8 +41,8 @@
 //= require nvd32/src/models/multiBarChart
 //= require colorArrays
 //= require stackedAndPie
-//= require json_fetcher
 //= require_self
+
 
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -219,8 +219,24 @@ jQuery.fn.current_link = function(){
 
 };
 
-
-
+function secondsToString(seconds){ 
+if (seconds < 60){
+	return "0:00"	
+}else{
+	var numhours = Math.floor(seconds / 3600);
+	var numminutes = Math.floor((seconds  % 3600) / 60);
+	
+	if (numminutes < 10){
+		var minutes = "0" + numminutes
+	}else if(numminutes == 0)
+	{
+		var minutes = "00" 
+	}else{
+		var minutes = numminutes
+	}
+	return numhours + ":" + minutes;
+	}
+}
 
 //ok
   

@@ -93,7 +93,9 @@ class Log < ActiveRecord::Base
   def log_date_format
     log_date.strftime("%Y%m%d")
   end
-  
+  def self.logs_for_timesheet(user)
+    user.logs.where(:log_date => (Date.today.beginning_of_week..Date.today.end_of_week)).group("project_id").group("date(log_date)").sum(:hours)
+  end
   
   def self.hours_by_day_and_model(firm, range, model)
     model_id = model.to_s + "_id"
@@ -110,5 +112,8 @@ class Log < ActiveRecord::Base
      .where(log_date: range).includes(model)
      .group([model_id.intern])
      .select("sum(hours) as total_hours, #{model_id}")    
+  end
+  def placed_between?(date_range)
+    date_range.include?(log_date)
   end
 end

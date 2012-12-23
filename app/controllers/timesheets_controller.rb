@@ -4,13 +4,11 @@ class TimesheetsController < ApplicationController
      @users = current_firm.users
      @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
      range = Time.zone.today..Time.zone.today + 7.days
-     @log_project = @user.logs.where(:log_date => Time.zone.today..Time.zone.today + 7.days).group("project_id").sum(:hours)
-     @log_week = @user.logs.where(:log_date => range).group("date(log_date)").sum(:hours)
-     @log_week_project = @user.logs.where(:log_date => range).group("project_id").group("date(log_date)").sum(:hours)
-     @log_week_no_project = @user.logs.where(:log_date => range, :project_id => nil).group("date(log_date)").sum(:hours)
+     @log_project = @user.logs.where(:log_date => @dates).group("project_id").sum(:hours)
+     @log_week = @user.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
+     @log_week_project = @user.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
+     @log_week_no_project = @user.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
      @projects = @user.projects
-     @all_projects = @projects
-     @customers = current_firm.customers
      @log_total = @user.logs.where(:log_date => range).sum(:hours) 
   end
   def timesheet_create
@@ -47,14 +45,16 @@ class TimesheetsController < ApplicationController
     @logs_by_date = @user.logs.group("date(log_date)").sum(:hours)
   end
   
-  def add_hours_to_timesheet
-    @project = Project.find(params[:id])  
-    @date = params[:date]
+  def add_hour_to_project
     @log = Log.new
-    @log.project = @project
-    @log.log_date = @date
+    @log.user = User.find(params[:user_id])
+    @log.firm = current_firm
+    @log.project = Project.find(params[:project_id])
+    @log.log_date = params[:date]
     @log.event = "Added on timesheet"
-    @log.begin = @date.beginning_of_day
-    @log.end =  @log.begin + params[:hours] 
+    @log.begin_time = @log.log_date.beginning_of_day
+    @log.end_time =  @log.begin_time + (params[:val_input].to_f * 3600)
+    Rails.logger.info("Log #{@log.event}") 
+    @log.save!
   end
 end

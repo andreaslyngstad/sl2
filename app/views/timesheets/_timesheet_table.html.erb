@@ -1,4 +1,4 @@
-<table class="timesheet_table">
+<table class="timesheet_table" data-user="<%= @user.id.to_s %>">
 <tr>
 	<th class="timesheet_day"></th>
 	<% @dates.each do |date|%>
@@ -8,24 +8,25 @@
 </tr>
 <% for project in @projects do %>
 <% if project_week_log_hour_total(@log_project, project) != "<span style='color:grey;'>0:00</span>" %>
-<tr>	
+<tr class="project_hours">	
 	<td class="timesheet_project"><%= project.name %></td>	
 	<% @dates.each do |date| %>
-			<td class="number">			
+			<td class="number project_date_<%= project.id %>_<%= date %>" data-time="<%= every_day_log_hour(@log_week_project, date, project) %>">			
 				<%= every_day_log_hour(@log_week_project, date, project)%>				
 			</td>
 		<% end %>
-	<td class="number"><%= project_week_log_hour_total(@log_project, project) %></td>
+	<td class="project_total_<%= project.id %> total" data-time=""></td>
 </tr>
 <% end %>
 <% end %>
-<tr>
+<tr class="project_hours">
 	<td class="timesheet_project">No project</td>
 <% @dates.each do |date| %>
 	<td class="number">
 		<%= every_day_log_hour_no_project(@log_week_no_project, date)%>
 	</td>
 <% end %>
+<td class="project_total_ total" data-time=""></td>
 </tr>
 <td class="timesheet_project"><%= select_tag :project_id, options_from_collection_for_select(@projects, "id", "name"), 
   		:id => "timeheet_project_select", :data_url => url_splitter(request.fullpath), :prompt =>  'Select Project' %></td>
@@ -34,14 +35,14 @@
 <input class="form-input" id="" data-project="<%=  %>" data-date="<%= date %>" name="" size="3" type="text" value="<%= %>" disabled>
 		</td>
 		<% end %>	
-		<td class="number" > save </td>			
+		<td class="number"> </td>			
 <tr>
 	  <tfoot>
 	<td class="timesheet_project"><b>Total</b></td>
 	<% @dates.each do |date| %>
 			<td class="timesheet_total"><%= every_day_log_hour_total(@log_week, date)%></td>
 		<% end %>
-	<td class="timesheet_total"><%= time_diff(@log_total)%></td>
+	<td class="timesheet_total"><%= @log_total.round%></td>
 	  </tfoot>
 </tr>
 </table>

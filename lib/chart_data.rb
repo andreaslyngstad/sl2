@@ -6,56 +6,6 @@ class ChartData
     @range = range
     @model = model  
   end
-  
-  def logs_by_day(logs)
-    days_with_hours = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
-      logs.each do |log|
-        if log.total_hours.to_f > 10.0
-        if log.send(@model) 
-          days_with_hours[log.send(@model).name][log.log_date] = log.total_hours
-        else
-          days_with_hours["No " + @model.to_s][log.log_date] = log.total_hours
-        end
-      end
-      end
-   
-    days_with_hours
-    
-  end
-  
-  def chart_lables
-    @firm.send(@model.pluralize).map do |model_instance|
-       model_instance.name.gsub(/["]/, "'")  
-    end
-  end
-  
-  def all_dates_no_hours
-    ms = []
-    ms << "No " + @model.to_s
-    models = ms + chart_lables
-    
-    date_hours_empty = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}      
-    models.each do |m|
-      (@range).each do |day|
-      date_hours_empty[m][day] = 0
-      end
-    end
-    date_hours_empty
-  end
-  
-  def compile_hash
-   key_user_value_date_hours = Hash.new
-   emtpy_hours = all_dates_no_hours
-   log_hours = logs_by_day(Log.hours_by_day_and_model(@firm, @range, @model))
-   emtpy_hours.each do |k,v|
-     if log_hours.has_key?(k)
-      c = log_hours.values_at(k)[0].diff(emtpy_hours.values_at(k)[0])
-      key_user_value_date_hours[k] = c 
-     end   
-   end 
-    key_user_value_date_hours
-   end
-   
   def stacked
     key_user_value_date_hours = compile_hash
     output = '[' 
@@ -86,4 +36,53 @@ class ChartData
     output.chomp!(',')
     output << ']}]'
   end 
+private
+  def logs_by_day
+    days_with_hours = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}
+      get_logs_by_day_and_model.each do |log|
+        if log.total_hours.to_f > 10.0
+        if log.send(@model) 
+          days_with_hours[log.send(@model).name][log.log_date] = log.total_hours
+        else
+          days_with_hours["No " + @model.to_s][log.log_date] = log.total_hours
+        end
+      end
+      end
+    days_with_hours
+  end
+  
+  def get_logs_by_day_and_model
+    Log.hours_by_day_and_model(@firm, @range, @model)
+  end
+  def chart_lables
+    @firm.send(@model.pluralize).map do |model_instance|
+       model_instance.name.gsub(/["]/, "'")  
+    end
+  end
+  
+  def all_dates_no_hours
+    ms = []
+    ms << "No " + @model.to_s
+    models = ms + chart_lables
+    date_hours_empty = Hash.new{|h, k| h[k] = Hash.new(&h.default_proc)}      
+    models.each do |m|
+      (@range).each do |day|
+      date_hours_empty[m][day] = 0
+      end
+    end
+    date_hours_empty
+  end
+  
+  def compile_hash
+   key_user_value_date_hours = Hash.new
+   emtpy_hours = all_dates_no_hours
+   log_hours = logs_by_day
+   emtpy_hours.each do |k,v|
+     if log_hours.has_key?(k)
+      c = log_hours.values_at(k)[0].diff(emtpy_hours.values_at(k)[0])
+      key_user_value_date_hours[k] = c 
+     end   
+   end 
+    key_user_value_date_hours
+   end
 end

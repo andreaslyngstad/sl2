@@ -16,6 +16,7 @@ class LogsController < ApplicationController
     @log = Log.find(params[:id])
   end
   def create
+    
     @klass = LogWorker.create(params[:log], params[:done], current_user, current_firm)
     create_resonder(@klass)
   end

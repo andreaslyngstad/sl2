@@ -68,6 +68,7 @@ Squadlink::Application.routes.draw do
     match "/timesheets/:user_id" => 'timesheets#timesheets', :as => :timesheets
     match "/timesheet_logs_day/:user_id/:date" => 'timesheets#timesheet_logs_day', :as => :timesheet_logs_day
     match "/timesheet_month/:user_id/:date" => "timesheets#timesheet_month", :as => :timesheet_month
+    match "/add_hour_to_project/" => 'timesheets#add_hour_to_project', :as => :add_hour_to_projects
     match "/add_log_timesheet" => 'timesheets#add_log_timesheet', :as => :add_log_timesheet
    
     #private_controller

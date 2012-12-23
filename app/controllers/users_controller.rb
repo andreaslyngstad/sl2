@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @kass = User.find(params[:id])
+    @klass = User.find(params[:id])
     respond_with(@klass)
   end
 
