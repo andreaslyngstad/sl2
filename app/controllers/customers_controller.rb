@@ -54,10 +54,8 @@ class CustomersController < ApplicationController
       if @customer.update_attributes(params[:customer])
         flash[:notice] = flash_helper("#{@customer.name}" + " was successfully updated.")
         format.js
-        
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end

@@ -8,9 +8,7 @@ describe MilestonesController do
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com"
     @project = FactoryGirl.create(:project, :firm => @user.firm)
-     
   end
-  
   
   describe "POST create" do
     context "with valid attributes" do
@@ -19,7 +17,6 @@ describe MilestonesController do
           post :create, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id)
         }.to change(Milestone,:count).by(1)
       end
-      
       it "Gives a flash notice" do
         post :create, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id)
         flash[:notice].should_not be_nil 
@@ -28,7 +25,8 @@ describe MilestonesController do
   end
   describe 'PUT update' do
   before :each do
-    @milestone = FactoryGirl.create(:milestone, :project_id => @project.id)
+    @milestone = FactoryGirl.create(:milestone, :project_id => @project.id , :firm => @user.firm)
+    
   end
   
   context "valid attributes" do
@@ -61,7 +59,7 @@ describe MilestonesController do
 end
   describe 'DELETE destroy' do
     before :each do
-      @milestone = FactoryGirl.create(:milestone, :project_id => @project.id)
+      @milestone = FactoryGirl.create(:milestone, :project_id => @project.id, :firm => @user.firm)
     end
     
     it "deletes the contact" do

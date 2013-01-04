@@ -23,7 +23,5 @@ describe LogsReport do
   it "returns the total hour of logs in range" do
     LogsReport.new(@logs,@range).total_hours_within_time_range.should == 28800
   end
-  it "returns the total hours on each date in range" do
-    LogsReport.new(@logs,@range).total_hours_on_date(Date.new(2012,12,21)).should == 7200 
-  end
+ 
 end

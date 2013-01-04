@@ -3,7 +3,7 @@ class CreateMilestones < ActiveRecord::Migration
     create_table :milestones do |t|
       t.text :goal
       t.date :due
-      t.integer :firm_id
+      t.integer :firm_id, :null => false
       t.boolean :completed
       t.integer :project_id
 

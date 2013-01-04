@@ -1,6 +1,6 @@
 class Todo < ActiveRecord::Base
   attr_accessible :name,:user_id,:project_id,:customer_id,
-  :due,:completed,:created_at,:updated_at,:project,:customer,:user,:done_by_user,:done_by_user_id, :prior
+  :due,:completed,:created_at,:updated_at,:project,:customer,:user,:done_by_user,:done_by_user_id,:prior,:firm
   
   belongs_to :customer
   belongs_to :project

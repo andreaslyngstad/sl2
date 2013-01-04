@@ -28,7 +28,7 @@ describe UsersController do
   
   describe "GET #show" do
     it "assigns the requested user to @user" do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryGirl.create(:user, :firm => @user.firm)
       get :show, :id => @user
       assigns(:user) == [@user] 
     end

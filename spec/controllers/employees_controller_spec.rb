@@ -12,9 +12,7 @@ describe EmployeesController do
   
   
   describe "POST create" do
-    before(:each) do
-      
-    end
+   
     context "with valid attributes" do
       it "creates a new contact" do
         expect{
@@ -30,15 +28,15 @@ describe EmployeesController do
   end
   describe 'PUT update' do
   before :each do
-    @employee = FactoryGirl.create(:employee, :customer_id => @customer.id)
+    @employee = FactoryGirl.create(:employee, :customer_id => @customer.id, :firm => @user.firm)
   end
   
   context "valid attributes" do
-    it "located the requested @contact" do
+    it "located the requested @employee" do
       put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee)
       assigns(:employee).should eq(@employee)      
     end
-  
+
     it "changes @employee's attributes" do
       put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee, :name => "something else")
       @employee.reload
@@ -62,7 +60,7 @@ describe EmployeesController do
 end
   describe 'DELETE destroy' do
     before :each do
-      @employee = FactoryGirl.create(:employee)
+      @employee = FactoryGirl.create(:employee, :customer_id => @customer.id, :firm => @user.firm)
     end
     
     it "deletes the contact" do

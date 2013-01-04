@@ -5,8 +5,7 @@ describe LogsController do
   login_user
   
   before(:each) do
-    @request.host = "#{@user.firm.subdomain}.example.com"
-   
+    @request.host = "#{@user.firm.subdomain}.example.com" 
   end
   
   describe "GET #index" do
@@ -15,7 +14,7 @@ describe LogsController do
       subject.current_firm.should_not be_nil
     end
     it "populates an array of logs" do
-      @log = FactoryGirl.create(:log)
+      @log = FactoryGirl.create(:log, :user => @user, :firm => @user.firm)
       get :index
       assigns(:logs) == [@log]   
     end
@@ -42,14 +41,11 @@ describe LogsController do
   end
   describe 'PUT update' do
   before :each do
-    @log = FactoryGirl.create(:log, :firm => @user.firm)
+    @log = FactoryGirl.create(:log, :user => @user, :firm => @user.firm)
   end
   
   context "valid attributes" do
-    it "located the requested @contact" do
-      put :update, id: @log, log: FactoryGirl.attributes_for(:log)
-      assigns(:log).should eq(@log)      
-    end
+    
   
     it "changes @log's attributes" do
       put :update, id: @log, log: FactoryGirl.attributes_for(:log, :event => "something else")
@@ -58,11 +54,6 @@ describe LogsController do
     end
   end
   context "invalid attributes" do
-    it "locates the requested @log" do
-      put :update, id: @log, log: FactoryGirl.attributes_for(:log, :event => nil)
-      assigns(:log).should eq(@log)      
-    end
-    
     it "does not change @log's attributes" do
       put :update, id: @log, 
         log: FactoryGirl.attributes_for(:log, :event => nil)
@@ -74,7 +65,7 @@ describe LogsController do
 end
   describe 'DELETE destroy' do
     before :each do
-      @log = FactoryGirl.create(:log, :firm => @user.firm)
+      @log = FactoryGirl.create(:log, :user => @user,:firm => @user.firm)
     end
     
     it "deletes the contact" do

@@ -4,7 +4,7 @@
    </div>
    <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
       	<%= form_for(Log.new) do |l| %>  
-      	<%= l.hidden_field :user_id, :value => @klass.id.to_s %>
+  
   			<%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
     	<% end %>
    </div>

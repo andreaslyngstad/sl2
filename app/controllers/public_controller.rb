@@ -7,8 +7,7 @@ class PublicController < ApplicationController
   end
 
   def register
-    @firm = Firm.new
-     
+    @firm = Firm.new   
   end 
   
   def first_user

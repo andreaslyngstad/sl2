@@ -10,6 +10,6 @@ describe LogsReport do
     log2 = Log.new(:event =>"test", :log_date => Date.new(2012,12,22), :hours => 3600)
     logs = [log1,log2]
     range = DateRange.new(Date.new(2012,12,17),Date.new(2012,12,21))
-    timesheet.new(logs,range).total_hours_within_time_range.should == 3600
+    LogsReport.new(logs,range).total_hours_within_time_range.should == 3600
   end
 end

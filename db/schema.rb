@@ -30,11 +30,13 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
     t.string   "phone"
     t.string   "email"
     t.integer  "customer_id", :null => false
+    t.integer  "firm_id",     :null => false
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
   add_index "employees", ["customer_id"], :name => "index_employees_on_customer_id"
+  add_index "employees", ["firm_id"], :name => "index_employees_on_firm_id"
 
   create_table "firms", :force => true do |t|
     t.string   "name"
@@ -90,7 +92,7 @@ ActiveRecord::Schema.define(:version => 20101029201141) do
   create_table "milestones", :force => true do |t|
     t.text     "goal"
     t.date     "due"
-    t.integer  "firm_id"
+    t.integer  "firm_id",    :null => false
     t.boolean  "completed"
     t.integer  "project_id"
     t.datetime "created_at", :null => false

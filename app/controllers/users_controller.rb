@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def create
     @klass = User.new(params[:user])
+    @klass.firm = current_firm 
      respond_to do |format|
       if @klass.save
         flash[:notice] = flash_helper("Registration successful.")

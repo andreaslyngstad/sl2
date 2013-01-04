@@ -22,9 +22,4 @@ class Firm < ActiveRecord::Base
   validates_format_of :subdomain, :with => /^[a-z0-9]+$/i
  
   validates :subdomain, :presence => true, :uniqueness => true,  :subdomain_exclutions => :true
-  
-  
-  
-
 end
- 

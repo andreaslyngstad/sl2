@@ -18,12 +18,12 @@ describe TodosController do
     context "with valid attributes" do
       it "creates a new contact" do
         expect{
-          post :create, todo: FactoryGirl.attributes_for(:todo, :firm_id => @user.firm.id, :project_id => @project.id)
+          post :create, todo: FactoryGirl.attributes_for(:todo, :project_id => @project.id)
         }.to change(Todo,:count).by(1)
       end
       
       it "Should show flash" do
-        post :create, todo: FactoryGirl.attributes_for(:todo, :firm_id => @user.firm.id, :project_id => @project.id)
+        post :create, todo: FactoryGirl.attributes_for(:todo, :project_id => @project.id)
         flash[:notice].should_not be_nil 
       end
     end 

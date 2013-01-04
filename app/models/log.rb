@@ -1,6 +1,6 @@
 class Log < ActiveRecord::Base
 	attr_accessible :event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
-	 :hours,:created_at,:updated_at,:project,:customer,:user,:todo
+	 :hours,:created_at,:updated_at,:project,:customer,:user,:todo, :firm
   validate :end_time_before_begin_time
   belongs_to :customer
   belongs_to :user

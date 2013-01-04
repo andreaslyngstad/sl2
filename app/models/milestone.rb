@@ -34,6 +34,5 @@ class Milestone < ActiveRecord::Base
   
   def overdue?
     due < Date.today
-  end
-  
+  end 
 end

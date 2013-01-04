@@ -1,5 +1,7 @@
 class TodosController < ApplicationController
   def create
+    @todo = Todo.new(params[:todo])
+    @todo.firm = current_firm
     respond_to do |format|
       if todo.save
         flash[:notice] = flash_helper('Todo was successfully created.')

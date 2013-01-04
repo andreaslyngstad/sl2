@@ -38,6 +38,10 @@ group :development, :test do
   gem 'ruby-prof'
   #gem 'turn' 
   #gem "spork-minitest", "~> 1.0.0.beta1"
+  gem 'spork'
+  gem 'guard-spork'
+  gem 'guard-rspec'
+  gem 'rb-inotify', '~> 0.8.8'
   gem 'database_cleaner'
   gem "selenium-webdriver"
   gem "selenium-client"
