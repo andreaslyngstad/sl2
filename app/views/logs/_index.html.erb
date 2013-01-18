@@ -1,3 +1,19 @@
+ <% content_for :help do %>
+ <div class="page_help">
+	<div class="page_help_container">
+	<h2><img src="../system/info.png"/> Tracking logs</h2>
+	    <p>Your logs are listed here and you can make new logs.</p>
+		<p>You can log your time in two ways.</p> 
+		<ul>
+		<li>1. Write what you are working on and click on the green arrow. When you stop working click on the stop button.
+			You can click on the small grey arrow add more details about the log.</li>
+		<li>2. You can also add logs by clicking on the "Add log" button.</li>
+		
+		</ul>
+		<p>Tip: If you want to find logs on a particular project or custumer, go to the project or custumer and click on the logs tab.</p>
+		</div>
+		</div>
+<% end %>
 <div class="list_header_log hor_scroll_200 orange_bgr ver_down_on_help">
 	<div id="form_holder">
 		<%if !@log.nil?%>

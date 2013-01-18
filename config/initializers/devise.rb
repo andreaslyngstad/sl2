@@ -203,7 +203,10 @@ Devise.setup do |config|
   #
   # The "*/*" below is required to match Internet Explorer requests.
   # config.navigational_formats = ["*/*", :html]
-
+  Warden::Manager.before_logout do |user, auth, opts|
+    user.current_sign_in_at = nil
+    user.save
+  end
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
 

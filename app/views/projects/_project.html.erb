@@ -4,11 +4,15 @@
   <div class="project_desc"><%= truncate_string(project.description) %></div>
   <div class="date_all"><%= project.due.strftime('%d/%m/%y') %></div>
 <div class="delete_edit">
+<% if can? :manage, project %>
   <span class="open_project_update edit" id="project_update" data-id="<%= project.id %>" data-object="project">edit</span>
-
+<% end %>
+<% if can? :archive, project %>
   <a class="activate_projects_no_button" data-object="project" data-id="<%= project.id.to_s %>">Archive</a>
+<% end %>
 </div>
 </div>
+<% if can? :manage, project %>
 <div class="dialog_form" id="project_update_<%= project.id %>_form" title="Update project" style="display:none;">
       <%= form_for(project) do |f| %>
       <ul>
@@ -19,4 +23,5 @@
       </ul>
       <% end %>
 </div>
+<% end %>
 </div>

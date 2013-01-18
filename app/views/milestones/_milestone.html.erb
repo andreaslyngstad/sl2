@@ -1,6 +1,7 @@
 <div class="info" id="milestone_<%=milestone.id%>">    
 	<div class="name_milestone"><%= milestone.goal %></div>
 	<div class="date_all"><%= milestone.due.strftime('%d.%m.%y')%></div>
+	<% if can? :manage, milestone.project %>
 	<div class="delete_edit">
 		<span class="open_milestone_update edit" id="milestone_update" data-id="<%= milestone.id %>" data-object="milestone">edit</span>
 		<%= link_to "delete", milestone, :confirm => "Are you sure?", :title => "Delete milestone", :method => :delete, :class => "delete_milestone", :remote => true%>
@@ -12,4 +13,5 @@
 		<li><%= f.submit "Save", :class => 'submit' %></li>
 		<% end %>
 	</div>
+	<% end %>
 </div>

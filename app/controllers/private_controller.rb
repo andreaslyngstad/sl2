@@ -2,18 +2,20 @@ class PrivateController < ApplicationController
 
 
   def account
+    authorize! :read, Firm
   end
   
   def statistics
+    authorize! :read, Firm
     @log_week = current_firm.logs.where(:log_date => (Time.now.beginning_of_week + 1.second)..(Time.now.end_of_day)).group("date(log_date)").sum(:hours)
- 	  @logs_project = current_firm.logs.where(['log_date > ? AND project_id IS NOT ?', Time.now.beginning_of_week, nil]).group("project").sum(:hours)
-    
+ 	  @logs_project = current_firm.logs.where(['log_date > ? AND project_id IS NOT ?', Time.now.beginning_of_week, nil]).group("project").sum(:hours) 
     @logs_customer = current_firm.logs.where(['log_date > ? AND customer_id IS NOT ?', Time.now.beginning_of_week, nil]).group("customer").sum(:hours)
     @logs_user = current_firm.logs.where(['log_date > ?', Time.now.beginning_of_week]).group("user").sum(:hours)
   end
 
 
   def reports
+      authorize! :manage, Firm
   	 @users = current_firm.users
   	 @projects = current_firm.projects
   	 @customers = current_firm.customers
@@ -39,11 +41,11 @@ class PrivateController < ApplicationController
   
 
   def membership
+    
   	@project = Project.find(params[:project_id])
+  	authorize! :manage, @project
   	@user = User.find(params[:id])
-  	if @user == current_user
-  	  flash[:notice] = flash_helper("You cannot remove yourself from a project. Consider to archive the project.")
-  	else
+  	
   	if @project.users.include?(@user)
   		@project.users.delete(@user)
   		flash[:notice] = flash_helper("#{@user.name} is NOT a member of the #{@project.name} project.")
@@ -51,7 +53,7 @@ class PrivateController < ApplicationController
   		@project.users << @user
   		flash[:notice] = flash_helper("#{@user.name} is a member of the #{@project.name} project.")
   	end
-  	end
+  	
   	@members = @project.users
   	@not_members = current_firm.users - @members	
   end

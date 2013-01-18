@@ -16,6 +16,7 @@ FactoryGirl.define do
     password "foobar"
     password_confirmation { |u| u.password }
     email
+    role "Admin"
     firm
   end 
 

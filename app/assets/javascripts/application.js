@@ -26,19 +26,19 @@
 //= require jquery.xcolor.min
 //= require nvd3/lib/d3.v2 
 
-//= require nvd3/src/core
-//= require nvd3/src/utils
-//= require nvd3/src/models/axis
-//= require nvd3/src/tooltip
-//= require nvd3/src/models/legend
-//= require nvd3/src/models/axis
-//= require nvd3/src/models/scatter
-//= require nvd3/src/models/stackedArea
-//= require nvd3/src/models/stackedAreaChart
-//= require nvd3/src/models/pie
-//= require nvd3/src/models/pieChart
-//= require nvd3/src/models/multiBar
-//= require nvd3/src/models/multiBarChart
+//= require nvd32/src/core
+//= require nvd32/src/utils
+//= require nvd32/src/models/axis
+//= require nvd32/src/tooltip
+//= require nvd32/src/models/legend
+//= require nvd32/src/models/axis
+//= require nvd32/src/models/scatter
+//= require nvd32/src/models/stackedArea
+//= require nvd32/src/models/stackedAreaChart
+//= require nvd32/src/models/pie
+//= require nvd32/src/models/pieChart
+//= require nvd32/src/models/multiBar
+//= require nvd32/src/models/multiBarChart
 //= require colorArrays
 //= require stackedAndPie
 //= require_self
@@ -53,7 +53,6 @@ jQuery.fn.display_help = function(){
  	
   	if ($(".page_help").length !== 0){ 	
   		$(this).show()
-  		console.log($(".page_help"))
     $(this).toggle(
     	function(){
     	var help_height = $(".page_help").height()

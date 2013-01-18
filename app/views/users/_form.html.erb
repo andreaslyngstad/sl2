@@ -3,7 +3,13 @@
 	  <li><%= f.label :name %><%= f.text_field :name%> </li>
 	  <li><%= f.label :email %><%= f.text_field :email %></li>
 	  <li><%= f.label :phone %><%= f.text_field :phone %></li>
-	  <li><%= f.label :password %><%= f.password_field :password, :class => "required", :minlength => "6" %></li>
+	  <li>
+		  <% if user.id == nil %>
+		  	<%= f.label :password %><%= f.password_field :password, :class => "required", :minlength => "6" %>
+		  <% else %>
+		   	<%= f.label :password %><%= f.password_field :password, :minlength => "6" %>
+		  <% end %>
+	  </li>
 	  <li>
 	  	<p><%= f.radio_button :role, 'Admin' %> <%= label :role, 'Admin (can see and edit everything)' %></p>
 	  	<p><%= f.radio_button :role, 'Member' %> <%= label :role, 'Member (can see everything and edit projects where they are members)' %></p>

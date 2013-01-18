@@ -8,9 +8,10 @@
 	        <input type="text" name="search" AUTOCOMPLETE=OFF value="" title="search" id="id_search_list">
 	    </div>
 	</div>
+	<div id="cus_pro_us_listing_container">
   <ul id="cus_pro_us_listing">
-    <% for project in @projects %>
-  <li class="archive_tab_list" id="project_<%= project.id.to_s %>"> 
+    <% @projects.each do |project| %>
+  <li class="tab_list" id="project_<%= project.id.to_s %>"> 
   	<div class="tab_list_text">
  <%= project.name %>
   </div>
@@ -22,6 +23,7 @@
     <% end %>
 
   </ul>
+  </div>
   </div>
 
 

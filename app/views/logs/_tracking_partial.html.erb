@@ -1,18 +1,3 @@
- <% content_for :help do %>
- <div class="page_help">
-	
-	<h2><img src="../system/info.png"/> Tracking logs</h2>
-	    <p>Your logs are listed here and you can make new logs.</p>
-		<p>You can log your time in two ways.</p> 
-		<ul>
-		<li>1. Write what you are working on and click on the green arrow. When you stop working click on the stop button.
-			You can click on the small grey arrow add more details about the log.</li>
-		<li>2. You can also add logs by clicking on the "Add log" button.</li>
-		
-		</ul>
-		<p>Tip: If you want to find logs on a particular project or custumer, go to the project or custumer and click on the logs tab.</p>
-		</div>
-<% end %>
     <div class="tracking_select" style="display: none;">
 	<div id="tracking_project_task">
     <%= n.label :project %>
@@ -51,6 +36,7 @@
             <%= n.label :done?%><%= check_box_tag "done", 1, false, {:style => "margin:13px 0 0 7px"}  %>
             <% end %>
            </div> </div>
+           <% if can? :read, Firm %>
            <div id="tracking_customer_employee">
           <%= n.label :customer %>
           	<%= n.select(:customer_id, all_customers.map {|customer| [customer.name, customer.id]},
@@ -74,5 +60,6 @@
     
      
       </div>
+      <% end %>
       </div>
      

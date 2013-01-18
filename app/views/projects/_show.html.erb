@@ -63,14 +63,17 @@
     <div class="tab_box has_url" id="tabs-1"></div>
   <div class="tab_box hide has_url" id="tabs-2"></div> 
   <div class="tab_box hide has_url" id="tabs-3"></div> 
+  
   <div class="tab_box hide" id="tabs-4">
   	<div id="users_list_header">
   		<div class="members_header">
   			Squad on this project
   		</div>
+  		<% if can? :manage, @klass %>
   		<div class="not_members_header">
   			Available squaders
   		</div>
+  		 <% end %>
   	</div>
 	<div id="users_list">
     <div id="members" class="droppable members">
@@ -81,6 +84,7 @@
     </div>
       <% end %>
     </div>
+    <% if can? :manage, @klass %>
     <div id="not_members" class="droppable">
       	<% @not_members.each do |user| %>
       	<div class="user_info edit white draggable not_member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @klass.id %>"> 
@@ -88,9 +92,11 @@
      	<%= user.name %>
     </div> 
     <% end %>
-    </div> 
+    </div>
+    <% end %> 
 	</div>
   </div> 
+  
   </div>
 </div>  
 </div> 

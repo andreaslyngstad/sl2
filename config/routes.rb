@@ -34,7 +34,7 @@ Squadlink::Application.routes.draw do
   end
 
   constraints(Subdomain) do
-    root :to	=> "private#statistics"
+    root :to	=> "logs#index"
     devise_for  :users
     #chart_controller
     match "users_logs/:form/:to" => "charts#users_logs",  :as => :users_logs

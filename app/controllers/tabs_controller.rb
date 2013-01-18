@@ -1,7 +1,7 @@
 class TabsController < ApplicationController
   def milestones
     @klass = get_klass(params[:class]).find(params[:id])
-    @milestones = get_klass(params[:class]).find(params[:id]).milestones.order("due ASC")
+    @milestones = get_klass(params[:class]).find(params[:id]).milestones.order("due ASC").includes(:project)
   end
   def todos  
     time_range = (Time.now.midnight - 7.day)..(Time.now.midnight + 7.day)

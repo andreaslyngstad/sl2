@@ -7,7 +7,6 @@ describe UsersController do
   
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com"
-   
   end
   
   describe "GET #index" do
@@ -30,14 +29,15 @@ describe UsersController do
     it "assigns the requested user to @user" do
       @user = FactoryGirl.create(:user, :firm => @user.firm)
       get :show, :id => @user
-      assigns(:user) == [@user] 
+      assigns(:user) == [@klass] 
     end
     it "renders the #show view" do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryGirl.create(:user, :firm => @user.firm)
       get :show, :id => @user
-      response.should render_template :show
+      response.should render_template("show")
     end
   end
+  
   describe "POST create" do
     context "with valid attributes" do
       it "creates a new user" do
@@ -49,12 +49,13 @@ describe UsersController do
       it "redirects to the new user" do
         post :create, user: FactoryGirl.attributes_for(:user)
         flash[:notice].should_not be_nil 
+        
       end
     end 
   end
   describe 'PUT update' do
   before :each do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user, :firm => @user.firm)
   end
   
   context "valid attributes" do
@@ -86,10 +87,11 @@ describe UsersController do
 end
   describe 'DELETE destroy' do
     before :each do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryGirl.create(:user, :firm => @user.firm)
     end
-    
+   
     it "deletes the user" do
+     
       expect{
         delete :destroy, id: @user        
       }.to change(User,:count).by(-1)

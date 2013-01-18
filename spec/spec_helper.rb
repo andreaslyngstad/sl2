@@ -10,10 +10,12 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rspec'
 require 'rspec/autorun'
-
 require 'factory_girl'
-
+require 'ruby-debug'
+include Warden::Test::Helpers
+Warden.test_mode!
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
@@ -61,7 +63,7 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-
+  FactoryGirl.reload  
 end
 
 # --- Instructions ---

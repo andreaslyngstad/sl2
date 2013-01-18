@@ -1,15 +1,20 @@
 <div class="log_menu">
-   
    <div class="add_some_timesheet">
        Timesheet for <%= @user.name %> 
-       
-       <%= link_to "month", timesheet_month_path(@user, Time.now.to_date) %>
-       <%= link_to "week", timesheets_path(@user) %>
    </div>
+   
    <div class="add_some_timesheet_buttons">
+   	
        <a id="dialog_log">Log more hours</a> 
        <%= select_tag :user_id, options_from_collection_for_select(@users, "id", "name"), :class => "small_selector", 
   		:id => "timeheet_user_select", :data_url => url_splitter(request.fullpath), :prompt => 'Select User' %>
+  		
+   </div>
+   <div id="month_week_tabs">
+   	<ul>	
+    	<li><%= link_to "Month", timesheet_month_path(@user, Time.now.to_date) %></li>
+   		<li><%= link_to "Week", timesheets_path(@user) %></li>
+	</ul>   
    </div>
    <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
       

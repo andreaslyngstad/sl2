@@ -15,7 +15,11 @@ module ApplicationHelper
   end 
    
   def all_customers
-    @all_customers ||= current_firm.customers.order("name")
+    if current_user.role == "External user"
+      @all_customers = []
+    else
+      @all_customers ||= current_firm.customers.order("name")
+    end
   end
   
 	def truncate_string(text, length = 18, truncate_string = '...')

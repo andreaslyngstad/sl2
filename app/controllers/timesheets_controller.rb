@@ -1,10 +1,12 @@
 class TimesheetsController < ApplicationController
   def timesheets 
+     
      @user = current_firm.users.find(params[:user_id])
-     @users = current_firm.users
+     find_users(@user)
      @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
      range = Time.zone.today..Time.zone.today + 7.days
      @log_project = @user.logs.where(:log_date => @dates).group("project_id").sum(:hours)
+  
      @log_week = @user.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
      @log_week_project = @user.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
      @log_week_no_project = @user.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
@@ -33,20 +35,21 @@ class TimesheetsController < ApplicationController
   end
   
   def timesheet_logs_day
-    @users = current_firm.users
     @user = current_firm.users.find(params[:user_id])
+    find_users(@user)
     @logs = @user.logs.where(:log_date => params[:date])
   end
   
   def timesheet_month
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    @users = current_firm.users
     @user = current_firm.users.find(params[:user_id])
+    find_users(@user)
     @logs_by_date = @user.logs.group("date(log_date)").sum(:hours)
   end
   
   def add_hour_to_project
-    @log = Log.new
+    @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
+    @log = Log.find_by_id(params[:log_id]) || Log.new
     @log.user = User.find(params[:user_id])
     @log.firm = current_firm
     @log.project = Project.find(params[:project_id])
@@ -56,5 +59,15 @@ class TimesheetsController < ApplicationController
     @log.end_time =  @log.begin_time + (params[:val_input].to_f * 3600)
     Rails.logger.info("Log #{@log.event}") 
     @log.save!
+  end
+  
+  private 
+  
+  def find_users(user)
+    if user.role != "External user"
+     @users = current_firm.users
+     else
+     @users = []
+     end
   end
 end

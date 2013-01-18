@@ -45,6 +45,6 @@ private
      resource.loginable_token = token
      resource.save
      cookies[:token] = { :value => token, :domain => :all }
-     redirect_to sign_in_at_subdomain_url(token, :subdomain => resource.firm.subdomain)
+     redirect_to sign_in_at_subdomain_url( :subdomain => resource.firm.subdomain)
   end
 end

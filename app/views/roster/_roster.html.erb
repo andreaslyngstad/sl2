@@ -11,7 +11,7 @@
 	  	<div id="signed_in_users">
 		  	<ul>
 			  <% all_users.each do |user|%>
-			  <% if !user.current_sign_in_at.nil?%>
+			  <% if user.current_sign_in_at != nil%>
 			  <li><div class="row_user green"><%= image(user, "image32") %><div class="user_row_name"><%= user.name %></div></div> </li>
 			  <%else%>
 			  <li><div class="row_user red"><%= image(user, "image32") %><div class="user_row_name"><%= user.name %></div></div> </li>

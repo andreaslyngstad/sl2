@@ -1,16 +1,30 @@
-console.log("test")
-var field = $(".project_date_<%= j(@log.project.id.to_s)%>_<%= j(@log.log_date.to_s)%>")
-var total_project = $(".project_total_<%= j(@log.project.id.to_s)%>")
-var total_date 
-var prehours_total_project = total_project.attr("data-time")
-var posthours_total_project = parseFloat(prehours_total_project) + parseFloat(<%= j( @log.hours.to_s )%>)
-console.log(posthours_total_project)
-var prehours = field.attr("data-time")
-var posthours = parseFloat(prehours) + parseFloat(<%= j( @log.hours.to_s )%>)
 
+if ($(".project_total_<%= j(@log.project.id.to_s)%>").length === 0){
+	$(".project_hours").last().before('<%= j(render :partial => "timesheet_project_row", :locals => {:log => @log} )%>')
+}
+var input = $(".log_date_<%= j(@log.log_date.to_s)%>")
+input.attr("data-logid",<%= j(@log.id.to_s)%> )
+
+var field = $(".project_date_<%= j(@log.project.id.to_s)%>_<%= j(@log.log_date.to_s)%>")
+var prehours_input = input.attr("data-prehours")
+var total_project = $(".project_total_<%= j(@log.project.id.to_s)%>")
+var prehours_total_project = total_project.attr("data-time")
+var prehours_total_date = $(".day_<%= j(@log.log_date.to_s) %>").attr("data-time")
+var prehours_total = $(".timesheet_week_total").attr("data-time")
+var prehours_log = field.attr("data-time")
+console.log(prehours_log + " " + prehours_input)
+var posthours_total_project = parseFloat(prehours_total_project) - prehours_input + parseFloat(<%= j( @log.hours.to_s )%>)
+var posthours_total_date = parseFloat(prehours_total_date) - prehours_input + parseFloat(<%= j( @log.hours.to_s )%>)
+var posthours_total = parseFloat(prehours_total) - prehours_input + parseFloat(<%= j( @log.hours.to_s )%>)
+var posthours = parseFloat(prehours_log) - prehours_input + parseFloat(<%= j( @log.hours.to_s )%>)
+
+$(".day_<%= j(@log.log_date.to_s) %>").empty().append(secondsToString(posthours_total_date))
+$(".day_<%= j(@log.log_date.to_s) %>").attr("data-time",posthours_total_date) 
 total_project.empty().append(secondsToString(posthours_total_project))
 total_project.attr("data-time",posthours_total_project)
+$(".timesheet_week_total").empty().append(secondsToString(posthours_total))
+$(".timesheet_week_total").attr("data-time",posthours_total)
+input.attr("data-prehours", parseFloat(<%= j(@log.hours.to_s) %>))
 field.empty().append(secondsToString(posthours))
-
-
+field.attr("data-time", posthours)
 $('.spinning').hide();

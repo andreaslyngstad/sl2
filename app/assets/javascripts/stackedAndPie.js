@@ -1,5 +1,3 @@
-
-
 function stackedAndPie(data, ColorArray) {
   	var labels = data.stacked.map(function(d){return d.key});
 	var pieIdIncrement = labels.length;
@@ -98,7 +96,7 @@ function stackedAndPie(data, ColorArray) {
 	  	}
 	nv.addGraph(function() {
 	    var chart = nv.models.stackedAreaChart()
-	   				.margin({top: 10, bottom: 30, left: 40, right: 10})
+	   				  .margin({top: 10, bottom: 30, left: 40, right: 10})
 	                  .showControls(false)
 	                  .showLegend(true)
 	                  .style('stacked')
@@ -113,7 +111,7 @@ function stackedAndPie(data, ColorArray) {
 	        .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
 	        
 	    chart.yAxis
-	        .tickFormat(d3.format(',.2f'));
+	        .tickFormat(d3.format(','));
 	  	
 	    d3.select('#stacked svg')
 	        .datum(data.stacked)

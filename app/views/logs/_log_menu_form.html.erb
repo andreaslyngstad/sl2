@@ -32,6 +32,7 @@
 	</select>
 </li>
   <% end %>
+  <% if can? :read, Firm %>
   <% if @klass.class.to_s == "Project" && @klass.customer%>
 <li><%= l.label :customer %>:  <%= truncate_string(@klass.customer.name) %></li>
   	<%= l.hidden_field :customer_id, :value => @klass.customer.id %>
@@ -69,6 +70,7 @@
 	<option value="">Select a customer</option>
 	</select>
 </li>
+<% end %>
 <% end %>
 <% end %>
   <li><%= l.submit "Save", :class => "submit" %></li>

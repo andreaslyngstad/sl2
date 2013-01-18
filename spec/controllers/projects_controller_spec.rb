@@ -1,25 +1,24 @@
 require 'spec_helper'
-# let(:user) { create(:user) }
-  # before { login_as user }
-describe ProjectsController do 
+
+describe ProjectsController, :type => :controller do 
 
   login_user
   
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com"
-   
-  end
+  end 
+  
   describe "activate_projects and deactivate_projects" do
     it "deactivate_projects" do 
       @project = FactoryGirl.create(:project)
       expect{
-          get :activate_projects, :id => @project.id
+          post :activate_projects, :id => @project.id
         }.to change(Project.where(:active => true),:count).by(-1)
     end
     it "activate_projects" do 
       @project = FactoryGirl.create(:project, :active => false)
       expect{
-          get :activate_projects, :id => @project.id
+          post :activate_projects, :id => @project.id
         }.to change(Project.where(:active => true),:count).by(1)
     end
   end
@@ -38,6 +37,12 @@ describe ProjectsController do
       response.should render_template("index")
     end
   end 
+  describe "GET #archive" do
+    it "renders the :archive view" do
+      get :archive
+      assigns(:projects) == [@project]
+    end
+  end
   
   describe "GET #show" do
     it "assigns the requested project to @project" do
@@ -59,7 +64,7 @@ describe ProjectsController do
         }.to change(Project,:count).by(1)
       end
       
-      it "redirects to the new contact" do
+      it "redirects to the new project" do
         post :create, project: FactoryGirl.attributes_for(:project)
         flash[:notice].should_not be_nil 
       end
@@ -71,7 +76,7 @@ describe ProjectsController do
   end
   
   context "valid attributes" do
-    it "located the requested @contact" do
+    it "located the requested project" do
       put :update, id: @project, project: FactoryGirl.attributes_for(:project)
       assigns(:project).should eq(@project)      
     end
@@ -102,13 +107,13 @@ end
       @project = FactoryGirl.create(:project, :firm => @user.firm)
     end
     
-    it "deletes the contact" do
+    it "deletes the project" do
       expect{
         delete :destroy, id: @project        
       }.to change(Project,:count).by(-1)
     end
       
-    it "redirects to contacts#index" do
+    it "redirects to project#index" do
       delete :destroy, id: @project
       response.should redirect_to projects_url
     end

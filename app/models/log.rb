@@ -1,7 +1,7 @@
 class Log < ActiveRecord::Base
 	attr_accessible :event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
 	 :hours,:created_at,:updated_at,:project,:customer,:user,:todo, :firm
-  validate :end_time_before_begin_time
+  
   belongs_to :customer
   belongs_to :user
   belongs_to :firm
@@ -12,6 +12,8 @@ class Log < ActiveRecord::Base
   
   before_save :set_hours
   validate :log_made_on_current_firm
+  validate :log_made_on_project
+  validate :end_time_before_begin_time
   
   def self.log_reflections
     arr = reflections.collect{|a, b| b.class_name.downcase if b.macro==:belongs_to}.compact.uniq
@@ -26,11 +28,19 @@ class Log < ActiveRecord::Base
       end
     end 
   end
+  
   def log_made_on_current_firm
     errors.add(:firm_id, "is secure!") if
     check_if_current_firm.include?(true) 
   end
+  def can_validate
+    user.role == "External user"
+  end
   
+  def log_made_on_project
+    errors.add(:project_id, "cannot be empty for this log") if
+    can_validate && project == nil
+  end
   
   def time_diff(time)
   	seconds    	=  (time % 60).to_i

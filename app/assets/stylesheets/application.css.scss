@@ -14,10 +14,8 @@
 html, body{
   margin:0;
   padding:0;
-  font-family: Tahoma, sans-serif; 
- 
+  font-family: Verdana,Helvetica,sans-serif; 
   letter-spacing:1px; 
- 
   background-color: #ffffff;
   }
 textarea{
@@ -397,30 +395,19 @@ position:fixed;
 #html_tabs ul{
 padding: 34px 17px 0px;
 overflow: hidden;
-
-
 -webkit-margin-before: 1em;
 -webkit-margin-after: 1em;
 -webkit-margin-start: 0px;
 -webkit-margin-end: 0px;
 -webkit-padding-start: 40px;
 margin: 0px;
-
-
-
-
-
 }
 #html_tabs ul li {
 	float:left;
 	height:29px;
 	margin-right:7px;
-	
-	
-
 }
 #html_tabs ul li a {
-
     background:#fa7d1b;
     border-color:#ee5f00;
     border-style:solid;
@@ -448,6 +435,7 @@ margin: 0px;
 }
 .home_content{
 	margin-top: 188px;
+	
 }
 .report_top, .report_middle, .report_bottom{
 float:left;
@@ -1037,15 +1025,7 @@ padding-left: 5px;
   width:500px;
   float: left;
 }
-.add_some_timesheet{ 
-  width:500px;
-padding: 7px 0 0 10px;
-  float: left;
-}
-.add_some_timesheet_buttons{
-float: right;
-width: 400px;
-}
+
 #dialog_log{
 float:left;
 }
@@ -1246,10 +1226,12 @@ width:740px;
 
 /*milestone view end*/
 #users_list{
+width: 980px;
 float: left;
 padding:0 10px;
 }
 #users_list_header{
+width: 980px;
 float: left;
 padding:10px;
 }

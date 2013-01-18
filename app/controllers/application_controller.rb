@@ -11,22 +11,25 @@ class ApplicationController < ActionController::Base
   helper_method :is_root_domain?, :can_sign_up?, :current_subdomain, :time_zone_now, :ftz, :time_range_to_day
   # skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
 
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
-
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
-
-  
+  protect_from_forgery # See ActionController::RequestForgeryProtection for details  
   
   rescue_from CanCan::AccessDenied do |exception|
-  flash[:error] = flash_helper("Sorry. You do not have access to this url. Please contact the site admin")
-  redirect_to root_path()
+     if request.format == "text/javascript"
+       flash[:notice] = flash_helper("Access denied.")
+       render :template => "shared/access_denied"
+     else
+       render :template => "shared/access_denied"
+     end
   end
   
   def can_sign_up?
     # return true if config.allow_account_sign_up is set to true
   	# Used in conjection with is_root_domain? for root domain.
     is_root_domain? ? true :Account::CAN_SIGN_UP
+  end
+  
+  def all_users
+    @all_users ||= current_firm.users.order("name")
   end
   
   def current_subdomain
@@ -62,12 +65,7 @@ class ApplicationController < ActionController::Base
     # return @current_firm if defined?(@current_firm)
     # @current_firm = current_user.firm
   end
-  def all_users
-    @all_users ||= current_firm.users.order("name")
-  end  
-  def all_projects
-    @all_projects ||= current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
-  end  
+  
   private
   def miniprofiler
     Rack::MiniProfiler.authorize_request

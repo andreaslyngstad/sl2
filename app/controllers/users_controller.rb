@@ -1,23 +1,27 @@
 class UsersController < ApplicationController 
-
+  
   skip_before_filter :authenticate_user!, :only => [:valid]
   respond_to :html, :js, :json
   def index
+    authorize! :read, User
     @users = current_firm.users.order(:name)
     respond_with(@users)
   end
 
-  def show
-    @klass = User.find(params[:id])
+  def show  
+    @klass = current_firm.users.find(params[:id])
+    authorize! :read, @klass
     respond_with(@klass)
   end
 
   def edit
-    @user = User.find(params[:id])
+    authorize! :manage, User
+    @user = current_firm.users.find(params[:id])
   end
 
   def create
-    @klass = User.new(params[:user])
+    @klass = current_firm.users.new(params[:user])
+    authorize! :manage, User
     @klass.firm = current_firm 
      respond_to do |format|
       if @klass.save
@@ -32,7 +36,12 @@ class UsersController < ApplicationController
   end
 
   def update
-     @klass = User.find(params[:id])
+    if params[:user][:password].blank?
+      params[:user].delete("password")
+      params[:user].delete("password_confirmation")
+    end
+     @klass = current_firm.users.find(params[:id])
+     authorize! :update, @klass
       respond_to do |format|
     if @klass.update_attributes(params[:user])
       flash[:notice] = flash_helper("Successfully updated profile.")
@@ -46,7 +55,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+   
+    @user = current_firm.users.find(params[:id])
+    authorize! :manage, @user
      respond_to do |format|
     if @user == current_user
     flash[:notice] = flash_helper("You are logged in as #{@user.name}. You cannot delete yourself.")
@@ -63,9 +74,7 @@ class UsersController < ApplicationController
   end
   
   def valid
-
   	token_user = User.valid?(params)
-
     if token_user
       sign_in(:user, token_user)
       flash[:notice] = flash_helper("You have been logged in")
@@ -73,6 +82,5 @@ class UsersController < ApplicationController
       flash[:alert] = "Login could not be validated"
     end
     redirect_to statistics_path
-  end
-  
+  end 
 end

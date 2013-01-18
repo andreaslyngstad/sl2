@@ -1,3 +1,4 @@
+<% if can? :read, log.project %>
 <div id="log_<%=log.id%>"> 
  <div id="log_info_<%=log.id%>" class="info" data-log="<%= log.id %>">
  	<div class="gravatar_on_log">
@@ -47,7 +48,6 @@
       	</div>
       	</div>
      </div>
-    <% end %>
-  
-  
+    <% end %> 
 </div>
+ <% end %>

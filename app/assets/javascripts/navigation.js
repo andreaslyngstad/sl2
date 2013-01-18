@@ -22,58 +22,36 @@ $(function() {
 	if (!(text2 == null)){
 		var tab_text = text2.toString().charAt(0).toUpperCase() + text2.toString().substr(1);
 		$("#html_tabs a.current_link").removeClass("current_link");	
+		$("#month_week_tabs a.current_link").removeClass("current_link");	
 		$("#html_tabs a:contains(" + tab_text + ")").addClass("current_link");
 		if(tab_text == "Home_user" ){$("#html_tabs a:contains(User)").addClass("current_link");}
 		if(tab_text == "Firm_edit" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Firm_update" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Timesheet_logs_day" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
-		if(tab_text == "Timesheet_month" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
-	}else{$("#html_tabs a:contains(Statistics)").addClass("current_link");
-		
-	};
-	if (text == null){
+		if(tab_text == "Timesheet_month" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Month)").addClass("current_link");}
+		if(tab_text == "Timesheets" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Week)").addClass("current_link");}
+	
+	}else{$("#html_tabs a:contains(Statistics)").addClass("current_link");};
+	if (text == null && text2 == null){
+		$('#navigation li#logs_navi').addClass("current_main")
+	}else if(text == null){
 		$('#navigation li#home_navi').addClass("current_main")
-		// $("#pointer-text").text("Statistics");
 		
-		// var pos = "0"
-		// var cssObj = {'top': pos + 'px'}
- 		// $("#pointer").css(cssObj);	
 	}else{
 	var cap_text = text.toString();
 	$('#navigation li#' + cap_text +'_navi').addClass("current_main")
 	if(cap_text == "archive"){
 		$('#navigation li#projects_navi').addClass("current_main")
 	}
-//	$("#pointer-text").text(cap_text);
-	// if(cap_text == "Statistics")
-	// {var pos = "0"} 
-	// else if (cap_text == "Logs")
-	// {} 
-	// else if (cap_text == "Customers")
-	// {var pos = "225"} 
-	// else if (cap_text == "Projects")
-	// {var pos = "150"}
-	// else if (cap_text == "Archive")
-	// {var pos = "150"}
-	// else if (cap_text == "Users")
-	// {var pos = "300"}
-	// var cssObj = {'top': pos + 'px'}
-	//$("#pointer").css(cssObj);
+
 	}
-  $('#navigation li').live('click', function(e) { 
+  $('#navigation li').on('click', function(e) { 
    $('#navigation li').removeClass("current_main")
    $(this).addClass('current_main')
-//  	var href =	$(this).find("a").attr("href");
-// 	$(".indicator").show(); // show loading spinner
-	// var text = $(this).text();
-	// var pos = $(this).attr("pos")
-// 	
- 	// var cssObj = {'top': pos + 'px'}
- 		// $("#pointer").animate(cssObj);
- 		// $("#pointer-text").text(text);
+
 		});
   $("#active_projects").button();
-  $("#archive").button().live('click', function(e) { 
+  $("#archive").button().on('click', function(e) { 
   	var href =	$(this).attr("href");
   	$("#pointer-text").text(text);
   });
