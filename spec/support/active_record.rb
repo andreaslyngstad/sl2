@@ -1,5 +1,8 @@
 require 'active_record'
-ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":memory:"
+ActiveRecord::Base.establish_connection adapter: "postgresql", 
+                                        database: "squadlink_test",
+                                        username: "andreas",
+                                        password: ""
 load "./db/schema.rb"
 
  

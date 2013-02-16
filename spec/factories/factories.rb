@@ -54,4 +54,5 @@ FactoryGirl.define do
     name "customer man"
     firm
   end  
+  
 end

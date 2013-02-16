@@ -6,16 +6,18 @@ gem 'eventmachine'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'rack-ssl'
-gem 'sqlite3', :require => 'sqlite3'
 gem 'jquery-rails'
 gem "devise"
 gem "paperclip"
 gem "cancan"
 gem 'newrelic_rpm'
 gem 'jbuilder'
-group :production do
-  gem 'pg'
-end
+gem 'activeadmin'
+gem "seedbank"
+gem 'whenever', :require => false
+gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
+gem 'pg'
+
 gem 'rack-mini-profiler'
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
@@ -25,8 +27,10 @@ group :assets do
 end
 
 group :development, :test do
+  
   gem 'better_errors'
-  gem "binding_of_caller"
+  gem "binding_of_caller" 
+  gem 'meta_request', '0.2.1'
   gem 'bullet'
   gem 'quiet_assets'
   gem 'debugger'
@@ -45,6 +49,8 @@ group :development, :test do
   gem 'database_cleaner'
   gem "selenium-webdriver"
   gem "selenium-client"
+  gem "vcr"
+  gem 'fakeweb'
 end
 
 

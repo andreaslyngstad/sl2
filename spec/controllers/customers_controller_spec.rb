@@ -16,9 +16,10 @@ describe CustomersController do
       subject.current_firm.should_not be_nil
     end
     it "populates an array of customers" do
-      @customer = FactoryGirl.create(:customer)
+      customers = stub
+      Customer.should_receive(:order_by_name){customers}
       get :index
-      assigns(:customers) == [@customer]   
+      assigns[:customers].should be customers   
     end
     it "renders the :index view" do
       get :index

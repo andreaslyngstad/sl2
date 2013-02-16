@@ -19,6 +19,7 @@
 //= require log_tracking
 
 //= require employees
+//= require subscriptions
 //= require timesheet
 
 //= require memberships
@@ -290,9 +291,10 @@ $(document).ready(function() {
 	
 	
  
-  $(".small_selector").selectmenu({width:200});
+ 
   $(".big_selector").selectmenu({width:369});
-  
+   $(".small_selector").selectmenu({width:200});
+   $(".mini_selector").selectmenu({width:177});
   $(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
   
   $(".show_avatar_upload").click(function(){

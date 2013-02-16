@@ -1,6 +1,9 @@
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui-1.8.7custom.min
+
+//= require jquery.ui.core
+//= require jquery.ui.position
+//= require jquery.ui.widget
 //= require jquery.ui.selectmenu
 //= require_self
 

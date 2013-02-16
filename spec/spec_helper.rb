@@ -2,7 +2,7 @@ require 'rubygems'
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
-require 'database_cleaner'
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
@@ -10,6 +10,7 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'database_cleaner'
 require 'capybara/rspec'
 require 'rspec/autorun'
 require 'factory_girl'
@@ -24,17 +25,18 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
   config.include RequestMacros, :type => :request
   config.mock_with :rspec
-  
-  config.use_transactional_fixtures = false
-
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-  end
  
+  config.use_transactional_examples = false
+  
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
   config.before(:each) do
     DatabaseCleaner.start
   end
- 
+
   config.after(:each) do
     DatabaseCleaner.clean
   end

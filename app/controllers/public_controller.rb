@@ -1,5 +1,5 @@
 class PublicController < ApplicationController
-  skip_before_filter :authenticate_user!, :all_users
+  skip_before_filter :authenticate_user!, :all_users, :user_at_current_firm
   layout "registration"
   respond_to :html
 
@@ -16,8 +16,10 @@ class PublicController < ApplicationController
   end
   
   def create_firm
+    
     @firm = Firm.new(params[:firm])
     @firm.subdomain = @firm.subdomain.downcase
+    
     respond_to do |format|
       if @firm.save
         flash[:notice] = 'Firm was successfully created! Now create the first user.'

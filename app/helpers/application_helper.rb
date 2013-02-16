@@ -89,4 +89,8 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
   
+  def prices_to_currency(price)
+    number_to_currency price, unit: "$", strip_insignificant_zeros: true
+  end
+  
 end

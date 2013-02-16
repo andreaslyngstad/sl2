@@ -27,10 +27,12 @@ describe ProjectsController, :type => :controller do
       subject.current_user.should_not be_nil
       subject.current_firm.should_not be_nil
     end
-    it "populates an array of projects" do
-      @project = FactoryGirl.create(:project)
+    it "populates an array of projects" do 
+      projects = stub
+      Project.should_receive(:order_by_name){projects}
       get :index
-      assigns(:projects) == [@project]   
+      assigns[:projects].should be projects 
+        
     end
     it "renders the :index view" do
       get :index

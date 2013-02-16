@@ -1,5 +1,14 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
+  get "hooks/receiver"
+
+  ActiveAdmin.routes(self)
+    get '/admin/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
+    get '/admin/dashboard/firms_chart_data' =>  'admin/dashboard#firms_chart_data', :as => :admin_dashboard_firms_chart_data
+    get '/admin/dashboard/firms_resources_chart_data' =>  'admin/dashboard#firms_resources_chart_data', :as => :admin_dashboard_firms_resources_chart_data
+    get '/admin/dashboard/new_firms_count_chart_data' =>  'admin/dashboard#new_firms_count_chart_data', :as => :admin_dashboard_new_firms_count_chart_data
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
     resources :firms
     post "public/create_firm" => "public#create_firm", :as => :create_firm
     resources :public do
@@ -34,7 +43,9 @@ Squadlink::Application.routes.draw do
   end
 
   constraints(Subdomain) do
-    root :to	=> "logs#index"
+    
+    get "plans/index", :as => :plans
+    get "plans/cancel", :as => :plans_cancel
     devise_for  :users
     #chart_controller
     match "users_logs/:form/:to" => "charts#users_logs",  :as => :users_logs
@@ -101,12 +112,15 @@ Squadlink::Application.routes.draw do
     match "/log_range/" => "timerange#log_range", :as => :log_range
     match "/todo_range/" => "timerange#todo_range", :as => :todo_range
     match "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date
+    
     resources :customers
     resources :employees
     resources :projects
     resources :milestones
     resources :todos
     resources :logs
+    resources :subscriptions
+    root :to  => "logs#index"
 	end
   
   root :to => "public#index"

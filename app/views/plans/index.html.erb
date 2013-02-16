@@ -1,0 +1,99 @@
+<%= render "private/home_header" %>
+<div id="left" class="home_content">
+<table border="0" cellspacing="0" cellpadding="10" class="plans">
+	<tr><td></td>
+		<% @plans.each do |plan| %>
+			<% if current_plan?(plan) %>
+				<td class="green">Current Plan</th>
+			<% else %>
+				<td></td>
+			<% end %>
+		<% end %>
+	</tr>
+	<tr><th></th>
+		<% @plans.each do |plan| %>
+		<th class="<%=  current_plan_style(plan) %>"><div class="name"><%= plan.name %></div></th>
+		<% end %>
+		
+		</tr>
+		<tr><td></td>
+		<% @plans.each do |plan| %>
+        	<td class="<%=  current_plan_style(plan) %>">
+        		<p class="price"><%=  prices_to_currency plan.price %></p>
+        		<p class="per_month">per month</p>
+        	</td>
+		<% end %>	
+	</tr>
+		<tr><td class="left_column">Users</td>
+		<% @plans.each do |plan| %>
+			<% if plan.users.nil? %>
+	        	<td class="<%=  current_plan_style(plan) %>">unlimited</td>
+	        <% else %>
+	        	<td class="<%=  current_plan_style(plan) %>"><%=  plan.users %></td>
+	        <% end %>
+		<% end %>	
+	</tr>
+	<tr><td class="left_column">Projects</td>
+		<% @plans.each do |plan| %>
+			<% if plan.projects.nil? %>
+	        	<td class="<%=  current_plan_style(plan) %>">unlimited</td>
+	        <% else %>
+	        	<td class="<%=  current_plan_style(plan) %>"><%=  plan.projects %></td>
+	        <% end %>
+		<% end %>	
+	</tr>
+	<tr><td class="left_column">Customers</td>
+		<% @plans.each do |plan| %>
+			<% if plan.customers.nil? %>
+	        	<td class="<%=  current_plan_style(plan) %>">unlimited</td>
+	        <% else %>
+	        	<td class="<%=  current_plan_style(plan) %>"><%=  plan.customers %></td>
+	        <% end %>
+		<% end %>	
+	</tr>
+	<tr><td class="left_column">Logs</td>
+		<% @plans.each do |plan| %>
+			<td class="<%=  current_plan_style(plan) %>">unlimited</td>
+		<% end %>
+	</tr>
+	<tr><td class="left_column">Time tracking</td>
+		<% @plans.each do |plan| %>
+			<td class="<%=  current_plan_style(plan) %>">yes</td>
+		<% end %>
+	</tr>
+	<tr><td class="left_column">Timesheets</td>
+		<% @plans.each do |plan| %>
+			<td class="<%=  current_plan_style(plan) %>">yes</td>
+		<% end %>
+	</tr>
+	<tr><td class="left_column">Statistics</td>
+		<% @plans.each do |plan| %>
+			<td class="<%=  current_plan_style(plan) %>">yes</td>
+		<% end %>
+	</tr>
+	<tr><td class="left_column">Daily backups</td>
+		<% @plans.each do |plan| %>
+			<td class="<%=  current_plan_style(plan) %>">yes</td>
+		<% end %>
+	</tr>
+	<tr><td class="left_column">SSL encryption</td>
+		<% @plans.each do |plan| %>
+			<td class="<%=  current_plan_style(plan) %>">yes</td>
+		<% end %>
+	</tr>
+	<tr><td></td>
+		<% @plans.each do |plan| %>
+			<td class="<%=  current_plan_style(plan) %>"><% if current_firm.plan == plan && current_firm.plan.name != "Free"%>
+				<%= link_to "Cancel Plan?", plans_cancel_path, :class => "red_font"%>
+				<% else %>
+				<% if plan.name != "Free" %>
+          			<%= link_to "Sign up", new_subscription_path(:plan_id => plan.id), :class => "submit" %>
+          		<% end %>
+          		<% end %>
+        	</td>
+		<% end %>
+	</tr>
+</table>
+  <div class="clear"></div>
+</div>
+</div>

@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :logs
   has_many :todos
   has_many :done_todos, :class_name => "Todo", :foreign_key => "done_by_user"
-  belongs_to :firm
+  belongs_to :firm, :counter_cache => true
   validates_presence_of :name
   validates :email, :presence => true, :email_format => true
   

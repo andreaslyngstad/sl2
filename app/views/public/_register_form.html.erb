@@ -20,11 +20,11 @@
     </div>
     <div class="signup-form-field">
     <%= firm.label :language %>
-    <%= firm.language_select :lang,  nil, {},  :class => "form-input" %>
+    <%= firm.select :language,  ["English"], {},  :class => "form-input" %>
     </div>
 	<div class="signup-form-field">
     <%= firm.label :currency %>
-    <%= firm.currency_select :currency, ["US Dollar", "British Pound", "Euro", "Norwegian Kroner", "Swedish Krona"],  {},  :class => "form-input"%>
+    <%= firm.select :currency, ["US Dollar", "British Pound", "Euro", "Norwegian Kroner", "Swedish Krona"],  {},  :class => "form-input"%>
     </div>
 	<div class="signup-form-field">
     <%= firm.label :time_zone %>

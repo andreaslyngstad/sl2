@@ -3,21 +3,8 @@ class FirmsController < ApplicationController
   
   skip_before_filter :authenticate_user!
   
-  # GET /firms
-  # GET /firms.xml
-  def index
-    @firms = Firm.all
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @firms }
-    end
-  end
 
-  # GET /firms/1
-  # GET /firms/1.xml
-  def show
-    
+  def show 
     @firm = Firm.find_by_subdomain!(request.subdomain)
     respond_to do |format|
       format.html # show.html.erb
@@ -26,18 +13,6 @@ class FirmsController < ApplicationController
     end
   end
 
-  # GET /firms/new
-  # GET /firms/new.xml
-  def new
-    @firm = Firm.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @firm }
-    end
-  end
-
-  # GET /firms/1/edit
   def firm_edit
     @firm = current_firm
   end
@@ -56,8 +31,6 @@ class FirmsController < ApplicationController
     end
   end
 
-  # DELETE /firms/1
-  # DELETE /firms/1.xml
   def destroy
     @firm = Firm.find(params[:id])
     @firm.destroy

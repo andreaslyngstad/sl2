@@ -3,10 +3,12 @@ class ApplicationController < ActionController::Base
   require "./lib/timehelp"
 	include UrlHelper
 	before_filter :miniprofiler
+	 before_filter :user_at_current_firm
 
 
   before_filter :set_mailer_url_options, :authenticate_user!, 
   :exept => [:after_sign_in_path_for, :sign_in_and_redirect, :check_firm_id, :current_subdomain]
+  
   helper :layout
   helper_method :is_root_domain?, :can_sign_up?, :current_subdomain, :time_zone_now, :ftz, :time_range_to_day
   # skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
@@ -60,12 +62,18 @@ class ApplicationController < ActionController::Base
   def ftz(time)
 	time.in_time_zone(current_firm.time_zone)
   end
+  
   def current_firm
     @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
     # return @current_firm if defined?(@current_firm)
     # @current_firm = current_user.firm
   end
-  
+  def user_at_current_firm
+    if current_user && !current_firm.users.include?(current_user)
+      sign_out(current_user)
+      
+    end
+  end
   private
   def miniprofiler
     Rack::MiniProfiler.authorize_request
@@ -78,8 +86,8 @@ class ApplicationController < ActionController::Base
   end
   
   
-  def record_not_found
-    flash[:notice] = "No record found"
-    redirect_to action: :index
-  end
+  # def record_not_found
+    # flash[:notice] = "No record found"
+    # redirect_to action: :index
+  # end
 end

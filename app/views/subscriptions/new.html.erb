@@ -1,0 +1,102 @@
+<%= content_for :head do %>
+<script type="text/javascript">
+  var PAYMILL_PUBLIC_KEY = '2028155948642eecacb7b872c5169aa6';
+</script>
+<%= javascript_include_tag "https://bridge.paymill.com/" %>
+<% end %>
+<%= render "private/home_header" %>
+<div id="left" class="home_content">
+	
+<div id="register_container">
+	
+
+
+ <div class="blue2">
+ 	
+	<% if @plan.id > current_firm.plan.id %>
+ 		<p><%= t "message.plan_update_html", :current_plan => current_firm.plan.name, 
+ 					       :new_plan => @plan.name,
+ 						   :current_plan_price =>  (prices_to_currency current_firm.plan.price), 
+ 						   :new_plan_price => (prices_to_currency @plan.price),  
+ 						   :grad => "upgrading"
+ 						   %>
+ 		<p><%= t "message.thank_you" %></p>
+ 	<% else %>
+ 	<p><%= t "message.plan_update_html", :current_plan => current_firm.plan.name, 
+ 					       :new_plan => @plan.name,
+ 						   :current_plan_price =>  (prices_to_currency current_firm.plan.price), 
+ 						   :new_plan_price => (prices_to_currency @plan.price),
+ 						   :grad => "downgrading"  %>
+ 	</p>
+ 	<% if !@plan.projects.nil? && current_firm.users.count > @plan.users || 
+ 	      !@plan.projects.nil? && current_firm.projects.count > @plan.projects ||
+ 	      !@plan.customers.nil? && current_firm.customers.count > @plan.customers
+ 		%>
+ 	<p><%= t "message.keep_in_mind" %> </p>
+ 	<ul>
+	 	<li>
+	 		<% if !@plan.projects.nil? && current_firm.users.count > @plan.users %>
+	 		<%= @plan.users %> users
+	 		<% end %>
+	 	</li>
+	 	<li>
+	 		<% if !@plan.projects.nil? && current_firm.projects.count > @plan.projects %>
+	 		<%= @plan.projects %> projects
+	 		<% end %>
+	 	</li>
+	 	<li>
+	 		<% if !@plan.customers.nil? && current_firm.customers.count > @plan.customers %>
+	 		<%= @plan.customers %> customers
+	 		<% end %>
+	 	</li>
+ 	</ul>
+ 	<p><%= t "message.will_be_deleted" %> </p>
+ 	<p><%= t "message.we_suggest" %></p>
+ 	<% end %>
+ 	<% end %>
+ 	<span class="flash_notice" style="color: #87E32B;"><%= flash[:notice] %></span>
+	<span class="flash_notice" style="color: red;"><%= flash[:error] %></span>
+ </div>
+<div class="credit_card_form_holder">
+<%= form_for @subscription,  :html => { :class => "credit_card_form"} do |f| %>
+  <% if @subscription.errors.any? %>
+    <div class="error_messages">
+      <h2><%= pluralize(@subscription.errors.count, "error") %> prohibited this subscription from being saved:</h2>
+      <ul>
+      <% @subscription.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :plan_id %>
+  <%= f.hidden_field :name, :value => current_firm.name %>
+  <%= f.hidden_field :email, :value => current_user.email%>
+  <%= f.hidden_field :paymill_card_token %>
+  <% if @subscription.paymill_card_token.present? %>
+    Credit card has been provided.
+  <% else %>
+  <div class="signup-form-field">
+      <%= label_tag :card_number, "Credit Card Number" %>
+      <%= text_field_tag :card_number, nil, name: nil %>
+    </div>
+   <div class="signup-form-field">
+      <%= label_tag :card_code, "Security Code on Card (cvc)" %>
+      <%= text_field_tag :card_code, nil, name: nil %>
+    </div>
+    <div class="signup-form-field">
+      <%= label_tag :card_month, "Card Expiration" %>
+      <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month", class: "mini_selector"} %>
+      <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year", class: "mini_selector"} %>
+    </div>
+  <% end %>
+  <div id="paymill_error">
+    <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+  </div>
+  <div class="actions">
+    <%= f.submit "Subscribe", :class => "submit" %>
+  </div>
+<% end %>
+</div>	 
+</div>
+</div>	

@@ -4,7 +4,7 @@ load_and_authorize_resource
     if current_user.role == "External user"
       @projects = current_user.projects.includes(:firm)
     else
-      @projects = current_firm.projects.where(:active => true).order(:name => "ASC").includes(:firm)
+      @projects = current_firm.projects.where(:active => true).order_by_name
     end
   end
   def edit
@@ -65,7 +65,7 @@ load_and_authorize_resource
   end
   
   def archive 
-    @projects = current_firm.projects.where(:active => false).order(:name => "ASC")  
+    @projects = current_firm.projects.where(:active => false).order("name ASC")  
   end
   
   def activate_projects

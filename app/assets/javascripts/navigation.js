@@ -13,6 +13,8 @@ $(function() {
 				old_url.match(/account/i) || 
 				old_url.match(/home_user/i) ||  
 				old_url.match(/statistics/i) ||  
+				old_url.match(/subscriptions/i) ||  
+				old_url.match(/plans/i) ||  
 				old_url.match(/firm_edit/i)||  
 				old_url.match(/firm_update/i) || 
 				old_url.match(/timesheet_logs_day/i)||
@@ -30,7 +32,8 @@ $(function() {
 		if(tab_text == "Timesheet_logs_day" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
 		if(tab_text == "Timesheet_month" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Month)").addClass("current_link");}
 		if(tab_text == "Timesheets" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Week)").addClass("current_link");}
-	
+		if(tab_text == "Plans" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
+		if(tab_text == "Subscriptions" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 	}else{$("#html_tabs a:contains(Statistics)").addClass("current_link");};
 	if (text == null && text2 == null){
 		$('#navigation li#logs_navi').addClass("current_main")

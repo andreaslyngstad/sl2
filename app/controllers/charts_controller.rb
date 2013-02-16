@@ -1,4 +1,8 @@
 class ChartsController < ApplicationController
+  def admin_firms_chart
+    @firm = Firm.count_by_subscription
+    render :formats => [:json]
+  end
   
   def users_logs
     var_setter(params,:user)

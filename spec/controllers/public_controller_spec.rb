@@ -15,7 +15,7 @@ describe PublicController do
         @firm = FactoryGirl.attributes_for(:firm, :name => "Firm", :subdomain => "test")
         post :create_firm, :firm => @firm
         @firm = Firm.last
-        @firm.name.should  == "Firm"
+        @firm.name.should  == "Firm" 
         @firm.subdomain.should == "test"
         response.should redirect_to(register_user_path(@firm))
       end

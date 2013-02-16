@@ -9,6 +9,8 @@
 @import "chosen";
 @import "jquery.ui.selectmenu";
 @import "sl_graphs";
+@import "plans";
+@import "subscriptions";
 
 
 html, body{
@@ -1376,7 +1378,7 @@ display: inline-block;
 width: 150px;
 
 }
-.timesheet .submit, .firm_account .submit, .firm_preferences .submit{
+.timesheet .submit, .firm_account .submit, .firm_preferences .submit, .plans .submit{
 background:#323CED;
 padding:10px; font-size:15px;
 letter-spacing: 1px;
@@ -1385,6 +1387,7 @@ color: white;
 .timesheet .submit:hover, .firm_account .submit:hover, .firm_preferences .submit:hover{
 background:#0B16DB;
 letter-spacing: 1px;
+cursor:pointer;
 
 }	
 .error_message {font-size: 12px; color: red;float:right; padding-right: 50px;}

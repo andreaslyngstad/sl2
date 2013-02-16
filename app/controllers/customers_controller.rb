@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
   load_and_authorize_resource :firm
   def index
-    @customers = current_firm.customers.order("name ASC")
+    @customers = current_firm.customers.order_by_name
     @customer = Customer.new  
   end
   def show

@@ -1,0 +1,19 @@
+<%= content_for :head do %>
+<script type="text/javascript">
+  var PAYMILL_PUBLIC_KEY = '2028155948642eecacb7b872c5169aa6';
+</script>
+<%= javascript_include_tag "https://bridge.paymill.com/" %>
+<% end %>
+<%= render "private/home_header" %>
+<div id="left" class="home_content">
+	
+<div id="register_container">
+
+ <div class="blue2">
+ 	<%= t "message.cancel_html", link: (mail_to "admin@squadlink.com", "admin@squadlink.com", subject: "Canceling", style: "color:white")  %>
+ 	<%= link_to "Delete Firm", current_firm, :confirm => "Are you sure?", :title => "Delete Firm", :method => :delete, :remote => true, class: "button" %>
+ 	<%= link_to "Revert to the Free plan", current_firm.subscription, :confirm => "Are you sure?", :title => "Revert to free", :method => :delete, :remote => true, class: "button"%>
+ <p> <%= t "message.thank_you" %></p>
+ </div>
+  
+ 	

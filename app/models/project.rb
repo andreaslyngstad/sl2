@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
   attr_accessible :name,:description,:due,:active,:budget,:hour_price,:customer_id,:created_at,:updated_at,:customer
-  belongs_to :firm
+  belongs_to :firm, :counter_cache => true
   belongs_to :customer
   has_many :todos, :dependent => :destroy
   has_many :logs, :dependent => :destroy
@@ -11,8 +11,9 @@ class Project < ActiveRecord::Base
   has_many :users, :through => :memberships
   scope :is_active, where(["active = ?", true])
   scope :is_inactive, where(["active = ?", false])
+  scope :order_by_name, order("name ASC")
   validate :made_on_current_firm
-
+  
   def made_on_current_firm
     errors.add(:firm_id, "is secure!") if
     if customer 
