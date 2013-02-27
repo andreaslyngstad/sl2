@@ -10,7 +10,7 @@ class Firm < ActiveRecord::Base
 	   	  :color,
 	   	  :subscription_id
 	   
-  before_create :add_free_subscription
+  # before_create :add_free_subscription
   has_many :customers, :dependent => :destroy
   has_many :users, :dependent => :destroy
   has_many :todos, :dependent => :destroy
@@ -39,17 +39,27 @@ class Firm < ActiveRecord::Base
   
   
   def add_free_subscription
-    self.plan_id = 1
+    subscription.create(plan_id: 1)
   end
   
   def update_plan(sub)
     self.plan_id = sub
     save
   end
-  # def self.count_by_subscription
-    # self.group(:subscription).count
-  # end
- 
   
+  def remove_associations_when_downgrading(plan_id)
+    plan = Plan.find(plan_id)
+    plan_ass = {users: plan.users, projects: plan.projects, customers: plan.customers}
+    firm_ass = {users: users_count, projects: projects_count, customers: customers_count}
+    diff_hash = HashHandeling.new.values_difference(firm_ass, plan_ass)
+    remove_associations(diff_hash)
+  end
   
+  def remove_associations(diff_hash)
+    diff_hash.each do |k,v|
+      if v < 0 
+       send(k).order('created_at DESC').limit(v.abs).destroy_all
+      end
+    end
+  end 
 end

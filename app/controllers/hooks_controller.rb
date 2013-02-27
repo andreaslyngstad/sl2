@@ -1,7 +1,6 @@
 class HooksController < ApplicationController
   require 'json'
 
-  Stripe.api_key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
   def receiver
 

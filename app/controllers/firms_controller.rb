@@ -34,11 +34,8 @@ class FirmsController < ApplicationController
   def destroy
     @firm = Firm.find(params[:id])
     @firm.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(firms_url) }
-      format.xml  { head :ok }
-    end
+    Subscription.delete_old_subscription(@firm)
+    flash[:notice] = "Your firm and all data are deleted from our servers. You are always welcome back. Thanks!"
+    redirect_to(root_url(:subdomain => nil)) 
   end
-  
 end

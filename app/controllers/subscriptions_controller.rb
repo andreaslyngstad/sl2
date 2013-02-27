@@ -22,8 +22,14 @@ class SubscriptionsController < ApplicationController
   
   def destroy
     @subscription = Subscription.find(params[:id])
-    firm = @subscription.firm
-    firm.plan = Plan.free
-    @subscription.destroy
+    current_firm.remove_associations_when_downgrading(1)
+    Subscription.delete_old_subscription(current_firm)
+    current_firm.plan = Plan.find(1)
+    s = Subscription.new(plan_id: 1)
+    s.firm = current_firm
+    s.save!
+    current_firm.save
+    flash[:notice] = flash_helper("You are now on the free plan.")  
+    redirect_to plans_path
   end
 end

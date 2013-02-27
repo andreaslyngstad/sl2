@@ -12,7 +12,13 @@ class Subscription < ActiveRecord::Base
       client = Paymill::Client.create email: email, description: name
       payment = Paymill::Payment.create token: paymill_card_token, client: client.id
       subscription = Paymill::Subscription.create offer: plan.paymill_id, client: client.id, payment: payment.id
-      Subscription.delete_old_subscription(firm_id)
+      firm = Firm.find(firm_id)
+      if subscription
+        if plan_id < firm.plan.id
+          firm.remove_associations_when_downgrading(plan_id)
+        end
+        Subscription.delete_old_subscription(firm)
+      end
       self.paymill_id = subscription.id
       save!
     end
@@ -21,9 +27,14 @@ class Subscription < ActiveRecord::Base
     errors.add :base, "There was a problem with your credit card. Please try again."
     false
   end
-  def self.delete_old_subscription(firm_id)
-    self.where(firm_id: firm_id).destroy_all
+  
+  def self.delete_old_subscription(firm)
+    if firm.subscription && firm.subscription.paymill_id
+      Paymill::Subscription.delete(firm.subscription.paymill_id)
+    end
+    self.where(firm_id: firm.id).destroy_all 
   end
+  
   def update_firm_plan
     self.firm.update_plan(plan_id)
   end

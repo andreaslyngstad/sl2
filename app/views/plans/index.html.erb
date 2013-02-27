@@ -1,4 +1,11 @@
 <%= render "private/home_header" %>
+<% content_for :help do %>
+<div class="page_help">
+	<div class="page_help_container">
+		<%= t "help.plan_index_html" %>
+	</div>
+</div>
+<% end %>
 <div id="left" class="home_content">
 <table border="0" cellspacing="0" cellpadding="10" class="plans">
 	<tr><td></td>
@@ -83,12 +90,15 @@
 	</tr>
 	<tr><td></td>
 		<% @plans.each do |plan| %>
-			<td class="<%=  current_plan_style(plan) %>"><% if current_firm.plan == plan && current_firm.plan.name != "Free"%>
-				<%= link_to "Cancel Plan?", plans_cancel_path, :class => "red_font"%>
-				<% else %>
-				<% if plan.name != "Free" %>
-          			<%= link_to "Sign up", new_subscription_path(:plan_id => plan.id), :class => "submit" %>
-          		<% end %>
+			<td class="<%=  current_plan_style(plan) %>">
+				<% if current_firm.plan == plan && current_firm.plan.name != "Free"%>
+					<%= link_to "Cancel Plan?", plans_cancel_path, :class => "red_font"%>
+				<% elsif current_firm.plan == plan && current_firm.plan.name == "Free" %>
+					<%= link_to "Delete Firm?", current_firm, :confirm => "Are you sure?", :class => "red_font", :title => "Delete Firm", :method => :delete %>
+	          	<% else %>	
+					<% if plan.name != "Free" %>
+	          			<%= link_to "Sign up", new_subscription_path(:plan_id => plan.id), :class => "submit" %>
+	          		<% end %>
           		<% end %>
         	</td>
 		<% end %>

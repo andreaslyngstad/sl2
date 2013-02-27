@@ -11,8 +11,8 @@
 
  <div class="blue2">
  	<%= t "message.cancel_html", link: (mail_to "admin@squadlink.com", "admin@squadlink.com", subject: "Canceling", style: "color:white")  %>
- 	<%= link_to "Delete Firm", current_firm, :confirm => "Are you sure?", :title => "Delete Firm", :method => :delete, :remote => true, class: "button" %>
- 	<%= link_to "Revert to the Free plan", current_firm.subscription, :confirm => "Are you sure?", :title => "Revert to free", :method => :delete, :remote => true, class: "button"%>
+ 	<%= link_to "Delete Firm", current_firm, :confirm => "Are you sure?", :title => "Delete Firm", :method => :delete, class: "button" %>
+ 	<%= link_to "Revert to the Free plan", subscription_path(current_firm.subscription), :confirm => "Are you sure?", :title => "Revert to free", :method => :delete, class: "button"%>
  <p> <%= t "message.thank_you" %></p>
  </div>
   

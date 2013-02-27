@@ -45,6 +45,7 @@ Squadlink::Application.routes.draw do
   constraints(Subdomain) do
     
     get "plans/index", :as => :plans
+    delete "plans/index", :as => :plans
     get "plans/cancel", :as => :plans_cancel
     devise_for  :users
     #chart_controller

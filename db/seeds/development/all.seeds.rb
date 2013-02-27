@@ -26,16 +26,18 @@ class Array
   end
 end
 
-Plan.create! name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2
-Plan.create! name: "Bronze", price: 19, customers: nil, logs: nil, projects: 50, users:10
-Plan.create! name: "Silver", price: 49, customers: nil, logs: nil, projects: 200, users:30
-Plan.create! name: "Gold", price: 99, customers: nil, logs: nil, projects: 400, users:100
-Plan.create! name: "Platinum", price: 199, customers: nil, logs: nil, projects: nil, users:nil
+Plan.create! name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, paymill_id: "free"
+Plan.create! name: "Bronze", price: 19, customers: nil, logs: nil, projects: 50, users:10, paymill_id: "offer_99a3a4d47e32be269501"
+Plan.create! name: "Silver", price: 49, customers: nil, logs: nil, projects: 200, users:30, paymill_id: "offer_36aa0af51624ba547064"
+Plan.create! name: "Gold", price: 99, customers: nil, logs: nil, projects: 400, users:100, paymill_id: "offer_1e479ea6dcaa3a589ec3"
+Plan.create! name: "Platinum", price: 199, customers: nil, logs: nil, projects: nil, users:nil, paymill_id: "offer_3d08a96455a613294adf"
 
 puts "plans added"
 
 puts "setting up first firm"
-firm1 = Firm.create! :name => "Lizz", :subdomain => "lizz" 
+firm1 = Firm.new :name => "Lizz", :subdomain => "lizz" 
+firm1.save
+puts firm1.name
 Subscription.create! plan_id: 3, firm_id: firm1.id.to_i
 firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong"
 Subscription.create! plan_id: 1, firm_id: firm2.id.to_i
