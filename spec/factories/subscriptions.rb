@@ -2,11 +2,10 @@
 
 FactoryGirl.define do
   factory :subscription do
-    plan_id 1
-    email "MyString@test.no"
-    firm_id 1
-    name "Yes"
-    paymill_id 1
+    email
+    name 
+    firm
+    plan
     
-  end
+  end 
 end

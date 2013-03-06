@@ -8,12 +8,16 @@ FactoryGirl.define do
   factory :firm do
    name
    subdomain
+   plan
   end
-
-
+  factory :firm_with_users, :parent => :firm do
+    after_create do |firm|
+      FactoryGirl.create(:user, :firm => firm)
+    end
+  end
   factory :user do
     name
-    password "foobar"
+    password "password"
     password_confirmation { |u| u.password }
     email
     role "Admin"

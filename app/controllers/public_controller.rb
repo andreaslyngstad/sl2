@@ -2,7 +2,7 @@ class PublicController < ApplicationController
   skip_before_filter :authenticate_user!, :all_users, :user_at_current_firm
   layout "registration"
   respond_to :html
-
+  include SubdomainLogin
   def index
   end
 
@@ -42,7 +42,7 @@ class PublicController < ApplicationController
         if @user.save
           flash[:notice] = "Registration successful."
           sign_in(@user)
-          respond_with @user, :location => after_sign_in_path_for(@user)
+          sign_out_and_redirect_with_token(@user)
         else
         	flash[:error] = "Registration could not be saved because:"
           render :action => 'first_user'

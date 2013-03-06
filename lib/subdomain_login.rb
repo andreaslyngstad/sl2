@@ -1,5 +1,14 @@
 # require "devise"
-# module SubdomainLogin
+ module SubdomainLogin
+
+  def sign_out_and_redirect_with_token(resource)
+     sign_out(resource)
+     token =  Devise.friendly_token
+     resource.loginable_token = token
+     resource.save
+     cookies[:token] = { :value => token, :domain => :all }
+     redirect_to sign_in_at_subdomain_url( :subdomain => resource.firm.subdomain)
+  end
   # def after_sign_in_path_for(resource_or_scope)
     # scope = Devise::Mapping.find_scope!(resource_or_scope)
     # subdomain_name = current_user.firm.subdomain
@@ -27,4 +36,4 @@
   # redirect_to home_path(:subdomain => firm.subdomain)
   # sign_in(user)
   # end
-# end
+end

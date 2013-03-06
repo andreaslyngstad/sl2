@@ -14,13 +14,13 @@ describe SubscriptionsController do
       subject.current_firm.should_not be_nil
     end
     it "returns http success" do
-      @plan = FactoryGirl.create(:plan)
+      @plan = FactoryGirl.create(:plan, paymill_id: "bull" )
       get 'new', plan_id: @plan.id.to_s
       response.should be_success
     end 
   end
 
-  describe "POST create" do
+  describe "POST create", :vcr do
     let(:subscription) { mock_model(Subscription).as_null_object }
 
     before do
@@ -40,7 +40,7 @@ describe SubscriptionsController do
     end
 
     it "redirects to the Messages index" do
-      post :create
+       post :create
       response.should redirect_to(:controller => "plans", :action => "index")
     end
   end

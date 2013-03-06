@@ -7,7 +7,6 @@ describe CustomersController do
   
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com"
-   
   end
 
   describe "GET #index" do

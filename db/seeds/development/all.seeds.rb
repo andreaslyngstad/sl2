@@ -38,9 +38,9 @@ puts "setting up first firm"
 firm1 = Firm.new :name => "Lizz", :subdomain => "lizz" 
 firm1.save
 puts firm1.name
-Subscription.create! plan_id: 3, firm_id: firm1.id.to_i
+
 firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong"
-Subscription.create! plan_id: 1, firm_id: firm2.id.to_i
+
 puts 'SETTING UP EXAMPLE USERS'
 user1 = User.new :name => 'Andreas Lyngstad', :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 user1.firm = firm1
@@ -69,7 +69,7 @@ firm = Firm.create! name: "test" + num, subdomain: "test" + num
 user = User.new name: 'user_test'+ num , email: 'test' + num + '@lizz.no', password: 'lekmedmeg', password_confirmation: 'lekmedmeg', role: "Admin"
 user.firm = firm
 user.save 
-Subscription.create! plan_id: rand(1..5), firm_id: firm.id.to_i
+
 puts 'New firm created: ' << firm.name
 end
 

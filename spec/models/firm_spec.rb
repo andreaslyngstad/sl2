@@ -12,16 +12,19 @@ describe Firm do
    it {should validate_presence_of(:subdomain) }
    it {should validate_presence_of(:name) }
 
+  
+  before(:each) do
+   @firm = FactoryGirl.create(:firm) 
+  end
+
   it "should be created with a plan" do
-    firm = Firm.new
-    firm.add_free_subscription
-    firm.plan_id.should == 1
+    @firm = FactoryGirl.create(:firm) 
+    #firm.send(:add_free_subscription)
+    @firm.subscription.should_not == nil 
   end
   
-  it "should updateexit_plan" do 
-   firm = Firm.create!(:subdomain=>"ersr",:name=>"we")
-   sub = mock_model Subscription, :plan_id => 6
-   firm.update_plan(sub)
-   firm.plan_id.should == 6
+  it "should update firm_plan" do 
+   @firm.update_plan(@firm.subscription.plan_id)
+   @firm.plan_id.should == 1  
   end 
 end

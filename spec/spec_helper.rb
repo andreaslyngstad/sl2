@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
@@ -11,10 +10,16 @@ Spork.prefork do
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
-require 'capybara/rspec'
 require 'rspec/autorun'
 require 'factory_girl'
 require 'ruby-debug'
+require 'capybara/rspec'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, :debug => true,:js_errors => false )
+end
+
 include Warden::Test::Helpers
 Warden.test_mode!
 
@@ -22,14 +27,17 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
+ 
   config.extend ControllerMacros, :type => :controller
+  config.include ControllerMacros, :type => :feature
+  
   config.include RequestMacros, :type => :request
   config.mock_with :rspec
  
   config.use_transactional_examples = false
   
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)
   end
 
@@ -61,11 +69,12 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-end
+end 
 
 Spork.each_run do
   # This code will be run each time you run your specs.
   FactoryGirl.reload  
+  
 end
 
 # --- Instructions ---
