@@ -6,13 +6,16 @@ gem 'eventmachine'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'rack-ssl'
-gem 'jquery-rails'
+gem 'jquery-rails', '2.1.3' 
+
+gem 'jquery-ui-rails'
 gem "devise"
 gem "paperclip"
 gem "cancan"
 gem 'newrelic_rpm'
 gem 'jbuilder'
 gem 'activeadmin'
+gem "select2-rails"
 gem "seedbank"
 gem 'whenever', :require => false
 gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
@@ -35,9 +38,12 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'debugger'
   gem 'thin'
+ 
+end
+group :test do 
   gem "rspec-rails"
   gem 'shoulda-matchers'
-  gem 'capybara'
+  gem 'capybara', '2.0.2'
   gem "factory_girl_rails", "~> 4.0"
   gem 'ruby-prof'
   #gem 'turn' 
@@ -45,16 +51,15 @@ group :development, :test do
   gem 'spork'
   gem 'guard-spork'
   gem 'guard-rspec'
-  gem 'rb-inotify', '~> 0.8.8'
   gem 'database_cleaner'
   gem "selenium-webdriver"
   gem "selenium-client"
   gem "vcr"
-  gem 'fakeweb'
+  gem 'webmock'
+  gem 'headless'
+  gem "poltergeist"
+  gem 'rb-inotify', '~> 0.9'
 end
-
-
-
 # Use unicorn as the web server
 # gem 'unicorn'
 
