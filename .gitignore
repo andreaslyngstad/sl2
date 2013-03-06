@@ -16,4 +16,6 @@
 
 /config/database.yml
 .sass-cache/
+.idea/
+.project
 public/assets/

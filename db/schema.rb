@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   end
 
   add_index "firms", ["plan_id"], :name => "index_firms_on_plan_id"
+  add_index "firms", ["subdomain"], :name => "index_firms_on_subdomain"
 
   create_table "logs", :force => true do |t|
     t.text     "event"
@@ -193,11 +194,17 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
     t.string   "name"
     t.integer  "firm_id"
     t.string   "paymill_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "card_zip"
+    t.string   "last_four"
+    t.string   "card_type"
+    t.date     "next_bill_on"
+    t.string   "card_expiration"
+    t.string   "card_holder"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
-  add_index "subscriptions", ["plan_id", "firm_id"], :name => "index_subscriptions_on_plan_id_and_firm_id", :unique => true
+  add_index "subscriptions", ["plan_id", "firm_id"], :name => "index_subscriptions_on_plan_id_and_firm_id"
 
   create_table "todos", :force => true do |t|
     t.text     "name"
