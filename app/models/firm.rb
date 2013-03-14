@@ -8,9 +8,10 @@ class Firm < ActiveRecord::Base
 	      :logo_updated_at,
 	   	  :background,
 	   	  :color,
-	   	  :subscription_id
+	   	  :subscription_id,
+	   	  :plan
 	   
-  # before_create :add_free_subscription
+  before_create :add_free_subscription
   has_many :customers, :dependent => :destroy
   has_many :users, :dependent => :destroy
   has_many :todos, :dependent => :destroy
@@ -31,16 +32,10 @@ class Firm < ActiveRecord::Base
   validates :subdomain, :presence => true, :uniqueness => true,  :subdomain_exclutions => :true
   
   scope :recent, order('created_at DESC').limit(10)
-  scope :free, where(plan_id: 1)
-  scope :bronze, where(plan_id: 2)
-  scope :silver, where(plan_id: 3)
-  scope :gold, where(plan_id: 4)
-  scope :platinum, where(plan_id: 5)
-  
   
   def add_free_subscription
-    subscription.create(plan_id: 1)
-  end
+    self.subscription = Subscription.create(plan_id: 1)  
+  end 
   
   def update_plan(sub)
     self.plan_id = sub

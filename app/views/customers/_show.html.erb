@@ -19,7 +19,17 @@
 
 </div>
 <div class="graphs">Grafer</div>
-
+<div class="show_statistics_wrapper">
+	<div class="show_statistics_header statistics_header_hours">Total hours</div>
+	<div class="show_statistics_header statistics_header_done">Tasks done</div>
+	<div class="statistics_unit one_number white statistics_unit_hours"><%= time_diff(@hours) %></div>
+	<div id="todos_chart">
+		<div class="statistics_unit one_number tasks_percent white">		
+			
+		</div>
+	</div>
+	
+</div>
 
    <nav id="sub_tabs">
   <ul>

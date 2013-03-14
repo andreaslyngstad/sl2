@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   belongs_to :firm, :counter_cache => true
   validates_presence_of :name
   validates :email, :presence => true, :email_format => true
-  
+  validate :made_with_in_limit
   
  # def user_role
  #   errors.add(:role, "Not a legal role") if 
@@ -58,5 +58,8 @@ class User < ActiveRecord::Base
   def role?(role)
       return self.roles.nil? ? false : self.roles.include?(role.to_s)
   end
-  
+  def made_with_in_limit
+    errors.add(:user_id, "You have reached your plans limit of #{firm.plan.users} users. Please upgrade.") if
+    PlanLimit.new.over_limit?(firm.users_count, firm.plan.users) 
+  end
 end

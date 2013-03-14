@@ -6,11 +6,16 @@ class Todo < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
   belongs_to :firm
-  belongs_to :done_by_user, :class_name => "User", :foreign_key => "done_by_user"
+  belongs_to :done_by_user, :class_name => "User", :foreign_key => "done_by_user_id"
   has_many :logs
  
   validates_presence_of :name
   validate :made_on_current_firm
+  validate :project_must_exist
+
+  def project_must_exist
+    errors.add(:project_id, "must be selected.") if project_id.nil? && project.nil?
+  end
   def self.todo_reflections
     arr = reflections.collect{|a, b| b.class_name.downcase if b.macro==:belongs_to}.compact.uniq
     arr.delete("firm")

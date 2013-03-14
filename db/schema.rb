@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
     t.date     "next_bill_on"
     t.string   "card_expiration"
     t.string   "card_holder"
+    t.boolean  "active"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end

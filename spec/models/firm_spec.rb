@@ -16,11 +16,12 @@ describe Firm do
   before(:each) do
    @firm = FactoryGirl.create(:firm) 
   end
-
+   
   it "should be created with a plan" do
     @firm = FactoryGirl.create(:firm) 
     #firm.send(:add_free_subscription)
     @firm.subscription.should_not == nil 
+    @firm.plan.id.should == 1 
   end
   
   it "should update firm_plan" do 

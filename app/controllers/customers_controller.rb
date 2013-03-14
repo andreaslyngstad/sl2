@@ -7,14 +7,12 @@ class CustomersController < ApplicationController
   def show
     @klass = current_firm.customers.find(params[:id])
     @customers = current_firm.customers
-    
-    
-    
+    @hours = @klass.logs.sum(:hours)
     @employees = @klass.employees
     @employee = Employee.new(:customer => @customer)
     @projects = @klass.projects.where(["active = ?", true]).includes(:customer, :todos)
     @users = current_firm.users
-    @all_projects = current_firm.projects.where(["customer_id IS ? OR customer_id IS ? AND active = ?", nil, @klass.id, true])
+    @hours = @klass.logs.sum(:hours)
     @project = Project.new(:customer => @klass)
     respond_to do |format|
       format.html # show.html.erb

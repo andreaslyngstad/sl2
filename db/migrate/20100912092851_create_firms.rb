@@ -17,6 +17,7 @@ class CreateFirms < ActiveRecord::Migration
       t.timestamps
     end
      add_index :firms, :plan_id
+     add_index :firms, :subdomain
   end
 
   def self.down

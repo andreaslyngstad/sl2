@@ -41,7 +41,7 @@ describe LogsController do
   end
   describe 'PUT update' do
   before :each do
-    @log = FactoryGirl.create(:log, :user => @user, :firm => @user.firm)
+    @log = FactoryGirl.create(:log, user: @user, firm: @user.firm)
   end
   
   context "valid attributes" do
@@ -53,14 +53,7 @@ describe LogsController do
       @log.event.should eq("something else")
     end
   end
-  context "invalid attributes" do
-    it "does not change @log's attributes" do
-      put :update, id: @log, 
-        log: FactoryGirl.attributes_for(:log, :event => nil)
-      @log.reload
-      @log.event.should_not eq("something else")
-    end
-  end
+  
   
 end
   describe 'DELETE destroy' do

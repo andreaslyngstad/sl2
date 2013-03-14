@@ -2,7 +2,7 @@ $(".flash_notice").empty()
 $(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>")
 $("#new_todo")[0].reset();
 $("#not_done_tasks").append("<%= escape_javascript(render(:partial => todo)) %>");
-$(".tasks_percent").replaceWith("<div class='statistics_unit tasks_percent one_number white'><%= %></div>")  
+$(".tasks_percent").countDone() 
 $(".open_todo_update").UIdialogs_edit_links();
 $(".searchableTaskCustomer").chosen();
 if($('.far_right_container[style*="none"]').data() === null){

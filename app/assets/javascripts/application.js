@@ -16,6 +16,7 @@
 //= require scrolling
 //= require far_right
 //= require logs
+//= require tasks
 //= require log_tracking
 
 //= require employees
@@ -50,8 +51,6 @@ jQuery.ajaxSetup({
 })
 //display help
 jQuery.fn.display_help = function(){
- 
- 	
   	if ($(".page_help").length !== 0){ 	
   		$(this).show()
     $(this).toggle(
@@ -264,18 +263,10 @@ $(document).ready(function() {
    $(".display_help").display_help();
   
 //jquery UI dialogs
-
-  
-  $("#dialog_task").UIdialogs_links();
-  
-
-  
+  $("#dialog_todo").UIdialogs_links();
   $("#dialog_project").UIdialogs_links();
- 
   $("#dialog_customer").UIdialogs_links();
- 
   $("#dialog_user").UIdialogs_links();
- 
   $("#activate_project").button().click(function(){
   	var id = $(this).attr("data-id")
   	

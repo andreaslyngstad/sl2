@@ -2,9 +2,9 @@
  <ul>
  	<li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
  	<li><%= f.label :Priority %>
-	  	<%= f.radio_button :prior, 1 %><%= label :role, 'Normal' %>
-	  	<%= f.radio_button :prior, 2 %><%= label :role, 'Middle' %>
-	  	<%= f.radio_button :prior, 3 %><%= label :role, 'High' %>
+	  	<%= f.radio_button :prior, 1 %><%= label :role, 'Normal', class: "todo_green" %>
+	  	<%= f.radio_button :prior, 2 %><%= label :role, 'Middle', class: "todo_yellow"  %>
+	  	<%= f.radio_button :prior, 3 %><%= label :role, 'High', class: "todo_red" %>
 	</li>
 	<li><%= f.label :user_id %>
 		<select class="searchableTaskCustomer" name="todo[user_id]">
@@ -25,7 +25,7 @@
 		</select> 
     </li>
     <li><%= f.label :project_id %>
-       	<select class="searchableTaskCustomer" name="todo[project_id]">
+       	<select class="searchableTaskCustomer required" name="todo[project_id]">
        		<option value="">Select project</option>
 	          	<% current_firm.projects.each do |project| %>
 	          	<option value="<%=project.id.to_i%>"<%if todo.project == project%> selected="<%=project.id.to_i%>"<%end%>>

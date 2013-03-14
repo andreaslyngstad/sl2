@@ -2,7 +2,7 @@
 	<div class="one_week_back" data-lastweek="<%= Date.today - 1.week %>" data-nextweek="<%= Date.today + 1.week %>"></div>
 	<div class="log_menu">
 	  <span class="add_some">  
-	    <a id="dialog_todo" data-object="todo">Add another</a>
+	    <a id="dialog_todo" class="add_new_todo_button" data-object="todo">Add another</a>
 	    <div class="range" >	   
 	    <%= form_tag('/todo_range', :id => "todo_range_form", :remote => true) do -%>
 	    <%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
@@ -31,9 +31,9 @@
 	        <%= f.hidden_field :completed, :value => false%>
 	          <li><%= f.label :name %><%= f.text_area :name, :class => "required", :minlength => "2" %></li>
 	          <li><%= f.label :Priority %>
-	          	<%= f.radio_button :prior, 1, :checked => true %><%= label :role, 'Normal' %>
-	          	<%= f.radio_button :prior, 2 %><%= label :role, 'Middle' %>
-	          	<%= f.radio_button :prior, 3 %><%= label :role, 'High' %>
+	          	<%= f.radio_button :prior, 1, :checked => true %><%= label :role, 'Normal', class: "todo_green" %>
+	          	<%= f.radio_button :prior, 2 %><%= label :role, 'Middle', class: "todo_yellow" %>
+	          	<%= f.radio_button :prior, 3 %><%= label :role, 'High', class: "todo_red" %>
 	          </li>
 	          <li><%= f.label :user_id %>
 	            <select class="searchableTaskCustomer" name="todo[user_id]"><option value="">Select user</option>
@@ -107,8 +107,12 @@
 		<%= render :partial => "todos/todo", :collection => @not_done_todos, :as => :todo %>
 	</div>
 	    <br/>
-	<div id="done_tasks">	
+	<div id="done_tasks_header">	
 		<div class="name_todo_head info_head">Done</div>
+		<div class="project_todo info_head"></div>
+		<div class="user_todo info_head">Done by</div>
+	</div>	
+	<div id="done_tasks">
 		<%= render :partial => "todos/todo" , :collection => @done_todos, :as => :todo %>
 	</div> 
 </div>

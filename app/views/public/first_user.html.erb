@@ -9,12 +9,8 @@
 	
 <div id="registration" class="blue">
 <p>Last step </p>
-	<% if flash[:notice] %>
-	<p><%= flash[:notice] %></p>
-	<% end %>
-	<% if flash[:error] %>
-	<span class="flash_error" style="display:block;height:30px; width:560px; background-color: red; text-align:center; line-height: 175%;" ><%= flash[:error] %></span>
-	<% end %>
+	<span class="flash_notice" style=""><%= flash[:notice] %></span>
+	<span class="flash_notice" style="color: red;"><%= flash[:error] %></span>
 <p>This user will become a manager, but this can be changed later</p>
 </div>
 		

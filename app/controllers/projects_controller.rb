@@ -16,7 +16,6 @@ load_and_authorize_resource
 
   def show
     @klass = current_firm.projects.find(params[:id])
-    
     @hours = @klass.logs.sum(:hours)
     @done_todos = @klass.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
     @not_done_todos = @klass.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC") 

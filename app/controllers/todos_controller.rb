@@ -14,6 +14,11 @@ class TodosController < ApplicationController
   def edit
   end
   def update
+    if params[:todo][:completed] == "1" && !todo.completed    
+      todo.done_by_user = current_user
+    else
+      todo.done_by_user = nil
+    end
     respond_to do |format|
       if todo.update_attributes(params[:todo])
         flash[:notice] = flash_helper('Todo was successfully updated.')
@@ -35,8 +40,6 @@ class TodosController < ApplicationController
   end
   def destroy
     todo.destroy
-    @done_todos = todo.project.todos.where(["completed = ?", true]).includes(:user)
-    @not_done_todos = todo.project.todos.where(["completed = ?", false]).includes(:user)
     flash[:notice] = flash_helper('Todo was successfully deleted.')
     respond_to do |format|
       format.js

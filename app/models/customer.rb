@@ -7,5 +7,11 @@ class Customer < ActiveRecord::Base
   has_many :projects
   has_many :employees, :dependent => :destroy
   validates_presence_of :name 
+  validate :made_with_in_limit
   scope :order_by_name, order("name ASC")
+  
+  def made_with_in_limit
+    errors.add(:customer_id, "You have reached your plans limit of #{firm.plan.customers} customers. Please upgrade.") if
+    PlanLimit.new.over_limit?(firm.customers_count, firm.plan.customers)
+  end 
 end

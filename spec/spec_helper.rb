@@ -16,10 +16,6 @@ require 'ruby-debug'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, :debug => true,:js_errors => false )
-end
-
 include Warden::Test::Helpers
 Warden.test_mode!
 
@@ -35,7 +31,7 @@ RSpec.configure do |config|
   config.mock_with :rspec
  
   config.use_transactional_examples = false
-  
+  config.use_transactional_fixtures = false
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)

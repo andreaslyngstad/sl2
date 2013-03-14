@@ -44,7 +44,7 @@ class PublicController < ApplicationController
           sign_in(@user)
           sign_out_and_redirect_with_token(@user)
         else
-        	flash[:error] = "Registration could not be saved because:"
+        	flash[:error] = "Registration could not be saved."
           render :action => 'first_user'
       end
   end

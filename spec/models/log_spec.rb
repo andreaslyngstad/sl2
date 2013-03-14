@@ -8,23 +8,26 @@ describe Log do
   it { should belong_to(:firm) }
   it { should belong_to(:project) }
   it { should belong_to(:todo) }
-  it { should belong_to(:employee) }
+  it { should belong_to(:employee) }  
+  
   before :each do
     @firm = FactoryGirl.create(:firm)
     @user = FactoryGirl.create(:user, :firm => @firm)
    
   end
+ 
   
   it "Displays the total time" do
-    log = Log.create!(:begin_time => Time.now, :end_time => Time.now + 30.hours, :user => @user, :firm => @firm)
+    log = FactoryGirl.create(:log, :begin_time => Time.now, :end_time => Time.now + 30.hours, :user => @user, :firm => @firm)
     assert_equal "30:00", log.total_time
-    log = Log.create!(:begin_time => Time.now, :end_time => Time.now + 3.hours, :user => @user, :firm => @firm)
+    log = FactoryGirl.create(:log,:begin_time => Time.now, :end_time => Time.now + 3.hours, :user => @user, :firm => @firm)
     assert_equal "3:00", log.total_time 
-    log = Log.create!(:begin_time => Time.now, :end_time => Time.now + 3.minutes, :user => @user, :firm => @firm)
+    log = FactoryGirl.create(:log,:begin_time => Time.now, :end_time => Time.now + 3.minutes, :user => @user, :firm => @firm)
     assert_equal "0:03", log.total_time 
-    log = Log.create!(:begin_time => Time.now, :end_time => Time.now + 13.minutes, :user => @user, :firm => @firm)
+    log = FactoryGirl.create(:log,:begin_time => Time.now, :end_time => Time.now + 13.minutes, :user => @user, :firm => @firm)
     assert_equal "0:13", log.total_time 
    end
+   
   it "Should set hour spent in right format before save" do
     time = Time.now
     log = Log.create!(:event => "test", :begin_time => time, :end_time => time + 3.hours, :user => @user, :firm => @firm)

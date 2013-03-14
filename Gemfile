@@ -1,14 +1,12 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.12'
 gem 'eventmachine'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'rack-ssl'
 gem 'jquery-rails', '2.1.3' 
-
-gem 'jquery-ui-rails'
 gem "devise"
 gem "paperclip"
 gem "cancan"
@@ -26,7 +24,7 @@ group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-ui-rails'
+  gem 'jquery-ui-rails', '2.0.2'
 end
 
 group :development, :test do
@@ -43,7 +41,7 @@ end
 group :test do 
   gem "rspec-rails"
   gem 'shoulda-matchers'
-  gem 'capybara', '2.0.2'
+  gem 'capybara'
   gem "factory_girl_rails", "~> 4.0"
   gem 'ruby-prof'
   #gem 'turn' 
@@ -59,6 +57,7 @@ group :test do
   gem 'headless'
   gem "poltergeist"
   gem 'rb-inotify', '~> 0.9'
+  gem 'sqlite3-ruby'
 end
 # Use unicorn as the web server
 # gem 'unicorn'
