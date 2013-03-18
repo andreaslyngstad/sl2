@@ -8,8 +8,8 @@
 	    <%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
 	    <%= hidden_field_tag "id", @klass ? @klass.id : "index"%>
 	    <div id="range_date_fields">
-		  	<%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "todo_range_date"%>
-			<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "todo_range_date"  %>
+		  	<%= text_field_tag 'from', {}, :class => "todo_range_date"%>
+			<%= text_field_tag 'to',{}, :class => "todo_range_date"  %>
 		</div>
 		<% end %>
    	</div>
@@ -88,7 +88,7 @@
 		          	</select> 
 			   </li>
 			   <% end %>
-	          <li><%= f.label :due %><%= f.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_todo_date" %></li>
+	          <li><%= f.label :due %><%= f.text_field :due, :value => date_format(Date.today), :class => "date", :id => "dialog_todo_date" %></li>
 	          <li><%= f.submit "Save", :class => 'submit' %></li>
 	      <% end %>
 	      </ul>

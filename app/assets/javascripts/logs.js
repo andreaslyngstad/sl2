@@ -83,7 +83,7 @@ jQuery.fn.select_projects_customers = function() {
 jQuery.fn.UIdialogs_log_links = function(){
   var form = '#' + $(this).attr('id') + '_form'
   $(this).button().click(function(){
-  	$(form).find(".date").datepicker({dateFormat: "yy-mm-dd"}).attr( 'readOnly' , 'true' );
+  	$(form).find(".date").datepicker()
   	var log_time_from = $("#log_times_from_").val();
     var log_time_to = $("#log_times_to_").val();
     $(form).children(".new_log").validateWithErrors()
@@ -161,13 +161,10 @@ $(document).ready(function() {
   	$("select#logs_pr_date_select").logs_pr_date_select();
 	$("#dialog_log").UIdialogs_log_links();
 	$(".open_log_update").UIdialogs_edit_logs_links();
-	$(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
-	$(".range_date").datepicker({ 
-		dateFormat: "yy-mm-dd", 
+	$(".date").datepicker();
+	$(".range_date").datepicker({
 		onSelect: function() {
-			console.log("test")
 			$('#range_form').submit();
-		
   		}
 		}).attr( 'readOnly' , 'true' )
 	$(".slider_range").slider({

@@ -2,27 +2,31 @@ $(".flash_notice").empty()
 $(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>")
 
 
-<!-- $(".open_todo_update").UIdialogs_edit_links(); -->
-var todo = $("#todo_<%= j(todo.id.to_s)%>")
+var todojs 		= $("#todo_<%= j(todo.id.to_s)%>")
+var roster_todo = $("#roster_todo_<%= j(todo.id.to_s)%>")
+<% if todo.completed %> 
+	$("#done_tasks").append(todojs)
+	$("#not_done_tasks").find(todojs).remove()	
+	roster_todo.remove()
+<%else%>
+	$("#not_done_tasks").append(todojs)
+	$("#done_tasks").find(todojs).remove()
+	$.getScript("/roster_task")	
+<%end%>
 
-if(todo.find(".done_box").is(':checked')){
-	$("#done_tasks").append(todo)
-	$("#not_done_tasks").find(todo).remove()	
-}else{
-	$("#not_done_tasks").append(todo)
-	$("#done_tasks").find(todo).remove()		
-}
-
-todo.replaceWith("<%= escape_javascript(render todo) %>")
+todojs.replaceWith("<%= escape_javascript(render todo) %>")
+$("#<%= j(todo.id.to_s)%>").click(function() { 
+  	 var id = $(this).attr("id")
+  	 $("#edit_done_todo_" + id).submitDoneWithAjax(id)
+  });
 $(".add_new_todo_button").UIdialogs_links();
 $(".open_todo_update").UIdialogs_edit_links();
 $("#dialog_todo_form").UIdialogs();
-$("#todo_<%= escape_javascript(todo.id.to_s)%>").find(".open_todo_update").UIdialogs_edit_links();
+$("#todo_<%= j(todo.id.to_s)%>").find(".open_todo_update").UIdialogs_edit_links();
 $(".tasks_percent").countDone()
 $(".searchableTaskCustomer").chosen();
 
 if($('.far_right_container[style*="none"]').data() === null){
-$(".roster_tasks").empty();
-$.getScript("/roster_task")
+
 }
 $(".spinning").hide();

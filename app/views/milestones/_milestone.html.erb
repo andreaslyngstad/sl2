@@ -1,6 +1,6 @@
 <div class="info" id="milestone_<%=milestone.id%>">    
 	<div class="name_milestone"><%= milestone.goal %></div>
-	<div class="date_all"><%= milestone.due.strftime('%d.%m.%y')%></div>
+	<div class="date_all"><%= date_format(milestone.due, :short => true)%></div>
 	<% if can? :manage, milestone.project %>
 	<div class="delete_edit">
 		<span class="open_milestone_update edit" id="milestone_update" data-id="<%= milestone.id %>" data-object="milestone">edit</span>
@@ -9,7 +9,7 @@
 	<div class="dialog_form" id="milestone_update_<%= milestone.id %>_form" title="Update milestone" style="display:none;">
 		<%= form_for milestone do |f| %>
 		<li><%= f.label :goal %><%= f.text_area :goal, :class => "required", :minlength => "2"  %></li>
-		<li><%= f.label :due %><%= f.text_field :due, :value => milestone.due.strftime("%Y-%m-%d"), :id => "date_milestone_#{milestone.id}" %></li>
+		<li><%= f.label :due %><%= f.text_field :due, :value =>  date_format(milestone.due), :class => "date", :id => "date_milestone_#{milestone.id}" %></li>
 		<li><%= f.submit "Save", :class => 'submit' %></li>
 		<% end %>
 	</div>

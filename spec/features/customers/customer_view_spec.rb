@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 feature 'customer' do
-
     let(:user)        {FactoryGirl.create(:user)}
     let(:firm)        {user.firm} 
+    let(:project)     {FactoryGirl.create(:project, firm: firm, active: true, name: "test_project")}  
     let(:customers)   {"http://#{firm.subdomain}.lvh.me:31234/customers"} 
     let(:root_url)    {"http://#{firm.subdomain}.lvh.me:31234/"}
     before(:all) do 
-      
+      project.users << user
       Capybara.server_port = 31234 
       sub = firm.subdomain
       Capybara.app_host = root_url 
@@ -47,12 +47,24 @@ feature 'customer' do
     find("#dialog_todo").click
     page.should have_content("Create new task test_new customer")
     fill_in "todo_name", with: "This a task"
-    page.execute_script %Q{ $('#dialog_todo_date').trigger("focus") } # activate datetime picker
+   
+    page.find("#new_todo").find(".submit").click
+    page.should have_content("Project must be selected")
+    
+    page.execute_script %Q{ $(".chzn-results").find("li:contains('test_project')").parent().trigger("mousedown")}
+    page.execute_script %Q{ $(".chzn-results").find("li:contains('test_project')").trigger("mouseup")}
+    tes = page.evaluate_script %Q{ $(".chzn-results").find("li:contains('test_project')").hasClass('result-selected')}
+    tes.should == true
+    page.execute_script %Q{ $('#dialog_todo_date').trigger("focus") } # activate datetime picker 
+    tek = page.evaluate_script %Q{$("#ui-datepicker-div").is(':hidden')} 
+    tek.should == false
     page.execute_script %Q{ $('a.ui-datepicker-next').trigger("click") } # move one month forward
+    
+    
     page.execute_script %Q{ $('a.ui-state-default:contains("15")').trigger("click") } # click on day 15
     page.find("#new_todo").find(".submit").click
     page.should have_content("This a task")
-    page.should have_content("15")
+    page.should have_content("15") 
     find(".done_box#1").click
   end
  

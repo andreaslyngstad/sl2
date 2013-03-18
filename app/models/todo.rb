@@ -8,11 +8,14 @@ class Todo < ActiveRecord::Base
   belongs_to :firm
   belongs_to :done_by_user, :class_name => "User", :foreign_key => "done_by_user_id"
   has_many :logs
- 
+  
   validates_presence_of :name
   validate :made_on_current_firm
   validate :project_must_exist
-
+  validate :correct_time
+  def correct_time
+    errors.add(:due, "is wrong format") if !DateTester.new.date?(due)
+  end
   def project_must_exist
     errors.add(:project_id, "must be selected.") if project_id.nil? && project.nil?
   end

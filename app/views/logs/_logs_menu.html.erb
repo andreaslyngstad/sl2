@@ -13,8 +13,8 @@
 	    <%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
 	    <%= hidden_field_tag "id", @klass ? @klass.id : "index"%>
 	    <div id="range_date_fields">
-		  	<%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date"%>
-			<%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date"  %>
+		  	<%= text_field_tag 'from',date_format(time_zone_now - 1.week),  :class => "range_date"%>
+			<%= text_field_tag 'to', date_format(time_zone_now), :class => "range_date"  %>
 		</div>
 		<% end %>
    	</div>

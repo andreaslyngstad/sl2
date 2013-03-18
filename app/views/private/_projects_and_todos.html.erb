@@ -14,7 +14,7 @@
   <div id="not_done_tasks">
   <div class="info" id="todo_<%=todo.id%>"> 
   <input class="done_box" id="<%=todo.id%>" type="checkbox"/> 
-  <%= todo.due.strftime('%d.%m.%y')%> 
+  <%= date_format(todo.due, :short => true)%> 
   <%= todo.name %>
   <% if !todo.user.nil? %>
   <%= todo.user.name %>
@@ -28,7 +28,7 @@
  
   <input class="done_box" id="<%=todo.id%>" type="checkbox" checked="checked"/>
  
-  <%= todo.due.strftime('%d.%m.%y')%> 
+  <%= date_format(todo.due, :short => true)%> 
   <%= todo.name %>
   <% if !todo.user.nil? %>
   <%= todo.user.name %>

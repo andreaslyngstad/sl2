@@ -20,11 +20,9 @@ $(document).ready(function() {
 	  stackedAndPie(data, users_logsColorArray)      
 	}); 
 	$("#from").val($(".one_month_back").data("lastmonth"))
-	$(".range_date_graphs").datepicker({ 
-		dateFormat: "yy-mm-dd", 
+	$(".range_date_graphs").datepicker({
 		onSelect: function() {
 			prepareAndCallJson()
-		
   		}
 		}).attr( 'readOnly' , 'true' )
 	

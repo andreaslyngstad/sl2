@@ -16,7 +16,6 @@ jQuery.fn.todo_pr_date_select = function(){
 	$("#not_done_tasks").empty().append("<%= j( render @not_done_todos)  %>")
 	$("#done_tasks").empty().append("<%= j( render @done_todos)  %>")
 	$(".todo_range_date").datepicker({ 
-		dateFormat: "yy-mm-dd", 
 		onSelect: function() {
 			$('#todo_range_form').submit();
   		}
@@ -25,7 +24,6 @@ jQuery.fn.todo_pr_date_select = function(){
 <% else %>
 $(tab).empty().append("<%= j( render :partial => "todos/listing_todos")  %>")
 	$(".todo_range_date").datepicker({ 
-		dateFormat: "yy-mm-dd", 
 		onSelect: function() {
 			$('#todo_range_form').submit();
   		}
@@ -37,24 +35,19 @@ $(tab).empty().append("<%= j( render :partial => "todos/listing_todos")  %>")
 	
 <% end %>
 $("#dialog_todo").UIdialogs_links();
-	$(".searchableTaskCustomer").chosen();
-	
-	 $("select#todos_pr_date_select").todo_pr_date_select();
+$(".searchableTaskCustomer").chosen();
+$("select#todos_pr_date_select").todo_pr_date_select();
 $(".small_selector").selectmenu({width:200});
-
-
-
 $(".open_todo_update").UIdialogs_edit_links();
 jQuery.fn.submitDoneWithAjax = function(id) {
    $.post("/todos/" + id, $(this).serialize(), null, "script");
 };
-
-
- $(".done_box").live("click", function() { 
+$(".done_box").on("click", function() { 
   	 var id = $(this).attr("id")
   	 $("#edit_done_todo_" + id).submitDoneWithAjax(id)
   });
- $(".logs_pluss").click(function() {
+
+$(".logs_pluss").click(function() {
  	$(".flash_notice").empty() 
  	$(".spinning").show();
  	$(this).hide()

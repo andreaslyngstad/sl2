@@ -26,7 +26,8 @@ RSpec.configure do |config|
  
   config.extend ControllerMacros, :type => :controller
   config.include ControllerMacros, :type => :feature
-  
+  config.include ChosenSelect
+  config.include FactoryGirl::Syntax::Methods
   config.include RequestMacros, :type => :request
   config.mock_with :rspec
  

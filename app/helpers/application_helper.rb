@@ -5,6 +5,13 @@ module ApplicationHelper
     # return @current_firm if defined?(@current_firm)
     # @current_firm = current_user.firm
   end
+  def date_format(date,options = {} )
+    if options[:short]
+      date.strftime("%d.%m.%y")
+    else
+      date.strftime("%d.%m.%Y")
+    end
+  end
   
   def all_users
     @all_users ||= current_firm.users.order("name")

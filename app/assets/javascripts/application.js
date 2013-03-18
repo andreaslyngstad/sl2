@@ -50,6 +50,8 @@ jQuery.ajaxSetup({
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 })
 //display help
+$.datepicker.setDefaults( { dateFormat: "dd.mm.yy" } );
+
 jQuery.fn.display_help = function(){
   	if ($(".page_help").length !== 0){ 	
   		$(this).show()
@@ -155,7 +157,7 @@ jQuery.fn.UIdialogs_links = function(){
   var date = '#' + $(this).attr('id') + '_date'
   var object = $(this).attr("data-object")
   	$(form).UIdialogs();
-      $(date).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+      $(date).datepicker();
        $(form).find(".new_" + object).validateWithErrors();
        $(form).find("select").chosen()
       $(form).dialog( "open" );
@@ -200,7 +202,7 @@ jQuery.fn.UIdialogs_edit_links = function(){
     $.get("/"+ object +"s/" + data_id + "/edit/")
     }
     var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
-    $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+    $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker();
     $(form_id).find(".edit_" + object).validateWithErrors();
    	$(form_id).find("li").css("display", "");
     $(form_id).UIdialogs();
@@ -286,7 +288,7 @@ $(document).ready(function() {
   $(".big_selector").selectmenu({width:369});
    $(".small_selector").selectmenu({width:200});
    $(".mini_selector").selectmenu({width:177});
-  $(".date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+  $(".date").datepicker();
   
   $(".show_avatar_upload").click(function(){
   	$(".avatar_upload").show();
@@ -326,7 +328,7 @@ $(document).ready(function() {
  $("input.membership").membership();
  $(".register_firm").validateNoSubmit();
  $(".first_user").validateNoSubmit();
-$(".range_date").datepicker({ dateFormat: "yy-mm-dd" }).attr( 'readOnly' , 'true' );
+$(".range_date").datepicker().attr( 'readOnly' , 'true' );
    
    // $(".slider_range").slider({
         // range: true,

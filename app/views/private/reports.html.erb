@@ -5,8 +5,8 @@
   		<div class="timesheet">
   		<%= form_tag "/report_for" %>
   		<ul>
-			From <%= text_field_tag 'from', time_zone_now.strftime("%Y-%m-%d"),  :class => "range_date", :style => "font-size:80%;"%>  
-			To <%= text_field_tag 'to', time_zone_now.strftime("%Y-%m-%d"), :class => "range_date", :style => "font-size:80%;"  %>
+			From <%= text_field_tag 'from',{},  :class => "range_date", :style => "font-size:80%;"%>  
+			To <%= text_field_tag 'to',{}, :class => "range_date", :style => "font-size:80%;"  %>
   		<li>User</li>
   		<li><%= select_tag :user_id, options_from_collection_for_select(@users, "id", "name"), :class => "big_select", :include_blank => 'Select User' %></li>
   		

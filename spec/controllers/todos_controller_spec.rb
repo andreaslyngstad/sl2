@@ -9,8 +9,6 @@ describe TodosController do
     @request.host = "#{@user.firm.subdomain}.example.com"   
     @project = FactoryGirl.create(:project, :firm => @user.firm)
   end
-  
-  
   describe "POST create" do
     before(:each) do
       
@@ -30,7 +28,7 @@ describe TodosController do
   end
   describe 'PUT update' do
   before :each do
-    @todo = FactoryGirl.create(:todo, :firm => @user.firm)
+    @todo = FactoryGirl.create(:todo, :firm => @user.firm, :project_id => @project.id)
   end
   
   context "valid attributes" do

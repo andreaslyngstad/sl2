@@ -55,7 +55,7 @@
       <%= form_for(@klass.projects.build) do |p| %>
       <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
       <li><%= p.label :description %><%= p.text_area :description %></li>
-      <li><%= p.label :due %><%= p.text_field :due, :value => Time.now.strftime("%Y-%m-%d"), :id => "dialog_project_date"   %></li>
+      <li><%= p.label :due %><%= p.text_field :due, :id => "dialog_project_date"   %></li>
       <li><%= p.submit 'Save', :class => 'submit' %></li>
       <% end %>
       </div>

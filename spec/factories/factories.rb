@@ -29,6 +29,7 @@ FactoryGirl.define do
     active true
     firm
   end  
+  
 
   factory :log do
     event "customer man"

@@ -1,6 +1,6 @@
 <ul>
 <li><%= l.label :log %><%= l.text_field(:event, :class => "required", :minlength => "2", :AUTOCOMPLETE => "OFF") %></li>
-<li><div class="date_on_log"><%= l.label :date %><%= l.text_field(:log_date, :value => Date.today.strftime("%Y-%m-%d"), :class => "date", :id => "log_date_new") %></div></li>
+<li><div class="date_on_log"><%= l.label :date %><%= l.text_field(:log_date, :value => date_format(Date.today), :class => "date", :id => "log_date_new") %></div></li>
 <li style="margin-bottom: 0px;"><%= l.label :from %><%= l.label :to, :style => "margin-left: 30px;" %></li>
 <li><%= l.text_field(:begin_time, :value => time_zone_now.strftime("%H:%M"), :class => "log_times required clock", :id => "log_times_from_") %>
 	<%= l.text_field(:end_time, :value => time_zone_now.strftime("%H:%M"), :class => "log_times required clock", :id => "log_times_to_") %></li>

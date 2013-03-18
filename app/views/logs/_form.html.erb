@@ -1,7 +1,7 @@
 <%= form_for(@log) do |f| %>
     <ul>
         <li><%= f.label :log %><%= f.text_field(:event, :class => "required", :minlength => "2", :AUTOCOMPLETE => "OFF") %></li>
-        <li><div class="date_on_log"><%= f.label :date, :class => "required" %><%= f.text_field(:log_date, :value => @log.log_date.strftime("%Y-%m-%d"), :class => "log_date", :id => "log_date_edit_#{@log.id}") %></div></li>
+        <li><div class="date_on_log"><%= f.label :date, :class => "required" %><%= f.text_field(:log_date, :value => date_format(@log.log_date), :class => "log_date", :id => "log_date_edit_#{@log.id}") %></div></li>
         <li style="margin-bottom: 0px;"><%= f.label :from %><%= f.label :to, :style => "margin-left: 30px;" %></li>
         <li><%= f.text_field(:begin_time, :value => @log.begin_time.strftime("%H:%M"), :class => "log_times required clock", :id => "log_times_from_#{@log.id}") %>
         <%= f.text_field(:end_time, :value => @log.end_time.strftime("%H:%M"), :class => "log_times required clock", :id => "log_times_to_#{@log.id}") %></li>

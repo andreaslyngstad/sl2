@@ -9,7 +9,7 @@
 		<div id="user_info_header">
 		  <%= current_firm.name %><br /> 
 		 <span style="font-size:12px;"> <%= current_user.name %>
-		  <%= Time.now.strftime('%d.%m.%y')%>|<span class="jclock"></span></span> 
+		  <%= date_format(Date.today, :short => true)%>|<span class="jclock"></span></span> 
 		  
 		</div>
   	</div>

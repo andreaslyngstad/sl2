@@ -34,7 +34,7 @@
 	          	<% end %>
 	    </select>
 	 </li>
-       <li><%= f.label :due %><%= f.text_field :due, :value => todo.due.strftime("%Y-%m-%d"), :id => "date_todo_#{todo.id}" %></li>
+       <li><%= f.label :due %><%= f.text_field :due, :value => date_format(todo.due), :class => "date", :id => "date_todo_#{todo.id}" %></li>
        <li><%= f.submit "Save", :class => 'submit' %></li>
  </ul>
   <% end %>  

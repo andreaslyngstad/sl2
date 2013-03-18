@@ -1,13 +1,15 @@
 <ul class="roster_tasks">	
-  <% @tasks_overdue_and_to_day.each do |task|%>
+  <% @tasks_overdue_and_to_day.each do |todo|%>
 
-  <li id="roster_todo_<%=task.id%>">
-  	<div class="row_task <% if task.overdue %> red <% else %> green<% end %>" >
-	  	<input class="done_box" id="<%=task.id%>" type="checkbox"/>
-	  	<% if task.project %>
-	  	<%= link_to task.name, project_path(task.project).to_s + "/#tabs-1" %>
+  <li id="roster_todo_<%=todo.id%>">
+  	<div class="row_task <% if todo.overdue %>red<% else %>green<% end %>" >
+  		<%= form_for todo, :remote => true, :html => {:id => "roster_edit_done_todo_#{todo.id}"} do |f| %>
+  		<%= f.check_box :completed, :class => "roster_done_box", :id => todo.id %>
+	  	<% end %>
+	  	<% if todo.project %>
+	  	<%= link_to todo.name, project_path(todo.project).to_s + "/#tabs-1" %>
 	  	<% else %>
-	  	<%= link_to task.name, customer_path(task.customer).to_s + "/#tabs-1" %>
+	  	<%= link_to todo.name, customer_path(todo.customer).to_s + "/#tabs-1" %>
 	  	<% end %>
   	</div> 
   </li>

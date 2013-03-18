@@ -2,7 +2,7 @@
 <div class="info" id="project_info_<%= project.id %>">
   <div class="name_todo"><%= link_to truncate_string(project.name), project_path( project) %></div>
   <div class="project_desc"><%= truncate_string(project.description) %></div>
-  <div class="date_all"><%= project.due.strftime('%d/%m/%y') %></div>
+  <div class="date_all"><%= date_format(project.due, :short => true) %></div>
 <div class="delete_edit">
 <% if can? :manage, project %>
   <span class="open_project_update edit" id="project_update" data-id="<%= project.id %>" data-object="project">edit</span>
@@ -18,7 +18,7 @@
       <ul>
       <li><%= f.label :name %><%= f.text_field :name %></li>
       <li><%= f.label :description %><%= f.text_area :description %></li>
-      <li><%= f.label :due %><%= f.text_field :due, :value => project.due.strftime("%Y-%m-%d"), :id => "date_project_#{project.id}"  %></li>
+      <li><%= f.label :due %><%= f.text_field :due, :value => date_format(project.due, :short => true), :id => "date_project_#{project.id}"  %></li>
       <li><%= f.submit 'Save', :class => 'submit' %></li>
       </ul>
       <% end %>

@@ -19,7 +19,7 @@
   <% end %>
   <div class="customer_todo smaller"><% if todo.customer %><%=link_to todo.customer.name, customer_path(todo.customer) %><% end %></div>
   
-  <div class="date_all <% if todo.overdue %>red<% end %><% if todo.due_to_day %>green<% end %>"><%= todo.due.strftime('%d.%m.%y')%> </div>
+  <div class="date_all <% if todo.overdue %>red<% end %><% if todo.due_to_day %>green<% end %>"><%= date_format(todo.due, :short => true)%> </div>
    <div class="delete_edit">
   <span class="open_todo_update edit" id="todo_update" data-id="<%= todo.id %>" data-object="todo">edit</span>
   <%= link_to "delete", todo, :confirm => "Are you sure?", :title => "Delete task", :method => :delete, :class => "delete_todo delete", :remote => true%>
