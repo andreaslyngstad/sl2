@@ -26,7 +26,7 @@ nv.models.stackedAreaChart = function() {
     , x //can be accessed via chart.xScale()
     , y //can be accessed via chart.yScale()
     , yAxisTickFormat = d3.format(',.2f')
-    , noData = 'No Data Available.'
+    , noData = 'Sorry! There is no data available for this time range, yet.'
     , dispatch = d3.dispatch('tooltipShow', 'tooltipHide')
     ;
 
@@ -229,20 +229,6 @@ nv.models.stackedAreaChart = function() {
       // Event Handling/Dispatching (in chart's scope)
       //------------------------------------------------------------
 
-      stacked.dispatch.on('areaClick.toggle', function(e) {
-        if (data.filter(function(d) { return !d.disabled }).length === 1)
-          data = data.map(function(d) {
-            d.disabled = false;
-            return d
-          });
-        else
-          data = data.map(function(d,i) {
-            d.disabled = (i != e.seriesIndex);
-            return d
-          });
-
-        selection.transition().call(chart);
-      });
 
       legend.dispatch.on('legendClick', function(d,i) {
         d.disabled = !d.disabled;

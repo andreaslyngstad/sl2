@@ -4,7 +4,7 @@ class TodosController < ApplicationController
     @todo.firm = current_firm
     respond_to do |format|
       if todo.save
-        flash[:notice] = flash_helper('Todo was successfully created.')
+        flash[:notice] = flash_helper('Task was successfully created.')
         format.js
       else       
         format.js { render "shared/validate_create" }
@@ -14,7 +14,6 @@ class TodosController < ApplicationController
   def edit
   end
   def update
-    Rails.logger.info "TASK " + params[:todo].to_s
     if params[:todo][:completed] == "1"   
       todo.done_by_user = current_user
     else
@@ -22,7 +21,7 @@ class TodosController < ApplicationController
     end
     respond_to do |format|
       if todo.update_attributes(params[:todo])
-        flash[:notice] = flash_helper('Todo was successfully updated.')
+        flash[:notice] = flash_helper('Task was successfully updated.')
         format.js
       else
         format.js { render "shared/validate_update" }
@@ -32,7 +31,7 @@ class TodosController < ApplicationController
   def todos_done
     respond_to do |format|
       if todo.update_attributes(params[:todo])
-        flash[:notice] = flash_helper('Todo was successfully updated.')
+        flash[:notice] = flash_helper('Task was successfully updated.')
         format.js
       else
         format.js
@@ -41,7 +40,7 @@ class TodosController < ApplicationController
   end
   def destroy
     todo.destroy
-    flash[:notice] = flash_helper('Todo was successfully deleted.')
+    flash[:notice] = flash_helper('Task was successfully deleted.')
     respond_to do |format|
       format.js
     end

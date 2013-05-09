@@ -1,13 +1,16 @@
 class CreateFirms < ActiveRecord::Migration
   def self.up
     create_table :firms do |t|
-           t.string :name
-           t.string :subdomain
-           t.string :address
-           t.string :phone
-           t.string :currency
-           t.string :language
-           t.string :time_zone
+           t.text :name
+           t.text :subdomain
+           t.text :address
+           t.text :phone
+           t.text :currency
+           t.text :language
+           t.text :time_zone
+           t.integer :time_format
+           t.integer :date_format
+           t.integer :clock_format
            t.integer :plan_id
            t.integer :customers_count, :default => 0
            t.integer :users_count, :default => 0

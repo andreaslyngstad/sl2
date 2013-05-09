@@ -1,14 +1,14 @@
 <div class="log_menu">
+	
    <div class="add_some">
-       <a id="dialog_log">Add log</a>
+       <a id="dialog_log">New log</a>
    </div>
    <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
       	<%= form_for(Log.new) do |l| %>  
-  
   			<%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
     	<% end %>
    </div>
-    <div class="range" >	   
+   <div class="range" >	   
 	    <%= form_tag('/log_range', :id => "range_form", :remote => true) do -%>
 	    <%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
 	    <%= hidden_field_tag "id", @klass ? @klass.id : "index"%>

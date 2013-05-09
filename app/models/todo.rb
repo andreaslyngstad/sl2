@@ -12,9 +12,13 @@ class Todo < ActiveRecord::Base
   validates_presence_of :name
   validate :made_on_current_firm
   validate :project_must_exist
+  validate :user_must_exist
   validate :correct_time
   def correct_time
     errors.add(:due, "is wrong format") if !DateTester.new.date?(due)
+  end
+  def user_must_exist
+    errors.add(:user_id, "must be selected.") if user_id.nil? && user.nil?
   end
   def project_must_exist
     errors.add(:project_id, "must be selected.") if project_id.nil? && project.nil?

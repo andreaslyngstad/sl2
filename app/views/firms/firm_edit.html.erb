@@ -1,59 +1,62 @@
-<div id="left">
 <%= render "private/home_header" %>
-  	<div class="html_tab_content"> 
-<div class="update update_firm">
-  			<%= form_for ([:firm, @firm]), :url => firm_update_path, :html => {:method => :put, :multipart => true }  do |firm| %>
+<div id="left" class="home_content">
+<div class="timesheet">
+<div class="signup preferences">
+	<h2>Preferences</h2>
+  			<%= form_for current_firm, :url => firm_update_path, :html => {:method => :put, :multipart => true }  do |firm| %>
   			
   			<div class="signup-form-field">
 		    <%= firm.label :Firm_name %>
 		    <%= firm.text_field :name, :class => "required form-input", :AUTOCOMPLETE => "OFF" %>
     		</div>
-  			
-  			<div class="update-form-field">
+  			<div class="signup-form-field">
     		<%= firm.label :phone %>
     		<%= firm.text_field :phone, :class => "form-input", :AUTOCOMPLETE => "OFF" %>
     		</div>
-  			 			
-  			<div class="update-form-field">
+  			<div class="signup-form-field">
 		    <%= firm.label :Address %>
 		    <%= firm.text_field :address, :class => "form-input", :AUTOCOMPLETE => "OFF" %>
 		    </div>
-  		
-  			<div class="update-form-field">
+  			<div class="signup-form-field">
 		    <%= firm.label :language %>
-		    <%= firm.language_select :language,  nil, {},  :class => "form-input" %>
+		    <%= firm.select :language,   ["English", "Deutsch"], {},  :class => "account_update_select" %>
 		    </div>
-  			
-  			<div class="update-form-field">
+  			<div class="signup-form-field">
 		    <%= firm.label :currency %>
-		    <%= firm.currency_select :currency, ["US Dollar", "British Pound", "Euro", "Norwegian Kroner", "Swedish Krona"],  {},  :class => "form-input"%>
+		    <%= firm.select :currency, ["US Dollar", "British Pound", "Euro", "Norwegian Kroner", "Swedish Krona"],  {},  :class => "account_update_select"%>
 		    </div>
   			
-  			<div class="update-form-field">
+  			<div class="signup-form-field">
 		    <%= firm.label :time_zone %>
-		    <%= firm.time_zone_select :time_zone,  nil, :class => "form-input", :default => "UTC"%>
+		    <%= firm.time_zone_select :time_zone,  nil, {}, {:class => "account_update_select"}%>
 		    </div>
-  			
-  			<div class="update-form-field">
+  			<div class="signup-form-field">
+  				<%= firm.label :time_format %>
+  				<%= firm.select :time_format, options_for_select([['Hour:minute', 1], ['Hour,desimal', 2]], current_firm.time_format), {}, {:class => "account_update_select"}  %></div>
+			<div class="signup-form-field">
+			    <%= firm.label :date_format %>
+			    <%= firm.select :date_format, options_for_select([['Day.Month.Year', 1], ['Month/Day/Year', 2]], current_firm.date_format), {}, {:class => "account_update_select"} %>
+		    </div>	
+			<div class="signup-form-field">
+			    <%= firm.label :clock_format %>
+		<%= firm.select :clock_format, options_for_select([['24 hours', 1], ['12 hours', 2]], current_firm.clock_format),{},:class => "account_update_select" %>	
+		    </div>	
+  			<div class="signup-form-field">
 		    <%= firm.label :logo %>
 		     <%= firm.file_field :logo %>		    
 		   </div>
-		  	<div class="update-form-field">
+		  	<div class="signup-form-field-color">
 		    <%= firm.label :background %>
 		    <%= firm.text_field :background, :class => "form-input background_style", :AUTOCOMPLETE => "OFF"%>
 		    
 		   	<div class="background_style_color"></div>
 		    </div>
-		  	<div class="update-form-field">
+		  	<div class="signup-form-field">
 		    <%= firm.label :Text %>
 		    <%= firm.text_field :color, :class => "form-input text_style", :AUTOCOMPLETE => "OFF"%>
 		    <div class="text_style_color"></div>
 		    </div>
-  			
-
   <%= firm.submit "Save", :class => "submit" %>
-  
-  
 <% end %>
 </div>
 </div>

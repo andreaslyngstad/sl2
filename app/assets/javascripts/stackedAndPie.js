@@ -10,7 +10,9 @@ function stackedAndPie(data, ColorArray) {
 		
 		
 		});
+	
 	function disableSetter(area, id, graph, label){
+	
 	  var dot = $("#" + id +".node .legend_dot")
 	  d3.select("#nv-series-" + id).attr("data", function(d){
 	    if(!(d3.select(area).selectAll(".nv-series").data().filter(function(e) { return !e.disabled }).length === 1))
@@ -26,7 +28,7 @@ function stackedAndPie(data, ColorArray) {
 	    })
 	};
 	
-	function pieDisableSetter(area, stacked_svg, pie_svg, gr){
+	function pieDisableSetter(area, stacked_svg, pie_svg){
 		
 			var click = 'elementClick'
 			area.pie.dispatch.on(click, function(e) {
@@ -121,9 +123,12 @@ function stackedAndPie(data, ColorArray) {
 	      }); 
 	     
 	   stacked_chart = chart
-	    stackDisableSetter(stacked_chart, "#stacked svg","#pie svg")        
+	   
+	   stackDisableSetter(stacked_chart, "#stacked svg","#pie svg")        
 	   return chart; 
 	});
+  
+	
   
 	  nv.addGraph(function() {
 	  var chart = nv.models.pieChart()

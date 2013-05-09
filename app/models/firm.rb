@@ -9,7 +9,10 @@ class Firm < ActiveRecord::Base
 	   	  :background,
 	   	  :color,
 	   	  :subscription_id,
-	   	  :plan
+	   	  :plan,
+	   	  :time_format,
+	   	  :date_format,
+	   	  :clock_format
 	   
   before_create :add_free_subscription
   has_many :customers, :dependent => :destroy

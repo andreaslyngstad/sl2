@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ProjectsController, :type => :controller do 
 
-  login_user
+  login_user 
   
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com"
@@ -10,7 +10,7 @@ describe ProjectsController, :type => :controller do
   
   describe "activate_projects and deactivate_projects" do
     it "deactivate_projects" do 
-      @project = FactoryGirl.create(:project)
+      @project = FactoryGirl.create(:project) 
       expect{
           post :activate_projects, :id => @project.id
         }.to change(Project.where(:active => true),:count).by(-1)
@@ -80,7 +80,7 @@ describe ProjectsController, :type => :controller do
   context "valid attributes" do
     it "located the requested project" do
       put :update, id: @project, project: FactoryGirl.attributes_for(:project)
-      assigns(:project).should eq(@project)      
+      assigns(:klass).should eq(@project)      
     end
   
     it "changes @project's attributes" do
@@ -90,9 +90,9 @@ describe ProjectsController, :type => :controller do
     end
   end
   context "invalid attributes" do
-    it "locates the requested @project" do
+    it "locates the requested @project" do 
       put :update, id: @project, project: FactoryGirl.attributes_for(:project, :name => nil)
-      assigns(:project).should eq(@project)      
+      assigns(:klass).should eq(@project)      
     end
     
     it "does not change @project's attributes" do

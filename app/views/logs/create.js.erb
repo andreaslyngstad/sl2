@@ -2,6 +2,9 @@ $(".flash_notice").empty()
 $(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>");
 $("#head_log").after("<%= escape_javascript(render(:partial => @klass)) %>");
 $(".open_log_update").UIdialogs_edit_logs_links();
+$(".total_log_time").set_hours()
+$('.date_format_setter').set_date_format()
+$('.clock_format_setter').set_clock_format()
 $("#new_log")[0].reset();
 $(".spinning").hide();
 

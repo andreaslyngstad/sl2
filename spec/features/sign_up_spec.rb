@@ -13,10 +13,9 @@ feature 'Sign up' do
      page.should have_content(success_message)
      fill_in 'user_name', :with => 'Test'
      fill_in 'user_email', :with => 'test@example.com'
-     fill_in 'user_password', :with => 'password' 
-     
+     fill_in 'user_password', :with => 'password'  
      click_button "Save"
-     # page.current_url.should == "http://test.example.com/" 
+     page.current_url.should == "http://test2.example.com/" 
      page.should have_content("Signed in successfully")
    end
    

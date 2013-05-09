@@ -1,20 +1,21 @@
-<% if can? :read, log.project %>
+<% if can? :read, log.project or can? :manage, log%>
 <div id="log_<%=log.id%>"> 
  <div id="log_info_<%=log.id%>" class="info" data-log="<%= log.id %>">
  	<div class="gravatar_on_log">
- 
+	
  	<%= link_to image(log.user, "image32"),user_path(log.user), :title => "#{log.user.name}" %>
  	</div>
   <div class="event_on_log">
     <%= log.event %>
      </div>
-   <div class="date_and_times_on_log">
-   	<% if !log.end_time.nil? %>
-    <%= date_format(log.log_date, :short => true) %> 
-    <%= ftz(log.begin_time).strftime('%H:%M')%>-<%= ftz(log.end_time).strftime('%H:%M')%>
-    <div class="total_log_time"><%= log.total_time %></div>  
-    
-      </div>
+     
+   
+     <% if !log.end_time.nil? %>
+    <div class="date_and_times_on_log" >
+	    <div class="date_format_setter" data-date="<%= log.log_date %>"><%= log.log_date %></div>
+	    <div class="clock_format_setter" data-time="<%= ftz(log.begin_time)%>"></div>-<div class="clock_format_setter" data-time="<%= ftz(log.end_time)%>"></div>
+	    <div class="total_log_time" data-hours="<%= log.hours %>"></div>  
+    </div>
       <div class="pro_tod_cus_emp_on_log">
       	<div class="pro_tod_on_log">
       		<div class="pro_cus_on_log"><% if log.project %><%= link_to log.project.name, project_path(log.project) %><% end %>&nbsp;</div>
@@ -34,8 +35,8 @@
   </div>
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="Update log" style="display:none;" data-id="<%= log.id %>"></div>
     <% else %>
-    Running<%= image_tag("running.gif") %>
-    
+    <div class="date_and_times_on_log" >
+    	Running<%= image_tag("running.gif") %>
     </div>
     <div class="pro_tod_cus_emp_on_log">
       	<div class="pro_tod_on_log">

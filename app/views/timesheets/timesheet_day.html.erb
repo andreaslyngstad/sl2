@@ -1,0 +1,12 @@
+<%= render "private/home_header" %>
+<div id="left" class="home_content">
+<div class="timesheet">
+  		<%= render "timesheet_header" %>
+	<div id="timesheet_log_listing_wrapper">
+		<div class="listing_logs"> 
+		 	<%= render "logs/list_header" %>
+		    <%= render @logs %>
+	    </div>
+	</div>
+</div>
+</div>

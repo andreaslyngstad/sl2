@@ -14,10 +14,27 @@ var roster_todo = $("#roster_todo_<%= j(todo.id.to_s)%>")
 	$.getScript("/roster_task")	
 <%end%>
 
-todojs.replaceWith("<%= escape_javascript(render todo) %>")
+todojs.replaceWith("<%= j(render todo) %>")
 $("#<%= j(todo.id.to_s)%>").click(function() { 
   	 var id = $(this).attr("id")
   	 $("#edit_done_todo_" + id).submitDoneWithAjax(id)
+  });
+$("#todo_<%= j(todo.id.to_s)%>").find(".logs_pluss").click(function() {
+ 	$(".flash_notice").empty() 
+ 	$(".spinning").show();
+ 	$(this).hide()
+ 	$(this).next(".logs_minus").show()
+  	var id = $(this).attr("id")	
+  	$.get("/get_logs_todo/" + id)
+  });
+   
+$("#todo_<%= j(todo.id.to_s)%>").find(".logs_minus").click(function() {
+ 	$(".flash_notice").empty() 
+ 	var id = $(this).attr("id")
+ 	$("#todo_logs_"+ id ).slideUp()
+ 	$("#todo_logs_"+ id ).children().empty().remove()
+ 	$(this).hide()
+ 	$(this).prev(".logs_pluss").show()
   });
 $(".add_new_todo_button").UIdialogs_links();
 $(".open_todo_update").UIdialogs_edit_links();
@@ -25,7 +42,7 @@ $("#dialog_todo_form").UIdialogs();
 $("#todo_<%= j(todo.id.to_s)%>").find(".open_todo_update").UIdialogs_edit_links();
 $(".tasks_percent").countDone()
 $(".searchableTaskCustomer").chosen();
-
+$('.date_format_setter').set_date_format()
 if($('.far_right_container[style*="none"]').data() === null){
 
 }

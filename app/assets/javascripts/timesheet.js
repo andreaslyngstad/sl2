@@ -2,31 +2,32 @@ jQuery.fn.timeheet_user_select = function(){
 		this.change(function(){
   $('.spinning').show();
   var id = this.value
-  $.get("/timesheets/" + id)
+  $.get("/timesheet_week/" + id)
   
   });
 };  
 
 $(document).ready(function() {
-
+	var firm_format = $(".current_firm_data").data("timeformat") 
+	$(".calendar_span").set_hours()
 $("tr.project_hours").each(function(index, element) {
     var row = $(this).find('td.total');
     var total = 0;
     $(this).find("td.number").each(function (index, element) {
-    	var hours = $(element).attr("data-time")
+    	var hours = $(element).attr("data-hours")
         total += parseFloat(hours);
-        $(element).html(secondsToString(hours))
+        $(element).html(secondsToString(hours, firm_format))
     });
-    row.attr("data-time", total)
-    row.html(secondsToString(total));
+    row.attr("data-hours", total)
+    row.html(secondsToString(total, firm_format));
 });
  var total = 0;
 $("td.timesheet_day_total").each(function(index, element) {
-	 total += parseFloat($(element).attr("data-time"));
-	$(element).html(secondsToString($(element).attr("data-time")))
+	 total += parseFloat($(element).attr("data-hours"));
+	$(element).html(secondsToString($(element).attr("data-hours"), firm_format))
 })
-$("td.timesheet_week_total").html(secondsToString(total))
-$("td.timesheet_week_total").attr("data-time", total)
+$("td.timesheet_week_total").html(secondsToString(total, firm_format))
+$("td.timesheet_week_total").attr("data-hours", total)
 $("#timeheet_project_select").chosen().change(function(){
 	    var this_value = $(this).val()
 	    $(".form-input").each(function(i,v){
@@ -43,7 +44,7 @@ $("#timeheet_project_select").chosen().change(function(){
 	}
 		
 })
-
+$("select#timeheet_user_select").chosen()
 $("select#timeheet_user_select").timeheet_user_select();
 $("table.timesheet_table tbody tr td.number input").focusout(function(){
 	var logid		= $(this).attr("data-logid")

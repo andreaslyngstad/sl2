@@ -12,19 +12,20 @@
 //= require jquery.validate
 //= require jquery.ba-bbq.min
 //= require jquery.quicksearch
+//= require timeFormatter
 //= require navigation
 //= require scrolling
 //= require far_right
 //= require logs
 //= require tasks
+//= require reports
 //= require log_tracking
-
 //= require employees
 //= require subscriptions
-//= require timesheet
 
+//= require timesheet
+//= require strftime-min.js
 //= require memberships
-//= require jquery.jclock
 //= require jquery.xcolor.min
 //= require nvd3/lib/d3.v2 
 
@@ -49,9 +50,46 @@
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 })
-//display help
-$.datepicker.setDefaults( { dateFormat: "dd.mm.yy" } );
 
+
+jQuery.fn.set_date_format = function(){
+  var dateformat = $('.current_firm_data').data("dateformat")
+  var date = new Date($(this).data("date"))
+  
+  if (dateformat == 1){
+  	$.each($('.date_format_setter'),function(k,v){
+  		$(v).html(strftime('%d.%m.%y', new Date($(v).data("date"))))
+  	});
+    
+  }else if (dateformat == 2)
+  {
+  	$.each($('.date_format_setter'),function(k,v){
+  		$(v).html(strftime('%m/%d/%y', new Date($(v).data("date"))))
+  	});
+    
+  }
+  
+}
+jQuery.fn.set_clock_format = function(){
+  var clockformat = $('.current_firm_data').data("clockformat")
+
+  if (clockformat == 1){
+  	$.each($('.clock_format_setter'),function(k,v){
+  		$(v).html(strftime('%H:%M', new Date($(v).data("time"))))
+  	});
+  }else if (clockformat == 2)
+  {
+  	var time = new Date(this.data("time"))
+  	$.each($('.clock_format_setter'),function(k,v){
+  		$(v).html(strftime('%I:%M%P', new Date($(v).data("time"))))
+  	});
+   
+  }
+  
+}
+
+
+//display help
 jQuery.fn.display_help = function(){
   	if ($(".page_help").length !== 0){ 	
   		$(this).show()
@@ -220,24 +258,7 @@ jQuery.fn.current_link = function(){
 
 };
 
-function secondsToString(seconds){ 
-if (seconds < 60){
-	return "0:00"	
-}else{
-	var numhours = Math.floor(seconds / 3600);
-	var numminutes = Math.floor((seconds  % 3600) / 60);
-	
-	if (numminutes < 10){
-		var minutes = "0" + numminutes
-	}else if(numminutes == 0)
-	{
-		var minutes = "00" 
-	}else{
-		var minutes = numminutes
-	}
-	return numhours + ":" + minutes;
-	}
-}
+
 
 //ok
   
@@ -245,9 +266,18 @@ if (seconds < 60){
 
 
   
-$(document).ready(function() {	  
+$(document).ready(function() {	 
+	if ($('.current_firm_data').data("dateformat") == 1 ){
+			$.datepicker.setDefaults( { dateFormat: "dd.mm.yy" } );
+	}else if($('.current_firm_data').data("dateformat") == 2 ){
+		$.datepicker.setDefaults( { dateFormat: "mm/dd/yy" } ); 
+	}
 	
-   
+	
+	
+	
+  	$('.date_format_setter').set_date_format()
+  	$('.clock_format_setter').set_clock_format()
 	$('.left_slider').click(function(){
 	  $(".milestone_slider").animate({"left": "+=122px"}, "slow");
 	});
@@ -259,8 +289,6 @@ $(document).ready(function() {
 	if (p != null){
 	$('.milestone_slider').animate({"left": "-=" + (parseInt(p.left) - 122)}, "slow");
 	}
-   $('.jclock').jclock();
-   
    $("#html_tabs a").current_link();
    $(".display_help").display_help();
   
@@ -269,6 +297,7 @@ $(document).ready(function() {
   $("#dialog_project").UIdialogs_links();
   $("#dialog_customer").UIdialogs_links();
   $("#dialog_user").UIdialogs_links();
+  $("#dialog_employees").UIdialogs_links();
   $("#activate_project").button().click(function(){
   	var id = $(this).attr("data-id")
   	
@@ -281,13 +310,11 @@ $(document).ready(function() {
   $(".open_customer_update").UIdialogs_edit_links();
   
   $(".open_todo_update").UIdialogs_edit_links();
-	
-	
- 
- 
+
+  $(".account_update_select").selectmenu({width:364});
   $(".big_selector").selectmenu({width:369});
-   $(".small_selector").selectmenu({width:200});
-   $(".mini_selector").selectmenu({width:177});
+  $(".small_selector").selectmenu({width:200});
+  $(".mini_selector").selectmenu({width:177});
   $(".date").datepicker();
   
   $(".show_avatar_upload").click(function(){

@@ -20,7 +20,7 @@
     </div>
     <div class="signup-form-field">
     <%= firm.label :language %>
-    <%= firm.select :language,  ["English"], {},  :class => "form-input" %>
+    <%= firm.select :language,  ["English", "Deutsch"], {},  :class => "form-input" %>
     </div>
 	<div class="signup-form-field">
     <%= firm.label :currency %>
@@ -30,12 +30,20 @@
     <%= firm.label :time_zone %>
     <%= firm.time_zone_select :time_zone,  nil, :class => "form-input", :default => "UTC"%>
     </div>
-	
-    
+	<div class="signup-form-field">
+	    <%= firm.label :time_format %>
+	 	<%= firm.select :time_format, options_for_select([['Hour:minute', 1], ['Hour,desimal', 2]]), {},:class => "form-input" %>		
+    </div>
+	<div class="signup-form-field">
+	    <%= firm.label :date_format %>
+		<%= firm.select :date_format, options_for_select([['Day.Month.Year', 1], ['Month/Day/Year', 2]]),{},:class => "form-input" %>	    
+    </div>
+	<div class="signup-form-field">
+	    <%= firm.label :clock_format %>
+		<%= firm.select :clock_format, options_for_select([['24 hours', 1], ['12 hours', 2]]),{},:class => "form-input" %>	    
+    </div>
 	</div>
-
   <%= firm.submit "next", :class => "submit" %>
-  
 <% end %>
 <div class="open_not_required_container">
     <a href="" class="open_not_required" title="Fill in not required field"></a>

@@ -7,7 +7,7 @@
 		<%= calendar @date do |date| %>
 			<%= date.day %>
 			 <ul>	
-	          <li><%= link_to logs_day_of_mounth_hours(@logs_by_date, date), timesheet_logs_day_path(@user, (date)) %></li>
+	          <li><%= link_to logs_day_of_mounth_hours(@logs_by_date, date), timesheet_day_path(@user, (date)) %></li>
 			 </ul>
 	  	<% end %>
 	</div>

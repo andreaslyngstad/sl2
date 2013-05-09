@@ -11,6 +11,7 @@
 <%= yield :head %>
 </head>
 <body> 
+	<span class="current_firm_data" data-clockFormat="<%= current_firm.clock_format%>" data-timeFormat="<%= current_firm.time_format %>" data-dateFormat="<%= current_firm.date_format %>"></span>
  <div id="main">
 <%= render "layouts/header" %>
 <div id="wrapper">
@@ -18,7 +19,7 @@
 	<%= yield(:help)%>
 <div id="navigation" class="hor_scroll ver_down_on_help">
 	<ul>
-      <li class="navigation" id="home_navi" pos="0"><%= link_to "Home", timesheets_path(current_user) %></li>
+      <li class="navigation" id="home_navi" pos="0"><%= link_to "Home", timesheet_week_path(current_user) %></li>
   	  <li class="navigation" id="logs_navi" pos="75"><a href="/logs">Logs</a></li>
   	  <li class="navigation" id="projects_navi" pos="150"><a href="/projects">Projects</a></li>
   	  <% if can? :read, Customer %>

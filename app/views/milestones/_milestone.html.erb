@@ -1,6 +1,6 @@
 <div class="info" id="milestone_<%=milestone.id%>">    
 	<div class="name_milestone"><%= milestone.goal %></div>
-	<div class="date_all"><%= date_format(milestone.due, :short => true)%></div>
+	<div class="date_all date_format_setter" data-date="<%= milestone.due %>"></div>
 	<% if can? :manage, milestone.project %>
 	<div class="delete_edit">
 		<span class="open_milestone_update edit" id="milestone_update" data-id="<%= milestone.id %>" data-object="milestone">edit</span>

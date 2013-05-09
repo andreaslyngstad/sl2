@@ -63,7 +63,7 @@ cursor:pointer;
 .signup_button_link:hover{
 background: #0230ee;
 }
-#footer{
+#footer_reg{
 position: absolute;
 top: 600px;
 left: 140px;
@@ -109,8 +109,16 @@ float:left;
 width: 600px;
 background: #fff;
 margin-top:20px;
+
 padding: 20px 0 0 0 ;
 border:1px solid #999;
+}
+.register_firm, .first_user,.new_user{
+	margin-left: 20px;
+}
+.preferences{
+	margin-left: 20px;
+	width: 515px;
 }
 .hide{
 	display:none;
@@ -133,6 +141,7 @@ border:1px solid #999;
 .signup .signup-form-field-subdomain input{
 width:264px;
 }
+
 .signup .signup-form-field #check{
 width:15px;
 padding: 0;
@@ -144,6 +153,12 @@ display: block;
 position: relative;
 height: 60px;
 width: 550px;
+
+}
+.signup .background_style,.signup .text_style,  {
+
+position: relative;
+width: 330px;
 
 }
 .signup .signup-form-field-subdomain #loggyit_sub{
@@ -182,13 +197,12 @@ background:#fff;
 }
 .signup label, .update label{
 display: block;
-margin-left: 20px;
 float: left;
 width: 150px;
 line-height: 30px;
 }
 .signup .submit, .update .submit{
-width:auto;margin-left:170px;cursor:pointer;padding:2px 15px 2px 15px;border:1px solid #999; font-size:20px;background:#fff;
+width:auto;margin-left:150px;cursor:pointer;padding:2px 15px 2px 15px;border:1px solid #999; font-size:20px;background:#fff;
 background:#3ea60b;
 border: 1px solid #2E8D11;
 color: white;

@@ -2,6 +2,7 @@
 @import "charts";
 @import "calendar";
 @import "timesheet";
+@import "reports";
 @import "nv_d3";
 @import "jquery-ui-1.8.7custom";
 @import "tabs";
@@ -11,6 +12,7 @@
 @import "sl_graphs";
 @import "plans";
 @import "subscriptions";
+@import "registration";
 
 
 html, body{
@@ -19,6 +21,7 @@ html, body{
   font-family: Verdana,Helvetica,sans-serif; 
   letter-spacing:1px; 
   background-color: #ffffff;
+  height:85%;
   }
 textarea{
 	height: 200px;
@@ -308,7 +311,7 @@ left:20px;
 .dialog_form input       {width:369px;padding: 5px;}
 .dialog_form select      {width:369px;}
 .dialog_form li .submit  {cursor:pointer;padding-top:2px;float:right;width:100px;}
-.dialog_form .log_times  {width:60px;}
+.dialog_form .log_times  {width:68px;}
 .dialog_form input#done {width:15px; float:right;}
 .dialog_form input#user_roles_admin {width:15px; float:left;}
 .dialog_form input#user_roles_member {width:15px; float:left;}
@@ -738,7 +741,6 @@ top:40px;
  
 }
 
-
 .start_tracking_form, .stop_tracking_form{
 margin:auto;
 
@@ -987,7 +989,7 @@ position:relative;
 height:32px;
 width:970px;
 padding:10px 5px 10px 5px;
-background:#fbfbfb;
+background:#FFFFFF;
 }
 .range{
 position:absolute;
@@ -1097,7 +1099,14 @@ display: inline-block;
 /*log begin*/
 
 
-
+.date_and_times_on_log .date_format_setter{
+	float: left;
+	margin-right: 5px;
+}
+.date_and_times_on_log .clock_format_setter{
+	display: inline;
+	
+}
 
 .gravatar_on_log{
 margin-right: 10px;
@@ -1318,7 +1327,7 @@ vertical-align: bottom;
 
 .signup label, .update label{
 display: block;
-margin-left: 20px;
+
 float: left;
 width: 150px;
 line-height: 30px;
@@ -1355,21 +1364,29 @@ padding: 10px 0 10px 0;
 
 
 .firm_account{
-background-color: #eee;
+margin-top: 100px;
+margin-left: 20px;
 padding: 20px;
 font-size: 15px;
+width: 400px;
+float: left;
+border: 1px solid #aaa;
 }
 .firm_preferences{
+	float: left;
+	margin-top: 100px;
+margin-left: 20px;
 padding: 20px;
-min-height:600px;
+
 font-size: 15px;
+width: 400px;
+border: 1px solid #aaa;
 }
 .firm_preferences ul, .firm_account ul{
 padding: 0;
 }
 .firm_preferences ul li, .firm_account ul li{
 padding: 10px 0 10px 0;
-border-bottom: 1px solid #999;
 
 }
 .preference_label  {
@@ -1383,6 +1400,7 @@ background:#323CED;
 padding:10px; font-size:15px;
 letter-spacing: 1px;
 color: white;
+float: right;
 }
 .timesheet .submit:hover, .firm_account .submit:hover, .firm_preferences .submit:hover{
 background:#0B16DB;

@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
 
   create_table "admin_users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
+    t.text     "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
   create_table "customers", :force => true do |t|
-    t.string   "name"
-    t.string   "phone"
-    t.string   "email"
+    t.text     "name"
+    t.text     "phone"
+    t.text     "email"
     t.text     "address"
     t.integer  "firm_id",    :null => false
     t.datetime "created_at", :null => false
@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   add_index "customers", ["firm_id"], :name => "index_customers_on_firm_id"
 
   create_table "employees", :force => true do |t|
-    t.string   "name"
-    t.string   "phone"
-    t.string   "email"
+    t.text     "name"
+    t.text     "phone"
+    t.text     "email"
     t.integer  "customer_id", :null => false
     t.integer  "firm_id",     :null => false
     t.datetime "created_at",  :null => false
@@ -72,13 +72,16 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   add_index "employees", ["firm_id"], :name => "index_employees_on_firm_id"
 
   create_table "firms", :force => true do |t|
-    t.string   "name"
-    t.string   "subdomain"
-    t.string   "address"
-    t.string   "phone"
-    t.string   "currency"
-    t.string   "language"
-    t.string   "time_zone"
+    t.text     "name"
+    t.text     "subdomain"
+    t.text     "address"
+    t.text     "phone"
+    t.text     "currency"
+    t.text     "language"
+    t.text     "time_zone"
+    t.integer  "time_format"
+    t.integer  "date_format"
+    t.integer  "clock_format"
     t.integer  "plan_id"
     t.integer  "customers_count",   :default => 0
     t.integer  "users_count",       :default => 0
@@ -144,8 +147,8 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   add_index "milestones", ["project_id"], :name => "index_milestones_on_project_id"
 
   create_table "plans", :force => true do |t|
-    t.string   "paymill_id"
-    t.string   "name"
+    t.text     "paymill_id"
+    t.text     "name"
     t.float    "price"
     t.integer  "customers"
     t.integer  "logs"
@@ -158,7 +161,7 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   end
 
   create_table "projects", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.text     "description"
     t.date     "due"
     t.boolean  "active"
@@ -190,16 +193,16 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "plan_id"
-    t.string   "email"
-    t.string   "name"
+    t.text     "email"
+    t.text     "name"
     t.integer  "firm_id"
-    t.string   "paymill_id"
-    t.string   "card_zip"
-    t.string   "last_four"
-    t.string   "card_type"
+    t.text     "paymill_id"
+    t.text     "card_zip"
+    t.text     "last_four"
+    t.text     "card_type"
     t.date     "next_bill_on"
-    t.string   "card_expiration"
-    t.string   "card_holder"
+    t.text     "card_expiration"
+    t.text     "card_holder"
     t.boolean  "active"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
@@ -228,21 +231,21 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   add_index "todos", ["user_id"], :name => "index_todos_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "role"
-    t.string   "phone"
-    t.string   "name"
+    t.text     "role"
+    t.text     "phone"
+    t.text     "name"
     t.integer  "firm_id",                                              :null => false
     t.float    "hourly_rate"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
     t.string   "loginable_type",         :limit => 40
     t.integer  "loginable_id"
-    t.string   "loginable_token"
+    t.text     "loginable_token"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "email",                                :default => "", :null => false
+    t.text     "email",                                :default => "", :null => false
     t.string   "encrypted_password",                   :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

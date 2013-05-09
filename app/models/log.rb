@@ -84,10 +84,15 @@ class Log < ActiveRecord::Base
   def begin_string=(begin_str)
     self.begin_time = Time.parse(begin_str)
   end
-  def date
-  self.log_date.strftime('%d.%m.%y')
-	end
   
+ #  def date
+ #    self.log_date.strftime('%d.%m.%y')
+	# end
+
+  # def log_date_format
+  #   log_date.strftime("%Y%m%d")
+  # end
+
   def end_time_before_begin_time
     errors.add(:end_time, "You end before you begin.") if
     if tracking != true
@@ -99,9 +104,7 @@ class Log < ActiveRecord::Base
   	validates_presence_of :event
   	end
   end
-  def log_date_format
-    log_date.strftime("%Y%m%d")
-  end
+  
   def self.logs_for_timesheet(user)
     user.logs.where(:log_date => (Date.today.beginning_of_week..Date.today.end_of_week)).group("project_id").group("date(log_date)").sum(:hours)
   end
@@ -125,4 +128,28 @@ class Log < ActiveRecord::Base
   def placed_between?(date_range)
     date_range.include?(log_date)
   end
+  def self.project_try(project)
+    if project
+      where(project_id: project)
+    else
+      where("end_time IS NOT NULL")
+    end
+  end
+  def self.user_try(user)
+    if user
+      where(user_id: user)
+    else
+      where("end_time IS NOT NULL")
+    end
+  end
+  def self.try_find_logs(options)
+     a = options.map do |k,v|
+       unless v.blank?
+         where(k => v)
+       end
+     end
+     a.compact.inject(:&)
+  end
+  
+  
 end

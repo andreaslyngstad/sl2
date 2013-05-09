@@ -1,5 +1,3 @@
-
-
 function prepareAndCallJson(){
 		var url = $("#stats").val()
 		var from = $("#from").val() 
@@ -8,7 +6,7 @@ function prepareAndCallJson(){
 		$("#stacked svg").empty();
 		$("#pie svg").empty()
 		$("#legend").empty()
-    	$.getJSON('/' + url + '/' + from  + '/' + to + '.json', function(data) {
+    	$.getJSON('/' + url + '.json', {from: from, to: to}, function(data) {
   				stackedAndPie(data, ColorArray)      
 		})
 } 
@@ -16,10 +14,11 @@ function prepareAndCallJson(){
 $(document).ready(function() {	
 	var from = $(".one_month_back").data("lastmonth") 
 	var to = $(".one_month_back").data("today")
-	$.getJSON('/users_logs/' + from  + '/' + to + '.json', function(data) {
+	$.getJSON('/users_logs.json', {from: from, to: to}, function(data) {
 	  stackedAndPie(data, users_logsColorArray)      
 	}); 
-	$("#from").val($(".one_month_back").data("lastmonth"))
+	$("#from").val(from)
+	$("#to").val(to)
 	$(".range_date_graphs").datepicker({
 		onSelect: function() {
 			prepareAndCallJson()

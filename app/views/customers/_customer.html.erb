@@ -1,7 +1,7 @@
 <li class="tab_list" id="customer_<%= customer.id.to_s %>"> 
 
 <div class="tab_list_text">
-  <%= link_to customer.name, customer_path(customer) %>
+  <%= link_to truncate(customer.name, :length => 80), customer_path(customer) %>
   </div>
 
     <%= link_to(customer_path(customer), :confirm => "Are you sure? This will destroy all employees at this customer", :title => "Delete customer", :method => :delete, :remote => true) do%>

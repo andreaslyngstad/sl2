@@ -15,31 +15,34 @@ class PrivateController < ApplicationController
 
 
   def reports
-      authorize! :manage, Firm
+     authorize! :manage, Firm
   	 @users = current_firm.users
   	 @projects = current_firm.projects
   	 @customers = current_firm.customers
   end
   
-  def report_for
-  	if !params[:user_id].blank?
-  	@user = User.find(params[:user_id])
-  	
-  	@logs = @user.logs.where(:log_date => (params[:from].to_date + 1.second)..(params[:to].to_date.end_of_day))
-  	@projects = @logs.project
-  	@logs_hours_by_project = @logs.group("project_id", "date(log_date)")
-  	@logs_hours_by_date = @logs.group("date(log_date)").sum(:hours)
-  	
-  	end
-  	if !params[:project_id].blank?
-  	@project = Project.find(params[:project_id])
-  	end
-  	if !params[:customer_id].blank?
-  	@customer = Customer.find(params[:customer_id])
-  	end
+  def squadlink_report
+    range = (params[:from].to_date..params[:to].to_date)
+  	@logs = current_firm.logs
+  	                    .where(log_date: range)
+  	                    .order(:log_date)
+  	                    .includes(:user, :project, :customer)
+  	                    .try_find_logs(user_id: params[:user_id],
+                                       project_id: params[:project_id], 
+                                       customer_id: params[:customer_id])
+                        
+    respond_to do |format|
+      format.html
+      format.csv do
+        response.headers['Content-Disposition'] = 'attachment; filename="squadlink_report.csv"'
+        render "squadlink_report.csv.erb"
+      end
+      format.xls do
+        response.headers['Content-Disposition'] = 'attachment; filename="squadlink_report.xls"'
+        render "squadlink_report.xls.erb"
+      end
+    end
   end
-  
-
   def membership
     
   	@project = Project.find(params[:project_id])

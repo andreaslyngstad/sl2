@@ -1,6 +1,5 @@
 function Change_select(log_id, object_id, url){
 		$('.spinning').show();
-		console.log("log => " + log_id + " object_id => " + object_id);
 	    if (log_id === "") {
 	    	if(object_id === ""){
 		      $.get("/" + url + "/0/0"  )
@@ -110,31 +109,76 @@ jQuery.fn.UIdialogs_edit_logs_links = function(){
     });
 
 };
-
+function getTime(value, format){
+			if (format == 'undefined')
+				format = 1;
+            var time = null,
+                minutes,
+                hours;				
+			hours = Math.floor(value / 60);
+			minutes = value - (hours * 60);
+			if (format == 2)
+			{
+				if (hours === 0) {
+					hours = 12;
+				}			
+				if (hours > 12) {
+					hours = hours - 12;
+					time = "pm";
+				}
+				else {
+					time = "am";   
+				}
+				if (minutes < 10) {
+					minutes = "0" + minutes;
+				}	
+				return hours + ":" + minutes + time;
+			}
+			else if (format == 1)
+			{
+				if (hours < 10) {
+         			hours = "0" + hours;
+    			 }
+				
+				if (minutes < 10) {
+					minutes = "0" + minutes;
+				}	
+				return hours + ":" + minutes;
+			}
+        }
 
 function slideTime(event, ui){
    var log = $(this).attr("log")
-    var minutes0 = parseInt(ui.values[ 0 ]  % 60);
-    var hours0 = parseInt(ui.values[ 0 ]  / 60 % 24);
-    var minutes1 = parseInt(ui.values[ 1 ]  % 60);
-    var hours1 = parseInt(ui.values[ 1 ]  / 60 % 24);
-    $("#log_times_from_" + log).val(getTime(hours0, minutes0));
-    $("#log_times_to_" + log).val(getTime(hours1, minutes1));
+    var val0 = parseInt(ui.values[ 0 ]);
+    var val1 = parseInt(ui.values[ 1 ]);
+    var format = $(".current_firm_data").data("clockformat")
+    $("#log_times_from_" + log).val(getTime(val0,format ));
+    $("#log_times_to_" + log).val(getTime(val1, format));
    };
  
-function getTime(hours, minutes) {
-    var time = null;
-    minutes = minutes + "";  
-    if (minutes.length == 1) {
-        minutes = "0" + minutes;
-    }
-    hours = hours + "";
-    if (hours.length == 1) {
-        hours = "0" + hours;
-    }
-    
-    return hours + ":" + minutes;
-};
+// function slideTime(event, ui){
+   // var log = $(this).attr("log")
+    // var minutes0 = parseInt(ui.values[ 0 ]  % 60);
+    // var hours0 = parseInt(ui.values[ 0 ]  / 60 % 24);
+    // var minutes1 = parseInt(ui.values[ 1 ]  % 60);
+    // var hours1 = parseInt(ui.values[ 1 ]  / 60 % 24);
+    // $("#log_times_from_" + log).val(getTime(hours0, minutes0));
+    // $("#log_times_to_" + log).val(getTime(hours1, minutes1));
+   // };
+//  
+// function getTime(hours, minutes) {
+    // var time = null;
+    // minutes = minutes + "";  
+    // if (minutes.length == 1) {
+        // minutes = "0" + minutes;
+    // }
+    // hours = hours + "";
+    // if (hours.length == 1) {
+        // hours = "0" + hours;
+    // }
+//     
+    // return hours + ":" + minutes;
+// };
 function time_to_value(time){
     var b = time
     var temp = new Array
@@ -155,8 +199,15 @@ jQuery.fn.logs_pr_date_select = function(){
   
   });
   };
-
+jQuery.fn.set_hours = function(){
+	var firm_format = $(".current_firm_data").data("timeformat")
+	this.each(function(index, element) {
+    	var hours = $(element).attr("data-hours")
+        $(element).html(secondsToString(hours, firm_format))
+    });
+  };
 $(document).ready(function() {
+	$(".total_log_time").set_hours()
 	$(".searchableS_tracking").chosen();
   	$("select#logs_pr_date_select").logs_pr_date_select();
 	$("#dialog_log").UIdialogs_log_links();

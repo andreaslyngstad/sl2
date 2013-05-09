@@ -2,7 +2,7 @@
 <tr>
 	<th class="timesheet_day"></th>
 	<% @dates.each do |date|%>
-		<th class="timesheet_day"><%= link_to date.strftime('%a %d.%m'), timesheet_logs_day_path(@user, (date))  %></th>
+		<th class="timesheet_day"><%= link_to date.strftime('%a %d.%m'), timesheet_day_path(@user, (date))  %></th>
 	<% end %>
 	<th class="timesheet_day">Total</th>		
 </tr>
@@ -11,22 +11,21 @@
 <tr class="project_hours">	
 	<td class="timesheet_project"><%= link_to project.name, project_path(project) %></td>	
 	<% @dates.each do |date| %>
-			<td class="number project_date_<%= project.id %>_<%= date %>" data-time="<%= every_day_log_hour(@log_week_project, date, project) %>">			
-								
+			<td class="number project_date_<%= project.id %>_<%= date %>" data-hours="<%= every_day_log_hour(@log_week_project, date, project) %>">					
 			</td>
 		<% end %>
-	<td class="project_total_<%= project.id %> total" data-time="0"></td>
+	<td class="project_total_<%= project.id %> total" data-hours="0"></td>
 </tr>
 <% end %>
 <% end %>
 <tr class="project_hours">
 	<td class="timesheet_project">No project</td>
 <% @dates.each do |date| %>
-	<td class="number" data-time="<%= every_day_log_hour_no_project(@log_week_no_project, date) %>">
+	<td class="number project_date__<%= date %>" data-hours="<%= every_day_log_hour_no_project(@log_week_no_project, date) %>">
 		<%= every_day_log_hour_no_project(@log_week_no_project, date)%>
 	</td>
 <% end %>
-<td class="project_total_ total" data-time="0"></td>
+<td class="project_total_ total" data-hours="0"></td>
 </tr>
 <td class="timesheet_project"><%= select_tag :project_id, options_from_collection_for_select(@projects, "id", "name"), 
   		:id => "timeheet_project_select", :data_url => url_splitter(request.fullpath), :prompt =>  'Select Project' %></td>
@@ -40,7 +39,7 @@
 	  <tfoot>
 	<td class="timesheet_project"><b>Total</b></td>
 	<% @dates.each do |date| %>
-			<td class="timesheet_day_total day_<%= date %>" data-time="<%= every_day_log_hour_total(@log_week, date)%>"></td>
+			<td class="timesheet_day_total day_<%= date %>" data-hours="<%= every_day_log_hour_total(@log_week, date)%>"></td>
 		<% end %>
 	<td class="timesheet_week_total"><%= @log_total.round%></td>
 	  </tfoot>

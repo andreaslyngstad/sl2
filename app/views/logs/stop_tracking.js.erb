@@ -5,6 +5,7 @@ $("#form_holder").append("<%= escape_javascript(render(:partial => "start_tracki
 $("#log_<%= escape_javascript(@log.id.to_s) %>").remove();
 $("#head_log").after("<%= escape_javascript(render(:partial => @log)) %>");
 $("#form_holder").find("input#log_event").val('');
+$(".total_log_time").set_hours()
 $("#index_log_header").animate({ top: 279}, 400) 
 $("#index_logs").animate({marginTop: 340}, 400)
 $(".open_tracking_select").UIdialogs_tracking_logs_links();

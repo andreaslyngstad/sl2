@@ -3,15 +3,17 @@
 float: left;
 
 }
-
+.timesheet_for_user{
+	padding: 10px;
+}
 .add_some_timesheet{ 
-  width:425px;
-padding: 7px 0 0 10px;
+  width:650px;
+  padding: 0 0 0 7px;
   float: left;
 }
 .add_some_timesheet_buttons{
 float: left;
-width: 515px;
+width: 101px;
 }
 .month_week_buttons{
 	margin-bottom:4px;
@@ -77,12 +79,19 @@ margin: 0px;
 	
 
 }
-
+#timesheet_log_listing_wrapper{
+	float: left;
+	border-top:1px solid #e5eff8;
+	padding-top:10px;
+	margin-top:7px;
+	margin-bottom: 100px;
+}
 table.timesheet_table {
 width:100%;
+margin-top:7px;
 border-top:1px solid #e5eff8;
 border-right:1px solid #e5eff8;
-
+float: left;
 border-collapse:collapse;
 }
 table.timesheet_table td {
@@ -137,7 +146,7 @@ padding:10px 0 10px 0;
 table.timesheet_table .timesheet_project{
 width: 100px;
 }
-#timeheet_project_select{
+#timeheet_project_select, #timeheet_user_select{
 	width:200px;
 }
 

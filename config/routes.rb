@@ -49,9 +49,9 @@ Squadlink::Application.routes.draw do
     get "plans/cancel", :as => :plans_cancel
     devise_for  :users
     #chart_controller
-    match "users_logs/:form/:to" => "charts#users_logs",  :as => :users_logs
-    match "projects_logs/:form/:to" => "charts#projects_logs",  :as => :projects_logs
-    match "customers_logs/:form/:to" => "charts#customers_logs",  :as => :customers_logs
+    match "users_logs" => "charts#users_logs",  :as => :users_logs
+    match "projects_logs" => "charts#projects_logs",  :as => :projects_logs
+    match "customers_logs" => "charts#customers_logs",  :as => :customers_logs
     
     
     #projects_controller
@@ -77,8 +77,8 @@ Squadlink::Application.routes.draw do
     match "/todo_select_tracking/:todo_id/:log_id" => "select#todo_select_tracking", :as => :todo_select_tracking
     match "/todo_select/:todo_id/:log_id" => "select#todo_select", :as => :todo_select
     #timesheets_controller
-    match "/timesheets/:user_id" => 'timesheets#timesheets', :as => :timesheets
-    match "/timesheet_logs_day/:user_id/:date" => 'timesheets#timesheet_logs_day', :as => :timesheet_logs_day
+    match "/timesheet_week/:user_id" => 'timesheets#timesheet_week', :as => :timesheet_week
+    match "/timesheet_day/:user_id/:date" => 'timesheets#timesheet_day', :as => :timesheet_day
     match "/timesheet_month/:user_id/:date" => "timesheets#timesheet_month", :as => :timesheet_month
     match "/add_hour_to_project/" => 'timesheets#add_hour_to_project', :as => :add_hour_to_projects
     match "/add_log_timesheet" => 'timesheets#add_log_timesheet', :as => :add_log_timesheet
@@ -87,7 +87,7 @@ Squadlink::Application.routes.draw do
     match "/statistics" => "private#statistics", :as => :statistics
     match "/reports" => 'private#reports', :as => :reports
     
-    match "/report_for" => 'private#report_for', :as => :reports_for
+    match "/squadlink_report" => 'private#squadlink_report', :as => :squadlink_report
     match "/account" => "private#account",  :as => :account
     match "/home_user" => "private#home_user",  :as => :home_user
     match "/upgrade" => "private#upgrade",  :as => :upgrade

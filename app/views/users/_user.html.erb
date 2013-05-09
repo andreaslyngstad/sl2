@@ -2,7 +2,7 @@
     <div class="left">
    </div>
    <div class="tab_list_text">
-    <%= link_to user.name, user_path(user) %>
+    <%= link_to truncate(user.name, :length => 80), user_path(user) %>
     </div>
     <%= link_to(user_path(user),
 		:confirm => "Are you sure?", 

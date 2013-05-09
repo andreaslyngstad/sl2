@@ -1,21 +1,56 @@
 
-<div id="left">
+<div id="left" class="home_content">
 <%= render "home_header" %>
   	<div class="html_tab_content" id="tabs-1"> 
   		<div class="timesheet">
-  		<%= form_tag "/report_for" %>
-  		<ul>
-			From <%= text_field_tag 'from',{},  :class => "range_date", :style => "font-size:80%;"%>  
-			To <%= text_field_tag 'to',{}, :class => "range_date", :style => "font-size:80%;"  %>
-  		<li>User</li>
-  		<li><%= select_tag :user_id, options_from_collection_for_select(@users, "id", "name"), :class => "big_select", :include_blank => 'Select User' %></li>
-  		
-  		<li>Project</li>
-  		<li><%= select_tag :project_id, options_from_collection_for_select(@projects, "id", "name"), :class => "big_select", :include_blank => 'Select Project'  %></li>
-  		<li>Customer</li>
-  		<li><%= select_tag :customer_id, options_from_collection_for_select(@customers, "id", "name"), :class => "big_select", :include_blank => 'Select Customer' %></li>
-  		
-  		 <li><%= submit_tag "Make report", :class => 'submit' %></li>
+  			<h2 id="report_heading">Generate report</h2>
+  	<%= form_tag "/squadlink_report", :method => :get %>
+  	<ul class="report_form">
+		<li>Range <span class="right"><%= text_field_tag 'from',date_format(Date.today - 1.month),  :class => "range_date", :style => "font-size:80%;"%>  
+			<%= text_field_tag 'to',date_format(Date.today), :class => "range_date", :style => "font-size:80%;"  %></span></li>
+			
+			
+		<li>User     
+			<span class="right">
+			<select class="range_select" id="user_id" name="user_id">
+				<option value="">Select User</option>
+				<% @users.each do |user| %>
+					<option value="<%= user.id %>"><%= user.name %></option>
+					<% end %>
+				</select>
+			</span>
+		</li> 
+		<li>Project     
+			<span class="right">
+			<select class="range_select" id="project_id" name="project_id">
+				<option value="">Select Project</option>
+				<% @projects.each do |project| %>
+					<option value="<%= project.id %>"><%= project.name %></option>
+					<% end %>
+				</select>
+			</span>
+		</li>  		
+		<li>User     
+			<span class="right">
+			<select class="range_select" id="customer_id" name="customer_id">
+				<option value="">Select Customer</option>
+				<% @customers.each do |customer| %>
+					<option value="<%= customer.id %>"><%= customer.name %></option>
+					<% end %>
+				</select>
+			</span>
+		</li> 
+		<li>Format     
+			<span class="right">
+			<select class="format_select" id='format' name='format'>
+	  			<option value='html' selected='selected'>View in browser (HTML)</option>
+	  			<option value='csv'>Export to CSV file (CSV)</option>
+	  			<option value='xls'>Export to excel (XLS)</option>
+			</select>
+			</span> 	
+		</li>	 		
+  		<li><%= submit_tag "Make report", :class => 'submit' %></li>
+
   	</ul>
 	</div>
 	</div>

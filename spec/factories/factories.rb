@@ -28,6 +28,7 @@ FactoryGirl.define do
     name
     active true
     firm
+    due Date.today
   end  
   
 
@@ -46,6 +47,7 @@ FactoryGirl.define do
 
   factory :todo do
     name "Todo today"
+    due Date.today.strftime("%d.%m.%y")
     firm
   end  
 

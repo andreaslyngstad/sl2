@@ -64,8 +64,6 @@
                         
                         select: function( event, ui ) {
                             ui.item.option.selected = true;
-                           console.log(this.element)
-            
                             that._trigger( "selected", event, {
                                 item: ui.item.option
                             });

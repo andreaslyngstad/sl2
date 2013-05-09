@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-load_and_authorize_resource 
+   
   def index
     if current_user.role == "External user"
       @projects = current_user.projects.includes(:firm)
@@ -25,37 +25,40 @@ load_and_authorize_resource
   end
 
   def create
-    @project = Project.new(params[:project])
-    @project.active = true
-    @project.firm = current_firm
-    @project.users << current_user
-      respond_to do |format|
-      if @project.save
-      flash[:notice] = flash_helper("Project is added.")
-      format.js
+    @klass = current_firm.projects.new(params[:project])
+    @klass.active = true
+    @klass.users << current_user
+
+    respond_to do |format|
+      if @klass.save
+        flash[:notice] = flash_helper("Project is added.")
+        format.js
+      else
+        flash[:notice] = flash_helper("Something went wrong")
+        format.js { render "shared/validate_create" }
       end
-      end
+    end
     
   end
   
   def update
-    @project = Project.find(params[:id])
-    @project.firm = current_firm
+    @klass = Project.find(params[:id])
+    @klass.firm = current_firm
     respond_to do |format|
-      if @project.update_attributes(params[:project])
+      if @klass.update_attributes(params[:project])
         flash[:notice] = flash_helper("Project was successfully saved.")
         format.js
       else
-        format.html { render :action => "index" }
-        format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+        format.js { render "shared/validate_update" }
+        flash[:notice] = flash_helper("Something went wrong")
       end
     end
     
   end
   
   def destroy
-   @project = Project.find(params[:id])
-   @project.destroy
+   @klass = Project.find(params[:id])
+   @klass.destroy
     respond_to do |format|
       flash[:notice] = flash_helper('Project was deleted.')
       format.html { redirect_to projects_path }

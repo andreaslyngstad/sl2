@@ -20,12 +20,17 @@ en:
                            You can click on the small grey arrow add more details about the log.</li><li>2. You can also add logs by clicking on the "Add log" button.</li> 
                     </ul>
                     <p>Tip; If you want to find logs on a particular project or customer, go to the project or customer and click on the logs tab.</p>
-   timesheets_html:    <h2><img src="../system/info.png"/> Timesheet use.</h2>
-                  <p>You can add hours to a project in two ways. </p> 
-                  <ul>
-                    <li>1. Add logs to your projects.</li>
-                    <li>2. Add hours to projects directly in the timesheet, if you do not have any logs on the project at a specific date.</li>
-                  </ul>   
+   timesheets_html:  <h2><img src="../system/info.png"/> Timesheet use.</h2>
+                      <p>You can add hours to a project by selecting it on the left side and type in hours on the various days.
+                      You enter not whole hours in two ways 
+                      <ul>
+                        <li>1. If you use a colon like this "2:32". The digits after the colon will
+                      be interpered as minutes.</li>
+                        <li>2. You can use a period like this "2.32" for desimals. In this case the time will be 2 hours and 19 minutes.
+                      </ul>  
+                      For every entry to the timesheet, a log is created with the event "Added on timesheet". Just edit the log if you need corrections.
+                      </p> 
+                      
    customers_index_html:  <h2><img src="../system/info.png"/> Customers</h2>
                           <p>Here you can see all your customers</p> 
                           <p>Search by typing in the search box</p>

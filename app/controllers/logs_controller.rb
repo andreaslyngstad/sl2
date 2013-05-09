@@ -15,7 +15,6 @@ class LogsController < ApplicationController
     @log = Log.find(params[:id])
   end
   def create
-    
     @klass = LogWorker.create(params[:log], params[:done], current_user, current_firm)
     create_resonder(@klass)
   end
@@ -59,7 +58,7 @@ private
   def create_resonder(log)
      respond_to do |format|
       if log.save
-        flash[:notice] = flash_helper('Log was successfully created.')
+        flash[:notice] = flash_helper('Log was successfully saved.')
         format.js
       else
        format.js { render "shared/validate_create" }

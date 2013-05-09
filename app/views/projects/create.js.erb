@@ -1,9 +1,9 @@
 $(".flash_notice").empty()
 $(".flash_notice").append("<%= j(flash.discard(:notice))%>")
 if(window.location.pathname.indexOf("customers") >= 0){
-$("#listing_projects").append("<%= j(render(:partial => @project)) %>");	
+$("#listing_projects").append("<%= j(render(:partial => "project", :locals => {:project => @klass})) %>");	
 }else{
-$("#cus_pro_us_listing").prepend("<%= j( render :partial => "projects_index", :locals => { :project => @project })  %>");
+$("#cus_pro_us_listing").prepend("<%= j( render :partial => "projects_index", :locals => { :project => @klass })  %>");
 $(".button").button();	
 }
 $(".open_project_update").UIdialogs_edit_links();

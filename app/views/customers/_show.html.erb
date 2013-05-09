@@ -24,11 +24,8 @@
 	<div class="show_statistics_header statistics_header_done">Tasks done</div>
 	<div class="statistics_unit one_number white statistics_unit_hours"><%= time_diff(@hours) %></div>
 	<div id="todos_chart">
-		<div class="statistics_unit one_number tasks_percent white">		
-			
-		</div>
-	</div>
-	
+	<div class="statistics_unit one_number tasks_percent white"></div>
+	</div>	
 </div>
 
    <nav id="sub_tabs">
@@ -50,13 +47,14 @@
   	<div class="log_menu">
   	 <% if can? :create, Project %>
     <div class="add_some">
-       <a id="dialog_project" data-object="project">Add another</a>
+       <a id="dialog_project" data-object="project">New project</a>
       <div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
-      <%= form_for(@klass.projects.build) do |p| %>
+      <%= form_for(Project.new) do |p| %>
+      <%= p.hidden_field :customer_id, value: @klass.id %>
       <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
       <li><%= p.label :description %><%= p.text_area :description %></li>
-      <li><%= p.label :due %><%= p.text_field :due, :id => "dialog_project_date"   %></li>
-      <li><%= p.submit 'Save', :class => 'submit' %></li>
+      <li><%= p.label :due %><%= p.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_project_date"   %></li>
+      <li><%= p.submit 'Save', :class => 'submit', :id => "new_project_customer" %></li>
       <% end %>
       </div>
     </div>
@@ -76,13 +74,14 @@
    	<div id="listing_employees">
 	<div class="log_menu">
 	<div class="add_some">
-       <a id="dialog_employees">Add another</a>
+       <a id="dialog_employees" data-object="employee">New employee</a>
         <div id="dialog_employees_form" class="dialog_form" title="Create new employee" style="display:none;">  
-      <%= form_for(@klass.employees.build) do |f| %>
+      <%= form_for(Employee.new) do |f| %>
+      <%= f.hidden_field :customer_id, value: @klass.id %>
       <li><%= f.label :name %><%= f.text_field :name, :class => "required", :minlength => "2"%></li>
       <li><%= f.label :phone %><%= f.text_field :phone %></li>
       <li><%= f.label :email %><%= f.text_field :email %></li>
-      <li><%= f.submit "save", :class => 'submit' %></li>
+      <li><%= f.submit "save", :class => 'submit', :id => "new_employee_submit" %></li>
       <% end %>
       </div>
     </div>

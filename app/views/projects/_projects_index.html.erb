@@ -1,6 +1,6 @@
 <li class="tab_list" id="project_<%= project.id.to_s %>"> 
 	<div class="tab_list_text">
-	<%= link_to project.name, project_path(project) %>
+	<%= link_to truncate(project.name, :length => 80), project_path(project) %>
 	</div>
 	
 	<span class='view-tabs-list' data-id="<%= project.id %>" data-object="project" title="View project" data-firm-id="<%= current_firm.id %>"></span>

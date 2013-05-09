@@ -4,7 +4,7 @@
   		<li><%= link_to "Statistics", statistics_path%></li>
 	    <li><%= link_to "Reports", reports_path%></li>
 	    <%end%>
-	   	<li><%= link_to "Timesheets", timesheets_path(current_user) %></li>
+	   	<li><%= link_to "Timesheets", timesheet_week_path(current_user) %></li>
 	   	<% if can? :manage, Firm %>
 	   	<li><%= link_to "Account", account_path%></li>     
 	   	<% end %>

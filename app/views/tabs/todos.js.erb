@@ -28,12 +28,11 @@ $(tab).empty().append("<%= j( render :partial => "todos/listing_todos")  %>")
 			$('#todo_range_form').submit();
   		}
   		}).attr( 'readOnly' , 'true' )
-  		
-	$("input#from").val($(".one_week_back").data("lastweek"))
-	$("input#to").val($(".one_week_back").data("nextweek"))
+  	
 	
 	
 <% end %>
+$('.date_format_setter').set_date_format()
 $("#dialog_todo").UIdialogs_links();
 $(".searchableTaskCustomer").chosen();
 $("select#todos_pr_date_select").todo_pr_date_select();
@@ -52,8 +51,7 @@ $(".logs_pluss").click(function() {
  	$(".spinning").show();
  	$(this).hide()
  	$(this).next(".logs_minus").show()
-  	var id = $(this).attr("id")
-  		
+  	var id = $(this).attr("id")	
   	$.get("/get_logs_todo/" + id)
   });
    

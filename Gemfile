@@ -10,6 +10,7 @@ gem 'jquery-rails', '2.1.3'
 gem "devise"
 gem "paperclip"
 gem "cancan"
+
 gem 'newrelic_rpm'
 gem 'jbuilder'
 gem 'activeadmin'
@@ -19,7 +20,6 @@ gem 'whenever', :require => false
 gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
 gem 'pg'
 
-gem 'rack-mini-profiler'
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
@@ -28,7 +28,7 @@ group :assets do
 end
 
 group :development, :test do
-  
+  gem 'rack-mini-profiler'
   gem 'better_errors'
   gem "binding_of_caller" 
   gem 'meta_request', '0.2.1'
@@ -44,11 +44,8 @@ group :test do
   gem 'capybara'
   gem "factory_girl_rails", "~> 4.0"
   gem 'ruby-prof'
-  #gem 'turn' 
-  #gem "spork-minitest", "~> 1.0.0.beta1"
-  gem 'spork'
-  gem 'guard-spork'
   gem 'guard-rspec'
+  gem 'zeus'
   gem 'database_cleaner'
   gem "selenium-webdriver"
   gem "selenium-client"
@@ -57,7 +54,7 @@ group :test do
   gem 'headless'
   gem "poltergeist"
   gem 'rb-inotify', '~> 0.9'
-  gem 'sqlite3-ruby'
+
 end
 # Use unicorn as the web server
 # gem 'unicorn'

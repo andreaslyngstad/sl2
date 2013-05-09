@@ -1032,7 +1032,7 @@ $.extend($.validator, {
 			return this.optional(element) || /^\d+$/.test(value);
 		},
 		clock: function(value, element) {
-			return this.optional(element) || /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(value);
+			return this.optional(element) || /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(value) || /^([1-9]|1[0-2]|0[1-9]){1}(:[0-5][0-9][aApP][mM]){1}$/.test(value);
 		},
 		noSpecialChars: function(value, element) {
 			return this.optional(element) || /^[a-z0-9\_]+$/i.test(value);

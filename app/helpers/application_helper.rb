@@ -7,10 +7,25 @@ module ApplicationHelper
   end
   def date_format(date,options = {} )
     if options[:short]
-      date.strftime("%d.%m.%y")
+      if current_firm.date_format == 1
+        date.strftime("%d.%m.%y")
+      elsif current_firm.date_format == 2 
+        date.strftime("%m/%d/%y")
+      end
     else
-      date.strftime("%d.%m.%Y")
+      if current_firm.date_format == 1
+        date.strftime("%d.%m.%Y")
+      elsif current_firm.date_format == 2 
+        date.strftime("%m/%d/%Y")
+      end
     end
+  end
+  def clock_format(time,options = {} )
+      if current_firm.clock_format == 1
+        time.strftime("%H:%M")
+      elsif current_firm.clock_format == 2 
+        time.strftime("%I:%M%P")
+      end
   end
   
   def all_users

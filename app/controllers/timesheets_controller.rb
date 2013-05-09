@@ -1,17 +1,8 @@
 class TimesheetsController < ApplicationController
-  def timesheets 
-     
+  def timesheet_week    
      @user = current_firm.users.find(params[:user_id])
      find_users(@user)
-     @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
-     range = Time.zone.today..Time.zone.today + 7.days
-     @log_project = @user.logs.where(:log_date => @dates).group("project_id").sum(:hours)
-  
-     @log_week = @user.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
-     @log_week_project = @user.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-     @log_week_no_project = @user.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
-     @projects = @user.projects
-     @log_total = @user.logs.where(:log_date => range).sum(:hours) 
+      variables_bag
   end
   def timesheet_create
     
@@ -20,21 +11,21 @@ class TimesheetsController < ApplicationController
     
   end
   def add_log_timesheet
-    @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
-    @log = LogWorker.create(params[:log], params[:done], current_user, current_firm)
+    @user = current_firm.users.find(params[:log][:user_id])
+    @log = LogWorker.create(params[:log], params[:done], @user, current_firm)
+    variables_bag
+    
     respond_to do |format|
       if @log.save
         flash[:notice] = flash_helper('Log was successfully created.')
-        format.html { redirect_to(home_path(@log)) }
-        format.xml  { render :xml => @log, :status => :created, :location => @log }
         format.js
       else
-       format.js { render "shared/validate_create" }
+        format.js { render "shared/validate_create" }
       end
     end
   end
   
-  def timesheet_logs_day
+  def timesheet_day
     @user = current_firm.users.find(params[:user_id])
     find_users(@user)
     @logs = @user.logs.where(:log_date => params[:date])
@@ -56,8 +47,15 @@ class TimesheetsController < ApplicationController
     @log.log_date = params[:date]
     @log.event = "Added on timesheet"
     @log.begin_time = @log.log_date.beginning_of_day
-    @log.end_time =  @log.begin_time + (params[:val_input].to_f * 3600)
-    Rails.logger.info("Log #{@log.event}") 
+    if params[:val_input].include?(":")
+      a = params[:val_input].split(":")
+      b = a[0].to_f + a[1].to_f/60
+      @log.end_time =  @log.begin_time + (b * 3600)
+    else
+      @log.end_time =  @log.begin_time + (params[:val_input].to_f * 3600)
+    end
+    Rails.logger.info(params[:val_input].class)
+    
     @log.save!
   end
   
@@ -69,5 +67,15 @@ class TimesheetsController < ApplicationController
      else
      @users = []
      end
+  end
+  def variables_bag
+    @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
+     range = Time.zone.today..Time.zone.today + 7.days
+     @log_project = @user.logs.where(:log_date => @dates).group("project_id").sum(:hours)
+     @log_week = @user.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
+     @log_week_project = @user.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
+     @log_week_no_project = @user.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
+     @projects = @user.projects
+     @log_total = @user.logs.where(:log_date => range).sum(:hours) 
   end
 end

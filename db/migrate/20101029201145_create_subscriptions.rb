@@ -2,16 +2,16 @@ class CreateSubscriptions < ActiveRecord::Migration
   def change
     create_table :subscriptions do |t|
       t.integer :plan_id
-      t.string :email
-      t.string :name
+      t.text :email
+      t.text :name
       t.integer :firm_id
-      t.string :paymill_id
-      t.string  :card_zip
-      t.string  :last_four
-      t.string  :card_type
+      t.text :paymill_id
+      t.text  :card_zip
+      t.text  :last_four
+      t.text  :card_type
       t.date    :next_bill_on
-      t.string  :card_expiration
-      t.string  :card_holder
+      t.text  :card_expiration
+      t.text  :card_holder
       t.boolean :active
 
       t.timestamps

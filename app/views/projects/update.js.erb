@@ -1,11 +1,11 @@
 $(".flash_notice").empty();
 $(".flash_notice").append("<%= j(flash.discard(:notice))%>");
 
-$("#project_<%= j(@project.id.to_s)%>").replaceWith("<%= j( render :partial => "projects_index", :locals => { :project => @project })  %>")
+$("#project_<%= j(@klass.id.to_s)%>").replaceWith("<%= j( render :partial => "projects_index", :locals => { :project => @klass })  %>")
 $(".button").button();
 
-$("#project_list_<%= j(@project.id.to_s)%>").replaceWith("<%= j(render @project) %>")
-$("#project_list_<%= j(@project.id.to_s)%>").css("background-color", "#DBFFDE");
+$("#project_list_<%= j(@klass.id.to_s)%>").replaceWith("<%= j(render @klass) %>")
+$("#project_list_<%= j(@klass.id.to_s)%>").css("background-color", "#DBFFDE");
 
 $(".activate_project").activate_projects();
 $(".open_project_update").UIdialogs_edit_links();

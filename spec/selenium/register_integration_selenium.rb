@@ -2,7 +2,7 @@ require "selenium-webdriver"
 require "spec_helper"
 include RSpec::Expectations
 
-describe "RegisterIntegrationSpec" do
+describe "RegisterIntegrationSpec", :slow do
 
   before(:each) do
     @driver = Selenium::WebDriver.for :firefox

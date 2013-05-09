@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   has_many :logs, :dependent => :destroy
   has_many :recent_logs, :class_name => "Log", :order => "log_date DESC", :conditions => ['log_date > ?', Time.now.beginning_of_week]
   has_many :milestones
-  validates_presence_of :name
+  validates_presence_of :name, :due
   has_many :memberships
   has_many :users, :through => :memberships
   scope :is_active, where(["active = ?", true])
