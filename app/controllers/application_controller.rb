@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  # rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   require "./lib/timehelp"
 	include UrlHelper
 	before_filter :miniprofiler
-	 before_filter :user_at_current_firm
+	before_filter :user_at_current_firm
 
 
   before_filter :set_mailer_url_options, :authenticate_user!, 

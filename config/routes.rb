@@ -1,6 +1,10 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
-  get "hooks/receiver"
+  resources :blogs
+  get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
+  get "/pricing" => "public#pricing",  :as => :pricing
+  resources :guides
+  post "hooks/receiver"
 
   ActiveAdmin.routes(self)
     get '/admin/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
@@ -14,7 +18,6 @@ Squadlink::Application.routes.draw do
     resources :public do
       member do
         get "first_user"
-        
         post "create_first_user"
      end
   end    
@@ -29,27 +32,37 @@ Squadlink::Application.routes.draw do
   devise_scope :user do
     	get "/sign_in", :to => "sessions#new"
       get "/sign_out", :to => "sessions#destroy"
-    	get "register", :to => "public#register"
+      get "register", :to => "public#register"
+    	get "contact", :to => "public#contact"
       match "/sign_in_at_subdomain" =>  "sessions#sign_in_at_subdomain", :as => :sign_in_at_subdomain
     	get "/register/:firm_id/user" => "public#first_user",  :as => :register_user
     	post "/register/:firm_id/user" => "public#create_first_user",  :as => :create_first_user
     	get "/validates_uniqe/:subdomain" => "public#validates_uniqe", :as => :validates_uniqe
-
   	end
-  resources :users, :only => [:index, :show, :edit, :create, :update, :destroy] do
+  
+  
+
+
+  constraints(Subdomain) do
+    get "plans/index", :as => :plans
+    delete "plans/index", :as => :plans
+    get "plans/cancel", :as => :plans_cancel
+    resources :subscriptions
+    get "/account" => "private#account",  :as => :account
+    
+    constraints(PaymentChecker) do
+    
+    devise_for  :users
+    resources :users, :only => [:index, :show, :edit, :create, :update, :destroy] do
     member do
      get :valid
     end
   end
-
-  constraints(Subdomain) do
-    
-    get "plans/index", :as => :plans
-    delete "plans/index", :as => :plans
-    get "plans/cancel", :as => :plans_cancel
-    devise_for  :users
     #chart_controller
     match "users_logs" => "charts#users_logs",  :as => :users_logs
+    match "project_users_logs" => "charts#project_users_logs",  :as => :project_users_logs
+    match "project_todos_logs" => "charts#project_todos_logs",  :as => :project_todos_logs
+    match "customer_users_logs" => "charts#customer_users_logs",  :as => :customer_users_logs
     match "projects_logs" => "charts#projects_logs",  :as => :projects_logs
     match "customers_logs" => "charts#customers_logs",  :as => :customers_logs
     
@@ -64,6 +77,7 @@ Squadlink::Application.routes.draw do
     match "/tabs/milestones/:id/:class" => "tabs#milestones", :as => :tabs_milestones
     match "/tabs/logs/:id/:class" => "tabs#logs", :as => :tabs_logs
     match "/tabs/users/:id/:class" => "tabs#users", :as => :tabs_users
+    match "/tabs/statistics/:id/:class" => "tabs#statistics", :as => :tabs_statistics
     #logs_controller
     match "logs/start_tracking" => "logs#start_tracking",  :as => :start_tracking
     match "logs/stop_tracking/:id" => "logs#stop_tracking",  :as => :stop_tracking
@@ -120,8 +134,10 @@ Squadlink::Application.routes.draw do
     resources :milestones
     resources :todos
     resources :logs
-    resources :subscriptions
+    
     root :to  => "logs#index"
+    end
+    root :to  => "plans#index"
 	end
   
   root :to => "public#index"

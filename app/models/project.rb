@@ -13,7 +13,7 @@ class Project < ActiveRecord::Base
   scope :is_inactive, where(["active = ?", false])
   scope :order_by_name, order("name ASC")
   validate :made_on_current_firm
-  validate :made_with_in_limit
+  validate :made_with_in_limit, :on => :create
   
   def made_on_current_firm
     errors.add(:firm_id, "is secure!") if

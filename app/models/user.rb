@@ -14,13 +14,13 @@ class User < ActiveRecord::Base
   has_many :recent_logs, :class_name => "Log", :order => "log_date DESC", :conditions => ['log_date > ?', Time.now.beginning_of_week]
   has_many :memberships
   has_many :projects, :through => :memberships
-  has_many :logs
-  has_many :todos
+  has_many :logs, :dependent => :destroy
+  has_many :todos, :dependent => :destroy
   has_many :done_todos, :class_name => "Todo", :foreign_key => "done_by_user"
   belongs_to :firm, :counter_cache => true
   validates_presence_of :name
   validates :email, :presence => true, :email_format => true
-  validate :made_with_in_limit
+  validate :made_with_in_limit, :on => :create
   
  # def user_role
  #   errors.add(:role, "Not a legal role") if 

@@ -1,3 +1,4 @@
+require "subdomain_login" 
 class PublicController < ApplicationController
   skip_before_filter :authenticate_user!, :all_users, :user_at_current_firm
   layout "registration"
@@ -15,16 +16,13 @@ class PublicController < ApplicationController
     @user = @firm.users.build
   end
   
-  def create_firm
-    
+  def create_firm  
     @firm = Firm.new(params[:firm])
     @firm.subdomain = @firm.subdomain.downcase
-    
     respond_to do |format|
       if @firm.save
         flash[:notice] = 'Firm was successfully created! Now create the first user.'
-        format.html { redirect_to(register_user_path(@firm)) }
-        
+        format.html { redirect_to(register_user_path(@firm)) }    
       else
         flash[:error] = 'Firm could not be created'
         format.html { render "public/register", :layout => "registration"}
@@ -55,4 +53,12 @@ class PublicController < ApplicationController
   	 @wrong_format = true
   	end
   end	
+  def termsofservice
+  end
+  def pricing
+    @plans = Plan.all
+  end
+  def contact
+  end
+
 end

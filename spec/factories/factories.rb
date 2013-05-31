@@ -9,6 +9,7 @@ FactoryGirl.define do
    name
    subdomain
    plan
+   closed false
   end
   factory :firm_with_users, :parent => :firm do
     after_create do |firm|
@@ -60,6 +61,14 @@ FactoryGirl.define do
   factory :customer do
     name "customer man"
     firm
-  end  
-  
+  end
+  factory :guide do
+    title "test"
+    content "test"  
+  end
+  factory :blog do
+    author "test"
+    title "test"
+    content "test"  
+  end
 end

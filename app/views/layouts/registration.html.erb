@@ -10,7 +10,74 @@
 </head>
 <body>  
 	<div class="container">
+    <div id="main">
+      <div id="login_link">
+<!-- AddThis Follow BEGIN -->
+<div class="addthis_toolbox addthis_32x32_style addthis_default_style" style="float:left;">
+<a class="addthis_button_facebook_follow" addthis:userid="squadlink"></a>
+<a class="addthis_button_twitter_follow" addthis:userid="squadlink"></a>
+</div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51a7ceb7757fb5c5"></script>
+<!-- AddThis Follow END -->
+        Log in</div>
+      <div class="signup signup_firm hide login_form">
+        <h2 style="margin-left:20px;">Log in</h2>
+        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+          <div class="signup-form-field"><%= f.label :email %><%= f.text_field :email %></div>
+          <div class="signup-form-field"><%= f.label :password %><%= f.password_field :password %></div>
+          <% if devise_mapping.rememberable? -%>
+              <div class="signup-form-field checkbox"><%= f.label :remember_me %><%= f.check_box :remember_me, :id => "check" %> </div>
+          <% end -%>
+          <div class="signup-form-field"><%= f.submit "Sign in", :class => "submit" %></div>
+        <% end %>
+        <div class="devise_links">
+        <%= render :partial => "devise/links" %>
+        </div>
+      </div>
+      <div id="front_logo">
+        <%= image_tag "squadlink.png"  %>
+      </div>
+      
 		<%= yield %>
-	</div>
+    </div>	
+  </div>
+  <div id="footer">
+        <div id="footer_reg">
+          <div style="margin: 0 auto">
+            <p id="copyright">
+                
+            </p>
+            <div id="locale_selector_cont">
+                <div id="locale_selector"></div>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><%= link_to "Pricing", pricing_path%></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li><a href="http://twitter.com/squadlink" target="_blank">Twitter</a></li>
+                    <li><a href="http://facebook.com/squadlink" target="_blank">Facebook</a></li>
+            </ul>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li><%= link_to "Squadlink blog", blogs_path%></li>
+                    <li><%= link_to "Terms", termsofservice_path%></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li><a href="/guides">Help Center</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </div>
+
+
+          </div>
+      </div>
+    </div>
 </body>
 </html>

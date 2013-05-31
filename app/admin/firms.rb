@@ -56,13 +56,13 @@ ActiveAdmin.register Firm do
   form do |f|
     f.inputs "Details" do
       f.input :plan,:as => :select, :collection => Plan.all
-      f.input :name
-      f.input :subdomain 
-      f.input :address
-      f.input :phone
-      f.input :currency
-      f.input :time_zone
-      f.input :language
+      f.input :name,:as => :string
+      f.input :subdomain ,:as => :string
+      f.input :address,:as => :string
+      f.input :phone,:as => :string
+      f.input :currency,:as => :string
+      f.input :time_zone,:as => :string
+      f.input :language,:as => :string
         end
       f.buttons
     end

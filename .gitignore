@@ -13,9 +13,11 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-
+/coverage
 /config/database.yml
 .sass-cache/
 .idea/
 .project
+.rspec
+.zeus.sock
 public/assets/

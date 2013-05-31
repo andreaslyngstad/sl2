@@ -7,7 +7,7 @@
 <%= render "private/home_header" %>
 <div id="left" class="home_content">
 	
-<div id="register_container">
+<div id="">
 	
 
 
@@ -21,13 +21,16 @@
  						   :grad => "upgrading"
  						   %>
  		<p><%= t "message.thank_you" %></p>
- 	<% else %>
+ 	<% elsif @plan.id < current_firm.plan.id %>
  	<p><%= t "message.plan_update_html", :current_plan => current_firm.plan.name, 
  					       :new_plan => @plan.name,
  						   :current_plan_price =>  (prices_to_currency current_firm.plan.price), 
  						   :new_plan_price => (prices_to_currency @plan.price),
  						   :grad => "downgrading"  %>
  	</p>
+  <% else %>
+  <p><%= t "message.opening_closed" %>
+  </p>
  	<% if !@plan.projects.nil? && current_firm.users.count > @plan.users || 
  	      !@plan.projects.nil? && current_firm.projects.count > @plan.projects ||
  	      !@plan.customers.nil? && current_firm.customers.count > @plan.customers

@@ -34,51 +34,51 @@ describe "TimesheetSpec" do
     
     @driver.execute_script('$(".form-input:eq(0)").val("1").trigger("focusout")')
     sleep 0.2
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*1:00[\s\S]*$/ 
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*1[\s\S]*$/ 
     @driver.execute_script('$(".form-input:eq(1)").val("2").trigger("focusout")')
     sleep 0.2
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*3:00[\s\S]*$/
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*3[\s\S]*$/
     @driver.execute_script('$(".form-input:eq(2)").val("3").trigger("focusout")') 
     sleep 0.2
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*6:00[\s\S]*$/
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*6[\s\S]*$/
     @driver.execute_script('$("#timeheet_project_select_chzn").trigger("mousedown")')
     @driver.execute_script('$("#timeheet_project_select_chzn_o_0").trigger("mouseup")')
     @driver.execute_script('$("#timeheet_project_select_chzn").trigger("mousedown")')
     @driver.execute_script('$("#timeheet_project_select_chzn_o_1").trigger("mouseup")')
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*3:00[\s\S]*$/
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*3[\s\S]*$/
     @driver.execute_script('$(".form-input:eq(1)").val("3").trigger("focusout")') 
     sleep 0.2
     html = @driver.execute_script('return $(".project_hours").first().children(".number:eq(1)").text()')
-    html.should include('5:00')
+    html.should include('5')
     @driver.execute_script('$(".form-input:eq(1)").val("2").trigger("focusout")') 
     sleep 0.2
     html = @driver.execute_script('return $(".project_hours").first().children(".number:eq(1)").text()')
-    html.should include('4:00')
+    html.should include('4')
     @driver.execute_script('$(".form-input:eq(3)").val("2").trigger("focusout")') 
     sleep 0.2
     html = @driver.execute_script('return $(".timesheet_week_total").text()')
-    html.should include('10:00')
+    html.should include('10')
     html = @driver.execute_script('return $(".total").first().text()')
-    html.should include('10:00')
+    html.should include('10')
     
     @driver.execute_script('$(".form-input:eq(4)").val("2").trigger("focusout")') 
     sleep 0.2
     html = @driver.execute_script('return $(".timesheet_week_total").text()')
-    html.should include('12:00')
+    html.should include('12')
     html = @driver.execute_script('return $(".total").first().text()')
-    html.should include('12:00')
+    html.should include('12')
     @driver.execute_script('$(".form-input:eq(5)").val("2").trigger("focusout")') 
     sleep 0.2
     html = @driver.execute_script('return $(".timesheet_week_total").text()')
-    html.should include('14:00')
+    html.should include('14')
     html = @driver.execute_script('return $(".total").first().text()')
-    html.should include('14:00')
+    html.should include('14')
     @driver.execute_script('$(".form-input:eq(6)").val("2").trigger("focusout")') 
     sleep 0.2
     html = @driver.execute_script('return $(".timesheet_week_total").text()')
-    html.should include('16:00')
+    html.should include('16')
     html = @driver.execute_script('return $(".total").first().text()')
-    html.should include('16:00') 
+    html.should include('16') 
      
     @driver.execute_script('$("#timeheet_user_select_chzn").trigger("mousedown")') 
     @driver.execute_script('$("#timeheet_user_select_chzn").find(".chzn-results").find("li:contains(\'test_2\')").trigger("mouseup")')
@@ -96,7 +96,7 @@ describe "TimesheetSpec" do
     
     @driver.execute_script('window.location.href = $("#month_week_tabs").find("li").last().find("a").attr("href");')
     html = @driver.execute_script('return $(".total").first().text()')
-    html.should include('16:00')
+    html.should include('16')
     @driver.execute_script('window.location.href = $("#month_week_tabs").find("li").first().find("a").attr("href");')
     html = @driver.execute_script('return $("th:eq(0)").text()')
     html.should include('Monday')

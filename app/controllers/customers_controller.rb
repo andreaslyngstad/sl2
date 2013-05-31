@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
     @hours = @klass.logs.sum(:hours)
     @employees = @klass.employees
     
-    @projects = @klass.projects.where(["active = ?", true]).includes(:customer, :todos)
+    @projects = @klass.projects.where(["active = ?", true]).includes(:firm)
     @users = current_firm.users
     @hours = @klass.logs.sum(:hours)
     @project = Project.new(:customer => @klass)

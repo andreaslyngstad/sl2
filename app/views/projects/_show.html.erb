@@ -23,7 +23,8 @@
 	<div class="show_statistics_header statistics_header_hours">Total hours</div>
 	<div class="show_statistics_header statistics_header_done">Tasks done</div>
 	<div class="show_statistics_header three_box ">Milestones</div>
-	<div class="show_statistics_header statistics_header_users">Users</div>
+  <div class="show_statistics_header statistics_header_users">Users</div>
+	<div class="show_statistics_header statistics_header_budget">Budget</div>
 	<div class="statistics_unit one_number white total_log_time statistics_unit_hours"  data-hours="<%= @hours %>"></div>
 	<div id="todos_chart">
 		<div class="statistics_unit one_number tasks_percent white">			
@@ -40,8 +41,15 @@
 	<div class="right_slider" data-dir="right"><span class="arrow-e"></span></div>
 	</div>
 	<div class="statistics_unit users_count one_number white statistics_unit_users">
-			<%= @klass.users.count %>
+      <%= @klass.users.count %>
+        </div>
+
+        <div class="statistics_unit one_number white statistics_unit_budget">
+          <div class="budget_green" data-procent="<%= ProjectPrice.set_procentage(@klass)%>"><p>spent</p></div>
+          <div class="budget_red"><p>left</p></div>
+			
   			</div>
+</div>
 </div>
  
   <div id="sub_tabs">
@@ -50,47 +58,47 @@
     <li class=""><a href="#tabs-2" data-url="/tabs/logs/<%= @klass.id %>/<%= @klass.class %>">Logs</a></li>
     <li class=""><a href="#tabs-3" data-url="/tabs/milestones/<%= @klass.id %>/<%= @klass.class %>">Milestones</a></li>
     <li class=""><a href="#tabs-4">Users</a></li>
+    <li class=""><a href="#tabs-5" data-url="/tabs/statistics/<%= @klass.id %>/<%= @klass.class %>">Statistics</a></li>
     </ul>
     <span class="nav_line"></span>
     </div>
     <div class="boxes">
-    <div class="tab_box has_url" id="tabs-1"></div>
-  <div class="tab_box hide has_url" id="tabs-2"></div> 
-  <div class="tab_box hide has_url" id="tabs-3"></div> 
-  
-  <div class="tab_box hide" id="tabs-4">
-  	<div id="users_list_header">
-  		<div class="members_header">
-  			Squad on this project
-  		</div>
-  		<% if can? :manage, @klass %>
-  		<div class="not_members_header">
-  			Available squaders
-  		</div>
-  		 <% end %>
+      <div class="tab_box has_url" id="tabs-1"></div>
+      <div class="tab_box hide has_url" id="tabs-2"></div> 
+      <div class="tab_box hide has_url" id="tabs-3"></div> 
+      <div class="tab_box hide" id="tabs-4">
+    	<div id="users_list_header">
+    		<div class="members_header">
+    			Squad on this project
+    		</div>
+    		<% if can? :manage, @klass %>
+    		<div class="not_members_header">
+    			Available squaders
+    		</div>
+    		 <% end %>
+    	</div>
+  	<div id="users_list">
+      <div id="members" class="droppable members">
+      	<% @members.each do |user| %>
+      	<div class="user_info edit white draggable member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @klass.id %>"> 
+          <%= image(user, "image64") %>
+          <%= user.name %>
+        </div>
+        <% end %>
+      </div>
+      <% if can? :manage, @klass %>
+      <div id="not_members" class="droppable">
+        <% @not_members.each do |user| %>
+        	<div class="user_info edit white draggable not_member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @klass.id %>"> 
+         	<%= image(user, "image64") %>
+         	<%= user.name %>
+          </div> 
+        <% end %>
+      </div>
+      <% end %> 
   	</div>
-	<div id="users_list">
-    <div id="members" class="droppable members">
-    	<% @members.each do |user| %>
-    	<div class="user_info edit white draggable member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @klass.id %>"> 
-    <%= image(user, "image64") %>
-    <%= user.name %>
-    </div>
-      <% end %>
-    </div>
-    <% if can? :manage, @klass %>
-    <div id="not_members" class="droppable">
-      	<% @not_members.each do |user| %>
-      	<div class="user_info edit white draggable not_member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @klass.id %>"> 
-     	<%= image(user, "image64") %>
-     	<%= user.name %>
     </div> 
-    <% end %>
-    </div>
-    <% end %> 
-	</div>
-  </div> 
-  
+    <div class="tab_box hide has_url" id="tabs-5"></div>
   </div>
 </div>  
 </div> 

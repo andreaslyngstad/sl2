@@ -9,6 +9,7 @@ $(".milestone_slider").prepend(milestone)
 $(".milestone_slider").append(milestone)
 <% end %>
 $("#listing_milestones").append("<%= escape_javascript(render(:partial => @milestone)) %>");
+$('.date_format_setter').set_date_format()
 $(".open_milestone_update").UIdialogs_edit_links();
 $(".spinning").hide();
 

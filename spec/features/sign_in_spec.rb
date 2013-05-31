@@ -14,7 +14,7 @@ feature 'Sign in user' do
       fill_in "Email", :with => user.email
       fill_in "Password", :with => "password"
       click_button "Sign in"
-      page.should have_content("Signed in successfully.")
+      page.should have_content("Signed in successfully")
       page.should have_content(firm.name)
       page.should have_content(user.name)
       page.current_url.should == root_url

@@ -10,10 +10,14 @@ en:
     keep_in_mind: Keep in mind that you have more than..
     will_be_deleted: ..the last ones you created will be deleted.
     cancel_html:  <p>Thanks for having subscribed to a Squadlink plan!</p>
-                  <p>Now you have two choices. You can delete your firm from squadlink entirely or just cancel the 
+                  <p>You can delete your firm from squadlink entirely or just cancel the 
                     plan and continue with the free plan.</p>
                   <p>Remember that either way data may be lost. </p>
                   <p>If you delete the firm all data will be deleted.</p>
                   <p>By revering to the free plan, all data that extends the limit of the free plan will be deleted.</p> 
                   <p>We are trying to improve the service all the time.Do you want to pop us a line about why you are canceling?</p> 
                   <p>%{link}</p>
+    closed_message_html: Hi. We have not recived payment and your account is locked.<br>No worries though, just
+                    sign up to the subscription you want and submit your card to unlock your account.<br>
+                    If you leave your account locked, we will change your plan to the Free plan after 30 days. This can lead to lost data. 
+    opening_closed: Thanks! Just enter a vaild card and we'll open the account at once.

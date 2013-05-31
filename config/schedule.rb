@@ -1,7 +1,16 @@
 set :output, "#{path}/log/cron.log"
 
-every :day, at: "23:58 AM" do
+every :day, at: '11:30pm' do
   runner "Statistics.write_count"
+end
+every :day, at: "00:02am" do
+  runner "Subscription.set_not_paid_not_active"
+end
+every :day, at: "01:58am" do
+  runner "Subscription.send_email_two_weeks_overdue"
+end
+every :day, at: "02:58am" do
+  runner "Subscription.one_month_overdue"
 end
 # Use this file to easily define all of your cron jobs.
 #

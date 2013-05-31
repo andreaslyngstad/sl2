@@ -9,7 +9,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.text  :card_zip
       t.text  :last_four
       t.text  :card_type
-      t.date    :next_bill_on
+      t.date  :next_bill_on
       t.text  :card_expiration
       t.text  :card_holder
       t.boolean :active

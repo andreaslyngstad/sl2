@@ -6,16 +6,9 @@ class SessionsController < Devise::SessionsController
     respond_with(resource, serialize_options(resource))
   end
   def create
-    
     subdomain = request.subdomain
     resource = warden.authenticate!(auth_options)
-   if subdomain.present? && resource.firm.subdomain == subdomain || subdomain == "www"
-     set_flash_message(:notice, :signed_in) if is_navigational_format?
-     redirect_to root_url(:subdomain => resource.firm.subdomain )
-     sign_in(resource_name, resource)
-   else
-      sign_out_and_redirect_with_token(resource)
-   end
+    sign_out_and_redirect_with_token(resource, subdomain)
   end
   
   def destroy
@@ -57,8 +50,10 @@ class SessionsController < Devise::SessionsController
     end
   end
 private
-  def sign_out_and_redirect_with_token(resource)
-     sign_out(resource)
+  def sign_out_and_redirect_with_token(resource, subdomain)
+     unless subdomain.present? && resource.firm.subdomain == subdomain || subdomain == "www"
+      sign_out(resource)
+     end
      token =  Devise.friendly_token
      resource.loginable_token = token
      resource.save

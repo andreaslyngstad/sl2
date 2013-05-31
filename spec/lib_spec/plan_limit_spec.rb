@@ -6,7 +6,7 @@ describe PlanLimit do
   let(:firm2) {51}
   
   it "should set true if under limit" do
-    PlanLimit.new.over_limit?(firm, plan).should == false
+    PlanLimit.new.over_limit?(firm, plan).should == true
   end
   it "should set true if on limit" do
     PlanLimit.new.over_limit?(firm1, plan).should == false

@@ -54,6 +54,7 @@ group :test do
   gem 'headless'
   gem "poltergeist"
   gem 'rb-inotify', '~> 0.9'
+  gem 'simplecov', :require => false
 
 end
 # Use unicorn as the web server

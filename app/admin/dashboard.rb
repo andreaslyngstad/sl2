@@ -51,52 +51,52 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         div :class => "total_counters" do
           panel "Firms" do
-            Statistics.last.firms
+            Statistics.last.try(:firms)
           end  
         end
         div :class => "total_counters" do
           panel "Free subscriptions" do
-            Statistics.last.free
+            Statistics.last.try(:free)
           end  
         end
         div :class => "total_counters" do
           panel "Bronze subscriptions" do
-            Statistics.last.bronze
+            Statistics.last.try(:bronze)
           end  
         end
         div :class => "total_counters" do
           panel "Silver subscriptions" do
-            Statistics.last.silver
+            Statistics.last.try(:silver)
           end  
         end
         div :class => "total_counters" do
           panel "Gold subscriptions" do
-            Statistics.last.gold
+            Statistics.last.try(:gold)
           end  
         end
         div :class => "total_counters" do
           panel "Free subscriptions" do
-            Statistics.last.platinum
+            Statistics.last.try(:platinum)
           end  
         end
         div :class => "total_counters" do
           panel "Logs" do
-            Statistics.last.logs
+            Statistics.last.try(:logs)
           end  
         end
         div :class => "total_counters" do
           panel "Projects" do
-            Statistics.last.projects
+            Statistics.last.try(:projects)
           end  
         end
         div :class => "total_counters" do
           panel "Customers" do
-            Statistics.last.customers
+            Statistics.last.try(:customers)
           end  
         end
         div :class => "total_counters" do
           panel "Users" do
-            Statistics.last.users
+            Statistics.last.try(:users)
           end  
         end
       end

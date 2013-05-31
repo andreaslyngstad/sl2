@@ -2,10 +2,13 @@
 
 FactoryGirl.define do
   factory :subscription do
+    active true
+    paymill_id "test"
     email
     name 
     firm
     plan
+    
     
   end 
 end

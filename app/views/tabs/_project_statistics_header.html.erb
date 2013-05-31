@@ -1,0 +1,14 @@
+<div class="log_menu">
+	<div class="range" >	   
+	    <div id="range_date_fields_graphs" data-klass="<%= @klass.class %>" data-id="<%= @klass.id %>">
+		  	<%= text_field_tag 'from',{},  :class => "range_date_graphs"%>
+			<%= text_field_tag 'to',{}, :class => "range_date_graphs"  %>
+		</div> 
+   	</div>
+    <div class="logs_pr_date">
+  		<select class="small_selector" id="stats">
+          	<option value="project_users_logs">Users</option>
+		  	<option value="project_todos_logs">Tasks</option>   
+      	</select>
+    </div> 
+</div>

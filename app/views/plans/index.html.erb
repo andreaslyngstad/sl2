@@ -92,7 +92,11 @@
 		<% @plans.each do |plan| %>
 			<td class="<%=  current_plan_style(plan) %>">
 				<% if current_firm.plan == plan && current_firm.plan.name != "Free"%>
+				<% if current_firm.closed %>
+					<%= link_to "Sign up", new_subscription_path(:plan_id => plan.id), :class => "submit" %>
+				<% else %>
 					<%= link_to "Cancel Plan?", plans_cancel_path, :class => "red_font"%>
+				<% end %>
 				<% elsif current_firm.plan == plan && current_firm.plan.name == "Free" %>
 					<%= link_to "Delete Firm?", current_firm, :confirm => "Are you sure?", :class => "red_font", :title => "Delete Firm", :method => :delete %>
 	          	<% else %>	

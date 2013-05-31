@@ -12,10 +12,16 @@
 </head>
 <body> 
 	<span class="current_firm_data" data-clockFormat="<%= current_firm.clock_format%>" data-timeFormat="<%= current_firm.time_format %>" data-dateFormat="<%= current_firm.date_format %>"></span>
- <div id="main">
+ <div id="main"> 
 <%= render "layouts/header" %>
 <div id="wrapper">
 <div id="all_container">
+  <% if current_firm.closed %>
+    <div class="not_paid_announcement">
+        <p style="font-size:15px"><%= t "message.closed_message_html", plan: current_firm.plan.name %>
+      </p>
+      </div>
+      <% end %>
 	<%= yield(:help)%>
 <div id="navigation" class="hor_scroll ver_down_on_help">
 	<ul>

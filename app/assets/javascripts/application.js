@@ -22,6 +22,7 @@
 //= require log_tracking
 //= require employees
 //= require subscriptions
+//= require sl_graphs
 
 //= require timesheet
 //= require strftime-min.js
@@ -50,25 +51,19 @@
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 })
-
+function set_date_format_str(){
+  var dateformat = $('.current_firm_data').data("dateformat")
+  if (dateformat =="1"){
+            return '%d.%m.%y'
+          }else if (dateformat =="2") {
+            return '%m/%d/%y'
+          };
+} 
 
 jQuery.fn.set_date_format = function(){
-  var dateformat = $('.current_firm_data').data("dateformat")
-  var date = new Date($(this).data("date"))
-  
-  if (dateformat == 1){
   	$.each($('.date_format_setter'),function(k,v){
-  		$(v).html(strftime('%d.%m.%y', new Date($(v).data("date"))))
+  		$(v).html(strftime(set_date_format_str(), new Date($(v).data("date"))))
   	});
-    
-  }else if (dateformat == 2)
-  {
-  	$.each($('.date_format_setter'),function(k,v){
-  		$(v).html(strftime('%m/%d/%y', new Date($(v).data("date"))))
-  	});
-    
-  }
-  
 }
 jQuery.fn.set_clock_format = function(){
   var clockformat = $('.current_firm_data').data("clockformat")
@@ -219,14 +214,39 @@ jQuery.fn.reopen_project = function(){
 };
     
 jQuery.fn.activate_projects_no_button = function(){
-	$(this).click(function(){
-		if (confirm("The project, all its tasks, logged hours and milestones will be arcivated. You'll find the project in the arcivated projects page, where you can reopen it or delete it.")){
-		
-		$('.spinning').show();
-		var id = $(this).attr("data-id")
-  	$.get("/activate_projects/" + id)}
+  $(this).click(function(){
+    if (confirm("The project, all its tasks, logged hours and milestones will be arcivated. You'll find the project in the arcivated projects page, where you can reopen it or delete it.")){
+    
+    $('.spinning').show();
+    var id = $(this).attr("data-id")
+    $.get("/activate_projects/" + id)}
     });
-	
+  
+};
+jQuery.fn.set_buget_width = function(){
+    var procent = this.data("procent") * 100
+    console.log(isNaN(procent))
+
+    if (this.data("procent") == "Infinity"){
+      $(this).css("width", "100%")
+        $(".budget_red").css("width", "0%")
+        $(".budget_red").html("")
+        $(this).html("<p>No set</p>")
+
+    }else if(procent < 1) {
+      var invert_procent = 100 - procent
+      $(this).css("width", procent + "%")
+      $(this).html(procent+ "%<p>spent</p>")
+      // $(this).css("color", "white")
+      $(".budget_red").css("width", invert_procent + "%")
+      $(".budget_red").html(invert_procent+ "%<p>left</p>")
+      
+    }else if(procent > 1){
+      $(this).css("width", "100%")
+      $(".budget_red").css("width", "0%")
+      $(".budget_red").html("")
+      $(this).html(procent+ "%<p>spent</p>")
+    }
 };
 
 
@@ -336,7 +356,8 @@ $(document).ready(function() {
 	$(".activate_project").activate_projects();
 	$(".reopen_project").reopen_project();
 	$(".activate_projects_no_button").activate_projects_no_button();
-	
+	$(".budget_green").set_buget_width()
+  
 
  $(".background_style_color").css({"background-color":$("input.background_style").val()})
   $(".text_style_color").css({"background-color":$("input.text_style").val()})

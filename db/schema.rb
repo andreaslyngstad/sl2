@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101029201147) do
+ActiveRecord::Schema.define(:version => 20101029201150) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -46,6 +46,14 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
+  create_table "blogs", :force => true do |t|
+    t.text     "title"
+    t.text     "content"
+    t.text     "author"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "customers", :force => true do |t|
     t.text     "name"
     t.text     "phone"
@@ -79,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
     t.text     "currency"
     t.text     "language"
     t.text     "time_zone"
+    t.boolean  "closed"
     t.integer  "time_format"
     t.integer  "date_format"
     t.integer  "clock_format"
@@ -99,6 +108,20 @@ ActiveRecord::Schema.define(:version => 20101029201147) do
 
   add_index "firms", ["plan_id"], :name => "index_firms_on_plan_id"
   add_index "firms", ["subdomain"], :name => "index_firms_on_subdomain"
+
+  create_table "guides", :force => true do |t|
+    t.text     "title"
+    t.text     "content"
+    t.integer  "guides_category_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "guides_categories", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "logs", :force => true do |t|
     t.text     "event"

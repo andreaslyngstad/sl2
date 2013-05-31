@@ -20,7 +20,7 @@ class TimerangeController < ApplicationController
   end
   
   def logs_pr_date
-    @customers = current_firm.customers.includes(:employees)
+    @customers = current_firm.customers
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]}) 
     find_logs_on(params[:url], timerange(params[:time])) 
     respond_to do |format|
@@ -59,6 +59,6 @@ class TimerangeController < ApplicationController
     else
       logs_on = eval(url).find(params[:id])
     end
-    @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee )
+    @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee,:firm )
   end
 end

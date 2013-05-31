@@ -1,59 +1,84 @@
 @import "jquery-ui-1.8.7custom";
 @import "jquery.ui.selectmenu";
+
+/*Opera Fix*/
+body:before {/* thanks to Maleika (Kohoutec)*/
+content:"";
+height:100%;
+float:left;
+width:0;
+margin-top:-32767px;/* thank you Erik J - negate effect of float*/
+}
+
+
+
+/* IMPORTANT
+
+You also need to include this conditional style in the <head> of your HTML file to feed this style to IE 6 and lower and 8 and higher.
+
+<!--[if !IE 7]>
+	<style type="text/css">
+		#wrap {display:table;height:100%}
+	</style>
+<![endif]-->
+
+*/
 html,body {margin:0;padding:0;font-family: Tahoma, sans-serif; font-weight: lighter; letter-spacing:1px; height: 100%; }
 img {border:none;}
 .container {
-position: relative;
-min-height: 900px;
+text-align:center;
+min-height:95%;
 background: white;
 width: 900px;
+margin:0;
 margin: 0 auto;
-padding: 5px 0 0 0;
+}
+a{
+	text-decoration:none;
+	color:#d3360b;
+}
+a:hover{
+	
+	text-decoration:none;
+	color:grey;
+}
+#main {overflow:auto;
+	padding-bottom: 80px;}
 
+#login_link{
+	text-align: right;
+	cursor: pointer;
 }
 #front_logo{
-position: absolute;
-left: 210px;
-top:75px;
-}
+	margin-bottom:50px;
+	}
 .video_container{
-display:none;
-position: absolute;
-top: 180px;
-left: 130px;
+text-align:center;
 }
-.hands_container{
-position: absolute;
 
-top: 341px;
-left: 200px;
-}
 
 .start_video{
-position: absolute;
-top: 300px;
-left: 418px;
-cursor: pointer;
+	margin-top:150px;
+	margin-bottom:20px;
+	cursor:pointer;
 }
 .on{
 opacity: .8;
 }
 .play_a_video{
-position: absolute;
-top: 370px;
-left: 385px;
+text-align:center;
 	
 }
-
+.signup_wrapper{
+margin-top:200px;
+}
 .signup_button_link{
 background: #0230BA;
 color:#fff;
 text-align: center;
 text-decoration: none;
 line-height:50px;
-position: absolute;
-top: 550px;
-left: 350px;
+
 border:1px solid #ddd;
 height:50px;
 width:200px;
@@ -63,17 +88,37 @@ cursor:pointer;
 .signup_button_link:hover{
 background: #0230ee;
 }
-#footer_reg{
-position: absolute;
-top: 600px;
-left: 140px;
-
+.terms{
+	text-align:left;
 }
+.terms ol{
+	
+}
+.terms ol li{
+	padding:10px;
+}
+.contact{
+	text-align: left;
+}
+#footer {
+	width:900px;
+	margin:0 auto;
+	position: relative;
+	margin-top: -80px; /* negative value of footer height */
+	height: 80px;
+	clear:both;}
+// #footer_reg{
+// 	margin:0 auto;
+// 	width:900px;
+// 	padding-left:75px;
+// float:left;
+// text-align: left;
+// }
 .footer-col{
-font-size: 11px;
+font-size: 13px;
 color: #777;
 float: left;
-max-width: 200px;
+width: 185;
 margin: 15px 20px 20px 20px;
 
 }
@@ -85,11 +130,8 @@ color: #777;
 list-style: none;
 }
 #register_container{
-position:absolute;
-top: 180px;
-left:150px;
+text-align:left;
 width:600px;
-display: block;
 margin: 0 auto 0 auto;
 }
 #registration{
@@ -113,8 +155,8 @@ margin-top:20px;
 padding: 20px 0 0 0 ;
 border:1px solid #999;
 }
-.register_firm, .first_user,.new_user{
-	margin-left: 20px;
+.register_firm, .first_user{
+	
 }
 .preferences{
 	margin-left: 20px;
@@ -153,7 +195,14 @@ display: block;
 position: relative;
 height: 60px;
 width: 550px;
+margin-left: 20px;
 
+}
+.edit_firm .signup-form-field{
+	height: 45px;
+}
+.edit_firm .submit{
+	margin-left:-170px;
 }
 .signup .background_style,.signup .text_style,  {
 
@@ -211,7 +260,19 @@ color: white;
 .signup .submit:hover, .update .submit:hover{
 background: #2E8D11;
 }
-
+.signup_button{
+background:#323CED;
+padding:10px; font-size:15px;
+letter-spacing: 1px;
+color: white;
+text-decoration:none;
+}
+.signup_button:hover{
+background:#0B16DB;
+letter-spacing: 1px;
+cursor:pointer;
+text-decoration:none;
+}	
 
 .open_not_required, .close_not_required{
   cursor:pointer;
@@ -238,4 +299,72 @@ background: #2E8D11;
  width: 500px;
  height: 200px;
  float:left;
+ text-align:left;
+}
+
+.guides{
+	text-align:left;
+}
+.guides_left{
+	float: left;
+	width:200px;
+}
+.guides_left ul{
+	padding:0px 0px 20px 20px;
+	list-style:none;
+}
+.guides_left ul li{
+	font-size: 20px;
+}
+.guides_left ul li ul li{
+	font-size: 15px;
+}
+.guides_right{
+	float: left;
+	width:700px;
+}
+.guides_right ol{
+counter-reset:li; /* Initiate a counter */
+    margin-left:0; /* Remove the default left margin */
+    padding-left:0; /* Remove the default left padding */
+}
+.guides_right ol > li {
+    position:relative; /* Create a positioning context */
+    margin:10px 0px 6px 15px; /* Give each list item a left margin to make room for the numbers */
+   	padding:0px 15px; /* Add some spacing around the content */
+    list-style:none; /* Disable the normal item numbering */
+}
+.guides_right ol>li:before {
+
+background: #0230BA;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+color: #FFF;
+content: counter(li);
+counter-increment: li;
+display: block;
+font-size: 15px;
+font-weight: bold;
+left: -12px;
+
+position: absolute;
+top: 0;
+margin: 0;
+padding: 0px;
+text-align: center;
+width: 25px;
+}
+.blogs{
+	text-align:left;
+}
+.blogs h2{
+	margin:0px;
+}
+.blogs h2 a{
+	margin:0px;
+}
+.blogs p.author{
+	margin:0px;
+	font-size:13px;
 }

@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
     if current_user.role == "External user"
       @projects = current_user.projects.includes(:firm)
     else
-      @projects = current_firm.projects.where(:active => true).order_by_name
+      @projects = current_firm.projects.where(:active => true).order_by_name.includes(:firm)
     end
   end
   def edit

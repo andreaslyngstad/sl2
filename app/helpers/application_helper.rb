@@ -1,7 +1,7 @@
 module ApplicationHelper
 	
   def current_firm
-    @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
+     @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
     # return @current_firm if defined?(@current_firm)
     # @current_firm = current_user.firm
   end
@@ -33,7 +33,7 @@ module ApplicationHelper
   end 
    
   def all_projects
-    @all_projects ||= current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
+    @all_projects ||= current_user.projects.where(["active = ?", true])
   end 
    
   def all_customers

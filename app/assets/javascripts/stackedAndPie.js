@@ -1,6 +1,7 @@
 function stackedAndPie(data, ColorArray) {
   	var labels = data.stacked.map(function(d){return d.key});
 	var pieIdIncrement = labels.length;
+	$("text[x='0']").fixDateformat()
 	if(!Array.prototype.last) {
     Array.prototype.last = function() {
         return this[this.length - 1];
@@ -110,8 +111,8 @@ function stackedAndPie(data, ColorArray) {
 	    
 	    chart.xAxis
 	        .showMaxMin(false)
-	        .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
-	        
+	        .tickFormat(function(d) { return d3.time.format(set_date_format_str())(new Date(d)) });
+	     
 	    chart.yAxis
 	        .tickFormat(d3.format(','));
 	  	

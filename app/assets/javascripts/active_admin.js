@@ -1,22 +1,22 @@
 //= require active_admin/base
 //= require nvd3/lib/d3.v2 
 //= require jquery.xcolor.min
-//= require nvd32/src/core
-//= require nvd32/src/utils
-//= require nvd32/src/models/axis
-//= require nvd32/src/tooltip
-//= require nvd32/src/models/legend
-//= require nvd32/src/models/axis
-//= require nvd32/src/models/scatter
-//= require nvd32/src/models/stackedArea
-//= require nvd32/src/models/stackedAreaChart
-//= require nvd32/src/models/pie
-//= require nvd32/src/models/pieChart
-//= require nvd32/src/models/line
-//= require nvd32/src/models/lineWithFocusChart
+//= require nvd3/src/core
+//= require nvd3/src/utils
+//= require nvd3/src/models/axis
+//= require nvd3/src/tooltip
+//= require nvd3/src/models/legend
+//= require nvd3/src/models/axis
+//= require nvd3/src/models/scatter
+//= require nvd3/src/models/stackedArea
+//= require nvd3/src/models/stackedAreaChart
+//= require nvd3/src/models/pie
+//= require nvd3/src/models/pieChart
+//= require nvd3/src/models/line
+//= require nvd3/src/models/lineWithFocusChart
 
-//= require nvd32/src/models/discreteBar
-//= require nvd32/src/models/discreteBarChart
+//= require nvd3/src/models/discreteBar
+//= require nvd3/src/models/discreteBarChart
 //= require colorArrays
 //= require stackedAndPie
 

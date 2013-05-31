@@ -13,6 +13,7 @@ ActiveAdmin.register Plan do
     column :customers
     column :projects
     column :users
+    column :paymill_id
     default_actions 
   end
   filter :name
@@ -20,4 +21,16 @@ ActiveAdmin.register Plan do
   member_action :firms do
     @plan = Plan.find(params[:id])
   end
+  form do |f|
+    f.inputs "Details" do
+      f.input :name,:as => :string
+      f.input :price 
+      f.input :logs
+      f.input :customers
+      f.input :projects
+      f.input :users
+      f.input :paymill_id,:as => :string
+        end
+      f.buttons
+    end
 end

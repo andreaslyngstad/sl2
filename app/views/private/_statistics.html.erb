@@ -1,16 +1,8 @@
-<% javascript 'sl_graphs.js' %>
-<% content_for :help do %>
-<div class="page_help">
-	<div class="page_help_container">
-		<%= t "help.statistics_html" %>
-	</div>
-</div>
-<% end %>
 <div class="one_month_back" data-lastmonth="<%= date_format(Date.today - 1.month) %>" data-today="<%= date_format(Date.today) %>"></div>
-  	<div id="stacked" style="float:left;">		
-  		<svg style="height:360px;width:600px;"></svg>
-  	</div>
-  	<div id="pie">	
-  		<svg style="height:380px; width:380px;"></svg>
-  	</div>
-	<ul id="legend"></ul>​
+<div id="stacked" style="float:left;">		
+	<svg style="height:360px;width:600px;"></svg>
+</div>
+<div id="pie">	
+	<svg style="height:380px; width:380px;"></svg>
+</div>
+<ul id="legend"></ul>​

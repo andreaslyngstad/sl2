@@ -13,12 +13,20 @@ class Log < ActiveRecord::Base
   validate :log_made_on_current_firm
   validate :log_made_on_project
   validate :end_time_before_begin_time
+  validate :made_with_in_limit, :on => :create
   
+  
+  def made_with_in_limit
+    errors.add(:customer_id, "You have reached your plans limit of #{firm.plan.logs} logs. Please upgrade.") if
+    PlanLimit.new.over_limit?(firm.logs_count, firm.plan.logs)
+  end 
+
   def self.log_reflections
     arr = reflections.collect{|a, b| b.class_name.downcase if b.macro==:belongs_to}.compact.uniq
     arr.delete("firm")
     arr
   end
+  
   def check_if_current_firm 
     Log.log_reflections.map do |ass|  
       parent = eval(ass)

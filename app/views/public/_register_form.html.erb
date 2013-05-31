@@ -43,7 +43,9 @@
 		<%= firm.select :clock_format, options_for_select([['24 hours', 1], ['12 hours', 2]]),{},:class => "form-input" %>	    
     </div>
 	</div>
-  <%= firm.submit "next", :class => "submit" %>
+    <div class="signup-form-field">
+        <%= firm.submit "next", :class => "submit" %>
+    </div>
 <% end %>
 <div class="open_not_required_container">
     <a href="" class="open_not_required" title="Fill in not required field"></a>

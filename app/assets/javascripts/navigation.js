@@ -28,7 +28,7 @@ $(function() {
 		$("#month_week_tabs a.current_link").removeClass("current_link");	
 		$("#html_tabs a:contains(" + tab_text + ")").addClass("current_link");
 		if(tab_text == "Home_user" ){$("#html_tabs a:contains(User)").addClass("current_link");}
-		if(tab_text == "edit" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
+		if(tab_text == "Firm_edit" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Firm_update" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Reports" ){$("#html_tabs a:contains(Reports)").addClass("current_link");}
 		if(tab_text == "Report_for" ){$("#html_tabs a:contains(Reports)").addClass("current_link");}
