@@ -1,10 +1,11 @@
 $(".flash_notice").empty()
-$(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>");
+$(".flash_notice").append("<%= j(flash.discard(:notice))%>");
 $("#form_holder").empty();
-$("#form_holder").append("<%= escape_javascript(render(:partial => "stop_tracking", :locals => {:log => @log })) %>");
+$("#form_holder").append("<%= j(render(:partial => "stop_tracking", :locals => {:log => @log })) %>");
 $("#index_log_header").animate({ top: 279}, 400) 
 $("#index_logs").animate({marginTop: 340}, 400)
-$("#head_log").after("<%= escape_javascript(render(:partial => @log)) %>");
+$("#head_log").after("<%= j(render(:partial => @log)) %>");
+$('.log_event_recording').save_while_typing()
 $(".clock_rec").stopwatch();
 $(".open_tracking_select").UIdialogs_tracking_logs_links();
 $(".stop_tracking_form").tracking_logs_WithAjax();

@@ -1,13 +1,7 @@
-require "selenium-webdriver"
-require "rspec"
-require "support/subdomain_login"
-include SubdomainLogin
-include RSpec::Expectations
-  
+require "support/selenium_helper"
 describe "TimesheetSpec" do
-  login_at_subdomain  
-  
-  it "test_timesheet_spec" do 
+  login_at_subdomain       
+  it "test_timesheet_spec" do  
     # FactoryGirl.create(:user, firm: user.firm, name: "abc" )
     @driver.get(@base_url + "/users")
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*user[\s\S]*$/
@@ -112,7 +106,7 @@ describe "TimesheetSpec" do
     @driver.find_element(:id, "new_log_submit").click
   end
   
-  def element_present?(how, what)
+  def element_present?(how, what) 
     @driver.find_element(how, what) 
     true
   rescue Selenium::WebDriver::Error::NoSuchElementError
@@ -130,7 +124,7 @@ describe "TimesheetSpec" do
     if (@accept_next_alert) then
       alert.accept()
     else
-      alert.dismiss()
+      alert.dismiss() 
     end
     alert.text
   ensure

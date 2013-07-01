@@ -1,33 +1,11 @@
 module ApplicationHelper
-	
   def current_firm
-     @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
-    # return @current_firm if defined?(@current_firm)
-    # @current_firm = current_user.firm
+    @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
+   
+  # return @current_firm if defined?(@current_firm)
+  # @current_firm = current_user.firm
   end
-  def date_format(date,options = {} )
-    if options[:short]
-      if current_firm.date_format == 1
-        date.strftime("%d.%m.%y")
-      elsif current_firm.date_format == 2 
-        date.strftime("%m/%d/%y")
-      end
-    else
-      if current_firm.date_format == 1
-        date.strftime("%d.%m.%Y")
-      elsif current_firm.date_format == 2 
-        date.strftime("%m/%d/%Y")
-      end
-    end
-  end
-  def clock_format(time,options = {} )
-      if current_firm.clock_format == 1
-        time.strftime("%H:%M")
-      elsif current_firm.clock_format == 2 
-        time.strftime("%I:%M%P")
-      end
-  end
-  
+
   def all_users
     @all_users ||= current_firm.users.order("name")
   end 
@@ -44,6 +22,12 @@ module ApplicationHelper
     end
   end
   
+  def time_zone_now
+    #exchange for Time.now
+    Time.zone = current_firm.time_zone
+    return Time.now.in_time_zone
+  end
+
 	def truncate_string(text, length = 18, truncate_string = '...')
      if text.nil? then return end
      l = length - truncate_string.length
@@ -61,43 +45,7 @@ module ApplicationHelper
 			end
 		end
 	end
-	def time_diff(time)
-  	seconds    	=  (time % 60).to_i
-    time 		= (time - seconds) / 60
-    minutes    	=  (time % 60).to_i
-    time 		= (time - minutes) / 60
-    hours      	=  (time).to_i
-    if minutes == 0 
-    	return hours.to_s + ":00"
-    elsif minutes < 10
-    	return hours.to_s + ":0" + minutes.to_s
-	else
-  		return hours.to_s + ":" + minutes.to_s
-  	end
-  end
-	def done_not_done(done_todos, not_done_todos)
-  	done = done_todos.count
-  	not_done = not_done_todos.count	
-  	donepr = (done / (done + not_done).to_f)*100
-  	not_donepr = (not_done / (done + not_done).to_f)*100
-  	donepr.round(2).to_s + "%"
-  end
- 	def url_splitter(url)
- 		url.split("/").first
- 	end	 
- 	def url_splitter2(url)
- 		url.split("/").third
- 	end	
- 	def todo_priority(prior)
- 	  case
- 	  when prior == 3
- 	    "todo_red"
- 	  when prior == 2
- 	    "todo_yellow"
- 	  when prior == 1
- 	    "todo_green"
- 	  end
- 	end 
+
   #for devise
   def resource_name
     :user
@@ -114,5 +62,4 @@ module ApplicationHelper
   def prices_to_currency(price)
     number_to_currency price, unit: "$", strip_insignificant_zeros: true
   end
-  
 end

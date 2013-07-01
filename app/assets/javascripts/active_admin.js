@@ -63,7 +63,6 @@ nv.addGraph(function() {
 }
 
 function firmResorses(data) {
-	console.log(data)
 nv.addGraph(function() {
   var chart = nv.models.lineWithFocusChart()
 		.x(function(d) { return d[0] })
@@ -85,7 +84,6 @@ nv.addGraph(function() {
 });
 };
 function newFirms(data) {
-	console.log(data)
 nv.addGraph(function() {
   var chart = nv.models.lineWithFocusChart()
 		.x(function(d) { return d[0] })

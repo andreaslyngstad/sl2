@@ -1,0 +1,29 @@
+<div id="left" class="home_content">
+<%= render "shared/home_header" %>
+  	<div class="html_tab_content" id="tabs-1"> 
+	
+<table class="report_table">
+<tr>
+<th class="report_event">Evnet</th>
+<th class="report_hours">Hours</th>
+<th class="report_user">User</th>
+<th class="report_project">Customer</th>
+<th class="report_customer">Project</th>
+<th class="report_date">Date</th>
+</tr>
+<% if @logs %>
+<% @logs.each do |log| %>
+<tr>
+<td class="report_event"><%= log.event %></td>
+<td class="report_hours"><%= time_format(log.hours )%></td>
+<td class="report_user"><%= log.user.try(:name) %></td>
+<td class="report_project"><%= log.customer.try(:name) %></td>
+<td class="report_customer"><%= log.project.try(:name) %></td>
+<td class="report_date"><%= date_format(log.log_date) %></td>
+</tr>
+<% end %>
+<% end %>
+</table>
+  		
+	</div>
+ </div>

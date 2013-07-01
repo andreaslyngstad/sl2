@@ -29,10 +29,11 @@ class Milestone < ActiveRecord::Base
   def self.user_milestones_two_weeks(firm, user)
     where(:firm_id => firm.id, :project_id => user.projects, :due => Time.current - 1.year..Time.current + 1.week).order("due ASC")
   end
-  def self.user_milestones_overdue(firm, user)
-    where(:firm_id => firm.id, :project_id => user.projects).where(["due < ?",  Date.today])
-  end
-  
+
+  # comment 06.06.13
+  # def self.user_milestones_overdue(firm, user)
+  #   where(:firm_id => firm.id, :project_id => user.projects).where(["due < ?",  Date.today])
+  # end
   def overdue?
     due < Date.today
   end 

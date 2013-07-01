@@ -19,7 +19,19 @@ describe SubscriptionsController do
       response.should be_success
     end 
   end
-
+# comment 06.06.13
+# describe "GET #show" do
+#     it "assigns the requested project to @project" do
+#       @subscription = FactoryGirl.create(:subscription, :firm => @user.firm)
+#       get :show, :id => @subscription
+#       assigns(:subscription) == [@subscription] 
+#     end
+#     it "renders the #show view" do
+#       @subscription = FactoryGirl.create(:subscription, :firm => @user.firm)
+#       get :show, :id => @subscription
+#       response.should render_template :show
+#     end
+#   end
   describe "POST create", :vcr do
     let(:subscription) { mock_model(Subscription).as_null_object }
 
@@ -43,6 +55,29 @@ describe SubscriptionsController do
        post :create
       response.should redirect_to(:controller => "plans", :action => "index")
     end
+  end 
+  describe 'DELETE destroy', :vcr do
+    let(:firm)          { FactoryGirl.create(:firm)}
+    let(:subscription)  { FactoryGirl.create(:subscription, firm_id: firm.id, paymill_id: "test")}
+    let(:plan)          { FactoryGirl.create(:plan, name: 'Free')}
+   
+    it "deletes the subscription" do
+      old_subscription = firm.subscription
+      delete :destroy, id: old_subscription
+      Subscription.where(firm_id: @user.firm.id).first.plan.name.should == 'Free'
+      @user.firm.subscription.should_not == old_subscription  
+      expect{Subscription.find(old_subscription.id)}.to raise_error(ActiveRecord::RecordNotFound)   
+    end
+    
+    it "redirects to project#index" do
+      delete :destroy, id: subscription
+      response.should redirect_to plans_url
+    end
+    it "shows flach notice" do
+      delete :destroy, id: subscription
+      flash[:notice].should == "<span style='color:#FFF'>You are now on the free plan.</span>"
+    end
+
   end
 end
 

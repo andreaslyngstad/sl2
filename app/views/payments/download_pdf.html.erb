@@ -1,0 +1,54 @@
+<div style="width:800px;font-family: monospace;" >
+<div style="float:left; margin-right:100px;"><%= image_tag(Rails.root.join('app/assets/images/squadlink.png')) %></div>
+<div style="float:left">Åsheim<br>1820 Spydeberg<br>Norway<br>support@squadlink.com<br>MVA985002975</div>
+<div style="float:left">
+<h3>Invoice for <%= current_firm.name %> @ the <%= (current_firm.plan.name).downcase  %> plan</h3>
+<p>Paid in full up to date. No payment is due.</p>
+<p>Prices exclude VAT.</p>
+-----------------------------------------------
+<table style="width:400px;">
+			<tr>
+				<td>
+					Date
+				</td>
+				<td>
+					<%= date_format(@payment.created_at) %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Plan
+				</td>
+				<td>
+					<%= @payment.plan_name %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Card type
+				</td>
+				<td>
+					<%= @payment.card_type %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Card number
+				</td>
+				<td>
+					**** **** **** <%= @payment.last_four %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Amount
+				</td>
+				<td>
+					<%= number_to_currency(@payment.amount) %> 
+				</td>
+			</tr>
+</table>
+-----------------------------------------------
+<p>Thank you for subscribing!</p>
+</div>
+</div>

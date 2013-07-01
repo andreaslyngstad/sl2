@@ -65,6 +65,7 @@ GEM
     builder (3.0.4)
     bullet (4.3.1)
       uniform_notifier
+    callsite (0.0.11)
     cancan (1.6.9)
     capistrano (2.14.2)
       highline
@@ -81,6 +82,8 @@ GEM
       xpath (~> 1.0.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (0.0.5)
+      nokogiri
     chronic (0.9.1)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -101,9 +104,9 @@ GEM
     debug_inspector (0.0.2)
     debugger (1.4.0)
       columnize (>= 0.3.1)
-      debugger-linecache (~> 1.1.1)
+      debugger-linecache (~> 1.2.0)
       debugger-ruby_core_source (~> 1.2.0)
-    debugger-linecache (1.1.2)
+    debugger-linecache (1.2.0)
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.2.0)
     devise (2.2.3)
@@ -139,7 +142,7 @@ GEM
     has_scope (0.5.1)
     headless (1.0.1)
     highline (1.6.15)
-    hike (1.2.1)
+    hike (1.2.2)
     http_parser.rb (0.5.3)
     i18n (0.6.4)
     inherited_resources (1.3.1)
@@ -154,7 +157,7 @@ GEM
     jquery-ui-rails (2.0.2)
       jquery-rails
       railties (>= 3.1.0)
-    json (1.7.7)
+    json (1.8.0)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -164,9 +167,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    meta_request (0.2.1)
+    meta_request (0.2.6)
+      callsite
       rack-contrib
-      rails
+      railties
     meta_search (1.1.3)
       actionpack (~> 3.1)
       activerecord (~> 3.1)
@@ -174,10 +178,10 @@ GEM
       polyamorous (~> 0.5.0)
     metaclass (0.0.1)
     method_source (0.8.1)
-    mime-types (1.21)
+    mime-types (1.23)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
-    multi_json (1.6.1)
+    multi_json (1.7.5)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.1)
@@ -194,6 +198,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.0)
       mime-types
+    pdfkit (0.5.4)
     pg (0.14.1)
     poltergeist (1.1.0)
       capybara (~> 2.0, >= 2.0.1)
@@ -234,7 +239,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.0.3)
+    rake (10.0.4)
     rb-inotify (0.9.0)
       ffi (>= 0.5.0)
     rdoc (3.12.2)
@@ -291,12 +296,12 @@ GEM
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
-    thor (0.17.0)
-    tilt (1.3.4)
+    thor (0.18.1)
+    tilt (1.4.1)
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.36)
+    tzinfo (0.3.37)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
@@ -327,6 +332,7 @@ DEPENDENCIES
   cancan
   capistrano
   capybara
+  chromedriver-helper
   coffee-rails (~> 3.2.1)
   database_cleaner
   debugger
@@ -338,10 +344,11 @@ DEPENDENCIES
   jbuilder
   jquery-rails (= 2.1.3)
   jquery-ui-rails (= 2.0.2)
-  meta_request (= 0.2.1)
+  meta_request
   newrelic_rpm
   paperclip
   paymill!
+  pdfkit
   pg
   poltergeist
   quiet_assets

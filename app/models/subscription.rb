@@ -1,5 +1,5 @@
 class Subscription < ActiveRecord::Base
-  attr_accessible :name, :email, :paymill_id, :paymill_card_token, :plan_id,:firm_id, :plan, :firm, :next_bill_on 
+  attr_accessible :name, :email, :paymill_id, :paymill_card_token, :plan_id,:firm_id, :plan, :firm, :next_bill_on, :card_holder
   belongs_to :plan
   belongs_to :firm
   validates_presence_of :plan_id 

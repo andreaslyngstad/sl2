@@ -28,16 +28,7 @@ class TodosController < ApplicationController
       end
     end
   end
-  def todos_done
-    respond_to do |format|
-      if todo.update_attributes(params[:todo])
-        flash[:notice] = flash_helper('Task was successfully updated.')
-        format.js
-      else
-        format.js
-      end
-    end
-  end
+
   def destroy
     todo.destroy
     flash[:notice] = flash_helper('Task was successfully deleted.')

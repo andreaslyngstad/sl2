@@ -45,7 +45,7 @@
         </div>
 
         <div class="statistics_unit one_number white statistics_unit_budget">
-          <div class="budget_green" data-procent="<%= ProjectPrice.set_procentage(@klass)%>"><p>spent</p></div>
+          <div class="budget_green" data-procent="<%= ProjectPrice.set_procentage(@klass)%>" data-budget="<%= @klass.budget %>"><p>spent</p></div>
           <div class="budget_red"><p>left</p></div>
 			
   			</div>
@@ -54,11 +54,12 @@
  
   <div id="sub_tabs">
     <ul>
-    <li class=""><a href="#tabs-1" data-url="/tabs/todos/<%= @klass.id %>/<%= @klass.class %>">Tasks</a></li>
-    <li class=""><a href="#tabs-2" data-url="/tabs/logs/<%= @klass.id %>/<%= @klass.class %>">Logs</a></li>
-    <li class=""><a href="#tabs-3" data-url="/tabs/milestones/<%= @klass.id %>/<%= @klass.class %>">Milestones</a></li>
+    <li class=""><a href="#tabs-1" data-url="/tabs/tabs_todos/<%= @klass.id %>/<%= @klass.class %>">Tasks</a></li>
+    <li class=""><a href="#tabs-2" data-url="/tabs/tabs_logs/<%= @klass.id %>/<%= @klass.class %>">Logs</a></li>
+    <li class=""><a href="#tabs-3" data-url="/tabs/tabs_milestones/<%= @klass.id %>/<%= @klass.class %>">Milestones</a></li>
     <li class=""><a href="#tabs-4">Users</a></li>
-    <li class=""><a href="#tabs-5" data-url="/tabs/statistics/<%= @klass.id %>/<%= @klass.class %>">Statistics</a></li>
+    <li class=""><a href="#tabs-5" data-url="/tabs/tabs_statistics/<%= @klass.id %>/<%= @klass.class %>">Statistics</a></li>
+    <li class=""><a href="#tabs-6" data-url="/tabs/tabs_spendings/<%= @klass.id %>/<%= @klass.class %>">Spendings</a></li>
     </ul>
     <span class="nav_line"></span>
     </div>
@@ -99,6 +100,7 @@
   	</div>
     </div> 
     <div class="tab_box hide has_url" id="tabs-5"></div>
+    <div class="tab_box hide has_url" id="tabs-6"></div>
   </div>
 </div>  
 </div> 

@@ -8,7 +8,7 @@ module LogWorker
     log.firm = firm
     log.tracking = false
     if log.todo
-      check_todo_on_log(log, done)
+      check_todo_on_log(log, user, done)
     end
     log
   end
@@ -21,13 +21,9 @@ module LogWorker
     log
   end
   
-  def check_todo_on_log(log, done)
-    if done == "1"
-         log.todo.completed = true
-         log.todo.save!
-    elsif done.nil?
-         log.todo.completed = false
-         log.todo.save!
-    end
+  def check_todo_on_log(log, user, done)
+    log.todo.done_by_user = user
+    log.todo.completed = done
+    log.todo.save!
   end 
 end

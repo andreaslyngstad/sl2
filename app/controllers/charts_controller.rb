@@ -1,8 +1,11 @@
 class ChartsController < ApplicationController
-  def admin_firms_chart
-    @firm = Firm.count_by_subscription
+  # comment on 06.06.13
+  # def admin_firms_chart
+  #   @firm = Firm.count_by_subscription
+  # end
+  def index
+    authorize! :read, Firm
   end
-  
   def users_logs  
     var_setter(params,:user)
   end
@@ -21,10 +24,12 @@ class ChartsController < ApplicationController
   def project_todos_logs
     tabs_var_setter(params,:todo) 
   end
-  def customer_users_logs
-    tabs_var_setter(params,:project) 
-  end
-
+  # def customer_users_logs
+  #   tabs_var_setter(params,:user) 
+  # end
+  # def customer_todos_logs
+  #   tabs_var_setter(params,:todo) 
+  # end
   private
   def tabs_var_setter(params,model)
     range = params[:from].to_date..params[:to].to_date

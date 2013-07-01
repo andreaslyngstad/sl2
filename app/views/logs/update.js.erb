@@ -6,7 +6,8 @@ $("#log_<%= escape_javascript(@klass.id.to_s)%>").find(".open_log_update").UIdia
 $(".total_log_time").set_hours()
 $('.date_format_setter').set_date_format()
 $('.clock_format_setter').set_clock_format()
+update_hours(<%= @klass.time %>-<%= @pre_hours %>)
+update_budget_useage(<%= @klass.time %>-<%= @pre_hours %>, <%= @klass.user.hourly_rate %>)
 $("#dialog_log").UIdialogs_links();
 $("body").find(".dialog_form:last").remove();
 $(".spinning").hide();
-

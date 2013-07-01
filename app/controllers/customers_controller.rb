@@ -6,31 +6,21 @@ class CustomersController < ApplicationController
   end
   def show
     @klass = current_firm.customers.find(params[:id])
-    @customers = current_firm.customers
     @hours = @klass.logs.sum(:hours)
     @employees = @klass.employees
-    
     @projects = @klass.projects.where(["active = ?", true]).includes(:firm)
-    @users = current_firm.users
-    @hours = @klass.logs.sum(:hours)
-    @project = Project.new(:customer => @klass)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @klass }
       format.js
     end
   end
-
-  def new
-    @customer = Customer.new   
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @customer }
-    end
-  end
   
   def edit
     @customer = Customer.find(params[:id])
+    respond_to do |format|
+        format.js 
+    end 
   end
 
   def create
@@ -39,11 +29,9 @@ class CustomersController < ApplicationController
     respond_to do |format|
       if @customer.save
       	flash[:notice] = flash_helper("#{@customer.name}" + " is added.")
-      	format.js
-        
+      	format.js  
       end
-      end
-     
+    end 
   end
 
   def update
@@ -64,23 +52,22 @@ class CustomersController < ApplicationController
       respond_to do |format|
       flash[:notice] = flash_helper('Customer was successfully deleted.')
       format.js
-    end
-   
+    end  
   end
+  # comment 06.06.13
+  # def create_project  
+  #   @project = Project.new(params[:project])
+  #   @project.firm = @firm
+  #     respond_to do |format|
+  #     if @project.save
+  #     flash[:notice] = flash_helper("Project is added.")
+  #     format.js
+  #     end
+  #   end
+  # end
   
-  def create_project  
-    @project = Project.new(params[:project])
-    @project.firm = @firm
-      respond_to do |format|
-      if @project.save
-      flash[:notice] = flash_helper("Project is added.")
-      format.js
-      end
-      end
-  end
-  
-  def update_project
+  # def update_project
     
-  end
+  # end
   
 end

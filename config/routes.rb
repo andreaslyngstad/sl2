@@ -1,5 +1,6 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
+  
   resources :blogs
   get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
   get "/pricing" => "public#pricing",  :as => :pricing
@@ -38,6 +39,7 @@ Squadlink::Application.routes.draw do
     	get "/register/:firm_id/user" => "public#first_user",  :as => :register_user
     	post "/register/:firm_id/user" => "public#create_first_user",  :as => :create_first_user
     	get "/validates_uniqe/:subdomain" => "public#validates_uniqe", :as => :validates_uniqe
+      get '/users/password/edit' =>  'devise/passwords#edit', :as => :edit_password
   	end
   
   
@@ -48,8 +50,9 @@ Squadlink::Application.routes.draw do
     delete "plans/index", :as => :plans
     get "plans/cancel", :as => :plans_cancel
     resources :subscriptions
-    get "/account" => "private#account",  :as => :account
-    
+    get "payments" => 'payments#index', :as => :payments
+    get "payments/:id" => 'payments#show', :as => :payment
+    get "payments/download_pdf/:id" => 'payments#download_pdf', :as => :download_pdf
     constraints(PaymentChecker) do
     
     devise_for  :users
@@ -59,12 +62,14 @@ Squadlink::Application.routes.draw do
     end
   end
     #chart_controller
-    match "users_logs" => "charts#users_logs",  :as => :users_logs
-    match "project_users_logs" => "charts#project_users_logs",  :as => :project_users_logs
-    match "project_todos_logs" => "charts#project_todos_logs",  :as => :project_todos_logs
-    match "customer_users_logs" => "charts#customer_users_logs",  :as => :customer_users_logs
-    match "projects_logs" => "charts#projects_logs",  :as => :projects_logs
-    match "customers_logs" => "charts#customers_logs",  :as => :customers_logs
+    get "charts" => "charts#index", :as => :charts
+    get "users_logs" => "charts#users_logs",  :as => :users_logs
+    get "project_users_logs" => "charts#project_users_logs",  :as => :project_users_logs
+    get "project_todos_logs" => "charts#project_todos_logs",  :as => :project_todos_logs
+    # get "customer_users_logs" => "charts#customer_users_logs",  :as => :customer_users_logs
+    # get "customer_todos_logs" => "charts#customer_todos_logs",  :as => :customer_todos_logs
+    get "projects_logs" => "charts#projects_logs",  :as => :projects_logs
+    get "customers_logs" => "charts#customers_logs",  :as => :customers_logs
     
     
     #projects_controller
@@ -73,60 +78,53 @@ Squadlink::Application.routes.draw do
     match "projects/create_index/" => "projects#create_index",  :as => :create_index
     match "/activate_projects/:id" => "projects#activate_projects", :as => :activate_projects
     #tabs_controller
-    match "/tabs/todos/:id/:class" => "tabs#todos", :as => :tabs_todos
-    match "/tabs/milestones/:id/:class" => "tabs#milestones", :as => :tabs_milestones
-    match "/tabs/logs/:id/:class" => "tabs#logs", :as => :tabs_logs
-    match "/tabs/users/:id/:class" => "tabs#users", :as => :tabs_users
-    match "/tabs/statistics/:id/:class" => "tabs#statistics", :as => :tabs_statistics
+    get "/tabs/tabs_todos/:id/:class" => "tabs#tabs_todos", :as => :tabs_todos
+    get "/tabs/tabs_milestones/:id/:class" => "tabs#tabs_milestones", :as => :tabs_milestones
+    get "/tabs/tabs_projects/:id/:class" => "tabs#tabs_projects", :as => :tabs_projects
+    get "/tabs/tabs_employees/:id/:class" => "tabs#tabs_employees", :as => :tabs_employees
+    get "/tabs/tabs_logs/:id/:class" => "tabs#tabs_logs", :as => :tabs_logs
+    get "/tabs/tabs_users/:id/:class" => "tabs#tabs_users", :as => :tabs_users
+    get "/tabs/tabs_statistics/:id/:class" => "tabs#tabs_statistics", :as => :tabs_statistics
+    get "/tabs/tabs_spendings/:id/:class" => "tabs#tabs_spendings", :as => :tabs_spendings
     #logs_controller
-    match "logs/start_tracking" => "logs#start_tracking",  :as => :start_tracking
-    match "logs/stop_tracking/:id" => "logs#stop_tracking",  :as => :stop_tracking
-    match "/get_logs_todo/:todo_id" => "logs#get_logs_todo", :as => :get_logs_todo
+    post "logs/start_tracking" => "logs#start_tracking",  :as => :start_tracking
+    put "logs/stop_tracking/:id" => "logs#stop_tracking",  :as => :stop_tracking
+    get "/get_logs_todo/:todo_id" => "logs#get_logs_todo", :as => :get_logs_todo
     #select_controller
-    match "/customer_select/:customer_id/:log_id" => "select#customer_select", :as => :customer_select
-    match "/customer_select_tracking/:customer_id/:log_id" => "select#customer_select_tracking", :as => :customer_select_tracking
-    match "/employee_select_tracking/:employee_id/:log_id" => "select#employee_select_tracking", :as => :employee_select_tracking  
-    match "/project_select/:project_id/:log_id" => "select#project_select", :as => :project_select
-    match "/project_select_tracking/:project_id/:log_id" => "select#project_select_tracking", :as => :project_select_tracking
-    match "/todo_select_tracking/:todo_id/:log_id" => "select#todo_select_tracking", :as => :todo_select_tracking
-    match "/todo_select/:todo_id/:log_id" => "select#todo_select", :as => :todo_select
+    get "/project_select/:project_id/:log_id" => "select#project_select", :as => :project_select
+    get "/customer_select/:customer_id/:log_id" => "select#customer_select", :as => :customer_select
+    get "/todo_select/:todo_id/:log_id" => "select#todo_select", :as => :todo_select
+    post "/customer_select_tracking/:customer_id/:log_id" => "select#customer_select_tracking", :as => :customer_select_tracking
+    post "/employee_select_tracking/:employee_id/:log_id" => "select#employee_select_tracking", :as => :employee_select_tracking  
+    post "/project_select_tracking/:project_id/:log_id" => "select#project_select_tracking", :as => :project_select_tracking
+    post "/todo_select_tracking/:todo_id/:log_id" => "select#todo_select_tracking", :as => :todo_select_tracking
+    
     #timesheets_controller
-    match "/timesheet_week/:user_id" => 'timesheets#timesheet_week', :as => :timesheet_week
-    match "/timesheet_day/:user_id/:date" => 'timesheets#timesheet_day', :as => :timesheet_day
-    match "/timesheet_month/:user_id/:date" => "timesheets#timesheet_month", :as => :timesheet_month
-    match "/add_hour_to_project/" => 'timesheets#add_hour_to_project', :as => :add_hour_to_projects
-    match "/add_log_timesheet" => 'timesheets#add_log_timesheet', :as => :add_log_timesheet
-   
-    #private_controller
-    match "/statistics" => "private#statistics", :as => :statistics
-    match "/reports" => 'private#reports', :as => :reports
-    
-    match "/squadlink_report" => 'private#squadlink_report', :as => :squadlink_report
-    match "/account" => "private#account",  :as => :account
-    match "/home_user" => "private#home_user",  :as => :home_user
-    match "/upgrade" => "private#upgrade",  :as => :upgrade
-    
-    match "/membership/:id/:project_id" => "private#membership", :as => :membership
-    match "/get_logs/:customer_id" => "private#get_logs", :as => :get_logs
-    
-    match "/get_logs_project/:project_id" => "private#get_logs_project", :as => :get_logs_project
-    match "/get_users_project/:project_id" => "private#get_users_project", :as => :get_users_project
-    match "/get_logs_user/:user_id" => "private#get_logs_user", :as => :get_logs_user
-    match "/get_employees/:customer_id" => "private#get_employees", :as => :get_employees
-    match "/add_todo_to_logs" => "private#add_todo_to_logs", :as => :add_todo_to_logs
+    get "/timesheet_week/:user_id" => 'timesheets#timesheet_week', :as => :timesheet_week
+    get "/timesheet_day/:user_id/:date" => 'timesheets#timesheet_day', :as => :timesheet_day
+    get "/timesheet_month/:user_id/:date" => "timesheets#timesheet_month", :as => :timesheet_month
+    post "/add_hour_to_project/" => 'timesheets#add_hour_to_project', :as => :add_hour_to_projects
+    post "/add_log_timesheet" => 'timesheets#add_log_timesheet', :as => :add_log_timesheet
+    #reports_controller
+    get "/reports" => 'reports#index', :as => :reports
+    get "/squadlink_report" => 'reports#squadlink_report', :as => :squadlink_report
+
+    #memberships_controller
+    post "/membership/:id/:project_id" => "memberships#index", :as => :membership
     
     #firms_controller
-    match "/firm_update" => "firms#firm_update",  :as => :firm_update
-    match "/firm_edit" => "firms#firm_edit",  :as => :firm_edit
+    put "/firm_update" => "firms#firm_update",  :as => :firm_update
+    get "/firm_edit" => "firms#firm_edit",  :as => :firm_edit
+    get "/firm_show" => "firms#firm_show",  :as => :firm_show
     #roster
     match "/roster_milestone" => "roster#get_milestones", :as => :roster_milestone
     match "/roster_task" => "roster#get_tasks", :as => :roster_task
     #timerange
-    match "/logs_pr_date/:time/:url" => "timerange#logs_pr_date", :as => :logs_pr_date
-    match "/logs_pr_date/:time/:url/:id" => "timerange#logs_pr_date", :as => :logs_pr_date
+    # get "/logs_pr_date/:time/:url" => "timerange#logs_pr_date", :as => :logs_pr_date
+    # match "/logs_pr_date" => "timerange#logs_pr_date", :as => :logs_pr_date
     match "/log_range/" => "timerange#log_range", :as => :log_range
     match "/todo_range/" => "timerange#todo_range", :as => :todo_range
-    match "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date
+    # get "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date
     
     resources :customers
     resources :employees

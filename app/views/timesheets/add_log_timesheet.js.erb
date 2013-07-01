@@ -2,7 +2,7 @@ $(".flash_notice").empty()
 $(".flash_notice").append("<%= j(flash.discard(:notice))%>");
 $("#new_log")[0].reset();
 var firm_format = $(".current_firm_data").data("timeformat")
-console.log(firm_format)
+
 if ($("#calendar").length != 0 ) {
 	var field = $("#<%= j(@log.log_date.to_s) %>")
 	var prehours_date_mounth = field.attr("data-hours")

@@ -26,13 +26,10 @@ class User < ActiveRecord::Base
  #   errors.add(:role, "Not a legal role") if 
  #   !roles == "admin" or !roles == "member" or !roles == "user"
  # end
-  def admin?
-    false
-  end
-
-  def self.current_firm(firm)
-    where("users.firm = ?", firm)
-  end
+  # comment on 06.06.13
+  # def self.current_firm(firm)
+  #   where("users.firm = ?", firm)
+  # end
   def self.valid_recover?(params)
     token_user = self.where(:loginable_token => params).first
     if token_user
@@ -50,16 +47,11 @@ class User < ActiveRecord::Base
     return token_user
   end
 
-   # def self.find_for_database_authentication(conditions)
-   # self.where(:email => conditions[:email]).first
-  # end
- 
-  
-  def role?(role)
-      return self.roles.nil? ? false : self.roles.include?(role.to_s)
-  end
   def made_with_in_limit
     errors.add(:user_id, "You have reached your plans limit of #{firm.plan.users} users. Please upgrade.") if
     PlanLimit.new.over_limit?(firm.users_count, firm.plan.users) 
+  end
+  def can_validate
+    role == "External user"
   end
 end

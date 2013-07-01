@@ -1,7 +1,7 @@
 function prepareAndCallJson(){
 		var url 	= $("#stats").val()
-		var from 	= $("#from").val() 
-		var to 		= $("#to").val()
+		var from 	= $("#from_stat").val() 
+		var to 		= $("#to_stat").val()
 		var klass 	= $("#range_date_fields_graphs").data("klass")
 		var id 		= $("#range_date_fields_graphs").data("id")
 		var ColorArray = eval(url + "ColorArray")
@@ -28,8 +28,8 @@ $(document).ready(function() {
 	var from = $(".one_month_back").data("lastmonth") 
 	var to = $(".one_month_back").data("today")
 	
-	$("#from").val(from)
-	$("#to").val(to)
+	$("#from_stat").val(from)
+	$("#to_stat").val(to)
 	$(".range_date_graphs").datepicker({
 		onSelect: function() {
 			prepareAndCallJson()

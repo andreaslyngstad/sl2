@@ -1,4 +1,4 @@
-<%= render "private/home_header" %>
+<%= render "shared/home_header" %>
 <div id="left" class="home_content">
 <div class="timesheet">
 <div class="signup preferences">
@@ -45,7 +45,7 @@
 		    <%= firm.label :logo %>
 		     <%= firm.file_field :logo %>		    
 		   </div>
-		  	<div class="signup-form-field-color">
+		  	<div class="signup-form-field">
 		    <%= firm.label :background %>
 		    <%= firm.text_field :background, :class => "form-input background_style", :AUTOCOMPLETE => "OFF"%>
 		    
@@ -56,7 +56,9 @@
 		    <%= firm.text_field :color, :class => "form-input text_style", :AUTOCOMPLETE => "OFF"%>
 		    <div class="text_style_color"></div>
 		    </div>
+		    <div class="signup-form-field">
   <%= firm.submit "Save", :class => "submit" %>
+  </div>
 <% end %>
 </div>
 </div>

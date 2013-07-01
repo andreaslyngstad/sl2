@@ -1,0 +1,19 @@
+table.spendings_table {
+width:100%;
+margin-left:10px;
+margin-top:7px;
+
+float: left;
+border-collapse:collapse;
+}
+table.spendings_table tr{
+border-bottom:1px solid #e5eff8;
+
+}
+
+.spendings_headers{
+	text-align:left;
+}
+.spending_total{
+	border-top: 2px solid #e5eff8;
+}

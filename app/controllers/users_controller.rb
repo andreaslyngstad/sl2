@@ -73,14 +73,14 @@ class UsersController < ApplicationController
     end
   end
   
-  def valid
-  	token_user = User.valid?(params)
-    if token_user
-      sign_in(:user, token_user)
-      flash[:notice] = flash_helper("You have been logged in")
-    else
-      flash[:alert] = "Login could not be validated"
-    end
-    redirect_to statistics_path
-  end 
+  # def valid
+  # 	token_user = User.valid?(params)
+  #   if token_user
+  #     sign_in(:user, token_user)
+  #     flash[:notice] = flash_helper("You have been logged in")
+  #   else
+  #     flash[:alert] = "Login could not be validated"
+  #   end
+  #   redirect_to statistics_path
+  # end 
 end

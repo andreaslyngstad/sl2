@@ -1,4 +1,4 @@
-function Change_select(log_id, object_id, url){
+function Change_select(log_id, object_id, url, http_method){
 		$('.spinning').show();
 	    if (log_id === "") {
 	    	if(object_id === ""){
@@ -33,23 +33,62 @@ jQuery.fn.UIdialogs_tracking_logs_links = function(){
     
     // get todo and saving log when selecting project
 	    $(form_id).find("select#logProjectIdTracking").change(function(){
-		    Change_select($(this).attr("log"), this.value.toString(), "project_select_tracking")
+        if (this.value.toString() == ""){
+          $.post("/project_select_tracking/0/" + $(this).attr("log"))
+        }else{
+          $.post("/project_select_tracking/" + this.value.toString() + "/" + $(this).attr("log"))
+       }
 	    });
 	    $(form_id).find("select#logTodoIdTracking" + data_id).change(function(){
-	   		Change_select($(this).attr("log"), this.value.toString(), "todo_select_tracking")
+        if (this.value.toString() == ""){
+          $.post("/todo_select_tracking/0/" + $(this).attr("log"))
+        }else{
+          $.post("/todo_select_tracking/" + this.value.toString() + "/" + $(this).attr("log"))
+       }
 	    });  
 	  // get employees and saving log when selecting customer
 	    $(form_id).find("select#logCustomerIdTracking" + data_id).change(function(){
-	    	Change_select($(this).attr("log"), this.value.toString(), "customer_select_tracking")
+        if (this.value.toString() == ""){
+          $.post("/customer_select_tracking/0/" + $(this).attr("log"))
+        }else{
+          $.post("/customer_select_tracking/" + this.value.toString() + "/" + $(this).attr("log"))
+       }
 	    }); 
 	    
 	    $(form_id).find("select#logEmployeeIdTracking" + data_id).change(function(){
-	    	Change_select($(this).attr("log"), this.value.toString(), "employee_select_tracking")
+        if (this.value.toString() == ""){
+          $.post("/employee_select_tracking/0/" + $(this).attr("log"))
+        }else{
+          $.post("/employee_select_tracking/" + this.value.toString() + "/" + $(this).attr("log"))
+       }
 	    });  
    });
 
 };
-
+jQuery.fn.save_while_typing = function(){
+      var delay = (function(){
+      var timer = 0;
+      return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+      };
+      })();
+    var $this = $(this)
+    var id = $(this).data('id')
+    $(this).on('keyup', function(e) {
+      delay(function(){
+        $.ajax({
+        url: "/logs/" + id, 
+        type: "PUT",
+        data:  {log:{event: $this.val()}},
+        chache:false,
+        dateType: "JSON"
+      }); 
+      }, 5000 );
+        $('#log_info_'+ id).find('.event_on_log').text($this.val())
+    });
+  //  var log = $(this).parent('.stop_tracking_form')
+};
 jQuery.fn.select_projects_customers = function() {
 	$(this).UIdialogs();
    	$(this).dialog( "open" );	
@@ -192,10 +231,12 @@ function time_to_value(time){
 jQuery.fn.logs_pr_date_select = function(){
 		this.change(function(){
   $('.spinning').show();
+  var form = "from"
+  var to = "to"
   var time = this.value
   var url = $(this).attr("data-url");
   var id = $(this).attr("data-id");
-  $.get("/logs_pr_date/" + time + "/" + url + "/" + id)
+  $.get("/log_range", {time: time, url: url, id: id });
   
   });
   };
@@ -206,10 +247,32 @@ jQuery.fn.set_hours = function(){
         $(element).html(secondsToString(hours, firm_format))
     });
   };
+
+// jQuery.fn.set_budget_procent = function(){
+//   var budget       = $('.budget_green').data('budget')
+//   var hourly_price = $
+//   var hours        =
+// };
+function update_hours(hours){
+  var firm_format = $(".current_firm_data").data("timeformat")
+  var pre_hours    = $('.statistics_unit_hours').data('hours')
+  var post_hours   = (pre_hours + hours)
+  $('.statistics_unit_hours').data('hours', post_hours)
+  $('.statistics_unit_hours').html(secondsToString(post_hours, firm_format))
+};
+function update_budget_useage(hours, hourly_price){
+  var budget      = $('.budget_green').data('budget')
+  var pre_usage   = $('.budget_green').data('procent')
+  var this_usage  = ((hours/3600)*hourly_price)/budget
+  var post_usage  = this_usage + pre_usage
+  $('.budget_green').data('procent', post_usage )
+  $('.budget_green').set_buget_width()
+};
 $(document).ready(function() {
+  $('.log_event_recording').save_while_typing()
 	$(".total_log_time").set_hours()
 	$(".searchableS_tracking").chosen();
-  	$("select#logs_pr_date_select").logs_pr_date_select();
+  $("select#logs_pr_date_select").logs_pr_date_select();
 	$("#dialog_log").UIdialogs_log_links();
 	$(".open_log_update").UIdialogs_edit_logs_links();
 	$(".date").datepicker();

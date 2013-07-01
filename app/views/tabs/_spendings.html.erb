@@ -1,0 +1,42 @@
+<table class="spendings_table">
+	<tr class="spendings_headers">
+		<th>
+			User
+		</th>
+		<th>
+			Hourly price
+		</th>
+		<th>
+			Logged hours
+		</th>
+		<th>
+			Total
+		</th>
+	</tr>
+	<% ProjectPrice.get_cost_per_user(@klass).each do |u| %>
+	<tr>
+		<td>
+			<%= u[0] %>
+		</td>
+		<td>
+
+			<%= u[1] %> <%= current_firm.currency %>
+			
+		</td>
+		<td class="seconds" data-hours="<%= u[2] %>">
+			
+		</td>
+		<td class="user_project_price" >
+			<%= u[3] %> <%= current_firm.currency %>
+		</td>
+		
+		
+	</tr>
+	<tr class="spending_total">
+		<td>Total</td>
+		<td></td>
+		<td></td>
+		<td><%= ProjectPrice.get_hours(@klass) %> <%= current_firm.currency %></td>
+	</tr>
+	<% end %>
+</table>

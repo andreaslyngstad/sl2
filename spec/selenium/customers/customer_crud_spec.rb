@@ -1,13 +1,8 @@
-require "selenium-webdriver"
-require "rspec"
-require "support/subdomain_login"
-include SubdomainLogin
-include RSpec::Expectations
-
-describe "CustomerCrudSpec", :slow do
+require "support/selenium_helper"
+describe "CustomerCrudSpec" do
   login_at_subdomain
-  
-  it "test_customer_crud_spec", :slow do
+   
+  it "test_customer_crud_spec" do
     @driver.get(@base_url + "/customers")
     @driver.find_element(:css, "span.ui-button-text").click
     @driver.find_element(:id, "customer_name").clear
@@ -20,6 +15,7 @@ describe "CustomerCrudSpec", :slow do
     @driver.find_element(:id, "customer_address").send_keys "test_street 23"
     @driver.find_element(:name, "commit").click
     # Warning: assertTextPresent may require manual changes
+    sleep 0.2
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*test_customer[\s\S]*$/
     @driver.find_element(:css, "#customer_update > span.ui-button-text").click
     @driver.find_element(:css, "input.customer_edit_name").clear
@@ -35,4 +31,4 @@ describe "CustomerCrudSpec", :slow do
     # Warning: assertTextNotPresent may require manual changes
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Customer was successfully deleted[\s\S]*$/
   end
-end
+end  

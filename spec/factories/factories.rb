@@ -10,6 +10,9 @@ FactoryGirl.define do
    subdomain
    plan
    closed false
+   time_format 1 
+   date_format 1
+   clock_format 1
   end
   factory :firm_with_users, :parent => :firm do
     after_create do |firm|
@@ -32,7 +35,13 @@ FactoryGirl.define do
     due Date.today
   end  
   
-
+  factory :payment do
+    firm
+    amount 99
+    plan_name 'costly_factory'
+    card_type 'rich_dude'
+    last_four '1111'
+  end
   factory :log do
     event "customer man"
     begin_time "2012-10-24 16:08:07 +0200"
@@ -49,7 +58,9 @@ FactoryGirl.define do
   factory :todo do
     name "Todo today"
     due Date.today.strftime("%d.%m.%y")
+    user
     firm
+    project
   end  
 
   factory :employee do

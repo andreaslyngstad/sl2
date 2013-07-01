@@ -1,0 +1,12 @@
+<div id="html_tabs"  class="orange_bgr hor_scroll_200 ver_down_on_help">
+  	<ul>
+  		<% if can? :read, Firm %>
+  		<li><%= link_to "Statistics", charts_path%></li>
+	    <li><%= link_to "Reports", reports_path%></li>
+	    <%end%>
+	   	<li><%= link_to "Timesheets", timesheet_week_path(current_user) %></li>
+	   	<% if can? :manage, Firm %>
+	   	<li><%= link_to "Account", firm_show_path%></li>     
+	   	<% end %>
+	</ul>
+</div>

@@ -1,3 +1,6 @@
+<% content_for :head do%>
+<title>Squadlink <%= @blog.title %></title>
+<%end %>
 <div class="blogs">
 	<h2><%= link_to @blog.title, blog_path(@blog)%></h2>
 	<p class="author">Posted by <%= @blog.author %> on <%= @blog.created_at.strftime("%b %d %Y") %></p>
@@ -6,7 +9,7 @@
 <div class="addthis_toolbox addthis_default_style ">
 <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
 <a class="addthis_button_tweet"></a>
-<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+<!-- <a class="addthis_button_google_plusone" g:plusone:size="medium"></a> -->
 <a class="addthis_button_pinterest_pinit"></a>
 <a class="addthis_counter addthis_pill_style"></a>
 </div>

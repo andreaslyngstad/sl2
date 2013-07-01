@@ -58,6 +58,14 @@ describe ProjectsController, :type => :controller do
       response.should render_template :show
     end
   end
+  describe "GET edit" do
+    it "should assign project to @project" do
+      project = FactoryGirl.create(:project, :firm => @user.firm)
+      get :edit, :id => project
+      assigns(:project).should eq(project) 
+      assigns(:customers).should eq(@user.firm.customers)
+    end 
+  end
   describe "POST create" do
     context "with valid attributes" do
       it "creates a new contact" do

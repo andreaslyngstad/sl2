@@ -36,7 +36,7 @@ describe MilestonesController do
     end
   
     it "changes @milestone's attributes" do
-      put :update, id: @project, milestone: FactoryGirl.attributes_for(:milestone, :goal => "something else", :project_id => @project.id)
+      put :update, id: @milestone, milestone: FactoryGirl.attributes_for(:milestone, :goal => "something else", :project_id => @project.id)
       @milestone.reload
       @milestone.goal.should eq("something else")
       flash[:notice].should_not be_nil 

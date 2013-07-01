@@ -1,7 +1,8 @@
 $(".flash_notice").empty()
-$(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>")
+$(".flash_notice").append("<%= j(flash.discard(:notice))%>")
 $("#new_todo")[0].reset();
-$("#not_done_tasks").append("<%= escape_javascript(render(:partial => todo)) %>");
+$(".searchableTaskCustomer").val('').trigger("liszt:updated");
+$("#not_done_tasks").append("<%= j(render(:partial => todo)) %>");
 $("#<%= j(todo.id.to_s)%>").click(function() { 
   	 var id = $(this).attr("id")
   	 $("#edit_done_todo_" + id).submitDoneWithAjax(id)

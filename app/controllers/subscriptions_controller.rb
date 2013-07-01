@@ -15,17 +15,21 @@ class SubscriptionsController < ApplicationController
       render :new
     end
   end
-
-  def show
-    @subscription = Subscription.find(params[:id])
-  end
+  # comment 06.06.13
+  # def show
+  #   @subscription = Subscription.find(params[:id])
+  #   respond_to do |format|
+  #     format.js
+  #   end
+  # end
   
   def destroy
     @subscription = Subscription.find(params[:id])
-    current_firm.remove_associations_when_downgrading(1)
-    Subscription.delete_old_subscription(current_firm)
-    current_firm.plan = Plan.find(1)
-    s = Subscription.new(plan_id: 1)
+    plan = Plan.where(name: "Free").first
+    current_firm.remove_associations_when_downgrading(plan.id)
+    @subscription.delete
+    current_firm.plan = plan
+    s = Subscription.new(plan_id: plan.id)
     s.firm = current_firm
     s.save!
     current_firm.save

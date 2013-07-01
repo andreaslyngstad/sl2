@@ -1,0 +1,4 @@
+Event,Hours,User,Customer,Project,Date,  
+    <% @logs.each do |log| %>
+      <%= log.event %>,<%= time_format(log.hours ) %>,<%= log.user.try(:name) %>,<%= log.customer.try(:name) %>,<%= log.project.try(:name) %>,<%= date_format(log.log_date) %>,
+    <% end %>

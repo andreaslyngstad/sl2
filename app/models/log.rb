@@ -9,12 +9,12 @@ class Log < ActiveRecord::Base
   belongs_to :recent_project, :class_name => "Project", :conditions => ['logs.log_date > ?', Time.now.beginning_of_week]
   belongs_to :todo
   belongs_to :employee
-  before_save :set_hours
+  before_save :set_hours 
   validate :log_made_on_current_firm
   validate :log_made_on_project
   validate :end_time_before_begin_time
   validate :made_with_in_limit, :on => :create
-  
+   
   
   def made_with_in_limit
     errors.add(:customer_id, "You have reached your plans limit of #{firm.plan.logs} logs. Please upgrade.") if
@@ -40,78 +40,51 @@ class Log < ActiveRecord::Base
     errors.add(:firm_id, "is secure!") if
     check_if_current_firm.include?(true) 
   end
-  def can_validate
-    user.role == "External user"
-  end
+  
   
   def log_made_on_project
     errors.add(:project_id, "cannot be empty for this log") if
-    can_validate && project == nil
+    user.can_validate && project == nil
   end
   
-  def time_diff(time)
-  	seconds    	=  (time % 60).to_i
-    time 		= (time - seconds) / 60
-    minutes    	=  (time % 60).to_i
-    time 		= (time - minutes) / 60
-    hours      	=  (time).to_i
-    if minutes == 0 
-    	return hours.to_s + ":00"
-    elsif minutes < 10
-    	return hours.to_s + ":0" + minutes.to_s
-	else
-  		return hours.to_s + ":" + minutes.to_s
-  	end
-  end
+ #  def time_diff(time)
+ #  	seconds    	=  (time % 60).to_i
+ #    time 		= (time - seconds) / 60
+ #    minutes    	=  (time % 60).to_i
+ #    time 		= (time - minutes) / 60
+ #    hours      	=  (time).to_i
+ #    if minutes == 0 
+ #    	return hours.to_s + ":00"
+ #    elsif minutes < 10
+ #    	return hours.to_s + ":0" + minutes.to_s
+	# else
+ #  		return hours.to_s + ":" + minutes.to_s
+ #  	end
+ #  end
  
-  def total_time
-  	time_diff(hours)
-  end
+  # def total_time
+  # 	time_diff(hours)
+  # end
   def set_hours
   	if end_time?
-  	self.hours = end_time  - begin_time
+  	self.hours = end_time - begin_time
   	end
   end
 
   def time
-  	end_time - begin_time
+    if end_time
+  	 end_time - begin_time 
+    end
   end
   
-  def end_string
-    end_time.to_s(:db)
-  end
   
-  def end_string=(end_str)
-    self.end_time = Time.parse(end_str)
-  end
-  
-  def begin_string
-    begin_time.to_s(:db)
-  end
-    
-  def begin_string=(begin_str)
-    self.begin_time = Time.parse(begin_str)
-  end
-  
- #  def date
- #    self.log_date.strftime('%d.%m.%y')
-	# end
-
-  # def log_date_format
-  #   log_date.strftime("%Y%m%d")
-  # end
-
   def end_time_before_begin_time
     errors.add(:end_time, "You end before you begin.") if
     if tracking != true
-    (end_string=(end_time) < begin_string=(begin_time))
+      end_time < begin_time
     end
   end
-  def presence_of_event
-  	if tracking != true
-  	validates_presence_of :event
-  	end
-  end
+  
   
   def self.logs_for_timesheet(user)
     user.logs.where(:log_date => (Date.today.beginning_of_week..Date.today.end_of_week)).group("project_id").group("date(log_date)").sum(:hours)
@@ -136,27 +109,28 @@ class Log < ActiveRecord::Base
   def placed_between?(date_range)
     date_range.include?(log_date)
   end
-  def self.project_try(project)
-    if project
-      where(project_id: project)
-    else
-      where("end_time IS NOT NULL")
-    end
-  end
-  def self.user_try(user)
-    if user
-      where(user_id: user)
-    else
-      where("end_time IS NOT NULL")
-    end
-  end
+  # comment 06.06.13
+  # def self.project_try(project)
+  #   if project
+  #     where(project_id: project)
+  #   else
+  #     where("end_time IS NOT NULL")
+  #   end
+  # end
+  # def self.user_try(user)
+  #   if user
+  #     where(user_id: user)
+  #   else
+  #     where("end_time IS NOT NULL")
+  #   end
+  # end
+  # comment end
   def self.try_find_logs(options)
-     a = options.map do |k,v|
+     options.map do |k,v|
        unless v.blank?
          where(k => v)
        end
-     end
-     a.compact.inject(:&)
+     end.compact.inject(:&)
   end
   
   

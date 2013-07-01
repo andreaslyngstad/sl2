@@ -23,6 +23,7 @@ class Firm < ActiveRecord::Base
   has_many :logs, :dependent => :destroy
   has_many :projects, :dependent => :destroy
   has_many :milestones, :dependent => :destroy
+  has_many :payments
   has_one :subscription, :dependent => :destroy
   belongs_to :plan
    
@@ -71,6 +72,10 @@ class Firm < ActiveRecord::Base
     end
   end 
   
+  def delete_old_subscription
+    self.subscription.delete
+  end
+
   def update_firm_counters
     self.users_count = users.count
     self.customers_count = customers.count

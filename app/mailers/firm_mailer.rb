@@ -1,47 +1,44 @@
 class FirmMailer < ActionMailer::Base
-  default from: "info@squadlink.com"
+  default from: "support@squadlink.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
   #   en.firm_mailer.sign_up_confirmation.subject
   #
-  def sign_up_confirmation
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def sign_up_confirmation(user)
+    @user = user
+    @firm = @user.firm
+    mail to: user.email, subject: 'Squadlink sign up confirmation.'
   end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.firm_mailer.overdue.subject
-  #
+  def new_plan(user)
+    @user = user
+    @firm = @user.firm
+    mail to: user.email, subject: 'Squadlink sign up confirmation.'
+  end
+  def payment_received(user)
+    @user = user
+    @firm = @user.firm
+    mail to: user.email, subject: 'Squadlink sign up confirmation.'
+  end
   def overdue(subscription)
-    @greeting = "Hi"
-
-    mail to: subscription.email
+    @subscription = subscription
+    @firm = subscription.firm
+    @user = @firm.users.where(email: subscription.email).first
+    mail to: subscription.email, subject: 'Squadlink payment is overdue.'
   end  
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.firm_mailer.2_weeks_overdue.subject
-  #
   def two_weeks_overdue(subscription)
-    @greeting = "Hi"
-
-    mail to: subscription.email
+    @subscription = subscription
+    @firm = subscription.firm
+    @user = @firm.users.where(email: subscription.email).first
+    mail to: subscription.email, subject: 'Squadlink payment is two weeks overdue.'
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.firm_mailer.reverting_to_free.subject
-  #
   def reverting_to_free(subscription)
-    @greeting = "Hi"
-
-    mail to: subscription.email
+    @subscription = subscription
+    @firm = subscription.firm
+    @user = @firm.users.where(email: subscription.email).first
+    mail to: subscription.email, subject: 'Squadlink account revertet to free due to missing payment.'
   end
 end

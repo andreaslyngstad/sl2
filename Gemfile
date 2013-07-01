@@ -7,15 +7,15 @@ gem 'eventmachine'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'rack-ssl'
 gem 'jquery-rails', '2.1.3' 
-gem "devise"
-gem "paperclip"
-gem "cancan"
-
+gem 'devise'
+gem 'paperclip'
+gem 'cancan'
+gem 'pdfkit'
 gem 'newrelic_rpm'
 gem 'jbuilder'
 gem 'activeadmin'
-gem "select2-rails"
-gem "seedbank"
+gem 'select2-rails'
+gem 'seedbank'
 gem 'whenever', :require => false
 gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
 gem 'pg'
@@ -31,11 +31,12 @@ group :development, :test do
   gem 'rack-mini-profiler'
   gem 'better_errors'
   gem "binding_of_caller" 
-  gem 'meta_request', '0.2.1'
+  gem 'meta_request'
   gem 'bullet'
   gem 'quiet_assets'
   gem 'debugger'
   gem 'thin'
+  gem 'simplecov', :require => false
  
 end
 group :test do 
@@ -50,12 +51,11 @@ group :test do
   gem "selenium-webdriver"
   gem "selenium-client"
   gem "vcr"
+  gem 'chromedriver-helper'
   gem 'webmock'
   gem 'headless'
   gem "poltergeist"
   gem 'rb-inotify', '~> 0.9'
-  gem 'simplecov', :require => false
-
 end
 # Use unicorn as the web server
 # gem 'unicorn'

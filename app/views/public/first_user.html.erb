@@ -1,9 +1,3 @@
-<div id="above_header">
-  </div>
-<div id="front_logo">
-		<%= image_tag "squadlink.png"  %>
-	</div>
-
 <div id="all_container">
 <div id="register_container">
 	
@@ -13,8 +7,6 @@
 	<span class="flash_notice" style="color: red;"><%= flash[:error] %></span>
 <p>This user will become a manager, but this can be changed later</p>
 </div>
-		
-	
 <div class="signup signup_user">
 	<%= form_for :user, :url => create_first_user_path, :html => { :class => "first_user", :id => "first_user", :multipart => true } do |f| %>
 	<div class="signup-form-field">
@@ -22,11 +14,11 @@
 		<%= f.text_field :name, :class => "required form-input", :AUTOCOMPLETE => "OFF"%></div>
 	<div class="signup-form-field">
 	    <%= f.label :email %>
-	    <%= f.text_field :email, :class => "required form-input", :email => "true", :AUTOCOMPLETE => "OFF" %>
+	    <%= f.text_field :email, :class => "required form-input", :email => "true", :AUTOCOMPLETE => "OFF", :id => "user_email_reg" %>
  	</div>
 	<div class="signup-form-field">
 		<%= f.label :password %>
-		<%= f.password_field :password, :class => "required form-input", :minlength => "4", :AUTOCOMPLETE => "OFF"  %>
+		<%= f.password_field :password, :class => "required form-input", :minlength => "4", :AUTOCOMPLETE => "OFF", :id => "user_password_reg" %>
   	</div>
 	<div class="not_required" style="display: none;">
 		<div class="signup-form-field">
@@ -39,7 +31,7 @@
 	  	</div>
 	</div>
 	<div class="signup-form-field">
-  		<%= f.submit "Save", :class => "submit" %>
+  		<%= f.submit "Save3", :class => "submit", :id => "save" %>
   	</div>
 <% end %>
 <div class="open_not_required_container">

@@ -1,15 +1,24 @@
 class TimesheetsController < ApplicationController
+  
+  def timesheet_day
+    @user = current_firm.users.find(params[:user_id])
+    find_users(@user)
+    @logs = @user.logs.where(:log_date => params[:date])
+  end
+
   def timesheet_week    
      @user = current_firm.users.find(params[:user_id])
      find_users(@user)
       variables_bag
   end
-  def timesheet_create
-    
+
+  def timesheet_month
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @user = current_firm.users.find(params[:user_id])
+    find_users(@user)
+    @logs_by_date = @user.logs.group("date(log_date)").sum(:hours)
   end
-  def timesheet_update
-    
-  end
+ 
   def add_log_timesheet
     @user = current_firm.users.find(params[:log][:user_id])
     @log = LogWorker.create(params[:log], params[:done], @user, current_firm)
@@ -23,19 +32,6 @@ class TimesheetsController < ApplicationController
         format.js { render "shared/validate_create" }
       end
     end
-  end
-  
-  def timesheet_day
-    @user = current_firm.users.find(params[:user_id])
-    find_users(@user)
-    @logs = @user.logs.where(:log_date => params[:date])
-  end
-  
-  def timesheet_month
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    @user = current_firm.users.find(params[:user_id])
-    find_users(@user)
-    @logs_by_date = @user.logs.group("date(log_date)").sum(:hours)
   end
   
   def add_hour_to_project
@@ -54,8 +50,6 @@ class TimesheetsController < ApplicationController
     else
       @log.end_time =  @log.begin_time + (params[:val_input].to_f * 3600)
     end
-    Rails.logger.info(params[:val_input].class)
-    
     @log.save!
   end
   
@@ -70,12 +64,12 @@ class TimesheetsController < ApplicationController
   end
   def variables_bag
     @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
-     range = Time.zone.today..Time.zone.today + 7.days
-     @log_project = @user.logs.where(:log_date => @dates).group("project_id").sum(:hours)
-     @log_week = @user.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
-     @log_week_project = @user.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-     @log_week_no_project = @user.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
-     @projects = @user.projects
-     @log_total = @user.logs.where(:log_date => range).sum(:hours) 
+    range = Time.zone.today..Time.zone.today + 7.days
+    @log_project = @user.logs.where(:log_date => @dates).group("project_id").sum(:hours)
+    @log_week = @user.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
+    @log_week_project = @user.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
+    @log_week_no_project = @user.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
+    @projects = @user.projects
+    @log_total = @user.logs.where(:log_date => range).sum(:hours) 
   end
 end

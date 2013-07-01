@@ -1,32 +1,9 @@
-require "selenium-webdriver"
-require "rspec"
-include RSpec::Expectations
-
+require "support/selenium_helper"
 describe "ProjectViewSpec" do
 
-  let(:firm)        {FactoryGirl.create(:firm)}
-    let(:user)        {FactoryGirl.create(:user, firm: firm)}  
-    
-    
-  before(:all) do 
-    @driver = Selenium::WebDriver.for :firefox
-    @base_url = "http://#{firm.subdomain}.lvh.me:3001"   
-    @driver.get(@base_url + "/")
-    @accept_next_alert = true
-    @driver.manage.timeouts.implicit_wait = 30
-    @verification_errors = []
-    @driver.find_element(:id, "user_email").send_keys user.email
-    @driver.find_element(:id, "user_password").send_keys user.password 
-    @driver.find_element(:name, "commit").click 
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Signed in[\s\S]*$/ 
-  end
+  login_at_subdomain 
   
-  after(:each) do
-    @driver.quit
-    @verification_errors.should == []
-  end
-  
-  it "test_project_view_spec", :slow do
+  it "test_project_view_spec" do
     @driver.get(@base_url + "/projects")
     @driver.find_element(:css, "#dialog_project > span.ui-button-text").click
     @driver.find_element(:id, "project_name").clear
@@ -51,13 +28,15 @@ describe "ProjectViewSpec" do
     sleep 0.5
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*test_todo_edit [\s\S]*$/
     @driver.find_element(:css,".done_box").click
-    sleep 0.2
-    # Warning: waitForTextPresent may require manual changes
+    
+    sleep 0.5 
+    # Warning: waitForTextPresent may require manual changes 
+
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Done Done by\ntest_todo_edit [\s\S]*$/
      @driver.find_element(:css,".done_box").click
     # Warning: waitForTextPresent may require manual changes
-    sleep 0.2
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Due\ntest_todo_edit[\s\S]*$/
+    sleep 0.5
+      @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Due\ntest_todo_edit[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     @driver.find_element(:css, "#dialog_log > span.ui-button-text").click 
     @driver.execute_script('$("#logProjectId_chzn").trigger("mousedown")')
@@ -78,9 +57,9 @@ describe "ProjectViewSpec" do
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\ntest_log[\s\S]*$/
     @driver.find_element(:link, "delete").click
     alert = @driver.switch_to().alert()
-    alert.accept()
-   
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\nTodo was successfully deleted\.[\s\S]*$/
+    alert.accept()  
+    sleep 0.2
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\nTask was successfully deleted\.[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     @driver.find_element(:link, "delete").click 
     alert = @driver.switch_to().alert()
@@ -92,11 +71,11 @@ describe "ProjectViewSpec" do
     @driver.find_element(:link, "Milestones").click
     sleep 0.2
     # Warning: assertTextPresent may require manual changes
+
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Goal[\s\S]*$/m 
     @driver.find_element(:css, "#dialog_milestone > span.ui-button-text").click 
     @driver.find_element(:id, "milestone_goal").clear
-    @driver.find_element(:id, "milestone_goal").send_keys "test_milestone"
-    
+    @driver.find_element(:id, "milestone_goal").send_keys "test_milestone" 
     @driver.find_element(:id, "new_milestone_submit").click
      sleep 0.2
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*test_milestone[\s\S]*$/
@@ -122,7 +101,7 @@ describe "ProjectViewSpec" do
     true
   rescue Selenium::WebDriver::Error::NoSuchElementError
     false
-  end
+  end 
   
   def verify(&blk)
     yield

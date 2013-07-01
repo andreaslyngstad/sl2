@@ -9,7 +9,13 @@ describe Todo do
   it { should belong_to(:user) }
   it { should belong_to(:firm) }
   it {should have_many(:logs)}
-  
+
+  it 'should be saved on correct firm' do
+    firm2 = FactoryGirl.create(:firm)
+    test = FactoryGirl.build(:todo,:project => project, :firm => firm2)
+    test.should_not be_valid
+    test.errors[:firm_id].should be_present
+  end
   it "Can be due to day" do
     todo = Todo.create!(:name => "Test", :due => Time.now, :completed => false, :firm => firm, :project => project, :user => user)
     todo.due_to_day.should == true

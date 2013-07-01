@@ -2,9 +2,7 @@ require 'spec_helper'
 # let(:user) { create(:user) }
   # before { login_as user }
 describe UsersController do 
-
   login_user
-  
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com"
   end
@@ -27,9 +25,8 @@ describe UsersController do
   
   describe "GET #show" do
     it "assigns the requested user to @user" do
-      @user = FactoryGirl.create(:user, :firm => @user.firm)
       get :show, :id => @user
-      assigns(:user) == [@klass] 
+      assigns(:klass).should eq(@user) 
     end
     it "renders the #show view" do
       @user = FactoryGirl.create(:user, :firm => @user.firm)
@@ -37,7 +34,12 @@ describe UsersController do
       response.should render_template("show")
     end
   end
-  
+  describe "GET edit" do
+    it "should assign user to @user" do
+      get :edit, :id => @user
+      assigns(:user).should eq(@user) 
+    end 
+  end
   describe "POST create" do
     context "with valid attributes" do
       it "creates a new user" do
@@ -54,10 +56,6 @@ describe UsersController do
     end 
   end
   describe 'PUT update' do
-  before :each do
-    @user = FactoryGirl.create(:user, :firm => @user.firm)
-  end
-  
   context "valid attributes" do
     it "located the requested @user" do
       put :update, id: @user, user: FactoryGirl.attributes_for(:user)
@@ -68,6 +66,12 @@ describe UsersController do
       put :update, id: @user, user: FactoryGirl.attributes_for(:user, :name => "something else")
       @user.reload
       @user.name.should eq("something else")
+    end
+    it "does not change password or password_confirmation when the fields are blank" do
+      put :update, id: @user, user: FactoryGirl.attributes_for(:user, password: "", password_confirmation: "testtest")
+      controller.params[:user].should_not include "password"
+      put :update, id: @user, user: FactoryGirl.attributes_for(:user, password: "testtest", password_confirmation: "testtest")
+      controller.params[:user].should include "password" => "testtest"  
     end
   end
   context "invalid attributes" do
@@ -106,5 +110,5 @@ end
       delete :destroy, id: @user
       response.should redirect_to users_url
     end
-  end
+  end 
 end

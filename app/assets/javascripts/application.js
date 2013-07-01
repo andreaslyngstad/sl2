@@ -63,6 +63,7 @@ function set_date_format_str(){
 jQuery.fn.set_date_format = function(){
   	$.each($('.date_format_setter'),function(k,v){
   		$(v).html(strftime(set_date_format_str(), new Date($(v).data("date"))))
+
   	});
 }
 jQuery.fn.set_clock_format = function(){
@@ -224,16 +225,14 @@ jQuery.fn.activate_projects_no_button = function(){
   
 };
 jQuery.fn.set_buget_width = function(){
-    var procent = this.data("procent") * 100
-    console.log(isNaN(procent))
-
-    if (this.data("procent") == "Infinity"){
+    var procent = Math.round(this.data("procent") * 100)
+    if (this.data("procent") == "Not set" || this.data("procent") == "Nothing used"){
       $(this).css("width", "100%")
         $(".budget_red").css("width", "0%")
         $(".budget_red").html("")
-        $(this).html("<p>No set</p>")
+        $(this).html("<p>" + this.data("procent")  +"</p>")
 
-    }else if(procent < 1) {
+    }else if(procent < 100) {
       var invert_procent = 100 - procent
       $(this).css("width", procent + "%")
       $(this).html(procent+ "%<p>spent</p>")
@@ -241,10 +240,10 @@ jQuery.fn.set_buget_width = function(){
       $(".budget_red").css("width", invert_procent + "%")
       $(".budget_red").html(invert_procent+ "%<p>left</p>")
       
-    }else if(procent > 1){
+    }else if(procent > 100){
+      var invert_procent = 100 - procent
       $(this).css("width", "100%")
-      $(".budget_red").css("width", "0%")
-      $(".budget_red").html("")
+      $(".budget_red").hide()
       $(this).html(procent+ "%<p>spent</p>")
     }
 };
@@ -273,9 +272,7 @@ jQuery.fn.current_link = function(){
   $(this).click(function(){
   $("#html_tabs a.current_link").removeClass("current_link")
   $(this).addClass("current_link")
-    
     });
-
 };
 
 
@@ -283,9 +280,16 @@ jQuery.fn.current_link = function(){
 //ok
   
 ///////////////////////////////////////////////////////////////document.ready///////////////////////////////////////////////////////
-
-
-  
+$.ajaxSetup({
+  statusCode: {
+  401: function(){
+ 
+// Redirec the to the login page.
+  location.href = "/sign_in";
+ 
+  }
+  }
+  });
 $(document).ready(function() {	 
 	if ($('.current_firm_data').data("dateformat") == 1 ){
 			$.datepicker.setDefaults( { dateFormat: "dd.mm.yy" } );

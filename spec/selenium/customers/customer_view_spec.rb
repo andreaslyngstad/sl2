@@ -1,49 +1,28 @@
-require 'spec_helper'
-require "rspec"
-include RSpec::Expectations
-  
-describe "CustomerViewCrud", :slow do  
-    let(:firm)        {FactoryGirl.create(:firm)}
-    let(:user)        {FactoryGirl.create(:user, firm: firm)}  
-    let(:project)     {FactoryGirl.create(:project, firm: firm, active: true, name: "test_project")}  
-    
-  before(:all) do
-    project.users << user
-    @driver = Selenium::WebDriver.for :firefox
-    @base_url = "http://#{firm.subdomain}.lvh.me:3001"   
-    @driver.get(@base_url + "/")
-    @accept_next_alert = true
-    @driver.manage.timeouts.implicit_wait = 30
-    @verification_errors = []
-    @driver.find_element(:id, "user_email").send_keys user.email
-    @driver.find_element(:id, "user_password").send_keys user.password 
-    @driver.find_element(:name, "commit").click 
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Signed in[\s\S]*$/ 
-  end
-   after(:each) do
-    @driver.quit
-    @verification_errors.should == []
-  end
-  it "test_customer_show_crud", :slow do 
+require "support/selenium_helper" 
+describe "CustomerViewCrud" do  
+   login_at_subdomain  
+  it "test_customer_show_crud" do  
     @driver.get(@base_url + "/customers")
     @driver.find_element(:css, "span.ui-button-text").click
     @driver.find_element(:id, "customer_name").clear
     @driver.find_element(:id, "customer_name").send_keys "tests"
-    @driver.find_element(:name, "commit").click
+    @driver.find_element(:name, "commit").click 
     @driver.find_element(:link, "tests").click
     # Warning: waitForTextPresent may require manual changes
     sleep 0.2
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Task Project Assigned to[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     # Warning: waitForTextPresent may require manual changes
-    sleep 0.2
+    sleep 0.2 
     
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Event[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Projects')])[2]").click
     # Warning: waitForTextPresent may require manual changes
+    sleep 0.2
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Name Description Due[\s\S]*$/
     @driver.find_element(:link, "Employees").click
     # Warning: waitForTextPresent may require manual changes
+    sleep 0.2
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Name Phone Email[\s\S]*$/
     @driver.find_element(:link, "Tasks").click 
     @driver.find_element(:css, "#dialog_todo > span.ui-button-text").click
@@ -91,23 +70,25 @@ describe "CustomerViewCrud", :slow do
     @driver.find_element(:id, "log_event").clear
     @driver.find_element(:id, "log_event").send_keys "test_log"
     @driver.find_element(:id, "new_log_submit").click 
+    sleep 0.2
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Due\ntest_todo_edit[\s\S]*$/
     @driver.find_element(:link, "Tasks").click
      sleep 0.2
     @driver.execute_script('$(".logs_pluss").first().trigger("click")')  
     # Warning: waitForTextPresent may require manual changes
-    sleep 0.2
+    sleep 0.5
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\ntest_log[\s\S]*$/
-    @driver.find_element(:link, "delete").click
-    alert = @driver.switch_to().alert()
-    alert.accept()
-    
-    @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     @driver.find_element(:link, "delete").click 
     alert = @driver.switch_to().alert()
     alert.accept()
-    sleep 0.2
+    # @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\nLog was deleted\.[\s\S]*$/
+    @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
+    @driver.find_element(:link, "delete").click 
+    alert = @driver.switch_to().alert()
+    alert.accept() 
+    sleep 0.2 
     # Warning: waitForTextPresent may require manual changes
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\nLog was deleted\.[\s\S]*$/
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\nTask was successfully deleted\.[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Projects')])[2]").click
     @driver.find_element(:css, "#dialog_project > span.ui-button-text").click
     @driver.find_element(:id, "project_name").clear
@@ -137,7 +118,7 @@ describe "CustomerViewCrud", :slow do
     @driver.find_element(:id, "submit_employee_edit").click
     sleep 0.2 
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*gunnar_edit[\s\S]*$/    
-    
+     
   end
    
   def element_present?(how, what)

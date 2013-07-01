@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101029201150) do
+ActiveRecord::Schema.define(:version => 20101029201151) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -168,6 +168,16 @@ ActiveRecord::Schema.define(:version => 20101029201150) do
 
   add_index "milestones", ["firm_id"], :name => "index_milestones_on_firm_id"
   add_index "milestones", ["project_id"], :name => "index_milestones_on_project_id"
+
+  create_table "payments", :force => true do |t|
+    t.integer  "firm_id"
+    t.float    "amount"
+    t.text     "plan_name"
+    t.text     "card_type"
+    t.text     "last_four"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "plans", :force => true do |t|
     t.text     "paymill_id"

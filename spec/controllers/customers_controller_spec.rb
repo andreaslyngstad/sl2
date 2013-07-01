@@ -28,15 +28,25 @@ describe CustomersController do
   
   describe "GET #show" do
     it "assigns the requested customer to @customer" do
-      @customer = FactoryGirl.create(:customer, :firm => @user.firm)
-      get :show, :id => @customer
-      assigns(:customer) == [@customer] 
+      customer = FactoryGirl.create(:customer, :firm => @user.firm)
+      get :show, :id => customer
+      assigns(:klass).should eq(customer) 
+      assigns(:hours).should eq(customer.logs.sum(:hours)) 
+      assigns(:employees).should eq(customer.employees)
+      assigns(:projects).should eq(customer.projects.where(["active = ?", true]))
     end
     it "renders the #show view" do
       @customer = FactoryGirl.create(:customer, :firm => @user.firm)
       get :show, :id => @customer
       response.should render_template :show
     end
+  end
+  describe "GET edit" do
+    it "should assign user to @user" do
+      customer = FactoryGirl.create(:customer, :firm => @user.firm)
+      get :edit, :id => customer
+      assigns(:customer).should eq(customer) 
+    end 
   end
   describe "POST create" do
     context "with valid attributes" do

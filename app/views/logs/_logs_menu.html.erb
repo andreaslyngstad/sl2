@@ -21,7 +21,7 @@
  
     <div class="logs_pr_date">
       <select class="small_selector" id="logs_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
-           <option value="to_day">To day</option>
+           <option data-from="" data-to="" value="to_day">To day</option>
            <option value="this_week">This week</option>
            <option value="this_month">This month</option>
            <option value="this_year">This year</option>   

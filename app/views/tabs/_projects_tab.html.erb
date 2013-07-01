@@ -1,0 +1,26 @@
+<div id="listing_projects">
+  	<div class="log_menu">
+  	 <% if can? :create, Project %>
+    <div class="add_some">
+       <a id="dialog_project" data-object="project">New project</a>
+      <div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
+      <%= form_for(Project.new) do |p| %>
+      <%= p.hidden_field :customer_id, value: @klass.id %>
+      <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
+      <li><%= p.label :description %><%= p.text_area :description %></li>
+      <li><%= p.label :due %><%= p.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_project_date"   %></li>
+      <li><%= p.submit 'Save', :class => 'submit', :id => "new_project_customer" %></li>
+      <% end %>
+      </div>
+    </div>
+     <% end %>
+    </div>
+    
+    	<div class="info" >
+  <div class="name_todo info_head">Name</div>
+  <div class="project_desc info_head">Description</div>
+  <div class="date_all info_head">Due</div>
+	</div>
+      <%= render @projects %>
+  </div>
+</div>

@@ -9,15 +9,22 @@ describe Project do
   it {should belong_to(:firm) }
   
   
-  let(:plan)    {FactoryGirl.create(:plan, projects: 50)}
+  let(:plan)      {FactoryGirl.create(:plan, projects: 50)}
+  let(:firm)      {FactoryGirl.create(:firm, projects_count: 51, plan: plan)}
+  let(:firm1)     {FactoryGirl.create(:firm, projects_count: 0, plan: plan)}
+  let(:customer)  {FactoryGirl.create(:customer, firm: firm)}
   
-  let(:firm)    {FactoryGirl.create(:firm, projects_count: 51, plan: plan)}
-  let(:firm1)    {FactoryGirl.create(:firm, projects_count: 50, plan: plan)}
-  
-  it "should not save if over plan limit" do
+  it "should not save if over plan limit"  do
     FactoryGirl.build(:project, firm_id: firm.id).should_not be_valid
   end
   it "should validate_presence_of name" do
-    FactoryGirl.build(:project, firm_id: firm1.id, name: "").should_not be_valid
+    project = FactoryGirl.build(:project, firm_id: firm1.id, name: "")
+    project.should_not be_valid
+    project.errors[:name].should be_present
+  end
+  it 'should not save on different firm' do
+    test = FactoryGirl.build(:project, customer: customer,firm_id: firm1.id)
+    test.should_not be_valid
+    test.errors[:firm_id].should be_present
   end
 end

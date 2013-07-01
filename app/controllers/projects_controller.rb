@@ -2,15 +2,17 @@ class ProjectsController < ApplicationController
    
   def index
     if current_user.role == "External user"
-      @projects = current_user.projects.includes(:firm)
+      @projects = current_user.projects
     else
-      @projects = current_firm.projects.where(:active => true).order_by_name.includes(:firm)
+      @projects = current_firm.projects.where(:active => true).order_by_name
     end
   end
   def edit
-    @project = Project.find(params[:id])
-    
+    @project = Project.find(params[:id]) 
     @customers = current_firm.customers
+    respond_to do |format|
+        format.js
+    end
   end
   
 

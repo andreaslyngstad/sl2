@@ -21,6 +21,7 @@ class Project < ActiveRecord::Base
        firm != customer.firm 
     end 
   end
+ 
   def made_with_in_limit
     errors.add(:project_id, "You have reached your plans limit of #{firm.plan.projects} projects. Please upgrade.") if
     PlanLimit.new.over_limit?(firm.projects_count, firm.plan.projects)

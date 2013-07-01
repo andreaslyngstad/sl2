@@ -13,7 +13,7 @@ $(document).ready(function() {
 	      	ui.draggable.draggable( 'option', 'revert', false );
 		    var user_id =  ui.draggable.attr("user_id");
 		    var project_id = ui.draggable.attr("project_id");
-		  	$.getScript("/membership/" + user_id + "/" + project_id);
+		  	$.post("/membership/" + user_id + "/" + project_id);
           	 }
     });
     $("#not_members").droppable({
@@ -26,7 +26,7 @@ $(document).ready(function() {
       	$("#not_members").find(".user_info:last")
 	    var user_id =  ui.draggable.attr("user_id");
 	    var project_id = ui.draggable.attr("project_id"); 
-	  	$.getScript("/membership/" + user_id + "/" + project_id);
+	  	$.post("/membership/" + user_id + "/" + project_id);
 		}
     });
 });

@@ -21,3 +21,5 @@
 .rspec
 .zeus.sock
 public/assets/
+public/system/
+tmux.sh

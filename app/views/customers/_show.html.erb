@@ -5,23 +5,26 @@
 	<div class="inner">
 <div class="show-view">
 <div class="list_header orange_bgr">
-	<%= link_to "Back", customers_path, :class => "back_button" %>
+  <div class="left">
+    <%= link_to "Back", customers_path, :class => "back_button" %>
+    <%= @klass.name %>
+  </div>
 	
-		<%=h @klass.name %>
+  
 </div>
-<div id="description">
-	Phone:
-	<%=h @klass.phone %><br/>
-	Email:
-	<%= mail_to "#{@klass.email}" %><br/>
-	Address:
-	<%=h @klass.address %><br/>
-
-</div>
-<div class="graphs">Grafer</div>
 <div class="show_statistics_wrapper">
+  <div class="show_statistics_header three_box">Contact info</div>
 	<div class="show_statistics_header statistics_header_hours">Total hours</div>
 	<div class="show_statistics_header statistics_header_done">Tasks done</div>
+  <div id="milestones_chart">
+    <div id="customer_description">
+    Phone:  <%=h @klass.phone %><br/>
+    Email:  <%= mail_to "#{@klass.email}" %><br/>
+    Address:<%=h @klass.address %><br/>
+  </div>
+    
+   </div>
+  
 	<div class="statistics_unit one_number white statistics_unit_hours"><%= time_diff(@hours) %></div>
 	<div id="todos_chart">
 	<div class="statistics_unit one_number tasks_percent white"></div>
@@ -30,73 +33,20 @@
 
    <nav id="sub_tabs">
   <ul>
-    
-    <li class=""><a href="#tabs-1" data-url="/tabs/todos/<%= @klass.id %>/<%= @klass.class %>">Tasks</a></li>
-    <li class=""><a href="#tabs-2" data-url="/tabs/logs/<%= @klass.id %>/<%= @klass.class %>">Logs</a></li>
-    <li><a href="#tabs-3">Projects</a></li>
-   
-    <li><a href="#tabs-4">Employees</a></li>
-
-    <li class=""><a href="#tabs-5" data-url="/tabs/statistics/<%= @klass.id %>/<%= @klass.class %>">Statistics</a></li>
+    <li class=""><a href="#tabs-1" data-url="/tabs/tabs_todos/<%= @klass.id %>/<%= @klass.class %>">Tasks</a></li>
+    <li class=""><a href="#tabs-2" data-url="/tabs/tabs_logs/<%= @klass.id %>/<%= @klass.class %>">Logs</a></li>
+    <li class=""><a href="#tabs-3" data-url="/tabs/tabs_projects/<%= @klass.id %>/<%= @klass.class %>">Projects</a></li>
+    <li class=""><a href="#tabs-4" data-url="/tabs/tabs_employees/<%= @klass.id %>/<%= @klass.class %>">Employees</a></li>
+    <!-- <li class=""><a href="#tabs-5" data-url="/tabs/statistics/<%= @klass.id %>/<%= @klass.class %>">Statistics</a></li> -->
   </ul>
   <span class="nav_line"></span>
     </nav>
   <div class="boxes">	
   <div class="tab_box has_url" id="tabs-1"></div>	
   <div class="tab_box hide has_url" id="tabs-2"></div>
-  <div class="tab_box hide" id="tabs-3"> 
-  	<div id="listing_projects">
-  	<div class="log_menu">
-  	 <% if can? :create, Project %>
-    <div class="add_some">
-       <a id="dialog_project" data-object="project">New project</a>
-      <div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
-      <%= form_for(Project.new) do |p| %>
-      <%= p.hidden_field :customer_id, value: @klass.id %>
-      <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
-      <li><%= p.label :description %><%= p.text_area :description %></li>
-      <li><%= p.label :due %><%= p.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_project_date"   %></li>
-      <li><%= p.submit 'Save', :class => 'submit', :id => "new_project_customer" %></li>
-      <% end %>
-      </div>
-    </div>
-     <% end %>
-    </div>
-    
-    	<div class="info" >
-  <div class="name_todo info_head">Name</div>
-  <div class="project_desc info_head">Description</div>
-  <div class="date_all info_head">Due</div>
-	</div>
-      <%= render @projects %>
-    </div>
-  </div>
-  
-  <div class="tab_box hide" id="tabs-4">
-   	<div id="listing_employees">
-    	<div class="log_menu">
-    	<div class="add_some">
-          <a id="dialog_employees" data-object="employee">New employee</a>
-          <div id="dialog_employees_form" class="dialog_form" title="Create new employee" style="display:none;">  
-            <%= form_for(Employee.new) do |f| %>
-            <%= f.hidden_field :customer_id, value: @klass.id %>
-            <li><%= f.label :name %><%= f.text_field :name, :class => "required", :minlength => "2"%></li>
-            <li><%= f.label :phone %><%= f.text_field :phone %></li>
-            <li><%= f.label :email %><%= f.text_field :email %></li>
-            <li><%= f.submit "save", :class => 'submit', :id => "new_employee_submit" %></li>
-            <% end %>
-          </div>
-      </div>
-      </div>
-      <div class="info" > 
-      	<div class="name_todo info_head">Name</div>
-      	<div class="project_todo info_head">Phone</div>
-      	<div class="user_todo info_head">Email</div>
-      </div>
-      <%= render @employees %>
-    </div>
-   </div>
-   <div class="tab_box hide has_url" id="tabs-5"></div>
+  <div class="tab_box hide has_url" id="tabs-3"></div>
+  <div class="tab_box hide has_url" id="tabs-4"></div>
+   <!-- <div class="tab_box hide has_url" id="tabs-5"></div> -->
 	</div>
 	</div>
   </div>

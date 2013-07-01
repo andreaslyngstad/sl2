@@ -1,3 +1,13 @@
-FirmMailer#overdue
+Hi, <%= @user.name %>
 
-<%= @greeting %>, find me in app/views/app/views/firm_mailer/overdue.text.erb
+We have not recived payment for your accound at Squadlink. 
+
+Your account is locked untill we recive payment.
+
+No worries, your account will stay on the <%= @subscription.plan.name.downcase %> plan for one more month. After that it will be reverted to a free account. This prosess might lead to loss of data.
+
+We hope to open the account soon. Please email us if you have any questions at support@squadlink.com
+
+Regards 
+
+Squadlink

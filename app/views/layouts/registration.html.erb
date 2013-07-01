@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
+  <%= yield :head %>
   <title>Squadlink</title>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta name="google-site-verification" content="I_bq1crh7G3M7kTRDZlfO95dwRqXX_TS9y2Jrru6Wl4" />
@@ -7,6 +8,7 @@
 	<%= javascript_include_tag "registration"%>
    <%= csrf_meta_tag %>
    <link rel="shortcut icon" href="/favicon.png" />
+   
 </head>
 <body>  
 	<div class="container">
@@ -23,8 +25,8 @@
       <div class="signup signup_firm hide login_form">
         <h2 style="margin-left:20px;">Log in</h2>
         <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-          <div class="signup-form-field"><%= f.label :email %><%= f.text_field :email %></div>
-          <div class="signup-form-field"><%= f.label :password %><%= f.password_field :password %></div>
+          <div class="signup-form-field"><%= f.label :email %><%= f.text_field :email, id: 'user_email_popup' %></div>
+          <div class="signup-form-field"><%= f.label :password %><%= f.password_field :password, id: 'user_password_popup' %></div>
           <% if devise_mapping.rememberable? -%>
               <div class="signup-form-field checkbox"><%= f.label :remember_me %><%= f.check_box :remember_me, :id => "check" %> </div>
           <% end -%>
@@ -64,14 +66,14 @@
             </div>
             <div class="footer-col">
                 <ul>
-                    <li><%= link_to "Squadlink blog", blogs_path%></li>
+                    <li><%= link_to "Blog", blogs_path%></li>
                     <li><%= link_to "Terms", termsofservice_path%></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <ul>
-                    <li><a href="/guides">Help Center</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/guides">Help</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
             </div>
 

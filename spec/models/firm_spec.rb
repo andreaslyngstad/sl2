@@ -53,7 +53,7 @@ describe Firm do
   end
   
   it "should check payment" do
-    f.subscription = FactoryGirl.create(:subscription, active: true, next_bill_on: Time.now.to_date )
+    f.subscription = FactoryGirl.create(:subscription, active: true, next_bill_on: Time.now.to_date - 1.day )
     f2.subscription = FactoryGirl.create(:subscription, active: true,  next_bill_on: Time.now.to_date + 1.days)
     f.payment_check?.should == true
     f2.payment_check?.should == false

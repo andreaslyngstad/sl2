@@ -1,0 +1,39 @@
+<%= render "shared/home_header" %>
+<% content_for :help do %>
+<div class="page_help">
+	<div class="page_help_container">
+		<%= t "help.account_html" %>
+	</div>
+</div>
+<% end %>
+<div id="left">
+	<div class="firm_account">
+		<h2>Account</h2>
+		<ul>
+			<li><span class="preference_label">Secure site:</span><%= current_firm.name %></li>
+			<li><span class="preference_label">Memeber since:</span><%= date_format(current_firm.created_at.to_date) %></li>
+			<li><span class="preference_label">Plan:</span><%= current_firm.plan.name %></li>	
+		</ul>
+		<%= link_to "Subscription", plans_path, :class => "submit"%>
+		<%= link_to "Payments", payments_path%>
+		</div>
+		<div class="firm_preferences">
+			<h2>Preferences</h2>
+		<ul>
+			<li><span class="preference_label">Name:</span><%= current_firm.name %></span></li>
+			<li><span class="preference_label">Subdomain:</span><%= current_firm.subdomain %></li>
+			<li><span class="preference_label">Phone:</span><%= current_firm.phone %></li>
+			<li><span class="preference_label">Address:</span><%= current_firm.address %></li>
+			<li><span class="preference_label">Language:</span><%= current_firm.language %></li>
+			<li><span class="preference_label">Currency:</span><%= current_firm.currency %></li>
+			<li><span class="preference_label">Time zone:</span><%= current_firm.time_zone %></li>
+			<li><span class="preference_label">Time format:</span><%= current_firm.time_format == 1 ? "Hour:minute" : "Hour:decimal" %></li>
+			<li><span class="preference_label">Date format:</span><%= current_firm.date_format == 1 ? "Day.Month.Year" : "Month/Day/Year"  %></li>
+			<li><span class="preference_label">Clock format:</span><%= current_firm.clock_format == 1 ? "24 hours" : "12 hours"  %></li>
+			<li><span class="preference_label">Logo:</span><%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :original)) : ""%></li>    
+			<li><span class="preference_label">Background color:</span><span style="display: inline-block;width:100px;"><%= current_firm.background %></span></li>
+			<li><span class="preference_label">Text color:</span><span style="display: inline-block;width:100px;"><%= current_firm.color %></span></li>
+		</ul>	
+		<%= link_to "Edit preferences", firm_edit_path, :class => "submit"%>
+	</div>  	
+</div>
