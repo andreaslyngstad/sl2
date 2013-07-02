@@ -24,7 +24,7 @@ describe TimesheetsController do
   	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
 	  it "timesheet_week user admin" do
 	  	firm.users << external_user
-	  	get :timesheet_week, user_id: @user.id
+	  	get :timesheet_week, user_id: @user.id, :format => 'js'
 	  	assigns(:user).should == @user
 	  	assigns(:users).should =~ [@user, external_user]
 	  	assigns(:dates).should == ((Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date))
@@ -61,12 +61,12 @@ describe TimesheetsController do
   	let(:firm) {@user.firm}
   	let(:log)  {FactoryGirl.attributes_for(:log, end_time: Time.now + 2.hours, begin_time: Time.now, user_id: @user.id)}
   	it "should get the user" do
-  		post :add_log_timesheet, log: log
+  		post :add_log_timesheet, log: log, :format => 'js'
   		assigns(:user).should == @user
   	end
-  	it "should get the user" do
+  	it "increases log count" do
   		 expect{
-          post :add_log_timesheet, log: FactoryGirl.attributes_for(:log, user_id: @user.id)
+          post :add_log_timesheet, log: FactoryGirl.attributes_for(:log, user_id: @user.id), :format => 'js'
         }.to change(Log,:count).by(1)
   	end
   end

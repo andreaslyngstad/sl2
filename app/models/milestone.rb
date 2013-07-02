@@ -5,8 +5,8 @@ class Milestone < ActiveRecord::Base
   belongs_to :user
   belongs_to :firm
   validates_presence_of :goal
-  scope :overdue, where(["due < ?",  Date.today])
-  scope :due_this_week, where(due:  Date.today, :completed => false)
+  scope :overdue, -> {where(["due < ?",  Date.today])}
+  scope :due_this_week, -> {where(due:  Date.today, :completed => false)} 
   validate :made_on_current_firm
   def self.milestones_reflections
     arr = reflections.collect{|a, b| b.class_name.downcase if b.macro==:belongs_to}.compact.uniq

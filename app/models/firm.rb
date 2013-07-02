@@ -34,10 +34,10 @@ class Firm < ActiveRecord::Base
   validates_attachment_size :logo, :less_than => 2.megabytes
   validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png']
   validates_presence_of :name
-  validates_format_of :subdomain, :with => /^[a-z0-9]+$/i
+  validates_format_of :subdomain, :with => /\A[a-z0-9]+\z/i
   validates :subdomain, :presence => true, :uniqueness => true,  :subdomain_exclutions => :true
   
-  scope :recent, order('created_at DESC').limit(10)
+  scope :recent, -> {order('created_at DESC').limit(10)}
   
   def add_free_subscription
     free_plan = Plan.where(name:"Free").first

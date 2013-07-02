@@ -2,7 +2,7 @@ require "support/selenium_helper"
 describe "LogCrudSpec" do 
  login_at_subdomain  
        
-  it "test_log_crud_spec", :focus do     
+  it "test_log_crud_spec" do     
     @driver.get(@base_url + "/logs") 
     @driver.find_element(:id, "log_event").clear 
     @driver.find_element(:id, "log_event").send_keys "test"

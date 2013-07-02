@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipsController do
+describe MembershipsController, :focus do
 	login_user
   
   before(:each) do
@@ -25,8 +25,10 @@ describe MembershipsController do
       post :index, id: external_user.id, project_id: project.id, format: [:js]
       assigns(:project).should == project
       assigns(:user).should == external_user
-      project.users.include?(external_user).should == false
+
+      project.users.to_array.includes?(external_user).should == true
       project.users.count.should == 1
+
       flash[:notice].should == "<span style='color:#FFF'>#{external_user.name} is NOT a member of the #{project.name} project.</span>"
 	  end
     it "assigns user to project" do

@@ -4,14 +4,14 @@ class Project < ActiveRecord::Base
   belongs_to :customer
   has_many :todos, :dependent => :destroy
   has_many :logs, :dependent => :destroy
-  has_many :recent_logs, :class_name => "Log", :order => "log_date DESC", :conditions => ['log_date > ?', Time.now.beginning_of_week]
+  has_many :recent_logs, -> {  where('log_date > ?', Time.now.beginning_of_week).order("log_date DESC") }, :class_name => "Log"
   has_many :milestones
   validates_presence_of :name, :due
   has_many :memberships
   has_many :users, :through => :memberships
-  scope :is_active, where(["active = ?", true])
-  scope :is_inactive, where(["active = ?", false])
-  scope :order_by_name, order("name ASC")
+  scope :is_active, -> {where(["active = ?", true])}
+  scope :is_inactive, -> {where(["active = ?", false])}
+  scope :order_by_name, -> {order("name ASC")}
   validate :made_on_current_firm
   validate :made_with_in_limit, :on => :create
   

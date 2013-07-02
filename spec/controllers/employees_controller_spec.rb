@@ -16,12 +16,12 @@ describe EmployeesController do
     context "with valid attributes" do
       it "creates a new contact" do
         expect{
-          post :create, employee: FactoryGirl.attributes_for(:employee, :customer_id => @customer.id)
+          post :create, employee: FactoryGirl.attributes_for(:employee, :customer_id => @customer.id), :format => 'js'
         }.to change(Employee,:count).by(1)
       end
       
       it "Should show flash" do
-        post :create, employee: FactoryGirl.attributes_for(:employee, :customer_id => @customer.id)
+        post :create, employee: FactoryGirl.attributes_for(:employee, :customer_id => @customer.id), :format => 'js'
         flash[:notice].should_not be_nil 
       end
     end 
@@ -33,25 +33,25 @@ describe EmployeesController do
   
   context "valid attributes" do
     it "located the requested @employee" do
-      put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee)
+      put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee), :format => 'js'
       assigns(:employee).should eq(@employee)      
     end
 
     it "changes @employee's attributes" do
-      put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee, :name => "something else")
+      put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee, :name => "something else"), :format => 'js'
       @employee.reload
       @employee.name.should eq("something else")
     end
   end
   context "invalid attributes" do
     it "locates the requested @employee" do
-      put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee, :name => nil)
+      put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee, :name => nil), :format => 'js'
       assigns(:employee).should eq(@employee)      
     end
     
     it "does not change @employee's attributes" do
       put :update, id: @employee, 
-        employee: FactoryGirl.attributes_for(:employee, :name => nil)
+        employee: FactoryGirl.attributes_for(:employee, :name => nil), :format => 'js'
       @employee.reload
       @employee.name.should_not eq("something else")
     end
@@ -65,12 +65,12 @@ end
     
     it "deletes the contact" do
       expect{
-        delete :destroy, id: @employee        
+        delete :destroy, id: @employee, :format => 'js'        
       }.to change(Employee,:count).by(-1)
     end
       
     it "redirects to contacts#index" do
-      delete :destroy, id: @employee
+      delete :destroy, id: @employee, :format => 'js'
       flash[:notice].should_not be_nil
     end
   end

@@ -12,7 +12,7 @@ describe ReportsController do
   	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
 	  it "get reports" do
 	  	get :index
-			expect(response).to render_template("reports")
+			expect(response).to render_template("reports/index")
 			expect(assigns(:users)).to eq(firm.users)
 			expect(assigns(:projects)).to eq(firm.projects)
 			expect(assigns(:customers)).to eq(firm.customers)

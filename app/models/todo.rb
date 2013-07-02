@@ -14,6 +14,10 @@ class Todo < ActiveRecord::Base
   validate :project_must_exist
   validate :user_must_exist
   validate :correct_time
+
+  scope :overdue_and_to_day, -> {not_complete.where(["due <= ?",  Date.today]).order("due")}
+  scope :due_to_day, -> {where(due:  Date.today, :completed => false)}
+
   def correct_time
     errors.add(:due, "is wrong format") if !DateTester.new.date?(due)
   end
@@ -44,8 +48,6 @@ class Todo < ActiveRecord::Base
   def self.not_complete
     where(:completed => false)
   end
-  scope :overdue_and_to_day, not_complete.where(["due <= ?",  Date.today]).order("due")
-  scope :due_to_day, where(due:  Date.today, :completed => false)
   
   def due_to_day
     Time.now.strftime("%Y%j") == due.strftime("%Y%j") && completed == false

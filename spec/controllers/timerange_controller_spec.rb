@@ -15,14 +15,14 @@ describe TimerangeController do
 
 	  it "log_range" do
 	  	project.users << @user
-	  	get :log_range, from:Date.today - 5.days, to:Date.today, url: "Project", id: project.id
+	  	get :log_range, from:(Date.today - 5.days).strftime('%Y-%m-%d'), to:(Date.today).strftime('%Y-%m-%d'), url: "Project", id: project.id, :format => 'js'
 	  	assigns(:customers).should == [customer]
 	  	assigns(:all_projects).should == [project]
 	  	assigns(:logs).should == [log]
 	  end
 	  it "log_range" do
 	  	project.users << @user
-	  	get :log_range, time: "to_day", url: "Project", id: project.id
+	  	get :log_range, time: "to_day", url: "Project", id: project.id, :format => 'js'
 	  	assigns(:customers).should == [customer]
 	  	assigns(:all_projects).should == [project]
 	  	assigns(:logs).should == [log]

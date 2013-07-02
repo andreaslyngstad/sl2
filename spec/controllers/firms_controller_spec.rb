@@ -14,7 +14,7 @@ describe FirmsController do
    end
    it "renders the #show view" do
      get :firm_show, :id => @user.firm
-     response.should render_template :show
+     response.should render_template :firm_show
    end
    it "renders access_denied when user is External user" do
       @user.role = "External user"

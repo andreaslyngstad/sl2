@@ -63,7 +63,6 @@ class ProjectsController < ApplicationController
    @klass.destroy
     respond_to do |format|
       flash[:notice] = flash_helper('Project was deleted.')
-      format.html { redirect_to projects_path }
       format.js
     end
   end

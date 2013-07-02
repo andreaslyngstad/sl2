@@ -16,12 +16,12 @@ describe TodosController do
     context "with valid attributes" do
       it "creates a new contact" do
         expect{ 
-          post :create, todo: FactoryGirl.attributes_for(:todo, :project_id => @project.id, :user_id => @user.id)
+          post :create, todo: FactoryGirl.attributes_for(:todo, :project_id => @project.id, :user_id => @user.id), :format => 'js'
         }.to change(Todo,:count).by(1)
       end
       
       it "Should show flash" do
-        post :create, todo: FactoryGirl.attributes_for(:todo, :project_id => @project.id, :user_id => @user.id)
+        post :create, todo: FactoryGirl.attributes_for(:todo, :project_id => @project.id, :user_id => @user.id), :format => 'js'
         flash[:notice].should_not be_nil 
       end
     end 
@@ -33,33 +33,33 @@ describe TodosController do
   
   context "valid attributes" do
     it "located the requested @contact" do
-      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo)
+      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo), :format => 'js'
       assigns(:todo).should eq(@todo)      
     end
   
     it "changes @todo's attributes" do
-      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, :name => "something else", :user_id => @user.id)
+      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, :name => "something else", :user_id => @user.id), :format => 'js'
       @todo.reload
       @todo.name.should eq("something else")
     end
     it "set done_by_user to current_user when params [:completed]" do
-      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: 1)
+      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: 1), :format => 'js'
       @todo.reload
       @todo.done_by_user.should eq(@user)
-      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: 0)
+      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: 0), :format => 'js'
       @todo.reload
       @todo.done_by_user.should eq(nil)
     end
   end
   context "invalid attributes" do
     it "locates the requested @todo" do
-      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, :name => nil, :user_id => @user.id)
+      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, :name => nil, :user_id => @user.id), :format => 'js'
       assigns(:todo).should eq(@todo)      
     end
     
     it "does not change @todo's attributes" do
       put :update, id: @todo, 
-        todo: FactoryGirl.attributes_for(:todo, :name => nil, :user_id => @user.id)
+        todo: FactoryGirl.attributes_for(:todo, :name => nil, :user_id => @user.id), :format => 'js'
       @todo.reload
       @todo.name.should_not eq("something else")
     end
@@ -73,12 +73,12 @@ end
     
     it "deletes the contact" do
       expect{
-        delete :destroy, id: @todo        
+        delete :destroy, id: @todo, :format => 'js'        
       }.to change(Todo,:count).by(-1)
     end
       
     it "redirects to contacts#index" do
-      delete :destroy, id: @todo
+      delete :destroy, id: @todo, :format => 'js'
       flash[:notice].should_not be_nil
     end
   end

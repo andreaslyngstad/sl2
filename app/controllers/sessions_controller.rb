@@ -1,7 +1,7 @@
 class SessionsController < Devise::SessionsController
   skip_before_filter :authenticate_user!, :all_users, :user_at_current_firm
   def new
-    resource = build_resource
+    self.resource = resource_class.new(sign_in_params)
     clean_up_passwords(resource)
     respond_with(resource, serialize_options(resource))
   end

@@ -44,7 +44,7 @@ $(document).ready(function() {
 	$(".start").hover(function(){
 		$(this).toggleClass("on")
 	})
-	$(".start").live("click", function(){
+	$(".start").on("click", function(){
 		$(this).hide();
 		$(".play_a_video").hide();
 		$(".video_container").show();

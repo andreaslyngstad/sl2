@@ -1,31 +1,41 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '3.2.12'
+gem 'rails', '4.0.0'
 gem 'eventmachine'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'rack-ssl'
-gem 'jquery-rails', '2.1.3' 
-gem 'devise'
+gem 'jquery-rails'
+# activeadmin
+gem 'devise',              github: 'plataformatec/devise'
+gem 'responders',          github: 'plataformatec/responders'
+gem 'inherited_resources', github: 'josevalim/inherited_resources'
+gem 'ransack',             github: 'ernie/ransack', branch: 'rails-4'
+gem 'activeadmin',         github: 'gregbell/active_admin', branch: 'rails4'
+gem 'formtastic',          github: 'justinfrench/formtastic'
+# activeadmin
 gem 'paperclip'
 gem 'cancan'
 gem 'pdfkit'
 gem 'newrelic_rpm'
 gem 'jbuilder'
-gem 'activeadmin'
 gem 'select2-rails'
 gem 'seedbank'
 gem 'whenever', :require => false
 gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
 gem 'pg'
 
-group :assets do
-  gem 'sass-rails', "  ~> 3.2.3"
-  gem 'coffee-rails', "~> 3.2.1"
-  gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-ui-rails', '2.0.2'
-end
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+
+gem 'sass-rails', :github => 'rails/sass-rails'
+gem 'coffee-rails', :github => "rails/coffee-rails"
+gem 'uglifier', '>= 1.3.0'
+gem 'jquery-ui-rails'
+
 
 group :development, :test do
   gem 'rack-mini-profiler'

@@ -41,10 +41,10 @@ describe CustomersController do
       response.should render_template :show
     end
   end
-  describe "GET edit" do
+  describe "GET edit" do 
     it "should assign user to @user" do
       customer = FactoryGirl.create(:customer, :firm => @user.firm)
-      get :edit, :id => customer
+      get :edit, :id => customer, :format => 'js'
       assigns(:customer).should eq(customer) 
     end 
   end
@@ -52,12 +52,12 @@ describe CustomersController do
     context "with valid attributes" do
       it "creates a new contact" do
         expect{
-          post :create, customer: FactoryGirl.attributes_for(:customer)
+          post :create, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
         }.to change(Customer,:count).by(1)
       end
       
       it "redirects to the new contact" do
-        post :create, customer: FactoryGirl.attributes_for(:customer)
+        post :create, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
         flash[:notice].should_not be_nil 
       end
     end 
@@ -69,25 +69,25 @@ describe CustomersController do
   
   context "valid attributes" do
     it "located the requested @contact" do
-      put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer)
+      put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
       assigns(:customer).should eq(@customer)      
     end
   
     it "changes @customer's attributes" do
-      put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer, :name => "something else")
+      put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer, :name => "something else"), :format => 'js'
       @customer.reload
       @customer.name.should eq("something else")
     end
   end
   context "invalid attributes" do
     it "locates the requested @customer" do
-      put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer, :name => nil)
+      put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer, :name => nil), :format => 'js'
       assigns(:customer).should eq(@customer)      
     end
     
     it "does not change @customer's attributes" do
       put :update, id: @customer, 
-        customer: FactoryGirl.attributes_for(:customer, :name => nil)
+        customer: FactoryGirl.attributes_for(:customer, :name => nil), :format => 'js'
       @customer.reload
       @customer.name.should_not eq("something else")
     end
@@ -101,12 +101,12 @@ end
     
     it "deletes the contact" do
       expect{
-        delete :destroy, id: @customer        
+        delete :destroy, id: @customer, :format => 'js'       
       }.to change(Customer,:count).by(-1)
     end
       
     it "redirects to contacts#index" do
-      delete :destroy, id: @customer
+      delete :destroy, id: @customer, :format => 'js'
       flash[:notice].should_not be_nil
     end
   end

@@ -14,11 +14,11 @@ describe MilestonesController do
     context "with valid attributes" do
       it "creates a new contact" do
         expect{
-          post :create, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id)
+          post :create, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id), :format => 'js'
         }.to change(Milestone,:count).by(1)
       end
       it "Gives a flash notice" do
-        post :create, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id)
+        post :create, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id), :format => 'js'
         flash[:notice].should_not be_nil 
       end
     end 
@@ -31,12 +31,12 @@ describe MilestonesController do
   
   context "valid attributes" do
     it "located the requested @contact" do
-      put :update, id: @milestone, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id)
+      put :update, id: @milestone, milestone: FactoryGirl.attributes_for(:milestone, :project_id => @project.id), :format => 'js'
       assigns(:milestone).should eq(@milestone)      
     end
   
     it "changes @milestone's attributes" do
-      put :update, id: @milestone, milestone: FactoryGirl.attributes_for(:milestone, :goal => "something else", :project_id => @project.id)
+      put :update, id: @milestone, milestone: FactoryGirl.attributes_for(:milestone, :goal => "something else", :project_id => @project.id), :format => 'js'
       @milestone.reload
       @milestone.goal.should eq("something else")
       flash[:notice].should_not be_nil 
@@ -44,13 +44,13 @@ describe MilestonesController do
   end
   context "invalid attributes" do
     it "locates the requested @milestone" do
-      put :update, id: @milestone, milestone: FactoryGirl.attributes_for(:milestone, :goal => nil)
+      put :update, id: @milestone, milestone: FactoryGirl.attributes_for(:milestone, :goal => nil), :format => 'js'
       assigns(:milestone).should eq(@milestone)      
     end
     
     it "does not change @milestone's attributes" do
       put :update, id: @milestone, 
-        milestone: FactoryGirl.attributes_for(:milestone, :goal => nil)
+        milestone: FactoryGirl.attributes_for(:milestone, :goal => nil), :format => 'js'
       @milestone.reload
       @milestone.goal.should_not eq("something else")
     end
@@ -64,7 +64,7 @@ end
     
     it "deletes the contact" do
       expect{
-        delete :destroy, id: @milestone       
+        delete :destroy, id: @milestone, :format => 'js'       
       }.to change(Milestone,:count).by(-1)
     end
   end

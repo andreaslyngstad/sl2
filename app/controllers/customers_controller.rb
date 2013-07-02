@@ -1,5 +1,5 @@
 class CustomersController < ApplicationController
-  load_and_authorize_resource :firm
+ 
   def index
     @customers = current_firm.customers.order_by_name
     @customer = Customer.new  
@@ -15,7 +15,7 @@ class CustomersController < ApplicationController
       format.js
     end
   end
-  
+   
   def edit
     @customer = Customer.find(params[:id])
     respond_to do |format|

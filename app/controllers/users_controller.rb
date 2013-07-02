@@ -26,7 +26,6 @@ class UsersController < ApplicationController
      respond_to do |format|
       if @klass.save
         flash[:notice] = flash_helper("Registration successful.")
-        format.html {redirect_to(users_path())}
         format.js
       else
         flash[:notice] = flash_helper("Something went wrong")
@@ -45,7 +44,6 @@ class UsersController < ApplicationController
       respond_to do |format|
     if @klass.update_attributes(params[:user])
       flash[:notice] = flash_helper("Successfully updated profile.")
-      format.html {redirect_to(user_path(@klass))}
       format.js
     else
       format.js { render "shared/validate_update" }
@@ -61,7 +59,6 @@ class UsersController < ApplicationController
      respond_to do |format|
     if @user == current_user
     flash[:notice] = flash_helper("You are logged in as #{@user.name}. You cannot delete yourself.")
-      format.html{ redirect_to(users_path())}
       format.js
     else
     @user.destroy

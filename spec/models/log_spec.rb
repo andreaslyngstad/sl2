@@ -61,7 +61,7 @@ describe Log do
   it 'should calculate hours for timesheet' do
      log2
      log3
-     Log.logs_for_timesheet(user).should == {[nil, (Date.today.beginning_of_week + 1.day).strftime('%Y-%m-%d')]=>3600.0}
+     Log.logs_for_timesheet(user).should == {[nil, (Date.today.beginning_of_week + 1.day)]=>3600.0}
   end
   
   it 'should find hours by day and model' do
@@ -70,7 +70,7 @@ describe Log do
     model = :user
     logs = Log.hours_by_day_and_model(firm, range, model)
     logs.each do |l|
-      l.total_hours.should == '3600'
+      l.total_hours.should == 3600.0
       l.user.should == user
       l.log_date.should == Date.today.beginning_of_week + 1.day
     end
@@ -81,7 +81,7 @@ describe Log do
     model = :user
     logs = Log.hours_by_model(firm, range, model)
     logs.each do |l|
-      l.total_hours.should == '3600'
+      l.total_hours.should == 3600.0
       l.user.should == user
     end
   end

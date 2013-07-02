@@ -4,7 +4,7 @@ module SubdomainLogin
     let(:user)        {FactoryGirl.create(:user, firm: firm)}
     
     let(:project)     {FactoryGirl.create(:project, firm: firm, active: true, name: "test_project")}  
-    before(:all) do
+    before(:each) do
       project.users << user
       @driver = Selenium::WebDriver.for :chrome
       @base_url = "http://#{firm.subdomain}.lvh.me:3001"   

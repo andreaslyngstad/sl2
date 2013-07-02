@@ -12,7 +12,7 @@ describe RosterController do
 	  	milestone1 = FactoryGirl.create(:milestone, :due => Time.now - 1.day, :firm => @user.firm,:project => @project)
 			milestone2 = FactoryGirl.create(:milestone, :due => Time.now + 1.day, :firm => @user.firm,:project => @project)
 			milestone3 = FactoryGirl.create(:milestone, :due => Time.now + 15.days, :firm => @user.firm,:project => @project)
-	    get :get_milestones
+	    get :get_milestones, :format => 'js'
 	    assigns(:milestones).should eq([milestone1,milestone2])
 	    assigns(:milestones).should_not include (milestone3)
 	  end 
@@ -21,7 +21,7 @@ describe RosterController do
     it "assigns the requested get tasks to @tasks_overdue_and_to_day" do
     	todo1 = FactoryGirl.create(:todo, user: @user, firm: @user.firm, project: @project, due: Time.now.to_date, completed: false )  
       todo2 = FactoryGirl.create(:todo, user: @user, firm: @user.firm, project: @project, due: Time.now.to_date + 1.day, completed: false )  
-      get :get_tasks
+      get :get_tasks, :format => 'js'
       assigns(:tasks_overdue_and_to_day).should eq([todo1])
       assigns(:tasks_overdue_and_to_day).should_not include (todo2)
     end

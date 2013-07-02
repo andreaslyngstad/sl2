@@ -1,5 +1,7 @@
+
 //= require jquery
 //= require jquery_ujs
+//= require jquery-migrate-1.2.1
 //= require jquery.ui.draggable
 //= require jquery.ui.droppable
 //= require jquery.ui.button

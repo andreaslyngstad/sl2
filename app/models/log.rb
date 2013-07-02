@@ -6,7 +6,7 @@ class Log < ActiveRecord::Base
   belongs_to :user
   belongs_to :firm, :counter_cache => true
   belongs_to :project
-  belongs_to :recent_project, :class_name => "Project", :conditions => ['logs.log_date > ?', Time.now.beginning_of_week]
+  # belongs_to :recent_project, :class_name => "Project", :conditions => ['logs.log_date > ?', Time.now.beginning_of_week]
   belongs_to :todo
   belongs_to :employee
   before_save :set_hours 
