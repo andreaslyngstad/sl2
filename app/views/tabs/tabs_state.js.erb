@@ -1,0 +1,8 @@
+$(".flash_notice").empty();
+var tab = $("li.active").children("a").attr("href")
+$(tab).empty().append("<%= j( render 'state_' + @klass.class.to_s.downcase )  %>")
+$(".budget_green").set_buget_width()
+$(".total_log_time").set_hours()
+$(".tasks_percent").task_done();
+$("#dialog_customer").UIdialogs_links();
+$(".spinning").hide()

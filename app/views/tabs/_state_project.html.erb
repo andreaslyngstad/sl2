@@ -1,0 +1,29 @@
+<div class="state_wrapper">
+  <div class="state_headers">Total hours</div>
+  <div class="state_unit total_log_time"  data-hours="<%= @klass.logs.sum(:hours) %>"></div>
+  <div class="state_headers">Tasks done</div>
+  <div class="state_unit tasks_percent" data-complete="<%= @klass.todos.where(["completed = ?", true]).count %>" data-notcomplete="<%= @klass.todos.where(["completed = ?", false]).count %>"></div>
+  <div class="state_headers">Milestones</div>
+   <ul>
+    <% @klass.milestones.order("due ASC").each do |milestone|%>
+      <li><%=  milestone.goal %></li>
+    <% end %>
+  </ul>
+  <div class="state_headers">Users</div>
+  <div class="state_unit">
+      <ul>
+      <% @klass.users.each do |user| %>
+        <li><%= user.name %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="state_headers">Budget</div>
+  <div class="state_unit">
+    <div class="budget_green" data-procent="<%= ProjectPrice.set_procentage(@klass)%>" data-budget="<%= @klass.budget %>"><p>spent</p></div>
+    <div class="budget_red"><p>left</p></div>
+  </div>
+  
+</div>
+<div id="description">
+  <%= @klass.description %>
+</div>

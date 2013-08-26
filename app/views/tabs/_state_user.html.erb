@@ -1,0 +1,29 @@
+<div id="description" class="user_description">
+	  		<div class="show_user_text">
+				 <%=h @klass.name %><br/>
+				Phone:
+				 <%=h @klass.phone %><br/>
+				Email:
+				<%=h @klass.email %><br/>
+			</div>
+			<div class="show_user_image">
+			<div class="avatar_show_page">	     	
+				<%= image(@klass, "image100") %>
+				<p><%= link_to "Change image", "", :class => "show_avatar_upload" %></p>  
+	  		</div>
+			<div class="avatar_upload" style="display:none">
+				<%= form_for(@klass, :html => { :multipart => true }) do |f| %>
+					<p id="firm_logo"><%= f.file_field :avatar%></p>  
+					<%= f.submit "Upload", :class => "submit"%>  <%= link_to "Cancel", "", :class => "hide_avatar_upload" %>
+				<% end %>
+			</div>
+			</div>
+		</div>
+<div class="show_statistics_wrapper">
+<div class="show_statistics_header statistics_header_hours">Total hours</div>
+<div class="show_statistics_header statistics_header_done">Tasks done</div>
+<div class="statistics_unit one_number white total_log_time statistics_unit_hours" data-hours="<%= @klass.logs.sum(:hours) %>"></div>
+<div id="todos_chart">
+<div class="statistics_unit one_number tasks_percent white" data-complete="<%= @klass.todos.where(["completed = ?", true]).count %>" data-notcomplete="<%= @klass.todos.where(["completed = ?", false]).count %>"></div>
+</div>  
+</div>

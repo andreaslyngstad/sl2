@@ -1,0 +1,13 @@
+<div id="customer_description">
+  Phone:  <%=h @klass.phone %><br/>
+  Email:  <%= mail_to "#{@klass.email}" %><br/>
+  Address:<%=h @klass.address %><br/>
+  </div>
+<div class="show_statistics_wrapper">
+<div class="show_statistics_header statistics_header_hours">Total hours</div>
+<div class="show_statistics_header statistics_header_done">Tasks done</div>
+<div class="statistics_unit one_number white total_log_time statistics_unit_hours" data-hours="<%= @klass.logs.sum(:hours) %>"></div>
+<div id="todos_chart">
+<div class="statistics_unit one_number tasks_percent white" data-complete="<%= @klass.todos.where(["completed = ?", true]).count %>" data-notcomplete="<%= @klass.todos.where(["completed = ?", false]).count %>"></div>
+</div>  
+</div>
