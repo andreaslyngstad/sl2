@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'features/subdomain_login_features'
 include SubdomainLoginFeatures
 feature 'customer' do
-    get_the_gritty  
+    get_the_gritty   
   scenario "make new", js: true do
-    sign_in_on_js
-    visit customers 
+    sign_in_on_js   
+    visit @customers 
     page.should have_content("Add new customer")       
     find("#dialog_customer").click
     page.should have_content("Create new customer")
@@ -15,13 +15,13 @@ feature 'customer' do
     fill_in "customer_name", with: "test_new customer"
     fill_in "customer_phone", with: "123456789"
     fill_in "customer_email", with: "test@tes.no"
-    fill_in "customer_address", with: "new customer address"
+    fill_in "customer_address", with: "new customer address" 
     click_button "Save"
     page.should have_content("test_new customer")
   end 
   scenario "Edit customer", js: true do
     sign_in_on_js
-    visit customers
+    visit @customers 
     page.should have_content("test_new customer")  
     id = page.evaluate_script("$('.open_customer_update').first().attr('data-id');")
     li = "li#customer_#{id}"
@@ -35,7 +35,7 @@ feature 'customer' do
   end 
   scenario "delete customer", js: true do
     sign_in_on_js
-    visit customers
+    visit @customers
     id = page.evaluate_script("$('.open_customer_update').first().attr('data-id');")
     li = "li#customer_#{id}"
     within(:css, li) do

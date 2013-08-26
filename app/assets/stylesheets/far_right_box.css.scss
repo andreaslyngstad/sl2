@@ -1,19 +1,19 @@
 .far_right_container{
-  display:none;
+  // display:none;
   position:fixed;
-  z-index:1001;
+  // z-index:1001;
   width: 220px;
   background-color:white;
   -moz-box-shadow: 0 0 5px #888;
   -webkit-box-shadow: 0 0 5px#888;
   box-shadow: 0 0 5px #888;
-height:448px;
+// height:448px;
 }
-#accordion_frame{
+// #accordion_frame{
 	
-	height:350px;
-	width: 220px;
-}
+// 	// height:350px;
+// 	// width: 220px;
+// }
 .far_right_container_min, .far_right_container_max{
   height: 29px;
   -moz-box-shadow: 0 0 5px #888;

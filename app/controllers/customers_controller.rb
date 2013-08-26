@@ -24,21 +24,24 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.new(params[:customer]) 
-    @customer.firm = current_firm
+    @klass = Customer.new(params[:customer]) 
+    @klass.firm = current_firm
     respond_to do |format|
-      if @customer.save
-      	flash[:notice] = flash_helper("#{@customer.name}" + " is added.")
-      	format.js  
+      if @klass.save
+      	flash[:notice] = flash_helper("#{@klass.name}" + " is added.")
+      	format.js 
+        else
+        flash[:notice] = flash_helper("Something went wrong")
+        format.js { render "shared/validate_create" }
       end
     end 
   end
 
   def update
-    @customer = Customer.find(params[:id])
+    @klass = Customer.find(params[:id])
     respond_to do |format|
-      if @customer.update_attributes(params[:customer])
-        flash[:notice] = flash_helper("#{@customer.name}" + " was successfully updated.")
+      if @klass.update_attributes(params[:customer])
+        flash[:notice] = flash_helper("#{@klass.name}" + " was successfully updated.")
         format.js
       else
         format.js

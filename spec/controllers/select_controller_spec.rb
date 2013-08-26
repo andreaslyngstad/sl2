@@ -15,12 +15,12 @@ describe SelectController do
     let(:log)           {FactoryGirl.create(:log, user: @user, firm: firm)}
     it "assigns project with todos if project_id" do
       # project.todos << todo
-    	get :project_select, project_id: project.id, log_id: 0, format: [:js]
+    	get :project_select, project_id: project.id, log_id:nil, format: [:js]
       assigns(:project).should == project
       assigns(:todos).should == [todo]
     end
     it 'says select a project if no project' do
-      get :project_select, project_id: 0, log_id: 0, format: [:js]
+      get :project_select, project_id: 0, log_id: nil, format: [:js]
       assigns(:todos).should == "Select a project"
     end
     it 'assigns log when log_id > 0' do
@@ -34,15 +34,15 @@ describe SelectController do
     let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
     let(:todo)          {FactoryGirl.create(:todo, completed: false, project: project, user: @user, firm: firm)}    
     let(:log)           {FactoryGirl.create(:log, user: @user, firm: firm)}
-    let(:log1)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm)}
+    let(:log1)          {FactoryGirl.create(:log, project: project, user: @user, firm: firm)}
     
     it 'assigns project and todos if project_id' do
-      post :project_select_tracking, project_id: project.id, log_id: 0, format: [:js]
+      post :project_select_tracking, project_id: project.id, log_id: nil, format: [:js]
       assigns(:project).should == project
       assigns(:todos).should == [todo]
     end
     it 'says select a project if no project' do
-      post :project_select_tracking, project_id: 0, log_id: 0, format: [:js]
+      post :project_select_tracking, project_id: 0, log_id: nil, format: [:js]
       assigns(:todos).should == "Select a project"
     end 
     it 'assigns log when log_id > 0' do
@@ -86,7 +86,7 @@ describe SelectController do
     let(:log1)      {FactoryGirl.create(:log, todo: todo, user: @user, firm: firm)}
     
     it 'assigns todo if todo_id' do
-      post :todo_select_tracking, todo_id: todo.id, log_id: 0, format: [:js]
+      post :todo_select_tracking, todo_id: todo.id, log_id: nil, format: [:js]
       assigns(:todo).should == todo    
     end
     
@@ -137,12 +137,12 @@ describe SelectController do
     
     it 'assigns customer and todos if customer_id' do
       customer.employees << employee
-      post :customer_select_tracking, customer_id: customer.id, log_id: 0, format: [:js]
+      post :customer_select_tracking, customer_id: customer.id, log_id: nil, format: [:js]
       assigns(:customer).should == customer
       assigns(:employees).should == [employee]
     end
     it 'says select a customer if no customer' do
-      post :customer_select_tracking, customer_id: 0, log_id: 0, format: [:js]
+      post :customer_select_tracking, customer_id: 0, log_id: nil, format: [:js]
       assigns(:employees).should == "Select a customer"
     end 
     it 'assigns log when log_id > 0' do
@@ -169,7 +169,7 @@ describe SelectController do
     let(:log1)      {FactoryGirl.create(:log, employee: employee, user: @user, firm: firm)}
     
     it 'assigns employee if employee_id' do
-      post :employee_select_tracking, employee_id: employee.id, log_id: 0, format: [:js]
+      post :employee_select_tracking, employee_id: employee.id, log_id: nil, format: [:js]
       assigns(:employee).should == employee    
     end
     

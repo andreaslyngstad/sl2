@@ -57,6 +57,6 @@ var todo 	 = form.find("#logTodoId<%= j(@log.id.to_s) %>")
      employee.append("<option value=''>Select a customer</option>");  
   <% end %>
   
-  form.find(form_selects).trigger("liszt:updated");
+  form.find(form_selects).trigger("chosen:updated");
  
 $(".spinning").hide();

@@ -1,11 +1,8 @@
-	
-<div id="left">
-	<div class="inner">
-		<div class="index-view">
+<div class="index-view">
 	<div class="list_header orange_bgr">
 		<%= link_to "Active projects", projects_path, :id => "active_projects"%>
 	    <div class="search">
-	        <input type="text" name="search" AUTOCOMPLETE=OFF value="" title="search" id="id_search_list">
+	        <input type="text" placeholder="Search" name="search" AUTOCOMPLETE=OFF value="" title="search" id="id_search_list">
 	    </div>
 	</div>
 	<div id="cus_pro_us_listing_container">
@@ -17,16 +14,9 @@
   </div>
   <%= link_to( project_path(project), :confirm => "This will destroy the project and all tasks and logs associated to this project. Are you sure? The project with its tasks and logs will be accessable if you reopen the project.", :title => "Delete project", :method => :delete, :remote => true) do%>
   <span class='button'>Delete</span>
-  
     <% end %>
     <a class="reopen_project button" data-object="project" data-id="<%= project.id.to_s %>">Reopen</a>
     <% end %>
-
   </ul>
   </div>
-  </div>
-
-
-      
-</div>
 </div>

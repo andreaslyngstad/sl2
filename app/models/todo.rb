@@ -15,7 +15,7 @@ class Todo < ActiveRecord::Base
   validate :user_must_exist
   validate :correct_time
 
-  scope :overdue_and_to_day, -> {not_complete.where(["due <= ?",  Date.today]).order("due")}
+  scope :overdue_and_to_day, -> {not_complete.where(["due <= ?",  Date.today]).order("due").includes(:project)}
   scope :due_to_day, -> {where(due:  Date.today, :completed => false)}
 
   def correct_time

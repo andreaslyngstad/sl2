@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
     else
       @projects = current_firm.projects.where(:active => true).order_by_name
     end
+
   end
   def edit
     @project = Project.find(params[:id]) 
@@ -30,7 +31,6 @@ class ProjectsController < ApplicationController
     @klass = current_firm.projects.new(params[:project])
     @klass.active = true
     @klass.users << current_user
-
     respond_to do |format|
       if @klass.save
         flash[:notice] = flash_helper("Project is added.")

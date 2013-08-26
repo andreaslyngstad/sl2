@@ -23,8 +23,8 @@ describe "TimesheetSpec" do
     html.should include('Timesheet for ' + user.name)
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Timesheet for [\s\S]*$/  
     
-    @driver.execute_script('$("#timeheet_project_select_chzn").trigger("mousedown")')
-    @driver.execute_script('$("#timeheet_project_select_chzn_o_1").trigger("mouseup")')
+    @driver.execute_script('$("#timeheet_project_select_chosen").trigger("mousedown")')
+    @driver.execute_script('$("#timeheet_project_select_chosen_o_1").trigger("mouseup")')
     
     @driver.execute_script('$(".form-input:eq(0)").val("1").trigger("focusout")')
     sleep 0.2
@@ -35,10 +35,10 @@ describe "TimesheetSpec" do
     @driver.execute_script('$(".form-input:eq(2)").val("3").trigger("focusout")') 
     sleep 0.2
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*6[\s\S]*$/
-    @driver.execute_script('$("#timeheet_project_select_chzn").trigger("mousedown")')
-    @driver.execute_script('$("#timeheet_project_select_chzn_o_0").trigger("mouseup")')
-    @driver.execute_script('$("#timeheet_project_select_chzn").trigger("mousedown")')
-    @driver.execute_script('$("#timeheet_project_select_chzn_o_1").trigger("mouseup")')
+    @driver.execute_script('$("#timeheet_project_select_chosen").trigger("mousedown")')
+    @driver.execute_script('$("#timeheet_project_select_chosen_o_0").trigger("mouseup")')
+    @driver.execute_script('$("#timeheet_project_select_chosen").trigger("mousedown")')
+    @driver.execute_script('$("#timeheet_project_select_chosen_o_1").trigger("mouseup")')
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*3[\s\S]*$/
     @driver.execute_script('$(".form-input:eq(1)").val("3").trigger("focusout")') 
     sleep 0.2

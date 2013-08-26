@@ -28,12 +28,12 @@
           </select>
                       <% if !log.todo.nil? %>
             <% if log.todo.completed == true %>
-            <%= n.label :done?%><%= check_box_tag "done", 1 ,true, {:style => "margin:13px 0 0 7px"} %>
+            <%= n.label :done?%><%= check_box_tag "done", 1 ,true, {class: 'tracking_checkbox'} %>
             <% else %>
-            <%= n.label :done?%><%= check_box_tag "done", 1, false, {:style => "margin:13px 0 0 7px"}  %>
+            <%= n.label :done?%><%= check_box_tag "done", 1, false, {class: 'tracking_checkbox'}  %>
             <% end %>
             <% else %>
-            <%= n.label :done?%><%= check_box_tag "done", 1, false, {:style => "margin:13px 0 0 7px"}  %>
+            <%= n.label :done?%><%= check_box_tag "done", 1, false, {class: 'tracking_checkbox'}  %>
             <% end %>
            </div> </div>
            <% if can? :read, Firm %>

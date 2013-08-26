@@ -1,15 +1,14 @@
 <div id="header" style="background-color:<%= current_firm.background ? current_firm.background : "black"%> ; color: <%= current_firm.color ? current_firm.color : "white"%>; ">
+	
 	<div class="common_header">
-		<div id="firm_logo_view">
-			<% if !current_firm.logo_file_name.nil? %>
-			<%= image_tag current_firm.logo.url( :original)%>
-			<% end %>
-		</div>
+		<div class="squadlink_logo">Squadlink</div>
+		<!-- <div id="firm_logo_view">
+			<#if !current_firm.logo_file_name.nil? %>
+			<#= image_tag current_firm.logo.url( :original)%>
+			<# end %>
+		</div> -->
 		
-		<div id="user_info_header">
-		  <%= current_firm.name %><br /> 
-		 <span style="font-size:12px;"> <%= current_user.name %>
-		</div>
+		
   	</div>
   	
   	<div class="messages">

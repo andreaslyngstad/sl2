@@ -52,7 +52,7 @@ var todo 	 = $("#logTodoIdTracking<%= escape_javascript(@log.id.to_s) %>")
        <% end %>
      employee.append("<option value=''>Select a customer</option>");  
   <% end %>
-  form.find(".searchableS_tracking").trigger("liszt:updated");
+  form.find(".searchableS_tracking").trigger("chosen:updated");
   <% if !@log.nil? %>
   $("#log_<%= escape_javascript(@log.id.to_s)%>").replaceWith("<%= escape_javascript(render(:partial => @log)) %>");
   <% end %>

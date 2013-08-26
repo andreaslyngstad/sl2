@@ -17,7 +17,7 @@ module TimesheetsHelper
 	end
 	
 	def logs_day_of_mounth_hours(logs, date)
-		hours = logs.detect { |key,v| Date.parse(key) == date}
+		hours = logs.detect { |key,v| key.to_date == date} 
 		hours ? "<span id='#{date}' style='font-size:20px;' class='calendar_span' data-hours='#{hours[1].round}'>#{time_diff(hours[1])}</span>".html_safe : "<span id='#{date}' class='calendar_span' data-hours='0' style='color:grey;'>0:00</span>".html_safe
 	end
 end

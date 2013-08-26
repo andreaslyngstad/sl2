@@ -4,7 +4,7 @@
   <%= link_to truncate(customer.name, :length => 80), customer_path(customer) %>
   </div>
 
-    <%= link_to(customer_path(customer), :confirm => "Are you sure? This will destroy all employees at this customer", :title => "Delete customer", :method => :delete, :remote => true) do%>
+    <%= link_to(customer_path(customer), data: { confirm: 'Are you sure? This will destroy all employees at this customer' }, :title => "Delete customer", :method => :delete, :remote => true) do%>
   <span class='button'>Delete</span>
     <% end %>
 

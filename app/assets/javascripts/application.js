@@ -1,18 +1,16 @@
-
 //= require jquery
 //= require jquery_ujs
-//= require jquery-migrate-1.2.1
+
 //= require jquery.ui.draggable
 //= require jquery.ui.droppable
 //= require jquery.ui.button
 //= require jquery.ui.dialog
 //= require jquery.ui.slider
 //= require jquery.ui.datepicker
-//= require jquery.ui.selectmenu
 //= require jquery.ui.accordion
-//= require chosen.jquery
+//= require chosen.jquery.min
 //= require jquery.validate
-//= require jquery.ba-bbq.min
+
 //= require jquery.quicksearch
 //= require timeFormatter
 //= require navigation
@@ -70,7 +68,6 @@ jQuery.fn.set_date_format = function(){
 }
 jQuery.fn.set_clock_format = function(){
   var clockformat = $('.current_firm_data').data("clockformat")
-
   if (clockformat == 1){
   	$.each($('.clock_format_setter'),function(k,v){
   		$(v).html(strftime('%H:%M', new Date($(v).data("time"))))
@@ -86,28 +83,24 @@ jQuery.fn.set_clock_format = function(){
   
 }
 
-
-//display help
 jQuery.fn.display_help = function(){
-  	if ($(".page_help").length !== 0){ 	
-  		$(this).show()
-    $(this).toggle(
-    	function(){
-    	var help_height = $(".page_help").height()
-	    	$(".page_help").show()
-	    	$("#left").css("margin-top", help_height + 70)
-	    	$(".ver_down_on_help").css("top",help_height  )
-	    	$(".list_header").css("top",help_height )  	
-    	},
-    	function(){
-	    	$(".page_help").hide()
-	    	$("#left").css("margin-top",188)
-	    	$(".ver_down_on_help").css("top",125 )
-		    $(".list_header").css("top",125 )
-    	}
-    );
-   }
-    
+  if ($(".page_help").length !== 0){  
+      $(this).show()
+    $(this).click(function(){
+    $(this).data('clicked',!$(this).data('clicked'));
+    if ($(this).data('clicked'))
+      {
+        var help_height = $(".page_help").height()
+        $(".page_help").show()
+        
+      }
+    else
+      {  
+        $(".page_help").hide()
+        
+      };
+    });
+  };
 };
 
 //submitting forms with ajax
@@ -115,6 +108,7 @@ jQuery.fn.submitWithAjax = function() {
   this.submit(function() { 
     $.post(this.action, $(this).serialize(), null, "script");
     $('.spinning').show();
+    console.log("submitWithAjax")
     return false;
   })
   return this;
@@ -122,11 +116,10 @@ jQuery.fn.submitWithAjax = function() {
 jQuery.fn.submit_dialog_WithAjax = function() {
     $.post(this.attr("action"), $(this).serialize(), null, "script");
     $('.spinning').show(); 
-    $(".dialog_form").dialog("close")
     return false;
 };
 jQuery.fn.membership = function (){
-  this.live('click', function() { 
+  this.on('click', function() { 
     $('.spinning').show();
     var user_id =  $(this).attr("id");
     var project_id = $(this).attr("project_id") 
@@ -138,20 +131,16 @@ jQuery.fn.highlight = function (className)
     return this.addClass(className);
 };
 jQuery.fn.UIdialogs = function(){
+  console.log(this)
   $(this).dialog({
       autoOpen: false,
       resizable: false,
       width: 400,
       modal: true,
-      position: { 
-    	my: 'top',
-    	at: 'top',
-    	offset: "500 0",
-    	of: $('#navigation')
-  		},
+      position: ['middle',50],
       close: function(event, ui) { 	
       	$(this).find(".hasDatepicker").datepicker( "destroy" );
-    	$("#logProjectId").val('').trigger("liszt:updated")
+    	  $("#logProjectId").val('').trigger("chosen:updated")
       	$(this).dialog("destroy"); 
       },
   });
@@ -189,13 +178,14 @@ jQuery.fn.validateNoSubmit = function(){
 
 jQuery.fn.UIdialogs_links = function(){
 	$(this).button().click(function(){
+    console.log("test")
   var form = '#' + $(this).attr('id') + '_form'
   var date = '#' + $(this).attr('id') + '_date'
   var object = $(this).attr("data-object")
   	$(form).UIdialogs();
       $(date).datepicker();
        $(form).find(".new_" + object).validateWithErrors();
-       $(form).find("select").chosen()
+       $(form).find("select").chosen({width:'369px'})
       $(form).dialog( "open" );
     });
 
@@ -205,14 +195,14 @@ jQuery.fn.activate_projects = function(){
 		if (confirm("The project, all its tasks, logged hours and milestones will be arcivated. You'll find the project in the arcivated projects page, where you can reopen it or delete it.")){
 		$('.spinning').show();
 		var id = $(this).attr("data-id")
-  	$.get("/activate_projects/" + id)}
+  	$.post("/activate_projects/" + id)}
     });	
 };
 jQuery.fn.reopen_project = function(){	
 	$(this).click(function(){
 		$('.spinning').show();
 		var id = $(this).attr("data-id")
-  	$.get("/activate_projects/" + id)
+  	$.post("/activate_projects/" + id)
     });	
 };
     
@@ -222,7 +212,7 @@ jQuery.fn.activate_projects_no_button = function(){
     
     $('.spinning').show();
     var id = $(this).attr("data-id")
-    $.get("/activate_projects/" + id)}
+    $.post("/activate_projects/" + id)}
     });
   
 };
@@ -252,6 +242,7 @@ jQuery.fn.set_buget_width = function(){
 
 
 jQuery.fn.UIdialogs_edit_links = function(){
+
   $(this).click(function(){
     var data_id = $(this).attr('data-id')
     // get edit action via ajax for all in the ajax_form array
@@ -262,7 +253,7 @@ jQuery.fn.UIdialogs_edit_links = function(){
     }
     var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
     $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker();
-    $(form_id).find(".edit_" + object).validateWithErrors();
+    // $(form_id).find(".edit_" + object).validateWithErrors();
    	$(form_id).find("li").css("display", "");
     $(form_id).UIdialogs();
     $(form_id).dialog( "open" );
@@ -271,13 +262,18 @@ jQuery.fn.UIdialogs_edit_links = function(){
 };
 
 jQuery.fn.current_link = function(){
-  $(this).click(function(){
-  $("#html_tabs a.current_link").removeClass("current_link")
-  $(this).addClass("current_link")
-    });
+  // $(this).click(function(){
+  // $("#html_tabs a.current_link").removeClass("current_link")
+  // $(this).addClass("current_link")
+  //   });
 };
 
-
+jQuery.fn.task_done = function () {
+  var complete = $(this).data("complete")
+  var notcomplete = $(this).data("notcomplete")
+  var procent = Math.round((complete/ (complete + notcomplete))*100 )
+  $(this).text(procent + "%")
+};
 
 //ok
   
@@ -324,11 +320,7 @@ $(document).ready(function() {
   $("#dialog_customer").UIdialogs_links();
   $("#dialog_user").UIdialogs_links();
   $("#dialog_employees").UIdialogs_links();
-  $("#activate_project").button().click(function(){
-  	var id = $(this).attr("data-id")
-  	
-  	alert(id);
-    });
+  $("#activate_project").button();
 
   
   $(".open_project_update").UIdialogs_edit_links();
@@ -337,10 +329,11 @@ $(document).ready(function() {
   
   $(".open_todo_update").UIdialogs_edit_links();
 
-  $(".account_update_select").selectmenu({width:364});
-  $(".big_selector").selectmenu({width:369});
-  $(".small_selector").selectmenu({width:200});
-  $(".mini_selector").selectmenu({width:177});
+  $(".account_update_select").chosen({width:'364px'});
+  $(".big_selector").chosen({width:'369px'});
+  $(".small_selector").chosen({width:'200px'});
+  $(".mini_selector").chosen({width:'177px'});
+  $('.logs_pr_date_select').chosen({width:'200px', disable_search:true});
   $(".date").datepicker();
   
   $(".show_avatar_upload").click(function(){
@@ -362,7 +355,7 @@ $(document).ready(function() {
 	$(".activate_project").activate_projects();
 	$(".reopen_project").reopen_project();
 	$(".activate_projects_no_button").activate_projects_no_button();
-	$(".budget_green").set_buget_width()
+	
   
 
  $(".background_style_color").css({"background-color":$("input.background_style").val()})

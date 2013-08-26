@@ -1,4 +1,4 @@
-<%= form_for(@log) do |f| %>
+<%= form_for(@log, :remote => true) do |f| %>
     <ul>
         <li><%= f.label :log %><%= f.text_field(:event, :class => "required log_edit_event", :minlength => "2", :AUTOCOMPLETE => "OFF") %></li>
         <li><div class="date_on_log"><%= f.label :date, :class => "required" %><%= f.text_field(:log_date, :value => date_format(@log.log_date), :class => "log_date", :id => "log_date_edit_#{@log.id}") %></div></li>

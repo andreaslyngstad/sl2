@@ -8,5 +8,6 @@ $(".button").button();
 }
 $(".open_project_update").UIdialogs_edit_links();
 $(".activate_project").activate_projects();
+$('#dialog_project_form').empty().append("<%= j(render "new_form" )%>")
 $("#new_project")[0].reset();
 $(".spinning").hide();

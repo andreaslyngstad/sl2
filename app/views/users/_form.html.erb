@@ -1,5 +1,5 @@
 <ul>
-  <%= form_for(user) do |f| %>	
+  <%= form_for(user, :remote => true) do |f| %>	
 	  <li><%= f.label :name %><%= f.text_field :name%> </li>
 	  <li><%= f.label :email %><%= f.text_field :email %></li>
 	  <li>

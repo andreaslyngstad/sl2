@@ -43,10 +43,13 @@ describe TodosController do
       @todo.name.should eq("something else")
     end
     it "set done_by_user to current_user when params [:completed]" do
-      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: 1), :format => 'js'
+      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: "1"), :format => 'js'
       @todo.reload
       @todo.done_by_user.should eq(@user)
-      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: 0), :format => 'js'
+    end
+    it "set done_by_user to nil when params [:completed] == 0" do
+     
+      put :update, id: @todo, todo: FactoryGirl.attributes_for(:todo, name: "something else", user_id: @user.id, completed: "0"), :format => 'js'
       @todo.reload
       @todo.done_by_user.should eq(nil)
     end

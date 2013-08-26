@@ -1,11 +1,4 @@
 $(".flash_notice").empty();
-
-$(".show-view").empty();
-$(".show-view").append("<%= escape_javascript(render :partial => "customers/show", :locals => {:customer => @customer}) %>");
-$("#dialog_project").UIdialogs_links();
-$("#dialog_project_form").UIdialogs();
-$(".open_project_update").UIdialogs_edit_links();
-$(".activate_projects_no_button").activate_projects_no_button();
 $( "#tabs" ).tabs({ cache: true },
   {spinner: '<%= image_tag "spinner2.gif"%>'},
    {
@@ -17,5 +10,5 @@ $( "#tabs" ).tabs({ cache: true },
         }
       }
     });
-$(".back_button").button()
+
 $('.spinning').hide();

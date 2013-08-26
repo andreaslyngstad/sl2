@@ -1,33 +1,17 @@
 function Change_select(log_id, object_id, url, http_method){
-		$('.spinning').show();
-	    if (log_id === "") {
-	    	if(object_id === ""){
-		      $.get("/" + url + "/0/0"  )
-		    }else{
-		      $.get("/" + url + "/" + object_id + "/0" )
-		     }
-	    }else{
+		$('.spinning').show();  
 		    if(object_id === ""){
 		      $.get("/" + url + "/0/" + log_id  )
 		    }else{		     
 		      $.get("/" + url + "/" + object_id + "/" + log_id)
-	    }
-	    };
-}
+	    };	 
+};
 
 jQuery.fn.UIdialogs_tracking_logs_links = function(){
   $(this).click(function(){
   	$(".tracking_select").slideToggle();
   	$(".open_tracking_select").toggleClass("close_tracking_select");
-  	  if ($(".open_tracking_select").hasClass("close_tracking_select")) {
-  	  	
-  	  	$("#index_log_header").animate({ top: 398}, 400) 
-          $("#index_logs").animate({marginTop: 460}, 400)
-  	  } else{
-  	  	 $("#index_log_header").animate({ top: 279}, 400) 
-          $("#index_logs").animate({marginTop: 340}, 400)
-  	  	
-  	  };
+  	  
     var data_id = $(this).attr('data-id')
     var form_id = '#form_holder'
     
@@ -133,7 +117,7 @@ jQuery.fn.UIdialogs_log_links = function(){
         step:10,
         slide: slideTime
     });
-    $(form).find(".searchableS").chosen();
+    $(form).find(".searchableS").chosen({width:'369px'});
     $(form).select_projects_customers();
     });
 
@@ -271,7 +255,7 @@ function update_budget_useage(hours, hourly_price){
 $(document).ready(function() {
   $('.log_event_recording').save_while_typing()
 	$(".total_log_time").set_hours()
-	$(".searchableS_tracking").chosen();
+	$(".searchableS_tracking").chosen({width: '200px'});
   $("select#logs_pr_date_select").logs_pr_date_select();
 	$("#dialog_log").UIdialogs_log_links();
 	$(".open_log_update").UIdialogs_edit_logs_links();

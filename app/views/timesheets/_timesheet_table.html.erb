@@ -9,7 +9,7 @@
 <% for project in @projects do %>
 <% if project_week_log_hour_total(@log_project, project) != "<span style='color:grey;'>0:00</span>" %>
 <tr class="project_hours">	
-	<td class="timesheet_project"><%= link_to project.name, project_path(project) %></td>	
+	<td class="timesheet_project"><%= link_to truncate(project.name, length: 60, omission: "...") , project_path(project) %></td>	
 	<% @dates.each do |date| %>
 			<td class="number project_date_<%= project.id %>_<%= date %>" data-hours="<%= every_day_log_hour(@log_week_project, date, project) %>">					
 			</td>

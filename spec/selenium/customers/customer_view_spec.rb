@@ -33,9 +33,9 @@ describe "CustomerViewCrud" do
     # Warning: verifyTextPresent may require manual changes
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Sorry\nProject must be selected\.[\s\S]*$/m
     
-    @driver.execute_script('$("#todoProjectId_chzn").trigger("mousedown")')
+    @driver.execute_script('$("#todoProjectId_chosen").trigger("mousedown")')
     sleep 0.2
-    @driver.execute_script('$("#todoProjectId_chzn_o_1").trigger("mouseup")')
+    @driver.execute_script('$("#todoProjectId_chosen_o_1").trigger("mouseup")')
     @driver.find_element(:id, "new_todo_submit").click 
     # Warning: waitForTextPresent may require manual changes 
     sleep 0.2
@@ -60,11 +60,11 @@ describe "CustomerViewCrud" do
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Due\ntest_todo_edit[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     @driver.find_element(:css, "#dialog_log > span.ui-button-text").click 
-    @driver.execute_script('$("#logProjectId_chzn").trigger("mousedown")')
-    @driver.execute_script('$("#logProjectId_chzn_o_1").trigger("mouseup")')
+    @driver.execute_script('$("#logProjectId_chosen").trigger("mousedown")')
+    @driver.execute_script('$("#logProjectId_chosen_o_1").trigger("mouseup")')
     sleep 0.2
-    @driver.execute_script('$("#logTodoId_chzn").trigger("mousedown")')
-    @driver.execute_script('$("#logTodoId_chzn_o_1").trigger("mouseup")')
+    @driver.execute_script('$("#logTodoId_chosen").trigger("mousedown")')
+    @driver.execute_script('$("#logTodoId_chosen_o_1").trigger("mouseup")')
    
     @driver.find_element(:id, "log_event").click
     @driver.find_element(:id, "log_event").clear

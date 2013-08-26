@@ -6,13 +6,11 @@
  	</div>
   <div class="event_on_log">
     <%= log.event %>
-     </div>
-     
-   
+     </div> 
      <% if !log.end_time.nil? %>
     <div class="date_and_times_on_log" >
 	    <div class="date_format_setter" data-date="<%= log.log_date %>"><%= log.log_date %></div>
-	    <div class="clock_format_setter" data-time="<%= ftz(log.begin_time)%>"></div>-<div class="clock_format_setter" data-time="<%= ftz(log.end_time)%>"></div>
+	    <div class="clock_format_setter" data-time="<%= log.begin_time.strftime("%Y/%m/%d %H:%M:%S")%>"></div>-<div class="clock_format_setter" data-time="<%= log.end_time.strftime("%Y/%m/%d %H:%M:%S")%>"></div>
 	    <div class="total_log_time" data-hours="<%= log.hours %>"></div>  
     </div>
       <div class="pro_tod_cus_emp_on_log">
@@ -35,7 +33,7 @@
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="Update log" style="display:none;" data-id="<%= log.id %>"></div>
     <% else %>
     <div class="date_and_times_on_log" >
-    	Running<%= image_tag("running.gif") %>
+    	Running
     </div>
     <div class="pro_tod_cus_emp_on_log">
       	<div class="pro_tod_on_log">

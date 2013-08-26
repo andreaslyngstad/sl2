@@ -19,5 +19,5 @@ var employee = $("#logEmployeeIdTracking<%= escape_javascript(@log.id.to_s) %>")
     <% end %>
     <% end %>
   <% end %>
-form.find(employee).trigger("liszt:updated")
+form.find(employee).trigger("chosen:updated")
 $(".spinning").hide();

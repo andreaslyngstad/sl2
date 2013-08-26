@@ -4,7 +4,8 @@
 //= require jquery.ui.core
 //= require jquery.ui.position
 //= require jquery.ui.widget
-//= require jquery.ui.selectmenu
+
+//= require chosen.jquery.min
 //= require_self
 
 
@@ -70,5 +71,5 @@ $(document).ready(function() {
 	
 	$(".register_firm_subdomain").validates_uniqe();
 	$(".open_not_required_container").open_not_required();
-	$(".signup select, .update select").selectmenu({width:364});
+	$(".signup select, .update select").chosen({width:364, disable_search:true});
 })

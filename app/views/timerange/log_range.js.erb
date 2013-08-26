@@ -1,5 +1,4 @@
 $(".listing_logs").empty();
-$(".listing_logs").append("<%= escape_javascript(render(:partial => "logs/list_header")) %>")
 $(".listing_logs").append("<%= escape_javascript(render(:partial => @logs)) %>");
 $(".total_log_time").set_hours()
 $('.date_format_setter').set_date_format()

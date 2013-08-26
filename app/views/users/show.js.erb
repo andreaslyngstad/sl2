@@ -1,9 +1,5 @@
 $(".flash_notice").empty();
-$(".dialog_form").remove();
-$(".show-view").empty();
-$(".show-view").append("<%= escape_javascript(render :partial => "users/show", :locals => {:user => @user}) %>");
-$("#dialog_task").UIdialogs_links();
-  
+$("#dialog_task").UIdialogs_links(); 
   $(".open_milestone_update").UIdialogs_edit_links();
   $(".open_todo_update").UIdialogs_edit_links();
   
@@ -21,5 +17,4 @@ $( "#tabs" ).tabs({ cache: true },
     });
     
 $(".back_button").button().back_button_function();
-
 $('.spinning').hide();

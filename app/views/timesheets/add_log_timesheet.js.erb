@@ -47,7 +47,7 @@ field.attr("data-hours", posthours)
 }else{
 	if (window.location.href.split("/").pop() == "<%= @log.log_date.to_s %>")
 	{
-	$("#head_log").after("<%= escape_javascript(render(:partial => @log)) %>");
+	$(".listing_logs").prepend("<%= j(render(:partial => @log)) %>");
 	$(".total_log_time").set_hours()
 	}
 }

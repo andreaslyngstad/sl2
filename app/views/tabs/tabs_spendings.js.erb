@@ -1,3 +1,4 @@
+$(".flash_notice").empty();
 var tab = $("li.active").children("a").attr("href")
 $(tab).empty().append("<%= j( render "spendings")  %>")
 var firm_format = $(".current_firm_data").data("timeformat")

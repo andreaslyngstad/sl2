@@ -15,28 +15,28 @@
     <div id="main">
       <div id="login_link">
 <!-- AddThis Follow BEGIN -->
-<div class="addthis_toolbox addthis_32x32_style addthis_default_style" style="float:left;">
+<!-- <div class="addthis_toolbox addthis_32x32_style addthis_default_style" style="float:left;">
 <a class="addthis_button_facebook_follow" addthis:userid="squadlink"></a>
 <a class="addthis_button_twitter_follow" addthis:userid="squadlink"></a>
 </div>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51a7ceb7757fb5c5"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51a7ceb7757fb5c5"></script> -->
 <!-- AddThis Follow END -->
-        Log in</div>
-      <div class="signup signup_firm hide login_form">
-        <h2 style="margin-left:20px;">Log in</h2>
+        Sign in</div>
+      <div class="hide login_form">
+        <h2 style="margin-left:40px;">Sign in</h2>
         <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-          <div class="signup-form-field"><%= f.label :email %><%= f.text_field :email, id: 'user_email_popup' %></div>
-          <div class="signup-form-field"><%= f.label :password %><%= f.password_field :password, id: 'user_password_popup' %></div>
+          <div class="login_form_field"><%= f.text_field :email, placeholder: 'email',id: 'user_email_popup', class: 'text' %></div>
+          <div class="login_form_field"><%= f.password_field :password, placeholder: 'password',id: 'user_password_popup', class: 'text' %></div>
           <% if devise_mapping.rememberable? -%>
-              <div class="signup-form-field checkbox"><%= f.label :remember_me %><%= f.check_box :remember_me, :id => "check" %> </div>
+              <div class="login_form_field checkbox"><%= f.check_box :remember_me, :id => "check" %><%= f.label :remember_me, id: 'check_box_label' %> </div>
           <% end -%>
-          <div class="signup-form-field"><%= f.submit "Sign in", :class => "submit" %></div>
+          <div class="login_form_field"><%= f.submit "Sign in", :class => "submit signup_button", :id => "sign_in" %></div>
         <% end %>
         <div class="devise_links">
         <%= render :partial => "devise/links" %>
         </div>
       </div>
-      <div id="front_logo">
+      <div class="magneto front_logo">
         <%= image_tag "squadlink.png"  %>
       </div>
       

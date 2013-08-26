@@ -1,4 +1,4 @@
-$(".dialog_form").remove()
+$(".flash_notice").empty();
 var tab = $("li.active").children("a").attr("href")
 jQuery.fn.todo_pr_date_select = function(){
 		this.change(function(){
@@ -35,9 +35,9 @@ $(tab).empty().append("<%= j( render :partial => "todos/listing_todos")  %>")
 <% end %>
 $('.date_format_setter').set_date_format()
 $("#dialog_todo").UIdialogs_links();
-$(".searchableTaskCustomer").chosen();
+$(".searchableTaskCustomer").chosen({width: '369px'});
 $("select#todos_pr_date_select").todo_pr_date_select();
-$(".small_selector").selectmenu({width:200});
+$(".small_selector").chosen({width:'200px'});
 $(".open_todo_update").UIdialogs_edit_links();
 jQuery.fn.submitDoneWithAjax = function(id) {
    $.post("/todos/" + id, $(this).serialize(), null, "script");

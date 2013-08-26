@@ -70,7 +70,7 @@ describe CustomersController do
   context "valid attributes" do
     it "located the requested @contact" do
       put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
-      assigns(:customer).should eq(@customer)      
+      assigns(:klass).should eq(@customer)      
     end
   
     it "changes @customer's attributes" do
@@ -82,7 +82,7 @@ describe CustomersController do
   context "invalid attributes" do
     it "locates the requested @customer" do
       put :update, id: @customer, customer: FactoryGirl.attributes_for(:customer, :name => nil), :format => 'js'
-      assigns(:customer).should eq(@customer)      
+      assigns(:klass).should eq(@customer)      
     end
     
     it "does not change @customer's attributes" do

@@ -1,23 +1,18 @@
-<div id="listing_milestones">
-  	<div class="log_menu">
-    <span class="add_some">
-      <a id="dialog_milestone" data-object="milestone">New milestone</a>
-      <div id="dialog_milestone_form" class="dialog_form" title="Create new milestone" style="display:none;">
-      	<ul>
-        <%= form_for Milestone.new do |n| %>
-        <%= n.hidden_field :project_id, value: @klass.id %>
+<div class="log_menu">
+  <span class="add_some">
+    <a id="dialog_milestone" data-object="milestone">New milestone</a>
+  </span>
+  <div id="dialog_milestone_form" class="dialog_form" title="Create new milestone" style="display:none;">
+      <%= form_for @klass.milestones.build, :remote => true do |n| %>
+      <%= n.hidden_field :project_id, value: @klass.id %>
+      <ul>
       <li><%= n.label :goal %><%= n.text_area :goal, :class => "required", :minlength => "2" %></li>
       <li><%= n.label :due %><%= n.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_milestone_date" %></li> 
       <li><%= n.submit "Save", :class => 'submit', :id => "new_milestone_submit"%></li> 
-       <% end %>
-       </ul>
-    </div>
-  </span>
+     </ul>
+     <% end %>
   </div>
-    	<div class="info" >   
-  <div class="name_milestone info_head">Goal</div>
-  <div class="date_all info_head">Due</div>
-  
-  </div>
+</div>
+<div id="listing_milestones">
   
 </div>

@@ -22,13 +22,10 @@ width: 101px;
 
 
 #month_week_tabs{
-	position:absolute;
-	right:0px;
-	z-index:0;
 	border-bottom: 1px solid #E5EFF8;
 	color:white;
 	height:42px;
-	text-align:center;
+	text-align:right;
 	}
 
 #month_week_tabs .content-wrapper {
@@ -79,6 +76,14 @@ margin: 0px;
 	
 
 }
+#timesheet_log_menu{
+
+height:32px;
+width:970px;
+padding:10px 5px 10px 5px;
+background:#FFFFFF;
+
+}
 #timesheet_log_listing_wrapper{
 	float: left;
 	border-top:1px solid #e5eff8;
@@ -87,10 +92,9 @@ margin: 0px;
 	margin-bottom: 100px;
 }
 table.timesheet_table {
-width:100%;
+width:980px;
 margin-top:7px;
-border-top:1px solid #e5eff8;
-border-right:1px solid #e5eff8;
+
 float: left;
 border-collapse:collapse;
 }
@@ -99,10 +103,7 @@ padding:.3em 1em;
 
 }
 
-table.timesheet_table tr{
-border-bottom:1px solid #e5eff8;
 
-}
 table.timesheet_table tr td.number, 
 table.timesheet_table tr td.total, 
 table.timesheet_table tr td.timesheet_day_total,

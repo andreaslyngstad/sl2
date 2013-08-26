@@ -3,7 +3,7 @@ require "./lib/date_tester.rb"
 
 describe DateTester do
   it "returns false when not given a date" do
-    false_time = ["tuesday 21 of january 2013", "13.13.2013", "13/13/2013", '06152008' '16 Jn 2008']
+    false_time = ["13.13.2013", "13/13/2013", '06152008']
     false_time.each do |p|
       DateTester.new.date?(p).should be_false
     end

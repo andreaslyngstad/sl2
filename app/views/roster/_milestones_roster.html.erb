@@ -3,14 +3,14 @@
 	<% if milestone.due >= Date.today %>
 	<li>
 	  	<div class="row_milestone green">
-		  	<%= link_to truncate(milestone.goal, :omission => "...", :length => 18), project_path(milestone.project).to_s + "/#tabs-2"%>
+		  	<%= link_to truncate(milestone.goal, :omission => "...", :length => 18), project_path(milestone.project).to_s + "/#tabs-4"%>
 		  	<span class="milestone_due"><%=milestone.due%></span>
 	  	</div> 
 	  </li>
 	  <% else %>
 		<li>
 	  	<div class="row_milestone red">  	
-		  	<%= link_to truncate(milestone.goal, :omission => "...", :length => 18), project_path(milestone.project).to_s + "/#tabs-2"%>
+		  	<%= link_to truncate(milestone.goal, :omission => "...", :length => 18), project_path(milestone.project).to_s + "/#tabs-4"%>
 		  	<span class="milestone_due"><%=milestone.due%></span>
 	  	</div> 
 	  </li>

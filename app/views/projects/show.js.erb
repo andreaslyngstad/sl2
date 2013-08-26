@@ -1,8 +1,4 @@
 $(".flash_notice").empty();
-$(".dialog_form").remove();
-
-$(".show-view").empty();
-$(".show-view").append("<%= escape_javascript(render :partial => "projects/show", :locals => {:project => @project}) %>");
 $(".open_project_update").UIdialogs_edit_links();
   $("#dialog_milestone").UIdialogs_links();
  

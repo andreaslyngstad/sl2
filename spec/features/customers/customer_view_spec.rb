@@ -5,7 +5,7 @@ feature 'customer' do
     get_the_gritty
    def visit_the_customer
     sign_in_on_js
-    visit customers
+    visit @customers
     find("#dialog_customer").click
     fill_in "customer_name", with: "test_new customer"
     fill_in "customer_phone", with: "123456789"

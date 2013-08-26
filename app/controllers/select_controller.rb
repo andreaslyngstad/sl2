@@ -126,7 +126,7 @@ class SelectController < ApplicationController
 private
 
   def check_log_status(params_log_id)
-    if params_log_id != "0"
+    if params_log_id.class == String
     @log = Log.find(params_log_id)
     end
   end

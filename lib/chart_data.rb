@@ -1,4 +1,5 @@
 require "symbol.rb"
+require 'hash_diff'
 class ChartData
   attr_accessor :firm, :range, :model
   def initialize(firm,range,model)
@@ -79,7 +80,7 @@ class ChartData
    log_hours = logs_by_day
    emtpy_hours.each do |k,v|
      if log_hours.has_key?(k)
-      c = log_hours.values_at(k)[0].diff(emtpy_hours.values_at(k)[0])
+      c = log_hours.values_at(k)[0].diff_sq(emtpy_hours.values_at(k)[0])
       key_user_value_date_hours[k] = c 
      end   
    end 

@@ -1,5 +1,10 @@
 class TabsController < ApplicationController
   respond_to :js
+  def tabs_state
+    get_instance(params)
+    
+
+  end
   def tabs_milestones
     get_instance(params)
     @milestones = @klass.milestones.order("due ASC").includes(:project)

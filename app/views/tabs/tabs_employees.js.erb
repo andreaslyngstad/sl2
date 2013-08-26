@@ -1,3 +1,4 @@
+$(".flash_notice").empty();
 var tab = $("li.active").children("a").attr("href")
 $(tab).empty().append("<%= j( render :partial => "employees_tab")  %>")
 $("#dialog_employees").UIdialogs_links();

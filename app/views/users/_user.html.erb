@@ -1,6 +1,4 @@
   <li class="tab_list" id="user_<%= user.id.to_s %>"> 
-    <div class="left">
-   </div>
    <div class="tab_list_text">
     <%= link_to truncate(user.name, :length => 80), user_path(user) %>
     </div>
@@ -9,10 +7,10 @@
 		:title => "Delete user", :method => :delete, :remote => true) do%>
   <span class='button'>Delete</span>
     <% end %>
-
+<% if can? :manage, @klass %>
  <span class='open_user_update button edit' id="user_update" data-id="<%= user.id %>" data-object="user" title="Edit user">Edit</span>
     <div class="dialog_form" id="user_update_<%= user.id %>_form" title="Update user" style="display:none;">
-   		
     </div>
+<% end %>
     <%= mail_to user.email,"Email" ,:title => "Send a email", :class => "button"%>
   </li>

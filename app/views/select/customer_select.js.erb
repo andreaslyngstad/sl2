@@ -20,6 +20,6 @@ var employee = $("#logEmployeeId<%= j(@log.id.to_s) %>")
     <% end %>
     <% end %>
   <% end %>
-  form.find(".searchableS").trigger("liszt:updated")
-  form.find(".searchableSE").trigger("liszt:updated")
+  form.find(".searchableS").trigger("chosen:updated")
+  form.find(".searchableSE").trigger("chosen:updated")
 $(".spinning").hide();

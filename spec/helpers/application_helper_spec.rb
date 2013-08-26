@@ -47,11 +47,11 @@ describe ApplicationHelper do
 	end
 	it "displays image32 of user" do
 		user = mock_model(User, avatar:double(url: "test"),  avatar_file_name: "test")
-		helper.image(user, 'image32').should == "<img alt=\"Test\" class=\"image32\" src=\"/assets/test\" />"
+		helper.image(user, 'image32').should == "<img alt=\"Test\" class=\"image32\" src=\"/images/test\" />"
 	end
 	it "displays image100 of user" do
 		user = mock_model(User, avatar:double(url: "test"),  avatar_file_name: "test")
-		helper.image(user, 'image100').should == "<img alt=\"Test\" class=\"image100\" src=\"/assets/test\" />"
+		helper.image(user, 'image100').should == "<img alt=\"Test\" class=\"image100\" src=\"/images/test\" />"
 	end
 	it "gives time difference in hours and minutes" do
 	  helper.time_diff(7200).should == '2:00'

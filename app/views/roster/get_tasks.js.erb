@@ -5,3 +5,4 @@ $(".roster_done_box").on("click", function() {
   	 var id = $(this).attr("id")
   	 $("#roster_edit_done_todo_" + id).submitDoneWithAjax(id)
   });
+$("#accordion").accordion("refresh");

@@ -7,9 +7,9 @@
   		<%= f.check_box :completed, :class => "roster_done_box", :id => todo.id %>
 	  	<% end %>
 	  	<% if todo.project %>
-	  	<%= link_to todo.name, project_path(todo.project).to_s + "/#tabs-1" %>
+	  	<%= link_to todo.name, project_path(todo.project).to_s + "/#tabs-2" %>
 	  	<% else %>
-	  	<%= link_to todo.name, customer_path(todo.customer).to_s + "/#tabs-1" %>
+	  	<%= link_to todo.name, customer_path(todo.customer).to_s + "/#tabs-2" %>
 	  	<% end %>
   	</div> 
   </li>

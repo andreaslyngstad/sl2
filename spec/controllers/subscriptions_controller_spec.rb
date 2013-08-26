@@ -75,7 +75,7 @@ describe SubscriptionsController do
     end
     it "shows flach notice" do
       delete :destroy, id: subscription
-      flash[:notice].should == "<span style='color:#FFF'>You are now on the free plan.</span>"
+      flash[:notice].should == "You are now on the free plan."
     end
 
   end

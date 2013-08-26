@@ -2,7 +2,7 @@ require "support/selenium_helper"
 describe "CustomerCrudSpec" do
   login_at_subdomain
    
-  it "test_customer_crud_spec" do
+  it "test_customer_crud_spec" do 
     @driver.get(@base_url + "/customers")
     @driver.find_element(:css, "span.ui-button-text").click
     @driver.find_element(:id, "customer_name").clear

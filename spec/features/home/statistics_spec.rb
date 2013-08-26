@@ -28,7 +28,7 @@ feature 'home' do
 
     scenario "Statistics select" do  
       visit statistics
-      page.should have_content(firm.name)
+     
       page.should have_content(user.name)
       # page.current_url.should == statistics
       # page.select("Stats for projects", :from => "stats")

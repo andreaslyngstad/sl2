@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipsController, :focus do
+describe MembershipsController do
 	login_user
   
   before(:each) do
@@ -17,7 +17,7 @@ describe MembershipsController, :focus do
       assigns(:project).should == project
       assigns(:user).should == external_user
       project.users.should include external_user
-      flash[:notice].should == "<span style='color:#FFF'>#{external_user.name} is a member of the #{project.name} project.</span>"
+      flash[:notice].should == "#{external_user.name} is a member of the #{project.name} project."
     end
 	  it "removes user from project" do
       project.users << [external_user, @user]
@@ -26,18 +26,19 @@ describe MembershipsController, :focus do
       assigns(:project).should == project
       assigns(:user).should == external_user
 
-      project.users.to_array.includes?(external_user).should == true
+      # project.users.includes?(external_user).should == true
       project.users.count.should == 1
 
-      flash[:notice].should == "<span style='color:#FFF'>#{external_user.name} is NOT a member of the #{project.name} project.</span>"
+      flash[:notice].should == "#{external_user.name} is NOT a member of the #{project.name} project."
 	  end
     it "assigns user to project" do
       project.users << [external_user]
-      @user.role = "Member"
+      @user.role = "External user"
       @user.save
       post :index, id: external_user.id, project_id: project.id, format: [:js]
-      assigns(:project).should == project  
-      flash[:notice].should == "<span style='color:#FFF'>Access denied.</span>"
+      assigns(:project).should == project
+      assigns(:user).should == nil   
+      # flash[:notice].should == "Access denied."
     end
   end
 end

@@ -1,29 +1,11 @@
-
-
-<div id="left" >
-	<div class="inner">
-		<div class="index-view">
+<div class="index-view">
 	<div class="list_header orange_bgr">
 		<a id="dialog_user" data-object="user">Add new user</a>
 		<div id="dialog_user_form" class="dialog_form" title="Create new user" style="display:none;">
-		<%= form_for(current_firm.users.build, :url => {:controller => "users", :action => "create"}) do |f| %>
-		<ul> 
-		  <li><%= f.label :name %><%= f.text_field :name, :class => "required"%> </li>
-		  <li><%= f.label :email %><%= f.text_field :email, :class => "required", :email => "true" %></li>
-		  <li><%= f.label :password %><%= f.password_field :password, :class => "required", :minlength => "4" %></li>
-		  <li><%= f.label :phone %><%= f.text_field :phone %></li>
-	 	  <li><%= f.label :hourly_rate %><%= f.text_field :hourly_rate %></li>	
-		  <li>	
-		  	<p><%= f.radio_button :role, 'Admin', :checked => true %> <%= label :role, 'Admin (can see and edit everything)' %></p>
-		  	<p><%= f.radio_button :role, 'Member' %> <%= label :role, 'Member (can see everything and edit projects where they are members)' %></p>
-		  	<p><%= f.radio_button :role, 'External user' %> <%= label :role, 'External user (can only see and edit projects where they are members)' %></p>
-		  </li>
-  		  <li><%= f.submit "Save", :class => "submit" %></li>
-  		</ul>
-  <% end %>
+		<%= render 'new_form' %>
     </div>
 	    <div class="search">
-	        <input type="text" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
+	        <input type="text" placeholder="Search" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
 	    </div>
 	</div>
 	<div id="cus_pro_us_listing_container">
@@ -32,7 +14,3 @@
   </ul>
 </div>
 </div>
-
-</div>
-</div>
-

@@ -25,7 +25,7 @@ class TimeHelp
     elsif minutes < 10
       return (hours.to_s + ".0" + minutes.to_s).to_f
   else
-      return (hours.to_s + "." + minutes.to_s).to_f
+      return (hours.to_s + "." + minutes.to_s).to_f.round
     end
   end
 end

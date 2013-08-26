@@ -4,7 +4,7 @@ describe ApplicationController do
 	describe "flash_helper" do
   		it "should return flash" do
 			message = "test" 
-			ApplicationController.new.flash_helper(message).should == "<span style='color:#FFF'>test</span>"
+			ApplicationController.new.flash_helper(message).should == "test"
   		end 
   	end
   end

@@ -5,13 +5,12 @@ describe PlansHelper do
 	
 	
 	before(:each) do
-    @user = FactoryGirl.create(:user) 
-    login_as @user
-    firm = @user.firm
-  	@request.host = "#{firm.subdomain}.example.com" 	
-  	@sub = FactoryGirl.create(:subscription, plan_id: firm.plan.id, firm_id:firm.id )
-  	@plan = FactoryGirl.create(:plan)
-  end
+	    @user = FactoryGirl.create(:user) 
+	    firm = @user.firm
+	  	@request.host = "#{firm.subdomain}.example.com" 	
+	  	@sub = FactoryGirl.create(:subscription, plan_id: firm.plan.id, firm_id:firm.id )
+	  	@plan = FactoryGirl.create(:plan)
+  	end
 	it 'returns the current plan' do
 		helper.current_plan.should == @user.firm.plan
 	end 

@@ -70,7 +70,7 @@ private
         flash[:notice] = flash_helper('Log was successfully saved.')
         format.js
       else
-       format.js { render "shared/validate_create" }
+        format.js { render "shared/validate_create" }
       end 
     end
   end

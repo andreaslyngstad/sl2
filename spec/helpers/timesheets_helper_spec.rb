@@ -2,21 +2,20 @@ require 'spec_helper'
 describe TimesheetsHelper do
 	before(:each) do
 		@request.env["devise.mapping"] = Devise.mappings[:user] 
-    @user = FactoryGirl.create(:user) 
-    sign_in @user
-  end
+	    @user = FactoryGirl.create(:user) 
+	    sign_in @user
+  	end 
 	let(:firm)          {@user.firm}
-  let(:project)       {FactoryGirl.create(:project, firm:firm)} 
-  let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
-  let(:todo)          {FactoryGirl.create(:todo, completed: false, project: project, user: @user, firm: firm)}    
-  let(:log)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Date.today)}
-  let(:log1)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 1.hours, end_time: Time.now,:log_date => Date.today )}
-  let(:log2)           {FactoryGirl.create(:log, project: nil, user: @user, firm: firm, begin_time: Time.now - 0.5.hours, end_time: Time.now,:log_date => Date.today )}
+	let(:project)       {FactoryGirl.create(:project, firm:firm)} 
+	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+	let(:todo)          {FactoryGirl.create(:todo, completed: false, project: project, user: @user, firm: firm)}    
+	let(:log)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Date.today)}
+	let(:log1)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 1.hours, end_time: Time.now,:log_date => Date.today )}
+	let(:log2)           {FactoryGirl.create(:log, project: nil, user: @user, firm: firm, begin_time: Time.now - 0.5.hours, end_time: Time.now,:log_date => Date.today )}
 	
 	it 'every_day_log_hour' do
 		helper.every_day_log_hour(@user.logs.where(:log_date => Date.today).group("project_id").group("date(log_date)").sum(:hours), Date.today, project).should == 0
 		@user.logs << [log, log1,log2]
-		
 		helper.every_day_log_hour(@user.logs.where(:log_date => Date.today).group("project_id").group("date(log_date)").sum(:hours), Date.today, project).should == 10800
 	end	 
 	it 'every_day_log_hour_no_project' do

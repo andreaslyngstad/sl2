@@ -41,7 +41,7 @@ $(".open_todo_update").UIdialogs_edit_links();
 $("#dialog_todo_form").UIdialogs();
 $("#todo_<%= j(todo.id.to_s)%>").find(".open_todo_update").UIdialogs_edit_links();
 $(".tasks_percent").countDone()
-$(".searchableTaskCustomer").chosen();
+$(".searchableTaskCustomer").chosen({width: '369px'});
 $('.date_format_setter').set_date_format()
 if($('.far_right_container[style*="none"]').data() === null){
 

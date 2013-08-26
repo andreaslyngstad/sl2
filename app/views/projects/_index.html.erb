@@ -5,9 +5,7 @@
 	</div>
 </div>
 <% end %>	
-<div id="left">
-	<div class="inner">
-		<div class="index-view">
+<div class="index-view">
 	<div class="list_header orange_bgr">
 		
 		<% if can? :archive, Project %>
@@ -16,27 +14,16 @@
 		<% if can? :create, Project %>
 		<a id="dialog_project" data-object="project">New project</a>
 		<div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
-      <%= form_for(current_firm.projects.build) do |p| %>
-      <ul>
-	      <li><%= p.label :name %><%= p.text_field :name, :class => "required"%></li>
-	      <li><%= p.label :description %><%= p.text_area :description %></li>
-	      <li><%= p.label :due %><%= p.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_project_date" %></li>
-	      <li><%= p.label :customer_id %><%= p.select(:customer_id, all_customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer", :class => "searchable")%></li>
-	      <li><%= p.label :budget %><div id="project_budget_wrapper"><%= p.text_field(:budget)%>  <%= current_firm.currency %></div></li>
-	      <li><%= p.submit 'Save', :class => 'submit' %></li>
-      </ul>
-      <% end %>
+      <%= render 'new_form' %>
       </div>
       <% end %>
 	    <div class="search">
-	        <input type="text" name="search" AUTOCOMPLETE=OFF value="" title="search" id="id_search_list">
+	        <input type="text" placeholder="Search" name="search" AUTOCOMPLETE=OFF value="" title="search" id="id_search_list">
 	    </div>
 	</div>
 	<div id="cus_pro_us_listing_container">
   <ul id="cus_pro_us_listing">
 	<%= render :partial => "projects_index",  :collection => @projects, :as => :project  %>
   </ul>
-  </div>
-  </div>
   </div>
 </div>

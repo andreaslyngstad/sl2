@@ -1,4 +1,4 @@
-<div class="info task_info" id="todo_<%=todo.id%>" data-due="<%= todo.due.strftime("%Y%j")%>"> 	
+<div class="info task_info" id="todo_<%=todo.id%>"   data-due="<%= todo.due.strftime("%Y%j")%>"> 	
   <div class="priority_todo <%=todo_priority(todo.prior)%>" title="Priority"></div>
   <%= form_for todo, :remote => true, :html => {:id => "edit_done_todo_#{todo.id}"} do |f| %>
   <%= f.check_box :completed, :class => "done_box", :id => todo.id %>
@@ -11,7 +11,7 @@
 	<% end %>
  <div class="name_todo"><%= todo.name %> </div> 
  	
-  <div class="project_todo smaller"><% if todo.project %><%=link_to todo.project.name, project_path(todo.project)%><% end %></div>
+  <div class="project_todo smaller"><% if todo.project %><%= link_to truncate(todo.project.name, length: 14,  omission: ""), project_path(todo.project)%><% end %></div>
   <% if !todo.completed %>
   	<div class="user_todo smaller"><% if todo.user %><%=link_to todo.user.name, user_path(todo.user) %><% end %></div>
   <% else %>
@@ -22,7 +22,7 @@
   <div class="date_all <% if todo.overdue %>red<% end %><% if todo.due_to_day %>green<% end %> date_format_setter" data-date="<%= todo.due %>"></div>
    <div class="delete_edit">
   <span class="open_todo_update edit" id="todo_update" data-id="<%= todo.id %>" data-object="todo">edit</span>
-  <%= link_to "delete", todo, :confirm => "Are you sure?", :title => "Delete task", :method => :delete, :class => "delete_todo delete", :remote => true%>
+  <%= link_to "delete", todo, data: { confirm: 'Are you sure?' }, :title => "Delete task", :method => :delete, :class => "delete_todo delete", :remote => true%>
 </div>
   
  <div class="dialog_form" id="todo_update_<%= todo.id %>_form" title="Update task" style="display:none;"></div>

@@ -4,12 +4,12 @@
        <a id="dialog_log">New log</a>
    </div>
    <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
-      	<%= form_for(Log.new) do |l| %>  
+      	<%= form_for(Log.new, :remote => true) do |l| %>  
   			<%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
     	<% end %>
    </div>
    <div class="range" >	   
-	    <%= form_tag('/log_range', :id => "range_form", :remote => true) do -%>
+	    <%= form_tag('/log_range', :id => "range_form", :remote => true, method: :get) do -%>
 	    <%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
 	    <%= hidden_field_tag "id", @klass ? @klass.id : "index"%>
 	    <div id="range_date_fields">
@@ -20,7 +20,7 @@
    	</div>
  
     <div class="logs_pr_date">
-      <select class="small_selector" id="logs_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
+      <select class='logs_pr_date_select' id="logs_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
            <option data-from="" data-to="" value="to_day">To day</option>
            <option value="this_week">This week</option>
            <option value="this_month">This month</option>

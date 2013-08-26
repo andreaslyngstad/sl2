@@ -73,8 +73,9 @@ Squadlink::Application.routes.draw do
       get "/archive" => "projects#archive",  :as => :archive
       put "projects/update_index/:id" => "projects#update_index",  :as => :update_index
       post "projects/create_index/" => "projects#create_index",  :as => :create_index
-      put "/activate_projects/:id" => "projects#activate_projects", :as => :activate_projects
+      post "/activate_projects/:id" => "projects#activate_projects", :as => :activate_projects
       #tabs_controller
+      get "/tabs/tabs_state/:id/:class" => "tabs#tabs_state"
       get "/tabs/tabs_todos/:id/:class" => "tabs#tabs_todos", :as => :tabs_todos
       get "/tabs/tabs_milestones/:id/:class" => "tabs#tabs_milestones", :as => :tabs_milestones
       get "/tabs/tabs_projects/:id/:class" => "tabs#tabs_projects", :as => :tabs_projects
@@ -88,13 +89,25 @@ Squadlink::Application.routes.draw do
       patch "logs/stop_tracking/:id" => "logs#stop_tracking",  :as => :stop_tracking
       get "/get_logs_todo/:todo_id" => "logs#get_logs_todo", :as => :get_logs_todo
       #select_controller
-      get "/project_select/:project_id/:log_id" => "select#project_select", :as => :project_select
-      get "/customer_select/:customer_id/:log_id" => "select#customer_select", :as => :customer_select
-      get "/todo_select/:todo_id/:log_id" => "select#todo_select", :as => :todo_select
-      post "/customer_select_tracking/:customer_id/:log_id" => "select#customer_select_tracking", :as => :customer_select_tracking
-      post "/employee_select_tracking/:employee_id/:log_id" => "select#employee_select_tracking", :as => :employee_select_tracking  
-      post "/project_select_tracking/:project_id/:log_id" => "select#project_select_tracking", :as => :project_select_tracking
-      post "/todo_select_tracking/:todo_id/:log_id" => "select#todo_select_tracking", :as => :todo_select_tracking
+      get "/project_select/:project_id/:log_id" => "select#project_select"
+      get "/project_select/:project_id/" => "select#project_select"
+
+      get "/customer_select/:customer_id/:log_id" => "select#customer_select"
+      get "/customer_select/:customer_id/" => "select#customer_select"
+      get "/todo_select/:todo_id/:log_id" => "select#todo_select"
+      get "/todo_select/:todo_id/" => "select#todo_select"
+      post "/customer_select_tracking/:customer_id/:log_id" => "select#customer_select_tracking"
+      post "/customer_select_tracking/:customer_id/" => "select#customer_select_tracking"
+
+      post "/employee_select_tracking/:employee_id/:log_id" => "select#employee_select_tracking"
+      post "/employee_select_tracking/:employee_id/" => "select#employee_select_tracking" 
+
+      post "/project_select_tracking/:project_id/:log_id" => "select#project_select_tracking"
+      post "/project_select_tracking/:project_id/" => "select#project_select_tracking"
+      
+      post "/todo_select_tracking/:todo_id/:log_id" => "select#todo_select_tracking"
+      post "/todo_select_tracking/:todo_id/" => "select#todo_select_tracking"
+
       #timesheets_controller
       get "/timesheet_week/:user_id" => 'timesheets#timesheet_week', :as => :timesheet_week
       get "/timesheet_day/:user_id/:date" => 'timesheets#timesheet_day', :as => :timesheet_day
@@ -125,9 +138,9 @@ Squadlink::Application.routes.draw do
       resources :milestones
       resources :todos
       resources :logs
-     # root :to  => "logs#index"
+      get "/", :to  => "logs#index"
     end
-    #root :to  => "plans#index"
+    get "/", :to  => "plans#index"
 	end
   root :to => "public#index"
 end

@@ -1,9 +1,10 @@
-<div class="log_menu">
-	<div class="timesheet_for_user">Timesheet for <%= @user.name %></div> 
-   	<div class="add_some_timesheet">     
+<div id="timesheet_log_menu">
+  <div class="add_some_timesheet">     
        <%= select_tag :user_id, options_from_collection_for_select(@users, "id", "name"), 
-  		:id => "timeheet_user_select",  :prompt => 'Select User' %>
+      :id => "timeheet_user_select",  :prompt => 'Select User' %>
    </div>
+	<div class="timesheet_for_user">Timesheet for <%= @user.name %></div> 
+   	
    <div class="add_some_timesheet_buttons">
        <a id="dialog_log">New log</a> 
        

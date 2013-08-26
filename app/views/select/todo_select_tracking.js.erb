@@ -42,5 +42,5 @@ var employee = $("#logEmployeeIdTracking<%= escape_javascript(@log.id.to_s) %>")
   $("#log_<%= escape_javascript(@log.id.to_s)%>").replaceWith("<%= escape_javascript(render(:partial => @log)) %>");
   <% end %>
   
- form.find(".searchableS_tracking").trigger("liszt:updated");
+ form.find(".searchableS_tracking").trigger("chosen:updated");
 $(".spinning").hide();

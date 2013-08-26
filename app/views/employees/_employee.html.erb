@@ -9,7 +9,7 @@
 </div>
 </div>
 <div class="dialog_form" id="employee_update_<%= employee.id %>_form" title="Update employee" style="display:none;">
-    <%= form_for(employee) do |f| %>
+    <%= form_for(employee, :remote => true) do |f| %>
     <li><%= f.label :name %><%= f.text_field :name %></li>
     <li><%= f.label :phone %><%= f.text_field :phone %></li>
     <li><%= f.label :email %><%= f.text_field :email %></li>

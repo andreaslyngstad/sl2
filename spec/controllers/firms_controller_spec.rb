@@ -54,7 +54,7 @@ describe FirmsController do
       put :firm_update, id: @firm, firm: FactoryGirl.attributes_for(:firm, :name => "something else")
       @firm.reload
       @firm.name.should eq("something else")
-      flash[:notice].should == "<span style='color:#FFF'>Account was successfully updated.</span>"
+      flash[:notice].should == "Account was successfully updated."
     end
   end
   context "invalid attributes" do

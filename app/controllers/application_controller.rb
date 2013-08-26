@@ -19,8 +19,7 @@ class ApplicationController < ActionController::Base
   helper_method :is_root_domain?, 
                 #:can_sign_up?, 
                 :current_subdomain, 
-                :time_zone_now, 
-                :ftz, 
+                :time_zone_now,  
                 :time_range_to_day
   # skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
 
@@ -53,11 +52,9 @@ class ApplicationController < ActionController::Base
   def not_found
     raise ActionController::RoutingError.new('Not Found')
   end
-  def ftz(time)
-     time.in_time_zone(current_firm.time_zone)
-  end
+  
   def flash_helper(message)
-  	return ("<span style='color:#FFF'>" + message + "</span>").html_safe
+  	return (message).html_safe
   end 
   
   def user_at_current_firm
