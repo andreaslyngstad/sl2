@@ -20,8 +20,13 @@ class ApplicationController < ActionController::Base
                 #:can_sign_up?, 
                 :current_subdomain, 
                 :time_zone_now,  
-                :time_range_to_day
+                :time_range_to_day,
+                :permitted_params
   # skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
+
+  def permitted_params
+    @permitted_params ||= PermittedParams.new(params, current_user)
+  end
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details  
   

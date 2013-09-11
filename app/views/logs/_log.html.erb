@@ -15,12 +15,12 @@
     </div>
       <div class="pro_tod_cus_emp_on_log">
       	<div class="pro_tod_on_log">
-      		<div class="pro_cus_on_log"><% if log.project %><%= link_to log.project.name, project_path(log.project) %><% end %>&nbsp;</div>
- 			<div class="tod_emp_on_log"><% if log.todo %><%= link_to log.todo.name, project_path(log.project) %><% end %>&nbsp;</div>
+      		<div class="pro_cus_on_log"><% if log.project %><%= link_to log.project.name, project_path(log.project) %><% end %></div>
+ 			<div class="tod_emp_on_log"><% if log.todo %><%= link_to log.todo.name, project_path(log.project) %><% end %></div>
       	</div>
       	<div class="cus_emp_on_log">
-      		<div class="pro_cus_on_log"><% if log.customer %><%= link_to log.customer.name, customer_path(log.customer) %><% end %>&nbsp;</div>
- 			<div class="tod_emp_on_log"><% if log.employee %><%= link_to log.employee.name, customer_path(log.customer) %><% end %>&nbsp;</div>
+      		<div class="pro_cus_on_log"><% if log.customer %><%= link_to log.customer.name, customer_path(log.customer) %><% end %></div>
+ 			<div class="tod_emp_on_log"><% if log.employee %><%= link_to log.employee.name, customer_path(log.customer) %><% end %></div>
       	</div>
       	</div>
 
@@ -33,16 +33,16 @@
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="Update log" style="display:none;" data-id="<%= log.id %>"></div>
     <% else %>
     <div class="date_and_times_on_log" >
-    	Running
+    	in progress
     </div>
     <div class="pro_tod_cus_emp_on_log">
       	<div class="pro_tod_on_log">
-      		<div class="pro_cus_on_log"><% if log.project %><%= log.project.name %><% end %>&nbsp;</div>
- 			<div class="tod_emp_on_log"><% if log.todo %><%= log.todo.name %><% end %>&nbsp;</div>
+      		<div class="pro_cus_on_log"><% if log.project %><%=  link_to log.project.name, project_path(log.project) %><% end %>&nbsp;</div>
+ 			<div class="tod_emp_on_log"><% if log.todo %><%=  link_to log.todo.name, project_path(log.project)  %><% end %>&nbsp;</div>
       	</div>
       	<div class="cus_emp_on_log">
-      		<div class="pro_cus_on_log"><% if log.customer %><%= log.customer.name %><% end %>&nbsp;</div>
- 			<div class="tod_emp_on_log"><% if log.employee %><%= log.employee.name %><% end %>&nbsp;</div>
+      		<div class="pro_cus_on_log"><% if log.customer %><%= link_to log.customer.name, customer_path(log.customer) %><% end %>&nbsp;</div>
+ 			<div class="tod_emp_on_log"><% if log.employee %><%= link_to log.employee.name, customer_path(log.customer)  %><% end %>&nbsp;</div>
       	</div>
       	</div>
      </div>

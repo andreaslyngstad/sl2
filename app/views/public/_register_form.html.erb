@@ -1,6 +1,6 @@
 <div class="signup signup_firm">
-<%= form_for :firm, :url => create_firm_path,  :html => { :class => "register_firm", :id => "register_firm" } do |firm| %>
- 	<div class="signup-form-field">
+<%= form_for @firm, :url => create_firm_path,  :html => { :class => "register_firm", :id => "register_firm" } do |firm| %>
+    <div class="signup-form-field">
     <%= firm.label :Firm_name %>
     <%= firm.text_field :name, :class => "required form-input", :AUTOCOMPLETE => "OFF" %>
     </div>
@@ -18,10 +18,10 @@
     <%= firm.label :Address %>
     <%= firm.text_field :address, :class => "form-input", :AUTOCOMPLETE => "OFF" %>
     </div>
-    <div class="signup-form-field">
-    <%= firm.label :language %>
-    <%= firm.select :language,  ["English", "Deutsch"], {},  :class => "form-input" %>
-    </div>
+    <!-- <div class="signup-form-field">
+    <%# firm.label :language %>
+    <%# firm.select :language,  ["English", "Deutsch"], {},  :class => "form-input" %>
+    </div> -->
 	<div class="signup-form-field">
     <%= firm.label :currency %>
     <%= firm.select :currency, ["US Dollar", "British Pound", "Euro", "Norwegian Kroner", "Swedish Krona"],  {},  :class => "form-input"%>

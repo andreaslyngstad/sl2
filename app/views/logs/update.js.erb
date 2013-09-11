@@ -1,13 +1,13 @@
+$('.flash_error').empty();
 $(".flash_notice").empty();
-$(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>");
-$("#log_<%= escape_javascript(@klass.id.to_s)%>").replaceWith("<%= escape_javascript(render(:partial => @klass)) %>");
-$("#log_<%= escape_javascript(@klass.id.to_s)%>").css("background-color", "#DBFFDE");
-$("#log_<%= escape_javascript(@klass.id.to_s)%>").find(".open_log_update").UIdialogs_edit_logs_links();
+$(".flash_notice").append("<%= j(flash.discard(:notice))%>");
+$("#log_<%= j(@klass.id.to_s)%>").replaceWith("<%= j(render(:partial => @klass)) %>");
+$("#log_<%= j(@klass.id.to_s)%>").css("background-color", "#DBFFDE");
+$("#log_<%= j(@klass.id.to_s)%>").find("#log_update").UIdialogs_edit_logs_links();
+
 $(".total_log_time").set_hours()
 $('.date_format_setter').set_date_format()
 $('.clock_format_setter').set_clock_format()
-update_hours(<%= @klass.time %>-<%= @pre_hours %>)
-update_budget_useage(<%= @klass.time %>-<%= @pre_hours %>, <%= @klass.user.hourly_rate %>)
 $("#dialog_log").UIdialogs_links();
 $("body").find(".dialog_form:last").remove();
 $(".spinning").hide();

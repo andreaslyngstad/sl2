@@ -10,15 +10,12 @@
        
    </div>
    <div id="month_week_tabs">
-   	<ul>	
-    	<li><%= link_to "Month", timesheet_month_path(@user, Time.now.to_date) %></li>
+   	<ul>
    		<li><%= link_to "Week", timesheet_week_path(@user) %></li>
+      <li><%= link_to "Month", timesheet_month_path(@user, Time.now.to_date) %></li>
 	</ul>   
    </div>
    <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
-    <%= form_for(Log.new, :url => add_log_timesheet_path ) do |l| %>
-		<%= l.hidden_field :user_id, :value => @user.id %>
-		<%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
-	<% end %>
+      <%= render "timesheet_log_form" %>
    </div>
 </div>

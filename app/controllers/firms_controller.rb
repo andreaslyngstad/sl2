@@ -9,7 +9,7 @@ class FirmsController < ApplicationController
   def firm_update
     @firm = current_firm
     respond_to do |format|
-      if @firm.update_attributes(params[:firm])
+      if @firm.update_attributes(permitted_params.firm)
         flash[:notice] = flash_helper('Account was successfully updated.')
         format.html { redirect_to firm_show_path }
       else

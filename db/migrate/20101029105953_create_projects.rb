@@ -3,7 +3,6 @@ class CreateProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.text :name
       t.text :description
-      t.date :due
       t.boolean :active
       t.float :budget
       t.float :hour_price

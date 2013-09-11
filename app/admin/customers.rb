@@ -1,4 +1,9 @@
 ActiveAdmin.register Customer do
+  controller do
+     def scoped_collection
+       Customer.includes(:firm)
+     end
+   end
   menu :priority => 5
   config.batch_actions = true
   index do

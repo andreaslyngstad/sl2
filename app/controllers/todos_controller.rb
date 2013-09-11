@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
   def create
-    @todo = Todo.new(params[:todo])
+    @todo = Todo.new(permitted_params.todo)
     @todo.firm = current_firm
     respond_to do |format|
       if todo.save
@@ -21,7 +21,7 @@ class TodosController < ApplicationController
     end
 
     respond_to do |format|
-      if todo.update_attributes(params[:todo])
+      if todo.update_attributes(permitted_params.todo)
         flash[:notice] = flash_helper('Task was successfully updated.')
         format.js
       else
@@ -39,7 +39,7 @@ class TodosController < ApplicationController
   end
   
   def todo
-    @todo ||= params[:id] ? Todo.find(params[:id]) : Todo.new(params[:todo])
+    @todo ||= params[:id] ? Todo.find(params[:id]) : Todo.new(permitted_params.todo)
   end
   helper_method :todo
   

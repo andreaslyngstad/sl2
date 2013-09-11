@@ -185,7 +185,7 @@ function stackedAndPie(data, ColorArray) {
 	        .style('stroke', (function(d, i){ return ColorArray[i] }));
 	li.append("div")
 	    .attr('class', 'legend_text')  
-	    .text(function(d) { return   d  });
+	    .text(function(d) { return jQuery.trim(d).substring(0, 30).trim(this) });
 	
 	d3.selectAll(".labels .node").on("click", function(d) {
 	    var id = $(this).attr("id");

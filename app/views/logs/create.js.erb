@@ -1,13 +1,11 @@
-$(".flash_notice").empty()
+$('.flash_error').empty();
+$(".flash_notice").empty();
 $(".flash_notice").append("<%= j(flash.discard(:notice))%>");
-$(".listing_logs").prepend("<%= j(render(:partial => @klass)) %>");
+$(".listing_logs").prepend("<%= j(render(:partial => @log)) %>");
 $(".open_log_update").UIdialogs_edit_logs_links();
 $(".total_log_time").set_hours()
 $('.date_format_setter').set_date_format()
 $('.clock_format_setter').set_clock_format()
-update_hours(<%= @klass.time %>)
-update_budget_useage(<%= @klass.time %>, <%= @klass.user.hourly_rate %>)
-$('#dialog_log_form').empty().append("<%= j(render "logs/new_form")  %>")
-
-
+$('.searchableS').chosen_reset({width:'369px'});
+$('form#new_log')[0].reset();
 $(".spinning").hide(); 

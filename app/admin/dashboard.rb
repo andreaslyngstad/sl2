@@ -2,6 +2,10 @@ ActiveAdmin.register_page "Dashboard" do
   controller do
       # This code is evaluated within the controller class
 
+    def scoped_collection
+      Firm.includes(:subscription, :users)
+    end
+ 
     def subscription_chart_data
      @data = AdminChart.new.subscription_count
     end
@@ -27,7 +31,7 @@ ActiveAdmin.register_page "Dashboard" do
               link_to firm.name, [:admin, firm]
             end
             column "Admin User" do |firm|
-              mail_to firm.users.where(role: "Admin").find(1).email
+              mail_to firm.users.where(role: "Admin").first.email
             end      
             column "Subscription", :sortable => :subscription_id do |firm|
               firm.subscription.name

@@ -4,7 +4,8 @@ class TimerangeController < ApplicationController
     @customers = current_firm.customers.includes(:employees)
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
     if params[:from]
-      time_range = ((Date.parse(params[:from]).midnight - 1.day)..Date.parse(params[:to]).midnight)
+      Rails.logger.info(Date.parse(params[:from]).midnight )
+      time_range = ((Date.parse(params[:from]).midnight + 1.day)..(Date.parse(params[:to]).midnight + 1.day ))
     else
       time_range = timerange(params[:time])
     end
@@ -16,7 +17,7 @@ class TimerangeController < ApplicationController
     @range = "range"
     @klass = eval(params[:url]).find(params[:id])
     if params[:from]
-      time_range = ((Date.parse(params[:from]).midnight - 1.day)..Date.parse(params[:to]).midnight)
+      time_range = ((Date.parse(params[:from]).midnight + 1.day)..Date.parse(params[:to]).midnight + 1.day)
     else
       time_range = timerange(params[:time])
     end

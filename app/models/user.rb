@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
-  attr_accessible :role,:phone,:name,:hourly_rate,:created_at,:updated_at,:loginable_type,:loginable_id,
-  :loginable_token,:avatar_file_name,:avatar_content_type,:avatar_file_size,:avatar_updated_at,:email,:encrypted_password,
-  :reset_password_token,:reset_password_sent_at,:remember_created_at,:sign_in_count,:current_sign_in_at,:last_sign_in_at,
-  :current_sign_in_ip,:last_sign_in_ip,:done_todos,:firm, :password, :password_confirmation, :remember_me
+  include ActionView::Helpers::UrlHelper
+  # attr_accessible :role,:phone,:name,:hourly_rate,:created_at,:updated_at,:loginable_type,:loginable_id,:avatar, 
+  # :loginable_token,:avatar_file_name,:avatar_content_type,:avatar_file_size,:avatar_updated_at,:email,:encrypted_password,
+  # :reset_password_token,:reset_password_sent_at,:remember_created_at,:sign_in_count,:current_sign_in_at,:last_sign_in_at,
+  # :current_sign_in_ip,:last_sign_in_ip,:done_todos,:firm, :password, :password_confirmation, :remember_me
 	has_attached_file :avatar, :styles => { :original => "100x100#", :small => "32x32#" }                       
 	validates_attachment_size :avatar, :less_than => 2.megabytes
 	validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
@@ -48,8 +49,8 @@ class User < ActiveRecord::Base
   end
 
   def made_with_in_limit
-    errors.add(:user_id, "You have reached your plans limit of #{firm.plan.users} users. Please upgrade.") if
-    PlanLimit.new.over_limit?(firm.users_count, firm.plan.users) 
+    errors.add(:user_id, "You have reached your plans limit of #{firm.plan.users} users. #{link_to "Please upgrade.", Rails.application.routes.url_helpers.plans_path}") if
+    PlanLimit.new.over_limit?(firm.users_count, firm.plan.users)
   end
   def can_validate
     role == "External user"

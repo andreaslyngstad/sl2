@@ -41,7 +41,7 @@
 			    <%= firm.label :clock_format %>
 		<%= firm.select :clock_format, options_for_select([['24 hours', 1], ['12 hours', 2]], current_firm.clock_format),{},:class => "account_update_select" %>	
 		    </div>	
-  			<div class="signup-form-field">
+  			<!-- <div class="signup-form-field">
 		    <%= firm.label :logo %>
 		     <%= firm.file_field :logo %>		    
 		   </div>
@@ -55,7 +55,7 @@
 		    <%= firm.label :Text %>
 		    <%= firm.text_field :color, :class => "form-input text_style", :AUTOCOMPLETE => "OFF"%>
 		    <div class="text_style_color"></div>
-		    </div>
+		    </div> -->
 		    <div class="signup-form-field">
   <%= firm.submit "Save", :class => "submit" %>
   </div>

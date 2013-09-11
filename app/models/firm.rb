@@ -1,19 +1,19 @@
 class Firm < ActiveRecord::Base
-	 attr_accessible :logo_file_name, :name,:subdomain,:address,:phone, :currency, :time_zone, 
-	      :logo_file_name, 
-	      :language,
-	  	  :logo,
-	  	  :logo_content_type,
-	      :logo_file_size,
-	      :logo_updated_at,
-	   	  :background,
-	   	  :color,
-	   	  :subscription_id,
-	   	  :plan,
-	   	  :time_format,
-	   	  :date_format,
-	   	  :clock_format,
-	   	  :closed
+	 # attr_accessible :logo_file_name, :name,:subdomain,:address,:phone, :currency, :time_zone, 
+	 #     
+	 #      :language,
+	 #  	  :logo,
+	 #  	  :logo_content_type,
+	 #      :logo_file_size,
+	 #      :logo_updated_at,
+	 #   	  :background,
+	 #   	  :color,
+	 #   	  :subscription_id,
+	 #   	  :plan,
+	 #   	  :time_format,
+	 #   	  :date_format,
+	 #   	  :clock_format,
+	 #   	  :closed
 	   	  
 	   
   before_create :add_free_subscription
@@ -25,14 +25,14 @@ class Firm < ActiveRecord::Base
   has_many :milestones, :dependent => :destroy
   has_many :payments
   has_one :subscription, :dependent => :destroy
-  belongs_to :plan
+  belongs_to :plan, counter_cache: true
    
   
-  has_attached_file :logo, :styles => { :original => "100x100#" },
-                  :url  => "/system/logos/:id/:style/:basename.:extension",
-                  :path => ":rails_root/public/system/logos/:id/:style/:basename.:extension"             
-  validates_attachment_size :logo, :less_than => 2.megabytes
-  validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png']
+  # has_attached_file :logo, :styles => { :original => "100x100#" },
+  #                 :url  => "/system/logos/:id/:style/:basename.:extension",
+  #                 :path => ":rails_root/public/system/logos/:id/:style/:basename.:extension"             
+  # validates_attachment_size :logo, :less_than => 2.megabytes
+  # validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png']
   validates_presence_of :name
   validates_format_of :subdomain, :with => /\A[a-z0-9]+\z/i
   validates :subdomain, :presence => true, :uniqueness => true,  :subdomain_exclutions => :true
@@ -91,6 +91,9 @@ class Firm < ActiveRecord::Base
     remove_associations_when_downgrading(free_plan.id)
     # subscription.plan_id = free_plan.id
     # subscription.save
+  end
+  def self.count_by_plan
+    group(:plan).count 
   end
   def close!
     self.closed = true

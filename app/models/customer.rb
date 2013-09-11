@@ -1,5 +1,6 @@
 class Customer < ActiveRecord::Base
-  attr_accessible :name,:phone,:email,:address,:created_at,:updated_at, :firm
+  include ActionView::Helpers::UrlHelper
+  # attr_accessible :name,:phone,:email,:address,:created_at,:updated_at, :firm
   belongs_to :firm, :counter_cache => true
   has_many :logs
   has_many :todos
@@ -11,7 +12,7 @@ class Customer < ActiveRecord::Base
   scope :order_by_name, -> {order("name ASC")}
   
   def made_with_in_limit
-    errors.add(:customer_id, "You have reached your plans limit of #{firm.plan.customers} customers. Please upgrade.") if
+    errors.add(:customer_id, "You have reached your plans limit of #{firm.plan.customers} customers. #{link_to "Please upgrade.", Rails.application.routes.url_helpers.plans_path}") if
     PlanLimit.new.over_limit?(firm.customers_count, firm.plan.customers)
   end 
 end

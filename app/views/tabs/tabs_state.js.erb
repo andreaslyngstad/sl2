@@ -1,8 +1,21 @@
+$('.flash_error').empty();
 $(".flash_notice").empty();
 var tab = $("li.active").children("a").attr("href")
 $(tab).empty().append("<%= j( render 'state_' + @klass.class.to_s.downcase )  %>")
 $(".budget_green").set_buget_width()
+$('.date_format_setter').set_date_format()
+$(".show_avatar_upload").click(function(){
+  	$(".avatar_upload").show();
+  	$(".avatar_show_page").hide();
+  	return false	
+  });
+
+  $(".hide_avatar_upload").click(function(){
+  	$(".avatar_upload").hide();
+  	$(".avatar_show_page").show();
+  	return false	
+  });
 $(".total_log_time").set_hours()
-$(".tasks_percent").task_done();
+$(".tasks_percent").countDone();
 $("#dialog_customer").UIdialogs_links();
 $(".spinning").hide()

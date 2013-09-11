@@ -1,6 +1,6 @@
 class Todo < ActiveRecord::Base
-  attr_accessible :name,:user_id,:project_id,:customer_id,
-  :due,:completed,:created_at,:updated_at,:project,:customer,:user,:done_by_user,:done_by_user_id,:prior,:firm
+  # attr_accessible :name,:user_id,:project_id,:customer_id,
+  # :due,:completed,:created_at,:updated_at,:project,:customer,:user,:done_by_user,:done_by_user_id,:prior,:firm
   
   belongs_to :customer
   belongs_to :project
@@ -8,7 +8,7 @@ class Todo < ActiveRecord::Base
   belongs_to :firm
   belongs_to :done_by_user, :class_name => "User", :foreign_key => "done_by_user_id"
   has_many :logs
-  
+  validates_presence_of :due
   validates_presence_of :name
   validate :made_on_current_firm
   validate :project_must_exist

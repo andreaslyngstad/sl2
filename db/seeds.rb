@@ -10,6 +10,7 @@
 #!/bin/env ruby
 Firm.delete_all
 Log.delete_all
+Plan.delete_all
 Customer.delete_all
 User.delete_all
 Employee.delete_all
@@ -23,10 +24,17 @@ class Array
   a
   end
 end
+Plan.create! name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, paymill_id: '12'
+Plan.create! name: "Bronze", price: 19, customers: nil, logs: nil, projects: 50, users:10, paymill_id: '12'
+Plan.create! name: "Silver", price: 49, customers: nil, logs: nil, projects: 200, users:30, paymill_id: '12'
+gold_plan = Plan.create! name: "Gold", price: 99, customers: nil, logs: nil, projects: 400, users:100, paymill_id: '12'
+Plan.create! name: "Platinum", price: 199, customers: nil, logs: nil, projects: nil, users:nil, paymill_id: '12'
+
+puts "Plans added"
 puts "setting up first firm"
-firm1 = Firm.create! :name => "Lizz", :subdomain => "lizz"
+firm1 = Firm.create! :name => "Lizz", :subdomain => "lizz", plan: gold_plan
 puts 'New firm created: ' << firm1.name
-firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong"
+firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong", plan: gold_plan
 puts 'New firm created: ' << firm2.name
 puts 'SETTING UP EXAMPLE USERS'
 user1 = User.new :name => 'Andreas Lyngstad', :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"

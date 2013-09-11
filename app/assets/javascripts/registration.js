@@ -1,10 +1,8 @@
 //= require jquery
 //= require jquery_ujs
-
 //= require jquery.ui.core
 //= require jquery.ui.position
 //= require jquery.ui.widget
-
 //= require chosen.jquery.min
 //= require_self
 

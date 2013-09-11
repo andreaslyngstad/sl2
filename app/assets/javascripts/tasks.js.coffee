@@ -1,8 +1,11 @@
 jQuery.fn.countDone = ->
-  done = $("#done_tasks").children(".info").size()
-  notDone = $("#not_done_tasks").children(".info").size()
-  percent = ((done / (notDone + done)) * 100).toFixed(2)
-  @replaceWith "<div class='statistics_unit tasks_percent one_number white'>" + percent + "%</div>"
+  done = $(".tasks_percent").data("complete")
+  notDone = $(".tasks_percent").data("notcomplete")
+  if notDone > 0 
+    percent = ((done / (notDone + done)) * 100).toFixed(0)
+  else
+    percent = '0'
+  @text percent + '%'
     
 jQuery.fn.submitDoneWithAjax = (id) -> 
    $.post("/todos/" + id, $(this).serialize(), null, "script")

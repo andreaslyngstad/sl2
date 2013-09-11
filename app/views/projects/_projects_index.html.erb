@@ -8,7 +8,7 @@
 		<span class='open_project_update button edit' id="project_update" data-id="<%= project.id %>" data-object="project" title="Edit project">Edit</span>  
 	<% end %>
 	<% if can? :archive, project %>
-		<a class="activate_project button" data-object="project" data-id="<%= project.id.to_s %>">Archive</a>
+		<a class="activate_project button" id="archive_<%= project.id.to_s %>" data-object="project" data-id="<%= project.id.to_s %>">Archive</a>
 	<% end %>
 	<div class="dialog_form" id="project_update_<%= project.id %>_form" title="Update project" style="display:none;"></div>
 </li>

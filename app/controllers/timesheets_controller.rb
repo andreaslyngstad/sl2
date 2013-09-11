@@ -3,6 +3,7 @@ class TimesheetsController < ApplicationController
   def timesheet_day
     @user = current_firm.users.find(params[:user_id])
     find_users(@user)
+    @date = params[:date]
     @logs = @user.logs.where(:log_date => params[:date])
   end
 
@@ -21,7 +22,7 @@ class TimesheetsController < ApplicationController
  
   def add_log_timesheet
     @user = current_firm.users.find(params[:log][:user_id])
-    @log = LogWorker.create(params[:log], params[:done], @user, current_firm)
+    @log = LogWorker.create(permitted_params.log, params[:done], @user, current_firm)
     variables_bag
     
     respond_to do |format|

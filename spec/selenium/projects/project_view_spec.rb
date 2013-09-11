@@ -10,8 +10,9 @@ describe "ProjectViewSpec" do
     @driver.find_element(:id, "project_name").send_keys "test_project"
     @driver.find_element(:name, "commit").click
     @driver.find_element(:link, "test_project").click
-    
-    @driver.find_element(:css, "#dialog_todo > span.ui-button-text").click
+    sleep 0.2
+    @driver.find_element(:link, "Tasks").click
+    @driver.find_element(:css, "#dialog_todo").click
     @driver.find_element(:id, "todo_name").clear
     @driver.find_element(:id, "todo_name").send_keys "test_todo"
     @driver.find_element(:id, "new_todo_submit").click
@@ -39,11 +40,11 @@ describe "ProjectViewSpec" do
       @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Due\ntest_todo_edit[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     @driver.find_element(:css, "#dialog_log > span.ui-button-text").click 
-    @driver.execute_script('$("#logProjectId_chosen").trigger("mousedown")')
-    @driver.execute_script('$("#logProjectId_chosen_o_1").trigger("mouseup")')
+    # @driver.execute_script('$("#logProjectId_chosen").trigger("mousedown")')
+    # @driver.execute_script(%Q{$("li:contains('test_todo_edit')").trigger("mouseup")})
     sleep 0.2
     @driver.execute_script('$("#logTodoId_chosen").trigger("mousedown")')
-    @driver.execute_script('$("#logTodoId_chosen_o_1").trigger("mouseup")')
+    @driver.execute_script(%Q{$("li:contains('test_todo_edit')").trigger("mouseup")})
    
     @driver.find_element(:id, "log_event").click
     @driver.find_element(:id, "log_event").clear
@@ -72,8 +73,8 @@ describe "ProjectViewSpec" do
     sleep 0.2
     # Warning: assertTextPresent may require manual changes
 
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Goal[\s\S]*$/m 
-    @driver.find_element(:css, "#dialog_milestone > span.ui-button-text").click 
+    
+    @driver.find_element(:css, "#dialog_milestone").click 
     @driver.find_element(:id, "milestone_goal").clear
     @driver.find_element(:id, "milestone_goal").send_keys "test_milestone" 
     @driver.find_element(:id, "new_milestone_submit").click

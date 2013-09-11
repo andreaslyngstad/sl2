@@ -1,6 +1,7 @@
 class Log < ActiveRecord::Base
-	attr_accessible :event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
-	 :hours,:created_at,:updated_at,:project,:customer,:user,:todo, :firm
+  include ActionView::Helpers::UrlHelper
+	# attr_accessible :event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
+	#  :hours,:created_at,:updated_at,:project,:customer,:user,:todo, :firm
   
   belongs_to :customer
   belongs_to :user
@@ -14,10 +15,11 @@ class Log < ActiveRecord::Base
   validate :log_made_on_project
   validate :end_time_before_begin_time
   validate :made_with_in_limit, :on => :create
+  validates_presence_of :log_date 
    
   
   def made_with_in_limit
-    errors.add(:customer_id, "You have reached your plans limit of #{firm.plan.logs} logs. Please upgrade.") if
+    errors.add(:customer_id, "You have reached your plans limit of #{firm.plan.logs} logs. #{link_to "Please upgrade.", Rails.application.routes.url_helpers.plans_path}") if
     PlanLimit.new.over_limit?(firm.logs_count, firm.plan.logs)
   end 
 

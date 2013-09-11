@@ -19,15 +19,15 @@ class LogsController < ApplicationController
   end
 
   def create
-    @klass = LogWorker.create(params[:log], check_done(params[:done]), current_user, current_firm)
-    create_resonder(@klass)
+    @log = LogWorker.create(permitted_params.log, check_done(params[:done]), current_user, current_firm)
+    create_resonder(@log)
   end
 
   def update
   	@klass = Log.find(params[:id])
     @pre_hours = @klass.time   
     LogWorker.check_todo_on_log(@klass, current_user, check_done(params[:done])) if !@klass.todo.nil?
-    update_responder(@klass,params[:log])
+    update_responder(@klass,permitted_params.log)
   end
  
   def destroy
@@ -40,7 +40,7 @@ class LogsController < ApplicationController
   end
 
   def start_tracking
-    @log = LogWorker.start_tracking(params[:log], check_done(params[:done]), current_user, current_firm)
+    @log = LogWorker.start_tracking(permitted_params.log, check_done(params[:done]), current_user, current_firm)
     create_resonder(@log)
   end
 
@@ -49,7 +49,7 @@ class LogsController < ApplicationController
   	@log = Log.find(params[:id])
     @log.end_time = Time.now
 	  LogWorker.check_todo_on_log(@log, current_user, check_done(params[:done])) unless @log.todo.nil? 
-	  update_responder(@log,params[:log])
+	  update_responder(@log,permitted_params.log)
   end
   
   def get_logs_todo

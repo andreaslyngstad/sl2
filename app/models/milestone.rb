@@ -1,10 +1,11 @@
 class Milestone < ActiveRecord::Base
   
-  attr_accessible :goal,:due,:completed,:project_id,:created_at,:updated_at, :project,:firm
+  # attr_accessible :goal,:due,:completed,:project_id,:created_at,:updated_at, :project,:firm
   belongs_to :project
   belongs_to :user
   belongs_to :firm
   validates_presence_of :goal
+  validates_presence_of :due
   scope :overdue, -> {where(["due < ?",  Date.today])}
   scope :due_this_week, -> {where(due:  Date.today, :completed => false)} 
   validate :made_on_current_firm
@@ -27,7 +28,7 @@ class Milestone < ActiveRecord::Base
   end
   
   def self.user_milestones_two_weeks(firm, user)
-    where(:firm_id => firm.id, :project_id => user.projects, :due => Time.current - 1.year..Time.current + 1.week).order("due ASC")
+    where(:firm_id => firm.id, :project_id => user.projects, :due => Time.current - 1.week..Time.current + 1.week).order("due ASC")
   end
 
   # comment 06.06.13
@@ -37,4 +38,7 @@ class Milestone < ActiveRecord::Base
   def overdue?
     due < Date.today
   end 
+  def self.next
+    where("due > ?", Date.today).order("due asc").try(:first)
+  end
 end

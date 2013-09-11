@@ -9,7 +9,9 @@
 //= require jquery.ui.datepicker
 //= require jquery.ui.accordion
 //= require chosen.jquery.min
-//= require jquery.validate
+
+//= require jquery.validate.js
+
 
 //= require jquery.quicksearch
 //= require timeFormatter
@@ -63,7 +65,7 @@ function set_date_format_str(){
 jQuery.fn.set_date_format = function(){
   	$.each($('.date_format_setter'),function(k,v){
   		$(v).html(strftime(set_date_format_str(), new Date($(v).data("date"))))
-
+    
   	});
 }
 jQuery.fn.set_clock_format = function(){
@@ -81,6 +83,12 @@ jQuery.fn.set_clock_format = function(){
    
   }
   
+}
+
+jQuery.fn.chosen_reset = function(n){
+  $(this).chosen('destroy');
+  $(this).prop('selectedIndex', 0);
+  $(this).chosen(n)
 }
 
 jQuery.fn.display_help = function(){
@@ -108,7 +116,6 @@ jQuery.fn.submitWithAjax = function() {
   this.submit(function() { 
     $.post(this.action, $(this).serialize(), null, "script");
     $('.spinning').show();
-    console.log("submitWithAjax")
     return false;
   })
   return this;
@@ -131,7 +138,6 @@ jQuery.fn.highlight = function (className)
     return this.addClass(className);
 };
 jQuery.fn.UIdialogs = function(){
-  console.log(this)
   $(this).dialog({
       autoOpen: false,
       resizable: false,
@@ -178,7 +184,6 @@ jQuery.fn.validateNoSubmit = function(){
 
 jQuery.fn.UIdialogs_links = function(){
 	$(this).button().click(function(){
-    console.log("test")
   var form = '#' + $(this).attr('id') + '_form'
   var date = '#' + $(this).attr('id') + '_date'
   var object = $(this).attr("data-object")
@@ -261,19 +266,18 @@ jQuery.fn.UIdialogs_edit_links = function(){
 
 };
 
-jQuery.fn.current_link = function(){
-  // $(this).click(function(){
-  // $("#html_tabs a.current_link").removeClass("current_link")
-  // $(this).addClass("current_link")
-  //   });
-};
+// jQuery.fn.add_alternate_date_field = function(){
+//   var name = $(this).attr('name')
+//   var value = $(this).attr('value');
+//   if (/_formated/i.test(name)){
+//   }else{
+//     $(this).parent().append('<input id="alternate" name="' + name + '" type="hidden" value="' + $.datepicker.parseDate('mm/dd/yy', value) + '">');
+//     $(this).attr('name', name + '_formated');
+ 
+//   }
+// };
 
-jQuery.fn.task_done = function () {
-  var complete = $(this).data("complete")
-  var notcomplete = $(this).data("notcomplete")
-  var procent = Math.round((complete/ (complete + notcomplete))*100 )
-  $(this).text(procent + "%")
-};
+
 
 //ok
   
@@ -288,30 +292,28 @@ $.ajaxSetup({
   }
   }
   });
-$(document).ready(function() {	 
+
+$(document).ready(function() {
+
+  $(".range_date").datepicker({
+      onSelect: function() {
+        $('#range_form').submit();
+        }
+    }).attr( 'readOnly' , 'true' )	 
 	if ($('.current_firm_data').data("dateformat") == 1 ){
-			$.datepicker.setDefaults( { dateFormat: "dd.mm.yy" } );
+			$.datepicker.setDefaults( { 
+        dateFormat: "dd.mm.yy"
+      } );
+      
 	}else if($('.current_firm_data').data("dateformat") == 2 ){
-		$.datepicker.setDefaults( { dateFormat: "mm/dd/yy" } ); 
+    // $('.hasDatepicker').parent().append('<input id="alternate" name="' + $(this).attr('name') + '" type="hidden" value="' + $.datepicker.parseDate('mm/dd/yy', '12/29/2013') + '">');
+		$.datepicker.setDefaults( { 
+        dateFormat: "mm/dd/yy"
+       } );
 	}
-	
-	
-	
-	
   	$('.date_format_setter').set_date_format()
   	$('.clock_format_setter').set_clock_format()
-	$('.left_slider').click(function(){
-	  $(".milestone_slider").animate({"left": "+=122px"}, "slow");
-	});
-	
-	$('.right_slider').click(function(){
-	  $(".milestone_slider").animate({"left": "-=122px"}, "slow");
-	});
-	var p = $(".milestone_slider").find(".upcomming:first").position()
-	if (p != null){
-	$('.milestone_slider').animate({"left": "-=" + (parseInt(p.left) - 122)}, "slow");
-	}
-   $("#html_tabs a").current_link();
+
    $(".display_help").display_help();
   
 //jquery UI dialogs
@@ -332,21 +334,9 @@ $(document).ready(function() {
   $(".account_update_select").chosen({width:'364px'});
   $(".big_selector").chosen({width:'369px'});
   $(".small_selector").chosen({width:'200px'});
-  $(".mini_selector").chosen({width:'177px'});
+  $(".mini_selector").chosen({width:'177px', disable_search:true});
   $('.logs_pr_date_select').chosen({width:'200px', disable_search:true});
   $(".date").datepicker();
-  
-  $(".show_avatar_upload").click(function(){
-  	$(".avatar_upload").show();
-  	$(".avatar_show_page").hide();
-  	return false	
-  });
-  $(".hide_avatar_upload").click(function(){
-  	$(".avatar_upload").hide();
-  	$(".avatar_show_page").show();
-  	return false	
-  });
-  
 
  	$(".tracking_log").submitWithAjax();
 	$("#form_holder").find(".edit_log").submitWithAjax();
@@ -354,7 +344,7 @@ $(document).ready(function() {
 	$(".button").button();
 	$(".activate_project").activate_projects();
 	$(".reopen_project").reopen_project();
-	$(".activate_projects_no_button").activate_projects_no_button();
+
 	
   
 
@@ -375,7 +365,7 @@ $(document).ready(function() {
  $("input.membership").membership();
  $(".register_firm").validateNoSubmit();
  $(".first_user").validateNoSubmit();
-$(".range_date").datepicker().attr( 'readOnly' , 'true' );
+
    
    // $(".slider_range").slider({
         // range: true,

@@ -3,13 +3,7 @@
   <div class="add_some">
     <a id="dialog_project" data-object="project">New project</a>
     <div id="dialog_project_form" class="dialog_form" title="Create new project" style="display:none;">
-      <%= form_for(Project.new, :remote => true) do |p| %>
-      <%= p.hidden_field :customer_id, value: @klass.id %>
-      <li><%= p.label :name %><%= p.text_field :name, :class => "required", :minlength => "2" %></li>
-      <li><%= p.label :description %><%= p.text_area :description %></li>
-      <li><%= p.label :due %><%= p.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_project_date"   %></li>
-      <li><%= p.submit 'Save', :class => 'submit', :id => "new_project_customer" %></li>
-      <% end %>
+      <%= render 'projects/new_form' %>
     </div>
   </div>
  <% end %>

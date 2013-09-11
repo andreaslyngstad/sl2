@@ -106,6 +106,9 @@ nv.addGraph(function() {
 
 }
 $(document).ready(function() {
+  var pathname = window.location.pathname;
+  if (/dashboard/i.test(pathname)){
+
 	$.getJSON('/admin/dashboard/subscription_chart_data.json', function(data) {
   				firmBySubscription(data)      
 		})
@@ -118,9 +121,5 @@ $(document).ready(function() {
 		})
 	$.getJSON('/admin/dashboard/new_firms_count_chart_data.json', function(data) {
   				newFirms(data)      
-		})
-	
-
- 
-
+		})}
 })

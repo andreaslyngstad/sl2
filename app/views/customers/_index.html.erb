@@ -7,7 +7,7 @@
 <% end %>	
 <div class="index-view">
 	<div class="list_header orange_bgr">
-		<a id="dialog_customer" data-object="customer">Add new customer</a>
+		<a id="dialog_customer" data-object="customer">New customer</a>
 		<div id="dialog_customer_form" class="dialog_form" title="Create new customer" style="display:none;">
 			<%= form_for(@customer, :remote => true) do |f| %>
 			   <li><%= f.label :name %><%= f.text_field :name, :class => "required", :minlength => "2"  %></li>

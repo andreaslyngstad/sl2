@@ -12,7 +12,7 @@
   	<div class="tab_list_text">
  <%= project.name %>
   </div>
-  <%= link_to( project_path(project), :confirm => "This will destroy the project and all tasks and logs associated to this project. Are you sure? The project with its tasks and logs will be accessable if you reopen the project.", :title => "Delete project", :method => :delete, :remote => true) do%>
+  <%= link_to( project_path(project),data: { confirm: 'This will destroy the project and all tasks and logs associated to this project. Are you sure? The project with its tasks and logs will be accessable if you reopen the project.' }, :title => "Delete project", :method => :delete, :remote => true, :class => 'delete_project') do%>
   <span class='button'>Delete</span>
     <% end %>
     <a class="reopen_project button" data-object="project" data-id="<%= project.id.to_s %>">Reopen</a>

@@ -17,7 +17,7 @@ class PublicController < ApplicationController
   end
   
   def create_firm  
-    @firm = Firm.new(params[:firm])
+    @firm = Firm.new(permitted_params.firm)
     @firm.subdomain = @firm.subdomain.downcase
     respond_to do |format|
       if @firm.save
@@ -25,17 +25,17 @@ class PublicController < ApplicationController
         format.html { redirect_to(register_user_path(@firm)) }    
       else
         flash[:error] = 'Firm could not be created'
-        format.html { render "public/register", :layout => "registration"}
+        format.html { render action:'register', :layout => "registration"}
         format.xml  { render :xml => @firm.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def create_first_user
-    @user = User.new(params[:user])
     @firm = Firm.find(params[:firm_id])
+    @user = @firm.users.new(permitted_params.first_user)
     @user.role = "Admin"
-    @user.firm = @firm
+    
 
         if @user.save
           flash[:notice] = "Registration successful."

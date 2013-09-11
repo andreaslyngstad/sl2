@@ -1,7 +1,7 @@
 class AdminChart
   def subscription_count
     [{"values" => 
-      Firm.count_by_subscription.map do |k, v|    
+      Firm.count_by_plan.map do |k, v|    
         {"label" => k.name, "value" => v.to_s}
       end
     }].to_json

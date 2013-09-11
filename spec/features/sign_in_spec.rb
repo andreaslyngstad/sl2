@@ -23,7 +23,7 @@ feature 'Sign in user' do
       page.current_url.should == @root_url 
     end
      
-    scenario 'at root' do 
+    scenario 'at root' do  
       visit @root_path
       find("#login_link").click
       fill_in "user_email_popup", :with => @firm.users.first.email

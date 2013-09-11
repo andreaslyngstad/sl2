@@ -9,13 +9,7 @@
 <div id="left" class="home_content">
 <table border="0" cellspacing="0" cellpadding="10" class="plans">
 	<tr><td></td>
-		<% @plans.each do |plan| %>
-			<% if current_plan?(plan) %>
-				<td class="green">Current Plan</th>
-			<% else %>
-				<td></td>
-			<% end %>
-		<% end %>
+		
 	</tr>
 	<tr><th></th>
 		<% @plans.each do |plan| %>
@@ -98,7 +92,7 @@
 					<%= link_to "Cancel Plan?", plans_cancel_path, :class => "red_font"%>
 				<% end %>
 				<% elsif current_firm.plan == plan && current_firm.plan.name == "Free" %>
-					<%= link_to "Delete Firm?", current_firm, :confirm => "Are you sure?", :class => "red_font", :title => "Delete Firm", :method => :delete %>
+					<%= link_to "Delete Firm?", current_firm, data: { confirm: 'Are you sure?' }, :class => "red_font", :title => "Delete Firm", :method => :delete %>
 	          	<% else %>	
 					<% if plan.name != "Free" %>
 	          			<%= link_to "Sign up", new_subscription_path(:plan_id => plan.id), :class => "submit" %>
@@ -107,6 +101,15 @@
         	</td>
 		<% end %>
 	</tr>
+	<tr><td></td>
+	<% @plans.each do |plan| %>
+			<% if current_plan?(plan) %>
+				<td class="green">Current Plan</th>
+			<% else %>
+				<td></td>
+			<% end %>
+		<% end %>
+		</tr>
 </table>
   <div class="clear"></div>
 </div>

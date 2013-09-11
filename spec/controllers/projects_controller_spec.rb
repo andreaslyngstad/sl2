@@ -29,7 +29,7 @@ describe ProjectsController, :type => :controller do
     end
     it "populates an array of projects" do 
       projects = stub
-      Project.should_receive(:order_by_name){projects}
+      Project.should_receive(:order_by_name){projects} 
       get :index
       assigns[:projects].should be projects 
         

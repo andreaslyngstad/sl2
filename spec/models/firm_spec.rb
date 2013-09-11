@@ -16,6 +16,7 @@ describe Firm do
   let(:f)               {FactoryGirl.create(:firm)}
   let(:f2)              {FactoryGirl.create(:firm)}
   let(:p)               {FactoryGirl.create(:plan, name: "costly", price: 1200)}
+  let(:p1)              {FactoryGirl.create(:plan, name: "cheep", price: 12)}
   let(:customer_list)   {FactoryGirl.create_list(:customer,20, firm: f)}
   let(:user_list)       {FactoryGirl.create_list(:user,20, firm: f)}
   let(:project_list)    {FactoryGirl.create_list(:project,20, firm: f)}
@@ -83,5 +84,10 @@ describe Firm do
     f.subscription.plan.projects.should == 2
     f.users.count.should == 2 
     f.users_count.should == 2 
+  end
+  it "generates a hash of firms per subscription" do
+    # Plan.destroy_all
+    # f
+    # Firm.count_by_plan.should == {Plan.last => 1}
   end
 end

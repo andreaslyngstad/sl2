@@ -1,4 +1,4 @@
-
+@import "chosen.min";
 /*Opera Fix*/
 body:before {/* thanks to Maleika (Kohoutec)*/
 content:"";
@@ -31,11 +31,12 @@ You also need to include this conditional style in the <head> of your HTML file 
 
 */
 html,body {
+	
 	margin:0;
 	padding:0;
-	// font-family: Tahoma, sans-serif; 
-	// font-weight: lighter; 
-	// letter-spacing:1px; 
+	font-family: Tahoma, sans-serif; 
+	font-weight: lighter; 
+	letter-spacing:1px; 
 	height: 100%; 
 	}
 img {border:none;}
@@ -56,7 +57,9 @@ a:hover{
 	text-decoration:none;
 	color:grey;
 }
-#main {overflow:auto;
+#main {
+	width: 900px;
+	display:inline-block;
 	padding-bottom: 80px;}
 
 #login_link{
@@ -132,7 +135,7 @@ background: #0230ee;
 font-size: 13px;
 color: #777;
 float: left;
-width: 185;
+width: 185px;
 margin: 15px 20px 20px 20px;
 
 }
@@ -220,19 +223,19 @@ line-height: 35px;
 em.error{
 color: red;
 display: block;
-margin: 5px 0 0 170px;
+margin: 5px 0 0 150px;
 
 }
 em.check{
 color: gray;
 display: block;
-margin: 5px 0 0 170px;
+margin: 5px 0 0 150px;
 
 }
 em.ok{
 color: green;
 display: block;
-margin: 5px 0 0 170px;
+margin: 5px 0 0 150px;
 
 }
 .devise_links{
@@ -288,7 +291,7 @@ padding: 0;
 margin: 0;
 position: absolute;
 top: 153px;
-left: 40;
+left: 40px;
 }
 .login_form #check_box_label{
 	margin-left: 30px;

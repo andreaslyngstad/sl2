@@ -1,3 +1,4 @@
+$('.flash_error').empty();
 $(".flash_notice").empty();
 $("#main_container").replaceWith("<%= escape_javascript(render("customers/index")) %>");
 $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li');

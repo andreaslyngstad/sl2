@@ -10,12 +10,11 @@ describe "CustomerViewCrud" do
     @driver.find_element(:link, "tests").click
     # Warning: waitForTextPresent may require manual changes
     sleep 0.2
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Task Project Assigned to[\s\S]*$/
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Total hours[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     # Warning: waitForTextPresent may require manual changes
     sleep 0.2 
     
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Event[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Projects')])[2]").click
     # Warning: waitForTextPresent may require manual changes
     sleep 0.2
@@ -33,9 +32,10 @@ describe "CustomerViewCrud" do
     # Warning: verifyTextPresent may require manual changes
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Sorry\nProject must be selected\.[\s\S]*$/m
     
-    @driver.execute_script('$("#todoProjectId_chosen").trigger("mousedown")')
+    @driver.find_element(:css, "#todoProjectId_chosen").click
     sleep 0.2
-    @driver.execute_script('$("#todoProjectId_chosen_o_1").trigger("mouseup")')
+    @driver.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
+
     @driver.find_element(:id, "new_todo_submit").click 
     # Warning: waitForTextPresent may require manual changes 
     sleep 0.2
@@ -60,18 +60,21 @@ describe "CustomerViewCrud" do
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Due\ntest_todo_edit[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Logs')])[2]").click
     @driver.find_element(:css, "#dialog_log > span.ui-button-text").click 
-    @driver.execute_script('$("#logProjectId_chosen").trigger("mousedown")')
-    @driver.execute_script('$("#logProjectId_chosen_o_1").trigger("mouseup")')
+    @driver.find_element(:css, "#logProjectId_chosen").click
     sleep 0.2
-    @driver.execute_script('$("#logTodoId_chosen").trigger("mousedown")')
-    @driver.execute_script('$("#logTodoId_chosen_o_1").trigger("mouseup")')
+    @driver.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
+    sleep 0.2
+    @driver.find_element(:css, "#logTodoId_chosen").click
+    sleep 0.2
+    @driver.execute_script %Q{ $("li:contains('test_todo_edit')").trigger("mouseup")}
+    
    
     @driver.find_element(:id, "log_event").click
     @driver.find_element(:id, "log_event").clear
     @driver.find_element(:id, "log_event").send_keys "test_log"
     @driver.find_element(:id, "new_log_submit").click 
-    sleep 0.2
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Due\ntest_todo_edit[\s\S]*$/
+    sleep 0.5
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*test_todo_edit[\s\S]*$/
     @driver.find_element(:link, "Tasks").click
      sleep 0.2
     @driver.execute_script('$(".logs_pluss").first().trigger("click")')  
@@ -88,15 +91,13 @@ describe "CustomerViewCrud" do
     alert.accept() 
     sleep 0.2 
     # Warning: waitForTextPresent may require manual changes
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\nTask was successfully deleted\.[\s\S]*$/
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*\nLog was deleted\.[\s\S]*$/
     @driver.find_element(:xpath, "(//a[contains(text(),'Projects')])[2]").click
     @driver.find_element(:css, "#dialog_project > span.ui-button-text").click
     @driver.find_element(:id, "project_name").clear
     @driver.find_element(:id, "project_name").send_keys "test_project"
-    @driver.find_element(:id, "dialog_project_date").click
-    @driver.find_element(:id, "dialog_project_date").clear
-    @driver.find_element(:id, "dialog_project_date").send_keys "10.10.2012" 
-    @driver.find_element(:id, "new_project_customer").click    
+    
+    @driver.find_element(:id,'new_project').find_element(:name, "commit").click    
     @driver.find_element(:id, "project_update").click
     sleep 0.2
     @driver.execute_script('$(".edit_project").first().find("#project_name").val("test_project_edit")')

@@ -1,0 +1,15 @@
+<% if !@klass.logs.empty? %>
+<div class="state_logs">
+  	<div class="state_headers">Last logs</div>
+    <% @logs.each do |log| %>
+	    <div class="state_log">
+	    <%= image(log.user, "image32") %>
+	    <div class="date_format_setter" data-date="<%= log.log_date %>"><%= log.log_date %></div>
+	    <%= log.event %> 
+	    <% if log.end_time.nil? %>
+	    	<span style="font-size: 60%">in progress</span>
+	    <% end %>
+	    </div>
+    <% end %>
+</div>
+ <% end %>

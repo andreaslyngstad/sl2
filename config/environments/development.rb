@@ -5,7 +5,7 @@ Squadlink::Application.configure do
   # since you don't have to restart the webserver when you make code changes.
   config.cache_classes = false
   config.eager_load = false
- 
+  config.force_ssl = true
 	
 	Paperclip.options[:command_path] = "C:/ImageM~1"
   # Show full error reports and disable caching

@@ -1,3 +1,4 @@
+$('.flash_error').empty();
 $(".flash_notice").empty();
 <% if @log.nil? %>
 var form_selects = ".searchableS"
@@ -5,8 +6,6 @@ var form	 = $(".new_log")
 var customer = form.find("#logCustomerId")
 var employee = form.find("#logEmployeeId")
 var todo 	 = form.find("#logTodoId")
-	
-	
 <% else %>
 var form_selects = ".searchableSE"
 var form	 = $("#log_update_<%= j(@log.id.to_s) %>_form")

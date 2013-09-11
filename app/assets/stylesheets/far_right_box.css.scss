@@ -57,13 +57,15 @@
   height:32px;
   line-height:32px;
   border-bottom: solid #ddd 1px;
-  
+  overflow: hidden;
   cursor: pointer;
 }
 .user_row_name{
   position:absolute;
   top: 2px;
   left: 40px;
+
+  
 }
 .row_task{
   border-bottom: solid #ddd 1px;
@@ -76,9 +78,11 @@
   border-bottom: solid #ddd 1px;
   vertical-align:text-bottom;
 }
-.milestone_due{
+.row_milestone a{
+ float:left;
+}
+.row_milestone .date_format_setter{
   float:right;
-  font-size: 10px;
-  line-height: 17px;
-  
+ font-size:70%;
+ line-height:20px;
 }

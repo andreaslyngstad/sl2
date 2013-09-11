@@ -21,7 +21,7 @@ feature 'home' do
     scenario 'firm_show' do  
      visit firm_show
      page.current_url.should == firm_show
-     page.should have_content("Memeber since: ")  
+     page.should have_content("Memeber since")  
      page.should have_content("Payments") 
   end
     scenario "payments index" do  

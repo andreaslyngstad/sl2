@@ -1,7 +1,7 @@
 class EmployeesController < ApplicationController
 
   def create
-    @employee = Employee.new(params[:employee])
+    @employee = Employee.new(permitted_params.employee)
 	  @customer = @employee.customer
 	  @employee.firm = current_firm
     respond_to do |format|
@@ -19,7 +19,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     @customer = @employee.customer
     respond_to do |format|
-      if @employee.update_attributes(params[:employee])
+      if @employee.update_attributes(permitted_params.employee)
         flash[:notice] = flash_helper("Employee was successfully saved.")
         format.js
       else

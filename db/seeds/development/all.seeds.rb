@@ -26,20 +26,20 @@ class Array
   end
 end
 
-Plan.create! name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, paymill_id: "free"
-Plan.create! name: "Bronze", price: 19, customers: nil, logs: nil, projects: 50, users:10, paymill_id: "offer_99a3a4d47e32be269501"
-Plan.create! name: "Silver", price: 49, customers: nil, logs: nil, projects: 200, users:30, paymill_id: "offer_36aa0af51624ba547064"
-Plan.create! name: "Gold", price: 99, customers: nil, logs: nil, projects: 400, users:100, paymill_id: "offer_1e479ea6dcaa3a589ec3"
-Plan.create! name: "Platinum", price: 199, customers: nil, logs: nil, projects: nil, users:nil, paymill_id: "offer_3d08a96455a613294adf"
+plan1 = Plan.create! name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, paymill_id: "free"
+plan2 = Plan.create! name: "Bronze", price: 19, customers: nil, logs: nil, projects: 50, users:10, paymill_id: "offer_99a3a4d47e32be269501"
+plan3 = Plan.create! name: "Silver", price: 49, customers: nil, logs: nil, projects: 200, users:30, paymill_id: "offer_36aa0af51624ba547064"
+plan4 = Plan.create! name: "Gold", price: 99, customers: nil, logs: nil, projects: 400, users:100, paymill_id: "offer_1e479ea6dcaa3a589ec3"
+plan5 = Plan.create! name: "Platinum", price: 199, customers: nil, logs: nil, projects: nil, users:nil, paymill_id: "offer_3d08a96455a613294adf"
 
 puts "plans added"
 
 puts "setting up first firm"
-firm1 = Firm.new :name => "Lizz", :subdomain => "lizz" 
+firm1 = Firm.new :name => "Lizz", :subdomain => "lizz", plan: plan4
 firm1.save
 puts firm1.name
 
-firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong"
+firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong", plan: plan4
 
 puts 'SETTING UP EXAMPLE USERS'
 user1 = User.new :name => 'Andreas Lyngstad', :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
@@ -65,7 +65,7 @@ puts 'New user created: ' << user5.name
 
 50.times do |n|
 num = (n + 1).to_s
-firm = Firm.create! name: "test" + num, subdomain: "test" + num
+firm = Firm.create! name: "test" + num, subdomain: "test" + num, plan: plan4
 user = User.new name: 'user_test'+ num , email: 'test' + num + '@lizz.no', password: 'lekmedmeg', password_confirmation: 'lekmedmeg', role: "Admin"
 user.firm = firm
 user.save 

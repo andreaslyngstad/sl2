@@ -113,7 +113,8 @@ jQuery.fn.UIdialogs_log_links = function(){
         range: true,
         min: 0,
         max: 1439,
-        values: [ time_to_value(log_time_from), time_to_value(log_time_to) ],
+
+        values: [ time_to_value(log_time_from)-300, time_to_value(log_time_to) ],
         step:10,
         slide: slideTime
     });
@@ -260,11 +261,7 @@ $(document).ready(function() {
 	$("#dialog_log").UIdialogs_log_links();
 	$(".open_log_update").UIdialogs_edit_logs_links();
 	$(".date").datepicker();
-	$(".range_date").datepicker({
-		onSelect: function() {
-			$('#range_form').submit();
-  		}
-		}).attr( 'readOnly' , 'true' )
+	
 	$(".slider_range").slider({
 	        range: true,
 	        min: 0,

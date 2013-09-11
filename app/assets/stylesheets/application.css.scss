@@ -57,6 +57,9 @@ ul.hmenu li {
   
 }
 
+img{
+  border-radius:5px;
+}
 #header { 
 	float:left;
 	width: 100%;	
@@ -73,12 +76,16 @@ height:25px;
   font-size: 40px;
   line-height: 20px;
 }
+#centering_main{
+  text-align: center; 
+}
 #main {
-margin: 0 auto;
-min-height:100%;
- width: 1180px;
-padding:10px;
-margin-top: 20px;
+  margin: 0 auto;
+   text-align: left; 
+  width: 1180px;
+  padding:10px 10px 100px 10px;
+  margin-top: 20px;
+  margin-bottom: 60px;
   box-shadow: 0 0 10px #888;
   background-color:white;
   border-radius:5px;
@@ -128,7 +135,20 @@ margin: 3px 0 0 0;
 // color: white;
 
 }
-
+.user_info {
+  float:left;
+  width:212px;
+  height: 64px;
+  margin:5px;
+  padding:5px;
+  
+  font-size:12px;
+  overflow:hidden;
+}
+.user_info img{
+  float:left;
+  clear: left;
+  }
 #user_nav_header a{
 // color:white;
 }
@@ -187,8 +207,7 @@ color: #aaa;
 
 
 #main_container{
-margin-left:200px;
-
+float:left;
 width: 980px;
  }
     
@@ -300,16 +319,7 @@ width: 100px;
 height: 100px;
 margin-right: 10px;
 }
-.user_description{
 
-}
-.show_user_text{
-
-}
-.show_user_image{
-
-
-}
 /* dialog_form. */
 .ui-dialog, .ui-dialog-content {
     overflow: visible !important
@@ -335,11 +345,6 @@ padding: 0.1em;
 border-radius: 0px;
 }
 
-.tabsul{
--moz-border-radius: 0px;
--webkit-border-radius: 0px;
-border-radius: 0px;
-}
 input.error  {border:1px solid red }
 div.error{
   width:355px;
@@ -351,25 +356,7 @@ div.error{
   padding-bottom: 2px;
 }
 .indicator {width:15px;height:15px; display:block; background: url('spinner.gif') no-repeat right !important; }
-a.quick_link {
-cursor: pointer; font-size:12px; color:red;
-}
-a.quick_link:hover {
-background: red;
-color: white;
-}
-a.quick_todo_link {
-cursor: pointer; float:left; font-size:12px; color:red; margin:20px 0px 10px 0px;
-}
-a.select_todo_link, a.remove_todo_link {
-cursor: pointer; font-size:12px; 
-}
-a.highlight-class:hover{
-background: #FCD7DB;
-}
-.highlight-class{
-background-color: #FCD7DB;
-}
+
 
 .orange_bgr {
 background: #DFF1F2;
@@ -385,55 +372,6 @@ background: -moz-linear-gradient(top,  #FAA51A,  #F47A20);
 			
 }
 
-/*statistics begin*/
-
-.report_top, .report_middle, .report_bottom{
-float:left;
-width: 122px;
-border-color:#DCDBDC;
-    border-style:solid;
-    border-width:0px 1px 1px;
-}
-
-.yellow{
-  color: #606060;
-border: solid 1px #B7B7B7;
-background: #FCCE83;
-background: -webkit-gradient(linear, left top, left bottom, from(#FCCE83), to(#EDEDED));
-background: -moz-linear-gradient(top, #FCCE83, #EDEDED);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FCCE83', endColorstr='#EDEDED');
-}
-.green_gr{
-  color: #606060;
-border: solid 1px #B7B7B7;
-background: #AAFC83;
-background: -webkit-gradient(linear, left top, left bottom, from(#AAFC83), to(#EDEDED));
-background: -moz-linear-gradient(top, #AAFC83, #EDEDED);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AAFC83', endColorstr='#EDEDED');
-}
-.white {
-color: #606060;
-border: solid 1px #B7B7B7;
-
-}
-
-
-.statistics_head{
-float:left;
-border: 1px solid #999;
-height:50px;
-width: 100px;
-padding:10px;
-background-color: #999;
-}
-.money, .hours, .report_charts{
-min-height: 128px;
-
-min-width: 300px;
-float: left;
-border:1px solid #CB3900;
-}
-/*statistics end*/
 
 #show_content{
   margin-bottom:0px;
@@ -441,49 +379,55 @@ border:1px solid #CB3900;
 
 #description{
   width:470px;
-  padding:10px;
+  padding:10px 10px 10px 10px;
   float:left;
-  color: #226600;
+  
+      word-wrap: break-word;
+      word-break: break-all;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      hyphens: auto;
 }
-#customer_description{
-  width:400px;
-float:left;
-padding:10px;
-font-size:12px;
+#description .state_unit{
+  font-size:90%;
+}
 
-}
 .state_wrapper{
   width:470px;
   float:left;
   padding:10px;
   
 }
-.state_headers{
-color: green;
-margin:0px;
 
-}
 
 .budget_green{
   float: left;
   height:37px;
   padding-top:15px;
   line-height:20px;
-  background-color:#FCCE83;
+  background-color:#FFE9C4;
+  text-align: center;
+  color: #555555;
 }
 .budget_red{
   float: left;
   height:37px;
   padding-top:15px;
   line-height:20px;
-  background-color:#AAFC83;
+  background-color:#DFF1F2;
+  text-align: center;
+  color: #555555;
 }
 .budget_green p, .budget_red p{
   margin: 0px;
   line-height:0px;
   font-size: 10px;
 }
+.white {
+color: #606060;
+border: solid 1px #B7B7B7;
 
+}
 .tab_box{
 
 }
@@ -492,101 +436,44 @@ width: 798px;
 min-height: 130px;
 
 }
-
-#todos_chart{
-  position:absolute;
-
-left: 122px;
-top:40px;
+.hours_done_wrapper{
+  width: 156px;
+  float: left;
+  padding-bottom: 10px;
 
 }
-
-
-#milestones_chart{
- 
-  position:relative;
-  border-top:1px solid #999;
-  border-bottom:1px solid #999;
-  border-right:1px solid #999;
-  border-left:1px solid #999;
-  width: 364px;
-  height:70px;
-  overflow:hidden;
-  font-size: 10px;
-  top:40px;
-  left:244px;
+.state_log{
+  font-size: 90%;
+  float:left;
+  padding-top:5px;
+  width: 100%;
 }
-.milestone_slider{
-  position:absolute;
-  left:0px;
-  width: 10000px;
-  
-}
-.right_slider, .left_slider{
-  position:absolute;
-  left:244px;
-  width: 120px;
-  height:72px;
-
-  background: #fff;
-  opacity: .6;
-  cursor:pointer; 
-  
-}
-.right_slider:hover, .left_slider:hover{
- 
-  background: #ddd;
-  
-  
-}
-.left_slider{
-  left:0px;
-  // border-left:1px solid #999;
-  border-right:1px solid #999;
-}
-.right_slider{
-  left:244px;
-  border-left:1px solid #999;
-  // border-right:1px solid #999;
-}
-.passed, .upcomming{
+.state_log img{
   float:left;
 }
-.arrow-e,
-.arrow-w {
-  /*
-   * In Internet Explorer, The"border-style: dashed" will never be
-   * rendered unless "(width * 5) >= border-width" is true.
-   * Since "width" is set to "0", the "dashed-border" remains
-   * invisible to the user, which renders the border just like how
-   * "border-color: transparent" renders.
-   */
-  border-style: dashed;
-  border-color: transparent;
-  border-width: 0.53em;
-  display: -moz-inline-box;
-  display: inline-block;
-  /* Use font-size to control the size of the arrow. */
-  font-size: 25px;
-  height: 0;
-  line-height: 0;
-  position: relative;
-  top:23px;
-  vertical-align: middle;
-  width: 0;
+// .state_unit{
+//   color: #555555;
+// }
+
+.user_on_project{
+
+width: 110px;
+float:left;
 }
-.arrow-e {
-  border-left-width: 1em;
-  border-left-style: solid;
-  border-left-color: #aaa;
-  left: 45px;
+.user_on_project div{
+  font-size: 80%;
+  width:64px;
+
+
 }
-.arrow-w {
-  border-right-width: 1em;
-  border-right-style: solid;
-  border-right-color: #aaa;
-  left: 35px;
+.state_headers{
+  float: left;
+  padding: 10px 0 5px 0;
+  color: green;
+  margin:0px;
+  width: 100%;
 }
+
 .list_header{
   float:left;
   padding: 20px 10px 16px 10px;
@@ -631,9 +518,8 @@ top:40px;
 }
 
 .start_tracking_form, .stop_tracking_form{
-margin:auto;
-
-width: 674px;
+  margin:auto;  
+  width: 674px;
 }
 .tracking_container{
   margin: 0 0 30px 0;
@@ -641,38 +527,36 @@ width: 674px;
 }
 
 .tracking_log_event {
-
-height: 50px;
-padding: 0px 5px 0px 5px;
-background: white;
-border: 0em;
-color: black;
-font-size: 25px;
-float:left;
-width:500px;
-margin-right: 7px;
-
+  height: 50px;
+  padding: 0px 5px 0px 5px;
+  background: white;
+  border: 0em;
+  color: black;
+  font-size: 25px;
+  float:left;
+  width:500px;
+  margin-right: 7px;
 }
 
 .searchableS_tracking{
   width:200px;
 }
 .clock_start, .clock_rec{
-height: 35px;
-background: white;
-font-family:arial;
-color: #bbb;
-width:90px;
-letter-spacing: -1px;
-font-size: 24px;
-padding: 13px 5px 2px 5px;
-float:left;
-margin-right:7px;
+  height: 35px;
+  background: white;
+  font-family:arial;
+  color: #bbb;
+  width:90px;
+  letter-spacing: -1px;
+  font-size: 24px;
+  padding: 13px 5px 2px 5px;
+  float:left;
+  margin-right:7px;
 }
 
 .log_form #new_log, .log_form_rec #new_log{
-margin: 10px auto 0 auto;
-width:700px;
+  margin: 10px auto 0 auto;
+  width:700px;
 }
 
 
@@ -785,13 +669,14 @@ background-color:#D42626;
    margin: 0 0 0 22px;
 }
 .tracking_checkbox{
-margin:3px 0 0 3px; width: 22px;
-height: 20px;
-padding: 0;}
+  margin:3px 0 0 3px; width: 22px;
+  height: 20px;
+  padding: 0;
+}
 #tracking_project_task{
-float:left;
+  float:left;
   width:300px;
-margin: 0 0 0 0;
+  margin: 0 0 0 0;
 }
 
 #id_search_list{
@@ -854,7 +739,7 @@ padding:0px 0 0 0;
   padding: 10px 0 0 10px;
 }
 .edit_text{
-  color: white;
+  color: #999999;
   font-size: 70%; 
 }
 .edit_text:hover{
@@ -867,6 +752,10 @@ background: #ccc;
 width: 605px;
 padding-top: 10px;
 
+}
+#project_description{
+  padding-top: 10px;
+  color: #333333;
 }
 .what_project, .what_todo{
 font-size:12px;
@@ -959,7 +848,6 @@ float:left;
 }
 .employee_edit_link{
   cursor: pointer;
-  title: "Edit";
   display: inline-block;   
   }
 
@@ -1036,10 +924,6 @@ line-height:18px;
 font-weight: bold;
 
 }
-.tod_emp_on_log{
-
-}
-
 
 .total_log_time{
   font-size: 20px;
@@ -1105,11 +989,16 @@ font-weight: bold;
 
 .delete_edit{
   width:80px;
-line-height:20px;
+  line-height:20px;
   font-size: 12px;
- 
-  
 }
+.delete_edit_employees{
+  width:80px;
+  line-height:20px;
+  font-size: 12px;
+  float:right;
+}
+
 .delete_edit_archive{
   width:70px;
   font-size: 10px;
@@ -1159,20 +1048,9 @@ padding:10px;
 #not_members{
   margin-left:10px;
 }
-.user_info {
-  float:left;
-  width:212px;
-  height: 64px;
-  margin:5px;
-  padding:5px;
-  
-  font-size:12px;
-  overflow:hidden;
+.show_user_image{
+ padding-top: 20px;
 }
-.user_info img{
-  float:left;
-  clear: left;
-  }
 
 #footer {
   

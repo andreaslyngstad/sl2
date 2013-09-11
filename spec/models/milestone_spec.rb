@@ -9,7 +9,7 @@ describe Milestone do
   let(:milestone1){FactoryGirl.create(:milestone, :due => Time.now - 1.day, :firm => firm,:project => project)}
   let(:milestone2){FactoryGirl.create(:milestone, :due => Time.now + 1.day, :firm => firm,:project => project)}
   let(:milestone3){FactoryGirl.create(:milestone, :due => Time.now + 15.days, :firm => firm,:project => project)}
-
+  let(:milestone4){FactoryGirl.create(:milestone, :due => Time.now - 15.days, :firm => firm,:project => project)}
   it 'should be saved on correct firm' do
     firm2 = FactoryGirl.create(:firm)
     test = FactoryGirl.build(:milestone,:project => project, :firm => firm2)
@@ -24,6 +24,15 @@ describe Milestone do
   it "Get milestones for user two weeks a head" do
   	project.users << user
   	Milestone.user_milestones_two_weeks(firm,user).should =~ [milestone1,milestone2]
-  	Milestone.user_milestones_two_weeks(firm,user).should_not include milestone3
+    Milestone.user_milestones_two_weeks(firm,user).should_not include milestone3
+  	Milestone.user_milestones_two_weeks(firm,user).should_not include milestone4
+  end
+  it "gets the next milestone" do 
+    milestone1
+    milestone2
+    milestone3
+    Milestone.next.should == milestone2
+    Milestone.next.should_not == milestone3
+    Milestone.next.should_not == milestone1
   end
 end

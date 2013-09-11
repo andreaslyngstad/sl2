@@ -1,6 +1,6 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
-  
+
   resources :blogs
   get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
   get "/pricing" => "public#pricing",  :as => :pricing

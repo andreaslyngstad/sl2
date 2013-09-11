@@ -2,12 +2,12 @@
    <div class="tab_list_text">
     <%= link_to truncate(user.name, :length => 80), user_path(user) %>
     </div>
-    <%= link_to(user_path(user),
-		:confirm => "Are you sure?", 
-		:title => "Delete user", :method => :delete, :remote => true) do%>
+    <% if can? :manage, user %>
+    <%= link_to(user_path(user), data: { confirm: 'Are you sure?' } ,
+		:title => "Delete user", :method => :delete, :remote => true, :class => 'delete_user') do%>
   <span class='button'>Delete</span>
     <% end %>
-<% if can? :manage, @klass %>
+
  <span class='open_user_update button edit' id="user_update" data-id="<%= user.id %>" data-object="user" title="Edit user">Edit</span>
     <div class="dialog_form" id="user_update_<%= user.id %>_form" title="Update user" style="display:none;">
     </div>

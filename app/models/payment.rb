@@ -1,5 +1,5 @@
 class Payment < ActiveRecord::Base
-  attr_accessible :card_type, :firm_id, :amount, :plan_name, :last_four
+  # attr_accessible :card_type, :firm_id, :amount, :plan_name, :last_four
   belongs_to :firm
   validates_presence_of :card_type, :firm_id, :amount, :plan_name, :last_four
   scope :order_by_date, -> {order("created_at ASC")}

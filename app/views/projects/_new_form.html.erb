@@ -2,7 +2,6 @@
   <ul>
       <li><%= p.label :name %><%= p.text_field :name, :class => "required"%></li>
       <li><%= p.label :description %><%= p.text_area :description %></li>
-      <li><%= p.label :due %><%= p.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_project_date" %></li>
       <li><%= p.label :customer_id %><%= p.select(:customer_id, all_customers.map {|customer| [customer.name, customer.id]}, :prompt => "Select customer", :class => "searchable")%></li>
       <li><%= p.label :budget %><div id="project_budget_wrapper"><%= p.text_field(:budget)%>  <%= current_firm.currency %></div></li>
       <li><%= p.submit 'Save', :class => 'submit' %></li>

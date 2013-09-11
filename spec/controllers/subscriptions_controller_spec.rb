@@ -39,20 +39,20 @@ describe SubscriptionsController do
       Subscription.stub(:new).and_return(subscription)
     end
 
-    it "creates a new message" do
+    it "creates a new Subscription" do
       Subscription.should_receive(:new).
-        with("text" => "a quick brown fox").
+        with("card_expiration" => "a quick brown fox").
         and_return(subscription)
-      post :create, :subscription => { "text" => "a quick brown fox" }
+      post :create, :subscription => { "card_expiration" => "a quick brown fox" }
     end
 
-    it "saves the message" do
+    it "saves the Subscription" do
       subscription.should_receive(:save_with_payment)
-      post :create
+      post :create, :subscription => { "card_expiration" => "a quick brown fox" }
     end
 
-    it "redirects to the Messages index" do
-       post :create
+    it "redirects to the Subscription index" do
+       post :create, :subscription => { "card_expiration" => "a quick brown fox" }
       response.should redirect_to(:controller => "plans", :action => "index")
     end
   end 
@@ -80,5 +80,3 @@ describe SubscriptionsController do
 
   end
 end
-
-

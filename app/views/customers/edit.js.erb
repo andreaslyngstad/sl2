@@ -1,3 +1,2 @@
 $("#customer_update_<%= j (@customer.id.to_s) %>_form").empty().append("<%= j( render "form")  %>")
-console.log("#customer_update_<%= j (@customer.id.to_s) %>_form")
 $("#customer_update_<%= j (@customer.id.to_s) %>_form").find(".edit_customer").validateWithErrors();

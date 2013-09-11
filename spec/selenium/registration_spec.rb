@@ -13,10 +13,10 @@ describe "Registration" do
     @driver.manage.timeouts.implicit_wait = 30
     @verification_errors = []
   end
-  after(:each) do
-    @driver.quit
-    @verification_errors.should == []
-  end 
+  # after(:each) do
+  #   @driver.quit
+  #   @verification_errors.should == []
+  # end 
     
   it "test_registration" do 
    
@@ -50,11 +50,11 @@ describe "Registration" do
     # Warning: assertTextPresent may require manual changes
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*is invalid[\s\S]*$/
     # Warning: assertTextPresent may require manual changes
-    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*is too short \(minimum is 6 characters\)[\s\S]*$/
+    @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*is too short \(minimum is 8 characters\)[\s\S]*$/
     @driver.find_element(:id, "user_email_reg").clear
     @driver.find_element(:id, "user_email_reg").send_keys "user@fwis1.com"
     @driver.find_element(:id, "user_password_reg").clear
-    @driver.find_element(:id, "user_password_reg").send_keys "secret"
+    @driver.find_element(:id, "user_password_reg").send_keys "secret12"
     @driver.find_element(:id, "save").click
     # Warning: assertTextPresent may require manual changes
     @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Registration successful.[\s\S]*$/

@@ -4,14 +4,14 @@
 	<li>
 	  	<div class="row_milestone green">
 		  	<%= link_to truncate(milestone.goal, :omission => "...", :length => 18), project_path(milestone.project).to_s + "/#tabs-4"%>
-		  	<span class="milestone_due"><%=milestone.due%></span>
+		  	 <div class="date_format_setter" data-date="<%= milestone.due %>"><%= milestone.due %></div>
 	  	</div> 
 	  </li>
 	  <% else %>
 		<li>
 	  	<div class="row_milestone red">  	
 		  	<%= link_to truncate(milestone.goal, :omission => "...", :length => 18), project_path(milestone.project).to_s + "/#tabs-4"%>
-		  	<span class="milestone_due"><%=milestone.due%></span>
+		  <div class="date_format_setter" data-date="<%= milestone.due %>"><%= milestone.due %></div>
 	  	</div> 
 	  </li>
 	   <%end%>

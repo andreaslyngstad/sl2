@@ -12,8 +12,8 @@ describe PublicController do
   describe "registration save frim" do
     describe "success" do
       it "Saves firm and goes to first user registration" do
-        @firm = FactoryGirl.attributes_for(:firm, :name => "Firm", :subdomain => "test")
-        post :create_firm, :firm => @firm
+        @firm = FactoryGirl.attributes_for(:firm, :name => "Firm", :subdomain => "Test")
+        post :create_firm, :firm => @firm 
         @firm = Firm.last
         @firm.name.should  == "Firm" 
         @firm.subdomain.should == "test"
@@ -42,9 +42,7 @@ describe PublicController do
     end
   end
   describe "registration of first user in firm" do
-    before(:each) do
-      
-    end
+    
     it "Shows form for new firm" do
       @firm = FactoryGirl.create(:firm, :name => "Firm", :subdomain => "subdomain")
       get :first_user, :firm_id => @firm.id.to_s
@@ -53,40 +51,52 @@ describe PublicController do
   end
   describe "registration save first user" do
     before(:each) do
-      @firm = FactoryGirl.create(:firm, :name => "Firm", :subdomain => "subdomain")
+      @firm = FactoryGirl.create(:firm)
     end   
     describe "success" do
       it "Saves user and gets redirected to application" do
-        @user = FactoryGirl.attributes_for(:user, :name => "user", :email => "user@firm.com", :password => "secret")
-        post :create_first_user, :firm_id => @firm.id.to_s, :user => @user
-        @user = User.last
-        @user.name.should  == "user"
-        @user.email.should == "user@firm.com"
+        @user = FactoryGirl.attributes_for(:user)
+        post :create_first_user, :firm_id => @firm.id.to_s, :user => @user     
+        flash[:error].should be_nil 
+        user = @firm.users.first
+        user.name.should  == @user[:name]
+        user.email.should == @user[:email]
        
         #response.should redirect_to(after_sign_in_path_for(@user))
       end
     describe "failure" do
       it "Does not save user without name" do
-        @user = FactoryGirl.attributes_for(:user, :name => "", :email => "user@firm.com", :password => "secret")
+        @user = FactoryGirl.attributes_for(:user, name: '')
         post :create_first_user, :firm_id => @firm.id.to_s, :user => @user
-        flash[:error].should_not be_nil 
+        assigns[:user].errors[:name].should include "can't be blank"
+        flash[:error].should_not be_nil
         response.should render_template("first_user")
       end
       it "Does not save user without email" do
-        @user = FactoryGirl.attributes_for(:user, :name => "user", :email => "", :password => "secret")
+        @user = FactoryGirl.attributes_for(:user, :email => "")
         post :create_first_user, :firm_id => @firm.id.to_s, :user => @user
-        flash[:error].should_not be_nil 
+        assigns[:user].errors[:email].should include "can't be blank"
+        flash[:error].should_not be_nil
         response.should render_template("first_user")
       end
-      it "Does not save user with faulty email" do
-        @user = FactoryGirl.attributes_for(:user, :name => "user", :email => "blah", :password => "secret")
+      it "Does not save user with faulty email"  do
+        @user = FactoryGirl.attributes_for(:user, :email => "blah")
         post :create_first_user, :firm_id => @firm.id.to_s, :user => @user
+        assigns[:user].errors[:email].should include "is not formatted properly"
         flash[:error].should_not be_nil
         response.should render_template("first_user") 
       end
       it "Does not save user without password" do
-        @user = FactoryGirl.attributes_for(:user, :name => "user", :email => "blah", :password => "")
+        @user = FactoryGirl.attributes_for(:user, :password => "")
         post :create_first_user, :firm_id => @firm.id.to_s, :user => @user
+        assigns[:user].errors[:password].should include "can't be blank"
+        flash[:error].should_not be_nil
+        response.should render_template("first_user") 
+      end
+      it "Does not save user with short password" do
+        @user = FactoryGirl.attributes_for(:user, :password => "1234")
+        post :create_first_user, :firm_id => @firm.id.to_s, :user => @user
+        assigns[:user].errors[:password].should include "is too short (minimum is 8 characters)"
         flash[:error].should_not be_nil
         response.should render_template("first_user") 
       end

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   respond_to :html, :js, :json
   def index
     authorize! :read, User
-    @users = current_firm.users.order(:name)
+    @users = current_firm.users.order(:name).includes(:firm)
     respond_with(@users)
   end
 
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @klass = current_firm.users.new(params[:user])
+    @klass = current_firm.users.new(permitted_params.user)
     authorize! :manage, User
     @klass.firm = current_firm 
      respond_to do |format|
@@ -28,7 +28,6 @@ class UsersController < ApplicationController
         flash[:notice] = flash_helper("Registration successful.")
         format.js
       else
-        flash[:notice] = flash_helper("Something went wrong")
         format.js { render "shared/validate_create" }
     end
     end
@@ -42,12 +41,15 @@ class UsersController < ApplicationController
      @klass = current_firm.users.find(params[:id])
      authorize! :update, @klass
       respond_to do |format|
-    if @klass.update_attributes(params[:user])
+    if @klass.update_attributes(permitted_params.user)
       flash[:notice] = flash_helper("Successfully updated profile.")
       format.js
+      format.html { redirect_to user_path(@klass) }
     else
+      
+      format.html
       format.js { render "shared/validate_update" }
-      flash[:notice] = flash_helper("Something went wrong")
+      
     end
     end
   end

@@ -1,78 +1,80 @@
 <ul>
 <li><%= l.label :log %><%= l.text_field(:event, :class => "required log_new_event", :minlength => "2", :AUTOCOMPLETE => "OFF") %></li>
-<li><div class="date_on_log"><%= l.label :date %><%= l.text_field(:log_date, :value => date_format(Date.today), :class => "date", :id => "log_date_new") %></div></li>
+<li><div class="date_on_log">
+	<%= l.label :date %><%= l.text_field(:log_date, :value => date_format(Date.today), :class => "date", :id => "log_date_new") %>
+</div></li>
 <li style="margin-bottom: 0px;"><%= l.label :from %><%= l.label :to, :style => "margin-left: 30px;" %></li>
 <li><%= l.text_field(:begin_time, :value => clock_format(time_zone_now), :class => "log_times required clock", :id => "log_times_from_") %>
 	<%= l.text_field(:end_time, :value => clock_format(time_zone_now), :class => "log_times required clock", :id => "log_times_to_") %></li>
 <li class="slider_range" log=""></li>
 <% if @klass.class.to_s == "User"%>
-<%= l.hidden_field :user_id, :value => @klass.id %>
-<% end %>
-	<% if @klass.class.to_s == "Project"%>
-<li><%= l.label :project %>:  <%= truncate_string(@klass.name) %></li>
-	<%= l.hidden_field :project_id, :value => @klass.id %>
-<li><%= l.label :Task %><%= l.label :done?, :style => "margin-left: 255px;" %><%= check_box_tag "done"%>
-	<select class="searchableS" id="logTodoId" name="log[todo_id]">
-		<option value="">None</option>
-	  	<% @klass.todos.not_complete.each do |todo| %>
-	  	<option value="<%= todo.id %>"><%= truncate_string(todo.name) %></option>
-	  	<% end %>
-	</select>
-</li>
+	<%= l.hidden_field :user_id, :value => @klass.id %>
+	<% end %>
+<% if @klass.class.to_s == "Project"%>
+	<li><%= l.label :project %>:  <%= truncate_string(@klass.name) %></li>
+		<%= l.hidden_field :project_id, :value => @klass.id %>
+	<li><%= l.label :Task %><%= l.label :done?, :style => "margin-left: 255px;" %><%= check_box_tag "done"%>
+		<select class="searchableS" id="logTodoId" name="log[todo_id]">
+			<option value="">None</option>
+		  	<% @klass.todos.not_complete.each do |todo| %>
+		  	<option value="<%= todo.id %>"><%= truncate_string(todo.name) %></option>
+		  	<% end %>
+		</select>
+	</li>
 <% else %>
-<li><%= l.label :project %>
-	<select class="searchableS" id="logProjectId" log="" name="log[project_id]">
-	   <option value="">None</option>
-	   <% all_projects.each do |project| %>
-	  <option value="<%= project.id %>"><%= truncate_string(project.name) %></option>
-	  <% end %>
-	</select>
-</li>
-  
-<li><%= l.label :Task %><%= l.label :done?, :style => "margin-left: 255px;" %><%= check_box_tag "done"%>
-	<select class="searchableS" id="logTodoId" name="log[todo_id]">
-	  <option value="" id="value">Select a project</option>
-	</select>
-</li>
+	<li><%= l.label :project %>
+		<select class="searchableS" id="logProjectId" log="" name="log[project_id]">
+		   <option value="">None</option>
+		   <% all_projects.each do |project| %>
+		  <option value="<%= project.id %>"><%= truncate_string(project.name) %></option>
+		  <% end %>
+		</select>
+	</li>
+	  
+	<li><%= l.label :Task %><%= l.label :done?, :style => "margin-left: 255px;" %><%= check_box_tag "done"%>
+		<select class="searchableS" id="logTodoId" name="log[todo_id]">
+		  <option value="" id="value">Select a project</option>
+		</select>
+	</li>
   <% end %>
-  <% if can? :read, Firm %>
-  <% if @klass.class.to_s == "Project" && @klass.customer%>
-<li><%= l.label :customer %>:  <%= truncate_string(@klass.customer.name) %></li>
-  	<%= l.hidden_field :customer_id, :value => @klass.customer.id %>
-<li><%= l.label :employee %>
-	<select class="searchableS" id="logEmployeeId" name="log[employee_id]">
-		<option value="">None</option>
-		<% @klass.customer.employees.each do |todo| %>
-		  <option value="<%= todo.id %>"><%= truncate_string(todo.name) %></option>
-		  <% end %>
-	</select>
-</li>
-<% else %>
+<% if can? :read, Firm %>
+  	<% if @klass.class.to_s == "Project" && @klass.customer%>
+		<li><%= l.label :customer %>:  <%= truncate_string(@klass.customer.name) %></li>
+		  	<%= l.hidden_field :customer_id, :value => @klass.customer.id %>
+		<li><%= l.label :employee %>
+			<select class="searchableS" id="logEmployeeId" name="log[employee_id]">
+				<option value="">None</option>
+				<% @klass.customer.employees.each do |todo| %>
+				  <option value="<%= todo.id %>"><%= truncate_string(todo.name) %></option>
+				  <% end %>
+			</select>
+		</li>
+	<% else %>
    <% if @klass.class.to_s == "Customer"%>
-<li><%= l.label :customer %>: <%= truncate_string(@klass.name) %></li>
-	<%= l.hidden_field :customer_id, :value => @klass.id %>
-<li><%= l.label :employee %>
-	<select class="searchableS" id="logEmployeeId" name="log[employee_id]">
-		<option value="">None</option>
-		<% @klass.employees.each do |todo| %>
-		  <option value="<%= todo.id %>"><%= truncate_string(todo.name) %></option>
-		  <% end %>
-	</select>
-</li>
+	<li><%= l.label :customer %>: <%= truncate_string(@klass.name) %></li>
+		<%= l.hidden_field :customer_id, :value => @klass.id %>
+	<li><%= l.label :employee %>
+		<select class="searchableS" id="logEmployeeId" name="log[employee_id]">
+			<option value="">None</option>
+			<% @klass.employees.each do |todo| %>
+			  <option value="<%= todo.id %>"><%= truncate_string(todo.name) %></option>
+			  <% end %>
+		</select>
+	</li>
    <% else %>
-<li><%= l.label :customer %>
-	<select class="searchableS" id="logCustomerId" log="" name="log[customer_id]">
-	  <option value="">None</option>
-	  <% all_customers.each do |customer| %>
-	  <option value="<%= customer.id %>"><%= truncate_string(customer.name).html_safe %></option>
-	  <% end %>
-	</select>
-</li>
-<li><%= l.label :employee %>
-	<select class="searchableS" id="logEmployeeId" name="log[employee_id]">
-	<option value="">Select a customer</option>
-	</select>
-</li>
+	<li><%= l.label :customer %>
+		<select class="searchableS" id="logCustomerId" log="" name="log[customer_id]">
+		  <option value="">None</option>
+		  <% all_customers.each do |customer| %>
+		  <option value="<%= customer.id %>"><%= truncate_string(customer.name).html_safe %></option>
+		  <% end %>
+		</select>
+	</li>
+	<li><%= l.label :employee %>
+		<select class="searchableS" id="logEmployeeId" name="log[employee_id]">
+		<option value="">Select a customer</option>
+		</select>
+	</li>
 <% end %>
 <% end %>
 <% end %>

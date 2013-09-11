@@ -11,7 +11,7 @@ $(function() {
 				old_url.match(/logs/i);
 				
 	var text2 = old_url.match(/reports/i) || 
-				old_url.match(/report_for/i) ||
+				old_url.match(/squadlink_report/i) ||
 				old_url.match(/timesheet_week/i) || 
 				old_url.match(/firm_show/i) || 
 				old_url.match(/home_user/i) ||  
@@ -35,7 +35,8 @@ $(function() {
 		if(tab_text == "Firm_edit" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Firm_update" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Reports" ){$("#html_tabs a:contains(Reports)").addClass("current_link");}
-		if(tab_text == "Report_for" ){$("#html_tabs a:contains(Reports)").addClass("current_link");}
+		if(tab_text == "Squadlink_report" ){$("#html_tabs a:contains(Reports)").addClass("current_link");}
+
 		if(tab_text == "Timesheet_day" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
 		if(tab_text == "Timesheet_month" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Month)").addClass("current_link");}
 		if(tab_text == "Timesheet_week" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Week)").addClass("current_link");}

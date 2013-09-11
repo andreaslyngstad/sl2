@@ -8,7 +8,7 @@
  </div>
 <div class="signup signup_firm">
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <div class="signup-form-field"><%= f.label :email %><%= f.email_field :email %></div>
+  <div class="signup-form-field"><%= f.label :email %><%= f.email_field :email, :autofocus => true %></div>
   <div class="signup-form-field"><%= f.submit "Send instructions", :class => "submit" %></div>
 <% end %>
  </div>

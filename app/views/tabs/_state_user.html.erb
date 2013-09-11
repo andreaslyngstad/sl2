@@ -1,29 +1,42 @@
-<div id="description" class="user_description">
-	  		<div class="show_user_text">
-				 <%=h @klass.name %><br/>
-				Phone:
-				 <%=h @klass.phone %><br/>
-				Email:
-				<%=h @klass.email %><br/>
-			</div>
-			<div class="show_user_image">
-			<div class="avatar_show_page">	     	
-				<%= image(@klass, "image100") %>
-				<p><%= link_to "Change image", "", :class => "show_avatar_upload" %></p>  
-	  		</div>
-			<div class="avatar_upload" style="display:none">
-				<%= form_for(@klass, :html => { :multipart => true }) do |f| %>
-					<p id="firm_logo"><%= f.file_field :avatar%></p>  
-					<%= f.submit "Upload", :class => "submit"%>  <%= link_to "Cancel", "", :class => "hide_avatar_upload" %>
-				<% end %>
-			</div>
-			</div>
+<div class="state_wrapper">
+	<% if @klass.logs.sum(:hours) > 0 %>
+	<div class="hours_done_wrapper">
+		<div class="state_headers">Total hours</div>
+		<div class="state_unit total_log_time" data-hours="<%= @klass.logs.sum(:hours) %>"></div>
+	</div> 
+	<% end %>
+  <% if @klass.todos.count >= 1 %>
+  	<div class="hours_done_wrapper">
+		<div class="state_headers">Tasks done</div>
+		<div class="state_unit tasks_percent" data-complete="<%= @klass.todos.where(["completed = ?", true]).count %>" data-notcomplete="<%= @klass.todos.where(["completed = ?", false]).count %>"></div>
 		</div>
-<div class="show_statistics_wrapper">
-<div class="show_statistics_header statistics_header_hours">Total hours</div>
-<div class="show_statistics_header statistics_header_done">Tasks done</div>
-<div class="statistics_unit one_number white total_log_time statistics_unit_hours" data-hours="<%= @klass.logs.sum(:hours) %>"></div>
-<div id="todos_chart">
-<div class="statistics_unit one_number tasks_percent white" data-complete="<%= @klass.todos.where(["completed = ?", true]).count %>" data-notcomplete="<%= @klass.todos.where(["completed = ?", false]).count %>"></div>
-</div>  
+	<% end %>
+		<%= render "state_logs" %>
+</div>
+
+<div id="description">	
+	<% if !@klass.phone.blank? %>
+	<div class="state_headers">Phone</div>
+	<div class="state_unit"><%= @klass.phone %></div>
+	<% end %>
+	<% if !@klass.email.blank? %>
+	<div class="state_headers">Email</div>
+	<div class="state_unit"><%= mail_to "#{ @klass.email}" %></div>
+<% end %>
+	<div class="show_user_image">
+	<div class="avatar_show_page">
+		<%= image(@klass, "image100") %>
+		<% if can?  :manage, @klass %>	
+		<%= link_to "Change image", "#", :class => "show_avatar_upload" %> 
+		</div>
+		<div class="avatar_upload" style="display:none">
+			<%= form_for(@klass, :html => { :multipart => true}) do |f| %>
+				<p id="firm_logo"><%= f.file_field :avatar%></p>  
+				<%= f.submit "Upload", :class => "submit"%>  <%= link_to "Cancel", "", :class => "hide_avatar_upload" %>
+			<% end %>
+		<% else %>
+		</div>
+		<% end %>
+	</div>
+	</div>
 </div>

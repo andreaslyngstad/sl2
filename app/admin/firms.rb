@@ -1,13 +1,17 @@
 ActiveAdmin.register Firm do
-  
+   controller do
+     def scoped_collection
+       Firm.includes(:subscription, {:subscription => :plan})
+     end
+   end
   menu :priority => 2
   
   scope :all, :default => true
-  scope :free
-  scope :bronze
-  scope :silver
-  scope :gold
-  scope :platinum
+  # scope :free
+  # scope :bronze
+  # scope :silver
+  # scope :gold
+  # scope :platinum
 
   config.batch_actions = true
   index do
@@ -37,6 +41,7 @@ ActiveAdmin.register Firm do
   end
   filter :name 
   filter :subdomain
+  filter :plan
   filter :created_at
   
   

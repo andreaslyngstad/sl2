@@ -2,9 +2,9 @@ class ProjectsController < ApplicationController
    
   def index
     if current_user.role == "External user"
-      @projects = current_user.projects
+      @projects = current_user.projects.includes(:firm)
     else
-      @projects = current_firm.projects.where(:active => true).order_by_name
+      @projects = current_firm.projects.where(:active => true).includes(:firm).order_by_name
     end
 
   end
@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
   
 
   def show
-    @klass = current_firm.projects.find(params[:id])
+    @klass = current_firm.projects.find(params[:id]) 
     @hours = @klass.logs.sum(:hours)
     @done_todos = @klass.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
     @not_done_todos = @klass.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC") 
@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @klass = current_firm.projects.new(params[:project])
+    @klass = current_firm.projects.new(permitted_params.project)
     @klass.active = true
     @klass.users << current_user
     respond_to do |format|
@@ -36,7 +36,6 @@ class ProjectsController < ApplicationController
         flash[:notice] = flash_helper("Project is added.")
         format.js
       else
-        flash[:notice] = flash_helper("Something went wrong")
         format.js { render "shared/validate_create" }
       end
     end
@@ -47,12 +46,12 @@ class ProjectsController < ApplicationController
     @klass = Project.find(params[:id])
     @klass.firm = current_firm
     respond_to do |format|
-      if @klass.update_attributes(params[:project])
+      if @klass.update_attributes(permitted_params.project)
         flash[:notice] = flash_helper("Project was successfully saved.")
         format.js
       else
         format.js { render "shared/validate_update" }
-        flash[:notice] = flash_helper("Something went wrong")
+       
       end
     end
     
@@ -87,4 +86,5 @@ class ProjectsController < ApplicationController
       end
       end
   end
+ 
 end

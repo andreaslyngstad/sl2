@@ -9,7 +9,8 @@
 	<div class="dialog_form" id="milestone_update_<%= milestone.id %>_form" title="Update milestone" style="display:none;">
 		<%= form_for milestone, :remote => true do |f| %>
 		<li><%= f.label :goal %><%= f.text_area :goal, :class => "required", :minlength => "2"  %></li>
-		<li><%= f.label :due %><%= f.text_field :due, :value =>  date_format(milestone.due), :class => "date", :id => "date_milestone_#{milestone.id}" %></li>
+		<li><%= f.label :due %><%= f.text_field :due, :value =>  date_format(milestone.due), :class => "date", :id => "date_milestone_#{milestone.id}" %>
+		</li>
 		<li><%= f.submit "Save", :class => 'submit' %></li>
 		<% end %>
 	</div>

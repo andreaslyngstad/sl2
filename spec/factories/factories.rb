@@ -14,13 +14,32 @@ FactoryGirl.define do
    date_format 1
    clock_format 1
   end
+  factory :firm_no_plan, class: Firm do
+   name
+   subdomain
+   closed false
+   time_format 1 
+   date_format 1
+   clock_format 1
+  end
+  
   factory :firm_with_users, :parent => :firm do
     after_create do |firm|
       FactoryGirl.create(:user, :firm => firm)
     end
   end
+
   factory :user do
     name
+    password "password"
+    password_confirmation { |u| u.password }
+    email
+    role "Admin"
+    firm
+  end 
+
+  factory :usernn, class: User do
+    
     password "password"
     password_confirmation { |u| u.password }
     email
@@ -46,12 +65,14 @@ FactoryGirl.define do
     event "customer man"
     begin_time "2012-10-24 16:08:07 +0200"
     end_time "2012-10-24 16:09:07 +0200"
+    log_date '2012-10-24'
     firm
     user
   end  
 
   factory :milestone do
     goal "This is the goal"
+    due Date.today
     firm
   end  
 

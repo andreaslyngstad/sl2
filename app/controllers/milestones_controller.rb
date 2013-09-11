@@ -1,6 +1,6 @@
 class MilestonesController < ApplicationController
   def create
-    @milestone = Milestone.new(params[:milestone])
+    @milestone = Milestone.new(permitted_params.milestone)
     @milestone.firm = current_firm
     respond_to do |format|
       if @milestone.save
@@ -15,7 +15,7 @@ class MilestonesController < ApplicationController
   def update
     @milestone = Milestone.find(params[:id])
     @milestone.firm = current_firm
-    if @milestone.update_attributes(params[:milestone])
+    if @milestone.update_attributes(permitted_params.milestone)
       flash[:notice] = flash_helper('Milestone was successfully updated.')
       respond_to do |format|
         format.js

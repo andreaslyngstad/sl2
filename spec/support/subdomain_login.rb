@@ -19,9 +19,9 @@ module SubdomainLogin
       @driver.find_element(:css, "BODY").text.should =~ /^[\s\S]*Signed in[\s\S]*$/
     end
   
-    # after(:each) do
-    #   @driver.quit
-    #   @verification_errors.should == []
-    # end
+     after(:each) do
+       @driver.quit
+       @verification_errors.should == []
+     end
   end
 end

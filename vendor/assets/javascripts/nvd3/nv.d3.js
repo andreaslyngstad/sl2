@@ -3,7 +3,7 @@
 var nv = window.nv || {};
 
 nv.version = '0.0.1a';
-nv.dev = true //set false when in production
+nv.dev = false //set false when in production
 
 window.nv = nv;
 
@@ -33,12 +33,13 @@ if (nv.dev) {
 
 // ********************************************
 //  Public Core NV functions
+irb
 
 // Logs all arguments, and returns the last so you can test things in place
-nv.log = function() {
-  if (nv.dev && console.log && console.log.apply) console.log.apply(console, arguments);
-  return arguments[arguments.length - 1];
-};
+// nv.log = function() {
+//   if (nv.dev && console.log && console.log.apply) console.log.apply(console, arguments);
+//   return arguments[arguments.length - 1];
+// };
 
 
 nv.render = function render(step) {

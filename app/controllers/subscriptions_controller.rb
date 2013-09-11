@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    @subscription = Subscription.new(params[:subscription])
+    @subscription = Subscription.new(permitted_params.subscription)
     @plan = @subscription.plan
     @subscription.firm_id = current_firm.id
     if @subscription.save_with_payment
