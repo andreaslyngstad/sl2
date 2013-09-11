@@ -1,6 +1,8 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
 
+server "50.57.155.135:2805", :web, :app, :db, primary: true
+
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
@@ -8,7 +10,6 @@ set :rvm_ruby_string, 'ruby-1.9.2-p290'
 set :rvm_type, :user  # Don't use system-wide RVM
 load 'deploy/assets'
 
-server "50.57.155.135:2805", :web, :app, :db, primary: true
 
 set :application, "squadlink.com"
 
