@@ -33,9 +33,9 @@ describe Firm do
   
   it "should update counters" do 
     customer_list
-    user_list
+    user_list  
     project_list
-    f.update_firm_counters
+    f.update_firm_counters 
     f.customers_count.should == 20
     f.projects_count.should == 20
     f.users_count.should == 20
@@ -59,7 +59,10 @@ describe Firm do
     f.payment_check?.should == true
     f2.payment_check?.should == false
   end  
-  
+  it 'did_sign_in' do
+    f.did_sign_in
+    f.last_sign_in_at.should == Date.today
+  end
   it "closes down" do
     f.close!
     f.closed.should == true

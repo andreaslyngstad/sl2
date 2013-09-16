@@ -19,12 +19,12 @@ describe User do
     user1 = FactoryGirl.create(:user, email: 'a@b.com', firm: firm)
     user2 = FactoryGirl.build(:user, email: 'a@b.com', firm: firm).should_not be_valid
   end
-  # it "Can have a valid recovery" do
-  #   user = User.new(:name => "test", :password => "secret", :email => "test@test.com", :loginable_token => "secret")
-  #   user.firm = firm
-  #   user.save
-  #   User.valid_recover?(user.loginable_token).should == user
-  # end
+  it "Can have a valid recovery" do
+    user = FactoryGirl.create(:user, :loginable_token => "secret")
+    user.firm = firm
+    user.save
+    User.valid_recover?(user.loginable_token).should == user
+  end
   # it "Can be valid" do
   #   user = User.new(:name => "test", :password => "secret", :email => "test@test.com", :loginable_token => "secret")
   #   user.firm = firm

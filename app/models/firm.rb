@@ -54,6 +54,11 @@ class Firm < ActiveRecord::Base
     save
   end
   
+  def did_sign_in
+    self.last_sign_in_at = Date.today
+    save
+  end
+
   def remove_associations_when_downgrading(plan_id)
     plan = Plan.find(plan_id)
     subscription.plan = plan

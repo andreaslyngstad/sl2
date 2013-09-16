@@ -9,8 +9,11 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(permitted_params.subscription)
     @plan = @subscription.plan
     @subscription.firm_id = current_firm.id
+
     if @subscription.save_with_payment
       redirect_to plans_path, :notice => "Thank you for subscribing!"
+      # user = @subscription.firm.users.where(role: "Admin").first 
+      # QC.enqueue "FirmMailer.new_plan", user.id
     else
       render :new
     end

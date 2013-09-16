@@ -6,21 +6,28 @@ class FirmMailer < ActionMailer::Base
   #
   #   en.firm_mailer.sign_up_confirmation.subject
   #
-  def sign_up_confirmation(user)
-    @user = user
+  
+
+  def sign_up_confirmation(id)
+    @user = User.find(id)
     @firm = @user.firm
-    mail to: user.email, subject: 'Squadlink sign up confirmation.'
+    sign_up_confirmation_mail = mail to: @user.email, subject: 'Squadlink sign up confirmation.'
+    sign_up_confirmation_mail.deliver
   end
-  def new_plan(user)
-    @user = user
+  def new_plan(id)
+    @user = User.find(id)
     @firm = @user.firm
-    mail to: user.email, subject: 'Squadlink sign up confirmation.'
+    new_plan = mail to: @user.email, subject: 'Squadlink new plan confirmation.'
+    new_plan.deliver
   end
-  def payment_received(user)
-    @user = user
-    @firm = @user.firm
-    mail to: user.email, subject: 'Squadlink sign up confirmation.'
-  end
+  
+  # def payment_received(id)
+  #   @user = User.find(id)
+  #   @firm = @user.firm
+  #   @subscription = @firm.subscription 
+  #   mail to: @user.email, subject: 'Squadlink payment received confirmation.'
+  # end
+
   def overdue(subscription)
     @subscription = subscription
     @firm = subscription.firm

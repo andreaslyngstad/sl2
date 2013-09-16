@@ -51,7 +51,6 @@ FactoryGirl.define do
     name
     active true
     firm
-    due Date.today
   end  
   
   factory :payment do

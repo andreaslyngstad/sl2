@@ -1,5 +1,5 @@
 class DateTester
-  def date?(t)
+   def date?(t)
     begin
       t.to_date.is_a?(Date)
     rescue

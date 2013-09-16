@@ -19,6 +19,7 @@ gem 'seedbank', github: 'james2m/seedbank'
 gem 'whenever', :require => false
 gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
 gem 'pg'
+gem 'queue_classic'
 
 # gem 'protected_attributes'
 gem 'rails-observers'

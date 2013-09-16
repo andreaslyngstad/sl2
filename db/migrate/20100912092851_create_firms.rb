@@ -8,6 +8,7 @@ class CreateFirms < ActiveRecord::Migration
            t.text :currency
            t.text :language
            t.text :time_zone
+           t.datetime :last_sign_in_at
            t.boolean :closed
            t.integer :time_format
            t.integer :date_format

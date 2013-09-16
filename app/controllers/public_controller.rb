@@ -39,7 +39,7 @@ class PublicController < ApplicationController
 
         if @user.save
           flash[:notice] = "Registration successful."
-          FirmMailer.sign_up_confirmation(@user).deliver
+          QC.enqueue "FirmMailer.sign_up_confirmation", @user.id
           sign_in(@user)
           sign_out_and_redirect_with_token(@user)
         else

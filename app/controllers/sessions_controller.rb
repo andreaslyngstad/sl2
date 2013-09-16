@@ -24,6 +24,7 @@ class SessionsController < Devise::SessionsController
       cookies.delete(:token, :domain => :all)
     if token_user
        sign_in(token_user)
+       token_user.firm.did_sign_in
        flash[:notice] = "Signed in successfully"
       redirect_to root_url(:subdomain => token_user.firm.subdomain )
     else
