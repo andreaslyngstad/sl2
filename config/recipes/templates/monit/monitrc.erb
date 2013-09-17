@@ -1,0 +1,27 @@
+set daemon 30
+
+set logfile /var/log/monit.log
+set idfile /var/lib/monit/id
+set statefile /var/lib/monit/state
+
+set eventqueue
+    basedir /var/lib/monit/events
+    slots 100
+
+set mailserver <%= secret_config[:production][:email][:address] %> port <%= secret_config[:production][:email][:port] %>
+    username <%= secret_config[:production][:email][:user_name].to_s %> password <%= secret_config[:production][:email][:password].to_s %>
+    using tlsv1
+    with timeout 30 seconds
+
+set alert <%= secret_config[:production][:alert_email] %>
+
+set httpd port <%= secret_config[:production][:monit_port] %>
+    allow <%= secret_config[:production][:monit_user].to_s %>:<%= secret_config[:production][:monit_password].to_s %>
+    
+monit_port
+check system blog_server
+  if loadavg(5min) > 2 for 2 cycles then alert
+  if memory > 75% for 2 cycles then alert
+  if cpu(user) > 75% for 2 cycles then alert
+
+include /etc/monit/conf.d/*

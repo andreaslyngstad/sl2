@@ -7,8 +7,14 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+
+SECRETS_CONFIG = YAML.load(File.read(File.expand_path('../secrets.yml', __FILE__)))
+SECRETS_CONFIG.merge! SECRETS_CONFIG.fetch(Rails.env, {})
+
 module Squadlink
+    # 
   class Application < Rails::Application
+
     config.colorize_logging = true
     # Enable the asset pipeline
     config.assets.enabled = true

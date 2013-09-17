@@ -63,7 +63,7 @@ group :test do
   gem 'rb-inotify', '~> 0.9'
 end
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 gem 'capistrano'
 

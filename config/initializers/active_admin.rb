@@ -1,4 +1,5 @@
 ActiveAdmin.setup do |config|
+
   config.skip_before_filter :authenticate_user!
   # == Site Title
   #
@@ -27,8 +28,9 @@ ActiveAdmin.setup do |config|
   # will be added to.
   #
   # eg:
-  #   config.default_namespace = :hello_world
-  #
+  if Rails.env != 'test'
+     config.default_namespace = SECRETS_CONFIG[:activeadmin_url]
+  end
   # This will create resources in the HelloWorld module and
   # will namespace routes to /hello_world/*
   #
@@ -152,6 +154,6 @@ ActiveAdmin.setup do |config|
   # Set the CSV builder options (default is {})
   # config.csv_options = {}
 end
-ActiveAdmin::BaseController.class_eval do
-  skip_before_filter :authenticate_user!
-end
+# ActiveAdmin::BaseController.class_eval do
+#   skip_before_filter :authenticate_user!
+# end

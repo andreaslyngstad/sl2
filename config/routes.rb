@@ -6,14 +6,6 @@ Squadlink::Application.routes.draw do
   get "/pricing" => "public#pricing",  :as => :pricing
   resources :guides
   post "hooks/receiver"
-
-  ActiveAdmin.routes(self)
-    get '/admin/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
-    get '/admin/dashboard/firms_chart_data' =>  'admin/dashboard#firms_chart_data', :as => :admin_dashboard_firms_chart_data
-    get '/admin/dashboard/firms_resources_chart_data' =>  'admin/dashboard#firms_resources_chart_data', :as => :admin_dashboard_firms_resources_chart_data
-    get '/admin/dashboard/new_firms_count_chart_data' =>  'admin/dashboard#new_firms_count_chart_data', :as => :admin_dashboard_new_firms_count_chart_data
-  devise_for :admin_users, ActiveAdmin::Devise.config
-
     resources :firms
     post "public/create_firm" => "public#create_firm", :as => :create_firm
     resources :public do
@@ -142,5 +134,11 @@ Squadlink::Application.routes.draw do
     end
     get "/", :to  => "plans#index"
 	end
+  ActiveAdmin.routes(self)
+  get '/admin/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
+  get '/admin/dashboard/firms_chart_data' =>  'admin/dashboard#firms_chart_data', :as => :admin_dashboard_firms_chart_data
+  get '/admin/dashboard/firms_resources_chart_data' =>  'admin/dashboard#firms_resources_chart_data', :as => :admin_dashboard_firms_resources_chart_data
+  get '/admin/dashboard/new_firms_count_chart_data' =>  'admin/dashboard#new_firms_count_chart_data', :as => :admin_dashboard_new_firms_count_chart_data
+  devise_for :admin_users, ActiveAdmin::Devise.config
   root :to => "public#index"
 end

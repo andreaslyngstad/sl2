@@ -17,6 +17,7 @@
 /spec/coverage
 /spec/controllers/coverage
 /config/database.yml
+/config/secrets.yml
 /config/email.yml
 .sass-cache/
 .idea/

@@ -1,5 +1,5 @@
 class FirmMailer < ActionMailer::Base
-  default from: "support@squadlink.com"
+  default from: "no_reply@squadlink.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
