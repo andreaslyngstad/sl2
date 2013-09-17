@@ -42,4 +42,9 @@ server {
     rewrite  ^(.*)$  /system/maintenance.html last;
     break;
   }
+  location ~* ^/assets {
+   expires max;
+   add_header Cache-Control public;
+   break;
+ }
 }

@@ -297,6 +297,8 @@ GEM
       rspec-mocks (~> 2.13.0)
     ruby-prof (0.13.0)
     rubyzip (0.9.9)
+    rvm-capistrano (1.5.0)
+      capistrano (>= 2.15.4)
     safe_yaml (0.9.3)
     sass (3.2.9)
     select2-rails (3.4.3)
@@ -400,6 +402,7 @@ DEPENDENCIES
   rb-inotify (~> 0.9)
   rspec-rails
   ruby-prof
+  rvm-capistrano
   sass-rails!
   seedbank!
   select2-rails

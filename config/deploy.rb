@@ -1,5 +1,5 @@
 require "bundler/capistrano"
-# require "rvm/capistrano"
+require "rvm/capistrano"
 require "whenever/capistrano"
 
 load "config/recipes/base"
@@ -10,6 +10,7 @@ load "config/recipes/nodejs"
 # load "config/recipes/rbenv"
 load "config/recipes/check"
 load "config/recipes/monit"
+load "config/recipes/copy_secrets"
 
 server "162.243.11.153", :web, :app, :db, primary: true
 

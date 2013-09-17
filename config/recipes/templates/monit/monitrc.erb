@@ -17,9 +17,8 @@ set mailserver smtp.gmail.com port 587
 set alert andreas@squadlink.com
 
 set httpd port 280987
-    allow andreas@squadlink.com:"d67?kp35UuE41RgC~y3E"
+    allow andreaslyngstad:"d67?kp35UuE41RgC~y3E"
 
-monit_port
 check system blog_server
   if loadavg(5min) > 2 for 2 cycles then alert
   if memory > 75% for 2 cycles then alert

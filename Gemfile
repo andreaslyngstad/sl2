@@ -66,7 +66,7 @@ end
 gem 'unicorn'
 
 gem 'capistrano'
-
+gem 'rvm-capistrano'
 # To use debugger
 # gem 'ruby-debug'
 
