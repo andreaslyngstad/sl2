@@ -12,7 +12,6 @@ SECRETS_CONFIG = YAML.load(File.read(File.expand_path('../secrets.yml', __FILE__
 SECRETS_CONFIG.merge! SECRETS_CONFIG.fetch(Rails.env, {})
 
 module Squadlink
-    # 
   class Application < Rails::Application
 
     config.colorize_logging = true

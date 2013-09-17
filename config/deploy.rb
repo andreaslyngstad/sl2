@@ -22,7 +22,6 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "git@github.com:andreaslyngstad/sl2.git"
 set :branch, "master"
-set :secret_config, YAML.load(File.read(File.expand_path('../secrets.yml', __FILE__)))
 set :maintenance_template_path, File.expand_path("../recipes/templates/maintenance.html.erb", __FILE__)
 
 default_run_options[:pty] = true

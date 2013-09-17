@@ -8,16 +8,17 @@ set eventqueue
     basedir /var/lib/monit/events
     slots 100
 
-set mailserver <%= secret_config[:production][:email][:address] %> port <%= secret_config[:production][:email][:port] %>
-    username <%= secret_config[:production][:email][:user_name].to_s %> password <%= secret_config[:production][:email][:password].to_s %>
+set mailserver smtp.gmail.com port 587
+    username no_reply@squadlink.com
+    password 2692Z4u2731T2Dq8ahvg
     using tlsv1
     with timeout 30 seconds
 
-set alert <%= secret_config[:production][:alert_email] %>
+set alert andreas@squadlink.com
 
-set httpd port <%= secret_config[:production][:monit_port] %>
-    allow <%= secret_config[:production][:monit_user].to_s %>:<%= secret_config[:production][:monit_password].to_s %>
-    
+set httpd port 280987
+    allow andreas@squadlink.com:"d67?kp35UuE41RgC~y3E"
+
 monit_port
 check system blog_server
   if loadavg(5min) > 2 for 2 cycles then alert
