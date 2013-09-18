@@ -7,12 +7,12 @@ load "config/recipes/nginx"
 load "config/recipes/unicorn"
 load "config/recipes/postgresql"
 load "config/recipes/nodejs"
-# load "config/recipes/rbenv"
+load "config/recipes/queue_classic"
 load "config/recipes/check"
 load "config/recipes/monit"
 load "config/recipes/copy_secrets"
 
-server "162.243.11.153", :web, :app, :db, primary: true
+server "162.243.11.153", :web, :app, :queue, :db, primary: true
 
 set :user, "deployer"
 set :application, "squadlink"
