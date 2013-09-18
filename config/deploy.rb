@@ -1,11 +1,11 @@
 require "bundler/capistrano"
-# require "rvm/capistrano"
+require "rvm/capistrano"
 require "whenever/capistrano"
 
 load "config/recipes/base"
 load "config/recipes/nginx"
 load "config/recipes/unicorn"
-load "config/recipes/rvm"
+# load "config/recipes/rvm"
 load "config/recipes/postgresql"
 load "config/recipes/nodejs"
 load "config/recipes/queue_classic"
