@@ -5,7 +5,7 @@ namespace :rvm do
   	run "#{sudo} apt-get update"
   	run "#{sudo} apt-get install curl"
     run "curl -L https://get.rvm.io | bash"
-    run "source ~/.rvm/scripts/rvm"
+    put ". ~/.rvm/scripts/rvm"
     run "rvm requirements"
     run "rvm install #{ruby_version}"
     run "rvm use ruby --default"
