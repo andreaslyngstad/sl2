@@ -10,7 +10,7 @@ load "config/recipes/nginx"
 load "config/recipes/unicorn"
 # load "config/recipes/rvm"
 load "config/recipes/postgresql"
-load 'deploy/assets'
+# load 'deploy/assets'
 load "config/recipes/nodejs"
 load "config/recipes/queue_classic"
 load "config/recipes/check"

@@ -22,7 +22,7 @@ namespace :deploy do
          # %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@#{host}:#{shared_path}}
          # %x{bundle exec rake assets:clean}
 
-  run_locally "rake assets:precompile"
+  run_locally "bundle exec rake assets:precompile"
   run_locally "cd public; tar -zcvf assets.tar.gz assets"
   top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
   run "cd #{shared_path}; tar -zxvf assets.tar.gz"
