@@ -4,11 +4,13 @@ require "rvm/capistrano"
 require "bundler/capistrano"
 require "whenever/capistrano"
 
+load "config/recipes/assets"
 load "config/recipes/base"
 load "config/recipes/nginx"
 load "config/recipes/unicorn"
 # load "config/recipes/rvm"
 load "config/recipes/postgresql"
+
 load "config/recipes/nodejs"
 load "config/recipes/queue_classic"
 load "config/recipes/check"
@@ -20,6 +22,7 @@ server "162.243.11.153", :web, :app, :db, primary: true
 set :rvm_bin_path, "/home/deployer/.rvm/bin"
 set :rvm_path, "$HOME/.rvm"
 set :rvm_ruby_string, :local
+set :host, "162.243.11.153"
 set :user, "deployer"
 set :application, "squadlink"
 set :deploy_to, "/home/#{user}/apps/#{application}"
@@ -36,7 +39,7 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 set :whenever_command, "bundle exec whenever"
-
+after "deploy:finalize_update", "deploy:assets:precompile"
 before 'deploy:install', 'rvm:install_rvm'
 before 'deploy:install', 'rvm:install_ruby'
 after "deploy", "deploy:cleanup" # keep only the last 5 releases
