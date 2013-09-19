@@ -18,13 +18,20 @@ namespace :deploy do
     desc 'Run the precompile task locally and rsync with shared'
     task :precompile, :roles => :web do
       # if releases.length <= 1 || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-         %x{bundle exec rake assets:precompile}
-         %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@#{host}:#{shared_path}}
-         %x{bundle exec rake assets:clean}
+         # %x{bundle exec rake assets:precompile}
+         # %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@#{host}:#{shared_path}}
+         # %x{bundle exec rake assets:clean}
+
+  run_locally "rake assets:precompile"
+  run_locally "cd public; tar -zcvf assets.tar.gz assets"
+  top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
+  run "cd #{shared_path}; tar -zxvf assets.tar.gz"
+  run "ln -nfs #{shared_path}/assets #{release_path}/public/assets"
+  
+  run_locally "rm public/assets.tar.gz"    
       # else
          # logger.info "Skipping asset pre-compilation because there were no asset changes"
       # end
     end
   end
 end
-after "deploy:finalize_update", "deploy:assets:precompile"
