@@ -39,6 +39,7 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 set :whenever_command, "bundle exec whenever"
+
 after "deploy:finalize_update", "deploy:assets:precompile"
 before 'deploy:install', 'rvm:install_rvm'
 before 'deploy:install', 'rvm:install_ruby'

@@ -69,9 +69,9 @@ class ApplicationController < ActionController::Base
     end
   end
   private
-  def miniprofiler
-    Rack::MiniProfiler.authorize_request # if current_user.email == 'andreas@lizz.no'
-  end
+  # def miniprofiler
+  #   Rack::MiniProfiler.authorize_request # if current_user.email == 'andreas@lizz.no'
+  # end
   def current_subdomain
       if request.subdomains.first.present? && request.subdomains.first != "www"
         current_subdomain = Firm.find_by_subdomain(request.subdomains.first)
