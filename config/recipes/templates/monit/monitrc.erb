@@ -19,7 +19,7 @@ set alert andreas@squadlink.com
 set httpd port 280987
     allow andreaslyngstad:"d67?kp35UuE41RgC~y3E"
 
-check system blog_server
+check system squadlink_server
   if loadavg(5min) > 2 for 2 cycles then alert
   if memory > 75% for 2 cycles then alert
   if cpu(user) > 75% for 2 cycles then alert

@@ -24,8 +24,9 @@
 //= require log_tracking
 //= require employees
 //= require subscriptions
-//= require sl_graphs
 
+//= require sl_graphs
+//= require tabs
 //= require timesheet
 //= require strftime-min.js
 //= require memberships

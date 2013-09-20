@@ -1,6 +1,3 @@
-<% content_for(:head) do %>
-<%= javascript_include_tag "tabs.js" -%>
-<% end %>
 <nav id="html_tabs" class="orange_bgr">
   <div class="name_and_back_button">
     <%= @klass.name %> <a class='open_customer_update  edit_text' id="customer_update" data-id="<%= @klass.id %>" data-object="customer" title="Edit customer">edit</a>

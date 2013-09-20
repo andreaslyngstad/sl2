@@ -5,9 +5,6 @@
 	</div>
 </div>
 <% end %>
-<% content_for(:head) do %>
-<%= javascript_include_tag "tabs.js" -%>
-<% end %>
 <nav id="html_tabs" class="orange_bgr">
     <div class="name_and_back_button">
       <%= truncate(@klass.name, length: 50, omission: "") %>
