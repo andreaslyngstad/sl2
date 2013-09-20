@@ -26,7 +26,7 @@
 //= require subscriptions
 
 //= require sl_graphs
-//= require tabs
+
 //= require timesheet
 //= require strftime-min.js
 //= require memberships
