@@ -1,4 +1,5 @@
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 
 //= require jquery.ui.draggable
@@ -49,7 +50,7 @@
 //= require colorArrays
 //= require stackedAndPie
 //= require_self
-
+//= require turbolinks
 
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}

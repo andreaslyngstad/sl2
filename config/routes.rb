@@ -13,7 +13,14 @@ Squadlink::Application.routes.draw do
         get "first_user"
         post "create_first_user"
      end
-  end    
+  end  
+  ActiveAdmin.routes(self)
+  get '/admin/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
+  get '/admin/dashboard/firms_chart_data' =>  'admin/dashboard#firms_chart_data', :as => :admin_dashboard_firms_chart_data
+  get '/admin/dashboard/firms_resources_chart_data' =>  'admin/dashboard#firms_resources_chart_data', :as => :admin_dashboard_firms_resources_chart_data
+  get '/admin/dashboard/new_firms_count_chart_data' =>  'admin/dashboard#new_firms_count_chart_data', :as => :admin_dashboard_new_firms_count_chart_data
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   devise_for  :users,
               :path_names => { :sign_up => "register" },
               :controllers => {
@@ -24,7 +31,7 @@ Squadlink::Application.routes.draw do
 
   devise_scope :user do
   	get "/sign_in", :to => "sessions#new"
-    get "/sign_out", :to => "sessions#destroy"
+    delete "/sign_out", :to => "sessions#destroy"
     get "register", :to => "public#register"
   	get "contact", :to => "public#contact"
     get "/sign_in_at_subdomain" =>  "sessions#sign_in_at_subdomain", :as => :sign_in_at_subdomain
@@ -134,11 +141,5 @@ Squadlink::Application.routes.draw do
     end
     get "/", :to  => "plans#index"
 	end
-  ActiveAdmin.routes(self)
-  get '/admin/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
-  get '/admin/dashboard/firms_chart_data' =>  'admin/dashboard#firms_chart_data', :as => :admin_dashboard_firms_chart_data
-  get '/admin/dashboard/firms_resources_chart_data' =>  'admin/dashboard#firms_resources_chart_data', :as => :admin_dashboard_firms_resources_chart_data
-  get '/admin/dashboard/new_firms_count_chart_data' =>  'admin/dashboard#new_firms_count_chart_data', :as => :admin_dashboard_new_firms_count_chart_data
-  devise_for :admin_users, ActiveAdmin::Devise.config
   root :to => "public#index"
 end

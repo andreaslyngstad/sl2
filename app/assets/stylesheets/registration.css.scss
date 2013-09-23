@@ -1,4 +1,4 @@
-@import "chosen.min";
+
 /*Opera Fix*/
 body:before {/* thanks to Maleika (Kohoutec)*/
 content:"";
@@ -30,348 +30,329 @@ You also need to include this conditional style in the <head> of your HTML file 
 <![endif]-->
 
 */
-html,body {
+// html,body {
 	
-	margin:0;
-	padding:0;
-	font-family: Tahoma, sans-serif; 
-	font-weight: lighter; 
-	// letter-spacing:1px; 
-	height: 100%; 
-	}
+// 	margin:0;
+// 	padding:0;
+// 	font-family: Tahoma, sans-serif; 
+// 	font-weight: lighter; 
+// 	// letter-spacing:1px; 
+// 	height: 100%; 
+// 	}
 img {border:none;}
-.container {
+.container_registration {
 text-align:center;
 min-height:95%;
 background: white;
 width: 900px;
 margin:0;
 margin: 0 auto;
-}
-a{
-	text-decoration:none;
-	color:#d3360b;
-}
-a:hover{
-	
-	text-decoration:none;
-	color:grey;
-}
-#main {
-	width: 900px;
-	display:inline-block;
-	padding-bottom: 80px;}
 
-#login_link{
-	text-align: right;
-	cursor: pointer;
-	display:inline;
-	padding: 0 10px 0 0;
-}
-#login_link a{
-	color:black;
-}
-.sign_in_sign_up{
-	text-align: right;
-}
-#front_logo{
-	margin-bottom:50px;
+	a{
+		text-decoration:none;
+		color:#d3360b;
 	}
-.video_container{
-text-align:center;
-}
+	a:hover{
+		
+		text-decoration:none;
+		color:grey;
+	}
+	#main_registration {
+		width: 900px;
+		display:inline-block;
+		padding-bottom: 80px;}
+
+	#login_link{
+		text-align: right;
+		cursor: pointer;
+		display:inline;
+		padding: 0 10px 0 0;
+	}
+	#login_link a{
+		color:black;
+	}
+	.sign_in_sign_up{
+		text-align: right;
+	}
+	#front_logo{
+		margin-bottom:50px;
+		}
+	.video_container{
+	text-align:center;
+	}
 
 
-.start_video{
-	margin-top:150px;
-	margin-bottom:20px;
+	.start_video{
+		margin-top:150px;
+		margin-bottom:20px;
+		cursor:pointer;
+	}
+	.on{
+	opacity: .8;
+	}
+	.play_a_video{
+	text-align:center;
+		
+	}
+	.signup_wrapper{
+	margin-top:200px;
+	}
+	.signup_button_link{
+	background: #0230BA;
+	color:#fff;
+	text-align: center;
+	text-decoration: none;
+	line-height:50px;
+
+	border:1px solid #ddd;
+	height:50px;
+	width:200px;
 	cursor:pointer;
-}
-.on{
-opacity: .8;
-}
-.play_a_video{
-text-align:center;
+
+	}
+	.signup_button_link:hover{
+	background: #0230ee;
+	}
+	.terms{
+		text-align:left;
+	}
+	.terms ol{
+		
+	}
+	.terms ol li{
+		padding:10px;
+	}
+	.contact{
+		text-align: left;
+	}
 	
-}
-.signup_wrapper{
-margin-top:200px;
-}
-.signup_button_link{
-background: #0230BA;
-color:#fff;
-text-align: center;
-text-decoration: none;
-line-height:50px;
-
-border:1px solid #ddd;
-height:50px;
-width:200px;
-cursor:pointer;
-
-}
-.signup_button_link:hover{
-background: #0230ee;
-}
-.terms{
+	#register_container{
 	text-align:left;
-}
-.terms ol{
-	
-}
-.terms ol li{
-	padding:10px;
-}
-.contact{
-	text-align: left;
-}
-#footer {
-	width:900px;
-	margin:0 auto;
-	position: relative;
-	margin-top: -80px; /* negative value of footer height */
-	height: 80px;
-	clear:both;}
-// #footer_reg{
-// 	margin:0 auto;
-// 	width:900px;
-// 	padding-left:75px;
-// float:left;
-// text-align: left;
-// }
-.footer-col{
-font-size: 13px;
-color: #777;
-float: left;
-width: 185px;
-margin: 15px 20px 20px 20px;
+	width:600px;
+	margin: 0 auto 0 auto;
+	}
+	#registration{
+	border:1px solid #999;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	float:left;
+	 width: 560px;
+	padding: 20px;
+	color: white;
+	background: #0230BA;
 
-}
-.footer-col a{
-text-decoration:none;
-color: #777;
-}
-.footer-col ul{
-list-style: none;
-}
-#register_container{
-text-align:left;
-width:600px;
-margin: 0 auto 0 auto;
-}
-#registration{
-border:1px solid #999;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-float:left;
- width: 560px;
-padding: 20px;
-color: white;
-background: #0230BA;
+	}
 
-}
-
-.signup_firm, .signup_user{
-float:left;
-width: 600px;
-background: #fff;
-margin-top:20px;
-
-padding: 20px 0 0 0 ;
-border:1px solid #999;
-}
-.register_firm, .first_user{
-	
-}
-.preferences{
-	margin-left: 20px;
-	width: 515px;
-}
-.hide{
-	display:none;
-}
-
-.signup .signup-form-field-subdomain input{
-width:264px;
-}
-
-.signup .signup-form-field #check{
-width:15px;
-padding: 0;
-margin: 9px 0 0 0;
-line-height: 30px;
-}
-.signup .signup-form-field-subdomain, .signup-form-field{
-display: block;
-position: relative;
-height: 60px;
-width: 550px;
-margin-left: 20px;
-
-}
-.edit_firm .signup-form-field{
-	height: 45px;
-}
-.edit_firm .submit{
-	margin-left:-170px;
-}
-.signup .background_style,.signup .text_style,  {
-
-position: relative;
-width: 330px;
-
-}
-.signup .signup-form-field-subdomain #loggyit_sub{
-position: absolute;
-top: 0px;
-left:444px;
-font-size: 14px;
-line-height: 35px;
-}
-em.error{
-color: red;
-display: block;
-margin: 5px 0 0 150px;
-
-}
-em.check{
-color: gray;
-display: block;
-margin: 5px 0 0 150px;
-
-}
-em.ok{
-color: green;
-display: block;
-margin: 5px 0 0 150px;
-
-}
-.devise_links{
-margin: 0 0 20px 40px;
-}
-
-//login form **************start************
-#login_link{
-	cursor: pointer;
-}
-.login_form{
-	
-	text-align: left;
+	.signup_firm, .signup_user{
+	float:left;
+	width: 600px;
 	background: #fff;
 	margin-top:20px;
-	-moz-box-shadow: 0 0 25px #444,inset 0 0 0 #000;
--webkit-box-shadow: 0 0 25px #444,inset 0 0 0 #000;
-box-shadow: 0 0 25px #444,inset 0 0 0 #000;
+
+	padding: 20px 0 0 0 ;
 	border:1px solid #999;
-	position:absolute;
-	top: 130px;
-	left: 500px;
-	z-index: 10;
-}
-.login_form input{
-	
-}
-.login_form a{
-	// color: #dddddd;
-}
+	}
+	.register_firm, .first_user{
+		
+	}
+	.preferences{
+		margin-left: 20px;
+		width: 515px;
+	}
+	.hide{
+		display:none;
+	}
 
-.login_form_field{
-margin-left:40px;
-margin-right:40px;
-height:40px;
-width:208px;
+	.signup .signup-form-field-subdomain input{
+	width:264px;
+	}
 
+	.signup .signup-form-field #check{
+	width:15px;
+	padding: 0;
+	margin: 9px 0 0 0;
+	line-height: 30px;
+	}
+	.signup .signup-form-field-subdomain, .signup-form-field{
+	display: block;
+	position: relative;
+	height: 60px;
+	width: 550px;
+	margin-left: 20px;
 
-}
-.login_form input.text{
-padding: 10px 5px;
-width: 208px;
-height: 36px;
-line-height: 36px;
-font-size: 16px;
-border: 1px solid #bfbfbf;
-padding: 5px;
-}
-.login_form input#check{
-width: 22px;
-height: 20px;
-padding: 0;
-margin: 0;
-position: absolute;
-top: 153px;
-left: 40px;
-}
-.login_form #check_box_label{
-	margin-left: 30px;
-}
-.login_form .submit{
-	float: none;
-	width: 208px;
+	}
+	.edit_firm .signup-form-field{
+		height: 45px;
+	}
+	.edit_firm .submit{
+		margin-left:-170px;
+	}
+	.signup .background_style,.signup .text_style,  {
+
+	position: relative;
+	width: 330px;
+
+	}
+	.signup .signup-form-field-subdomain #loggyit_sub{
+	position: absolute;
+	top: 0px;
+	left:444px;
 	font-size: 14px;
-	font-weight: normal;
-	
-	
-	border:none;
-}
+	line-height: 35px;
+	}
+	em.error{
+	color: red;
+	display: block;
+	margin: 5px 0 0 150px;
+
+	}
+	em.check{
+	color: gray;
+	display: block;
+	margin: 5px 0 0 150px;
+
+	}
+	em.ok{
+	color: green;
+	display: block;
+	margin: 5px 0 0 150px;
+
+	}
+	.devise_links{
+	margin: 0 0 20px 40px;
+	}
+
+	//login form **************start************
+	#login_link{
+		cursor: pointer;
+	}
+	.login_form{
+		
+		text-align: left;
+		background: #fff;
+		margin-top:20px;
+		-moz-box-shadow: 0 0 25px #444,inset 0 0 0 #000;
+	-webkit-box-shadow: 0 0 25px #444,inset 0 0 0 #000;
+	box-shadow: 0 0 25px #444,inset 0 0 0 #000;
+		border:1px solid #999;
+		position:absolute;
+		top: 130px;
+		left: 500px;
+		z-index: 10;
+	}
+	.login_form input{
+		
+	}
+	.login_form a{
+		// color: #dddddd;
+	}
+
+	.login_form_field{
+	margin-left:40px;
+	margin-right:40px;
+	height:40px;
+	width:208px;
 
 
-//login form **************end************
-.signup input, .update input{
-width:364px;padding:2px; font-size:20px;
-line-height: 1.2em;
-background:#fff;
-}
-.login_form label,.signup label, .update label{
-display: block;
-float: left;
-width: 150px;
-line-height: 30px;
-}
-.signup .submit, .update .submit{
-width:auto;margin-left:150px;cursor:pointer;padding:2px 15px 2px 15px;border:1px solid #999; font-size:20px;background:#fff;
-background:#3ea60b;
-border: 1px solid #2E8D11;
-color: white;
-}
+	}
+	.login_form input.text{
+	padding: 10px 5px;
+	width: 208px;
+	height: 36px;
+	line-height: 36px;
+	font-size: 16px;
+	border: 1px solid #bfbfbf;
+	padding: 5px;
+	}
+	.login_form input#check{
+	width: 22px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 153px;
+	left: 40px;
+	}
+	.login_form #check_box_label{
+		margin-left: 30px;
+	}
+	.login_form .submit{
+		float: none;
+		width: 208px;
+		font-size: 14px;
+		font-weight: normal;
+		
+		
+		border:none;
+	}
 
-.signup .submit:hover, .update .submit:hover{
-background: #2E8D11;
-}
-.signup_button{
-background:#323CED;
-padding:10px; font-size:15px;
-letter-spacing: 1px;
-color: white;
-text-decoration:none;
-}
-.signup_button:hover{
-background:#0B16DB;
-letter-spacing: 1px;
-cursor:pointer;
-text-decoration:none;
-}	
 
-.open_not_required, .close_not_required{
-  cursor:pointer;
-  margin-left: auto;
-  margin-right: auto;
-  display:block;
-  width: 100px;
-  height: 20px;
-}
-.open_not_required{
-  background: url("open_tracking_select.png") no-repeat scroll left top transparent;
-}
-.close_not_required{
-  background: url("close_tracking_select.png") no-repeat scroll left top transparent;
-}
+	//login form **************end************
+	.signup input, .update input{
+	width:364px;padding:2px; font-size:20px;
+	line-height: 1.2em;
+	background:#fff;
+	}
+	.login_form label,.signup label, .update label{
+	display: block;
+	float: left;
+	width: 150px;
+	line-height: 30px;
+	}
+	.signup .submit, .update .submit{
+	width:auto;margin-left:150px;cursor:pointer;padding:2px 15px 2px 15px;border:1px solid #999; font-size:20px;background:#fff;
+	background:#3ea60b;
+	border: 1px solid #2E8D11;
+	color: white;
+	}
 
-.open_not_required_container{
-  width: 600px;
-  height: 20px;
-  background:  #E6E6E6;
-  margin-top: 20px; 
+	.signup .submit:hover, .update .submit:hover{
+	background: #2E8D11;
+	}
+	.signup_button{
+	background:#323CED;
+	padding:10px; font-size:15px;
+	letter-spacing: 1px;
+	color: white;
+	text-decoration:none;
+	}
+	.signup_button:hover{
+	background:#0B16DB;
+	letter-spacing: 1px;
+	cursor:pointer;
+	text-decoration:none;
+	}	
 }
+#footer_registration {
+		width:900px;
+		margin:0 auto;
+		position: relative;
+		margin-top: -80px; /* negative value of footer height */
+		height: 80px;
+		clear:both;
+	// #footer_reg{
+	// 	margin:0 auto;
+	// 	width:900px;
+	// 	padding-left:75px;
+	// float:left;
+	// text-align: left;
+	// }
+		.footer_col{
+		font-size: 13px;
+		color: #777;
+		float: left;
+		width: 185px;
+		margin: 15px 20px 20px 20px;
+
+		}
+		.footer_col ul li a{
+		text-decoration:none;
+		color: #777;
+		}
+		.footer_col ul{
+		list-style: none;
+		}
+	}
 .instruction_1{
  width: 500px;
  height: 200px;
