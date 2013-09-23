@@ -15,10 +15,10 @@ Squadlink::Application.routes.draw do
      end
   end  
   ActiveAdmin.routes(self)
-  get '/admin/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
-  get '/admin/dashboard/firms_chart_data' =>  'admin/dashboard#firms_chart_data', :as => :admin_dashboard_firms_chart_data
-  get '/admin/dashboard/firms_resources_chart_data' =>  'admin/dashboard#firms_resources_chart_data', :as => :admin_dashboard_firms_resources_chart_data
-  get '/admin/dashboard/new_firms_count_chart_data' =>  'admin/dashboard#new_firms_count_chart_data', :as => :admin_dashboard_new_firms_count_chart_data
+  get '/obeqaslksdssdfnfdfysdfxm/dashboard/subscription_chart_data' =>  'admin/dashboard#subscription_chart_data', :as => :admin_dashboard_subscription_chart_data
+  get '/obeqaslksdssdfnfdfysdfxm/dashboard/firms_chart_data' =>  'admin/dashboard#firms_chart_data', :as => :admin_dashboard_firms_chart_data
+  get '/obeqaslksdssdfnfdfysdfxm/dashboard/firms_resources_chart_data' =>  'admin/dashboard#firms_resources_chart_data', :as => :admin_dashboard_firms_resources_chart_data
+  get '/obeqaslksdssdfnfdfysdfxm/dashboard/new_firms_count_chart_data' =>  'admin/dashboard#new_firms_count_chart_data', :as => :admin_dashboard_new_firms_count_chart_data
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   devise_for  :users,

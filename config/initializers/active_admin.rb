@@ -8,7 +8,7 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Squadlink"
   
-  
+  config.default_namespace = 'obeqaslksdssdfnfdfysdfxm'
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
@@ -28,12 +28,7 @@ ActiveAdmin.setup do |config|
   #
   # eg:
  
-  if Rails.env == 'production'
-     config.default_namespace = 'obe4633q8s50On4Fy3xm'
-  end
-  if Rails.env == 'development'
-     config.default_namespace = 'obe4633q8s50On4Fy3xm'
-  end
+  
   # This will create resources in the HelloWorld module and
   # will namespace routes to /hello_world/*
   #
