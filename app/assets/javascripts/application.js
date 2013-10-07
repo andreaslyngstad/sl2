@@ -17,6 +17,7 @@
 //= require jquery.quicksearch
 //= require timeFormatter
 //= require navigation
+
 //= require scrolling
 //= require far_right
 //= require logs
@@ -25,7 +26,7 @@
 //= require log_tracking
 //= require employees
 //= require subscriptions
-
+//= require tabs
 //= require sl_graphs
 
 //= require timesheet

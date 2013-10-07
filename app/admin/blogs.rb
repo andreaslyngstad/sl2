@@ -1,4 +1,9 @@
 ActiveAdmin.register Blog do
+  controller do
+    def permitted_params
+      params.permit blog: [:content , :author, :title]
+    end
+  end
   index do
     selectable_column
     column :title 

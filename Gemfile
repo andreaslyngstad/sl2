@@ -28,16 +28,16 @@ gem 'foreman'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
 
-group :development, :test do
+group :development do
   gem 'rack-mini-profiler'
-  gem 'better_errors'
+  # gem 'better_errors'
   gem "binding_of_caller" 
   gem 'meta_request'
-  gem 'bullet'
+  # gem 'bullet'
   gem 'quiet_assets'
   gem 'debugger'
   gem 'thin'
-  gem 'simplecov', :require => false
+  # gem 'simplecov', :require => false
  
 end
 group :test do 

@@ -109,17 +109,17 @@ $(document).ready(function() {
   var pathname = window.location.pathname;
   if (/dashboard/i.test(pathname)){
 
-	$.getJSON('/admin/dashboard/subscription_chart_data.json', function(data) {
+	$.getJSON('/obeqaslksdssdfnfdfysdfxm/dashboard/subscription_chart_data.json', function(data) {
   				firmBySubscription(data)      
 		})
-	$.getJSON('/admin/dashboard/firms_chart_data.json', function(data) {
+	$.getJSON('/obeqaslksdssdfnfdfysdfxm/dashboard/firms_chart_data.json', function(data) {
   				firmByCreation(data)      
 		})
 	
-	$.getJSON('/admin/dashboard/firms_resources_chart_data.json', function(data) {
+	$.getJSON('/obeqaslksdssdfnfdfysdfxm/dashboard/firms_resources_chart_data.json', function(data) {
   				firmResorses(data)      
 		})
-	$.getJSON('/admin/dashboard/new_firms_count_chart_data.json', function(data) {
+	$.getJSON('/obeqaslksdssdfnfdfysdfxm/dashboard/new_firms_count_chart_data.json', function(data) {
   				newFirms(data)      
 		})}
 })

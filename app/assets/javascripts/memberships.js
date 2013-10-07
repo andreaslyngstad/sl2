@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function droppable_members(){
 	$(".draggable").draggable({
 	  	containment: '#users_list',
 	  	revert: true,
@@ -29,4 +29,4 @@ $(document).ready(function() {
 	  	$.post("/membership/" + user_id + "/" + project_id);
 		}
     });
-});
+}

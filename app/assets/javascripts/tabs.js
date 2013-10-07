@@ -1,7 +1,12 @@
 String.prototype.contains = function(it) { return this.indexOf(it) != -1; }; 
 $(document).ready(function() {
+	var pathname = location.pathname;
+ 	
+	if (pathname.match(/customers\//i) || 
+				pathname.match(/projects\//i) || 
+				pathname.match(/users\//i)  ) {
   $(window).bind( 'hashchange', function(e) {
-    var url = window.location.hash;
+   var url = window.location.hash;
     if (url !== ""){
 	    var id = (url)
 	    var get_url = $( 'a[href="' + url + '"]' ).attr("data-url")
@@ -28,5 +33,5 @@ $(document).ready(function() {
 	}
 
     })
-  $(window).trigger( 'hashchange' );
+  $(window).trigger( 'hashchange' );}
 })

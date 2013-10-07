@@ -1,19 +1,19 @@
-require 'simplecov'
-SimpleCov.start do
+# require 'simplecov'
+# SimpleCov.start do
   
-  add_filter '/spec/'
-  add_filter '/config/'
-  add_filter '/lib/'
-  add_filter '/db/'
-  add_filter '/vendor/'
+#   add_filter '/spec/'
+#   add_filter '/config/'
+#   add_filter '/lib/'
+#   add_filter '/db/'
+#   add_filter '/vendor/'
  
-  add_group 'Controllers', 'app/controllers'
-  add_group 'Models', 'app/models'
-  add_group 'Helpers', 'app/helpers'
-  add_group 'Mailers', 'app/mailers'
-  add_group 'Views', 'app/views'
-  add_group 'Admin', 'app/admin'
-end
+#   add_group 'Controllers', 'app/controllers'
+#   add_group 'Models', 'app/models'
+#   add_group 'Helpers', 'app/helpers'
+#   add_group 'Mailers', 'app/mailers'
+#   add_group 'Views', 'app/views'
+#   add_group 'Admin', 'app/admin'
+# end
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
@@ -53,7 +53,7 @@ RSpec.configure do |config|
   config.before(:each) do
     DatabaseCleaner.start
   end
-
+  
   config.after(:each) do
     DatabaseCleaner.clean
   end

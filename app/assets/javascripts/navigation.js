@@ -1,7 +1,8 @@
-old_url = location.protocol + '//' + location.host + location.pathname;
+
 // console.log(baseurl)
-$(function() {
+$(document).ready(function() {
 	//old_url = $.param(baseurl, location.href, 2);
+old_url = location.protocol + '//' + location.host + location.pathname;
 
 	var text = 	old_url.match(/customers/i) || 
 				old_url.match(/projects/i) || 
@@ -27,9 +28,9 @@ $(function() {
 				
 	if (!(text2 == null)){
 		var tab_text = text2.toString().charAt(0).toUpperCase() + text2.toString().substr(1);
-		$("#html_tabs a.current_link").removeClass("current_link");	
+		$("#html_tabs_home a.current_link").removeClass("current_link");	
 		$("#month_week_tabs a.current_link").removeClass("current_link");	
-		$("#html_tabs a:contains(" + tab_text + ")").addClass("current_link");
+		$("#html_tabs_home a:contains(" + tab_text + ")").addClass("current_link");
 		if(tab_text == "Charts" ){$("#html_tabs a:contains(Statistics)").addClass("current_link");}
 		if(tab_text == "Firm_show" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
 		if(tab_text == "Firm_edit" ){$("#html_tabs a:contains(Account)").addClass("current_link");}

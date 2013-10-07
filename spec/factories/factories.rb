@@ -5,6 +5,7 @@ FactoryGirl.define do
   sequence(:subdomain) { |n| "subdomain#{n}"}
   sequence(:email) { |n| "foo#{n}@example.com" }
  
+ 
   factory :firm do
    name
    subdomain
@@ -37,6 +38,12 @@ FactoryGirl.define do
     role "Admin"
     firm
   end 
+
+  factory :admin_user do
+    password "password"
+    password_confirmation { |u| u.password }
+    email
+  end
 
   factory :usernn, class: User do
     
@@ -93,10 +100,17 @@ FactoryGirl.define do
     name "customer man"
     firm
   end
+  factory :guides_category do
+    title "test"
+  end
+
   factory :guide do
     title "test"
-    content "test"  
+    content "test" 
+    guides_category 
   end
+  
+
   factory :blog do
     author "test"
     title "test"

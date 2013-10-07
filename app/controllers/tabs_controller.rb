@@ -27,8 +27,9 @@ class TabsController < ApplicationController
   end
   def tabs_users
     get_instance(params)
-    @users = @klass.users
-    respond_with(@users)
+    @members = @klass.users
+    @not_members = all_users - @members
+    respond_with(@members)
   end
   def tabs_statistics
     get_instance(params)

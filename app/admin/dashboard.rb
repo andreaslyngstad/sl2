@@ -28,7 +28,7 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Recent Firms" do
           table_for Firm.recent.map do
             column :name do |firm|
-              link_to firm.name, [:admin, firm]
+              link_to firm.name, [:obeqaslksdssdfnfdfysdfxm, firm]
             end
             column "Admin User" do |firm|
               mail_to firm.users.where(role: "Admin").first.email
@@ -37,7 +37,7 @@ ActiveAdmin.register_page "Dashboard" do
               firm.subscription.name
             end
             end
-           strong { link_to "View All Firms", admin_firms_path }
+           strong { link_to "View All Firms", obeqaslksdssdfnfdfysdfxm_firms_path }
         end
       end
     column do
@@ -148,7 +148,7 @@ ActiveAdmin.register_page "Dashboard" do
     #     panel "Recent Posts" do
     #       ul do
     #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
+    #           li link_to(post.title, obeqaslksdssdfnfdfysdfxm_post_path(post))
     #         end
     #       end
     #     end

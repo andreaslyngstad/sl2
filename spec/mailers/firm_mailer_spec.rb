@@ -9,7 +9,7 @@ describe FirmMailer do
     it 'sends sign up confirmation' do
       mail.subject.should eq("Squadlink sign up confirmation.")
       mail.to.should eq([user.email])
-      mail.from.should eq(["support@squadlink.com"])
+      mail.from.should eq(["no_reply@squadlink.com"])
       mail.body.encoded.should include(user.name)
       mail.body.encoded.should include("We hope you'll enjoy your stay and are proud that you put your trust in us.")
     end
@@ -24,7 +24,7 @@ describe FirmMailer do
     it "sends overdue mail" do
       mail.subject.should eq("Squadlink payment is overdue.")
       mail.to.should eq([subscription.email])
-      mail.from.should eq(["support@squadlink.com"])
+      mail.from.should eq(["no_reply@squadlink.com"])
       mail.body.encoded.should include(user.name)
       mail.body.encoded.should include('We have not received payment for the ' + firm.name + ' account at squadlink.com')
       
@@ -39,7 +39,7 @@ describe FirmMailer do
     it "sends two_weeks_overdue mail" do
       mail.subject.should eq("Squadlink payment is two weeks overdue.")
       mail.to.should eq([subscription.email])
-      mail.from.should eq(["support@squadlink.com"])
+      mail.from.should eq(["no_reply@squadlink.com"])
       mail.body.encoded.should include(user.name)
       mail.body.encoded.should include('squadlink.com is 14 days overdue')
       mail.body.encoded.should include('After that it will be reverted to a free account')
@@ -53,7 +53,7 @@ describe FirmMailer do
     it "sends reverting_to_free mail" do
       mail.subject.should eq("Squadlink account revertet to free due to missing payment.")
       mail.to.should eq([subscription.email])
-      mail.from.should eq(["support@squadlink.com"])
+      mail.from.should eq(["no_reply@squadlink.com"])
       mail.body.encoded.should include(user.name)
       mail.body.encoded.should include('Your account is reverted to a free account. This process might have caused loss of data.')
      # mail.body.encoded.should match(edit_password_reset_path(user.password_reset_token))

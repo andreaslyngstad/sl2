@@ -4,7 +4,7 @@ include SubdomainLoginFeatures
 feature 'Project' do
   
     get_the_gritty
-    let!(:user) {FactoryGirl.create(:customer, name: "Gunnar")}
+    
    def visit_the_project
     sign_in_on_js
     visit @projects
@@ -17,14 +17,7 @@ feature 'Project' do
    end
    
   scenario "cycle trough links project", js: true do
-    sign_in_on_js
-    visit @projects
-    page.should have_content("test_project")
-    id = page.evaluate_script("$('.open_project_update').first().attr('data-id');")
-    li = "li#project_#{id}"
-    within(:css, li) do
-      find(".tab_list_text").find('a').trigger('click')
-    end
+    visit_the_project
     page.should have_content("test_project", visible: true)
     page.find('#html_tabs').click_link('Logs')
     
@@ -36,7 +29,6 @@ feature 'Project' do
     click_link('Milestones')
     page.should have_content("New milestone", visible: true)
     click_link('Statistics')
-    
     click_link('Spendings')
     page.should have_content("Hourly price", visible: true)
     click_link('Tasks')
@@ -45,11 +37,7 @@ feature 'Project' do
 
   scenario 'project task crud' , js: true do
     visit_the_project
-    
-
     click_link('Tasks')
-    
-
     page.find("#dialog_todo", visible: true).trigger('click')
     page.should have_content("Create new task")
     fill_in "todo_name", with: "This a task"

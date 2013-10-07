@@ -6,7 +6,7 @@ feature 'customer' do
   scenario "make new", js: true do
     sign_in_on_js   
     visit @customers 
-    page.should have_content("New customer")       
+    page.should have_content("New customer")        
     find("#dialog_customer").click
     page.should have_content("Create new customer")
     fill_in "customer_name", with: "" 

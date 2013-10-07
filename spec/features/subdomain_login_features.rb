@@ -26,7 +26,7 @@ module SubdomainLoginFeatures
 	
 	def sign_in_on_js
     visit @root_url
-    find("#login_link").click
+    
     fill_in "user_email2", :with => @user.email
     fill_in "user_password2", :with => "password"
     click_button "sign_in2"

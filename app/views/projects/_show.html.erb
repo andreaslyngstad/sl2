@@ -5,9 +5,7 @@
 	</div>
 </div>
 <% end %>
-<% content_for(:head) do %>
-  <%= javascript_include_tag "tabs.js" -%>
-<% end %>
+
 <nav id="html_tabs" class="orange_bgr">
     <div class="name_and_back_button">
       <%= truncate(@klass.name, length: 50, omission: "") %>
@@ -26,48 +24,21 @@
     <li class=""><a href="#tabs-2" data-url="/tabs/tabs_todos/<%= @klass.id %>/<%= @klass.class %>">Tasks</a></li>
     <li class=""><a href="#tabs-3" data-url="/tabs/tabs_logs/<%= @klass.id %>/<%= @klass.class %>">Logs</a></li>
     <li class=""><a href="#tabs-4" data-url="/tabs/tabs_milestones/<%= @klass.id %>/<%= @klass.class %>">Milestones</a></li>
-    <li class=""><a href="#tabs-5">Users</a></li>
+    <li class=""><a href="#tabs-5" data-url="/tabs/tabs_users/<%= @klass.id %>/<%= @klass.class %>">Users</a></li>
     <li class=""><a href="#tabs-6" data-url="/tabs/tabs_statistics/<%= @klass.id %>/<%= @klass.class %>">Statistics</a></li>
     <li class=""><a href="#tabs-7" data-url="/tabs/tabs_spendings/<%= @klass.id %>/<%= @klass.class %>">Spendings</a></li>
     </ul>
 
     </nav>
     <div class="boxes">
-      <div class="tab_box has_url" id="tabs-1"></div>
+      <div class="tab_box has_url" id="tabs-1">
+      
+      </div>
       <div class="tab_box hide has_url" id="tabs-2"></div>
       <div class="tab_box hide has_url" id="tabs-3"></div> 
       <div class="tab_box hide has_url" id="tabs-4"></div> 
-      <div class="tab_box hide" id="tabs-5">
-    	<div id="users_list_header">
-    		<div class="members_header">
-    			Squad on this project
-    		</div>
-    		<% if can? :manage, @klass %>
-    		<div class="not_members_header">
-    			Available squaders
-    		</div>
-    		 <% end %>
-    	</div>
-  	<div id="users_list">
-      <div id="members" class="droppable members">
-      	<% @members.each do |user| %>
-      	<div class="user_info edit white draggable member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @klass.id %>"> 
-          <%= image(user, "image64") %>
-          <%= user.name %>
-        </div>
-        <% end %>
-      </div>
-      <% if can? :manage, @klass %>
-      <div id="not_members" class="droppable">
-        <% @not_members.each do |user| %>
-        	<div class="user_info edit white draggable not_member" id="user_<%=user.id%>" user_id="<%=user.id%>" project_id="<%= @klass.id %>"> 
-         	<%= image(user, "image64") %>
-         	<%= user.name %>
-          </div> 
-        <% end %>
-      </div>
-      <% end %> 
-  	</div>
+      <div class="tab_box hide has_url" id="tabs-5">
+      	
     </div> 
     <div class="tab_box hide has_url" id="tabs-6"></div>
     <div class="tab_box hide has_url" id="tabs-7"></div>

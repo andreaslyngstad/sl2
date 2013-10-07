@@ -1,5 +1,8 @@
 ActiveAdmin.register User do
   controller do
+    def permitted_params
+      params.permit user: [:role,:phone,:name,:hourly_rate,:avatar, :email,:password, :password_confirmation, :remember_me]
+    end
     def scoped_collection
       User.includes(:firm)
     end
@@ -9,7 +12,7 @@ ActiveAdmin.register User do
   index do
     selectable_column                            
     column "Firm" do |user|
-      link_to user.firm.name, admin_firm_path(user.firm)
+      link_to user.firm.name, obeqaslksdssdfnfdfysdfxm_firm_path(user.firm)
     end                     
     column :name                     
     column :email                     
@@ -32,6 +35,6 @@ ActiveAdmin.register User do
         f.input :hourly_rate
         
       end
-      f.buttons
+      f.actions
     end
 end

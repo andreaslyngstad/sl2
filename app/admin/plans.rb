@@ -1,13 +1,18 @@
 ActiveAdmin.register Plan do
+  controller do
+    def permitted_params
+      params.permit plan: [:paymill_id,:name,:price,:customers,:logs, :projects,:users]
+    end
+  end
   menu :priority => 3
  config.batch_actions = true
   index do
     selectable_column
     column "Name", :sortable => :name do |plan|
-      link_to plan.name, admin_plan_path(plan)
+      link_to plan.name, obeqaslksdssdfnfdfysdfxm_plan_path(plan)
     end
     column "Firms", :sortable => :firms_count  do |plan|
-      link_to plan.firms_count, firms_admin_plan_path(plan)
+      link_to plan.firms_count, firms_obeqaslksdssdfnfdfysdfxm_plan_path(plan)
     end
     column :price
     column :customers
@@ -31,6 +36,6 @@ ActiveAdmin.register Plan do
       f.input :users
       f.input :paymill_id,:as => :string
         end
-      f.buttons
+      f.actions
     end
 end

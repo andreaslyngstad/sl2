@@ -1,6 +1,4 @@
-<% content_for(:head) do %>
-  <%= javascript_include_tag "tabs.js" -%>
-<% end %>
+
 <nav id="html_tabs" class=" orange_bgr">
 	<div class="name_and_back_button">
 		<%= @klass.name %>
@@ -16,8 +14,7 @@
     </ul> 
 </nav>
 <div class="boxes">
-	<div class="tab_box" id="tabs-1">
-	</div>
-  	<div class="tab_box hide" id="tabs-2"></div>
-  	<div class="tab_box hide" id="tabs-3"></div>
+	<div class="tab_box has_url" id="tabs-1"></div>
+  <div class="tab_box hide has_url" id="tabs-2"></div>
+  <div class="tab_box hide has_url" id="tabs-3"></div>
 </div>

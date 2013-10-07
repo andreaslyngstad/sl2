@@ -1,5 +1,8 @@
 ActiveAdmin.register Firm do
    controller do
+    def permitted_params
+      params.permit firm: [:subscription_id,:plan_id, :name,:subdomain,:address,:phone, :currency, :time_zone, :language,:time_format,:date_format,:clock_format,:closed]
+    end
      def scoped_collection
        Firm.includes(:subscription, {:subscription => :plan})
      end
@@ -18,23 +21,23 @@ ActiveAdmin.register Firm do
     selectable_column
     
     column "Name", :sortable => :name do |firm|
-      link_to firm.name, admin_firm_path(firm)
+      link_to firm.name, obeqaslksdssdfnfdfysdfxm_firm_path(firm)
     end
     column "Plan", :sortable => :plan_id do |firm|
-      firm.subscription.plan.name
+      firm.plan.name
     end
     column "Customers", :sortable => :customers_count  do |firm|
-      link_to firm.customers_count, customers_admin_firm_path(firm)
+      link_to firm.customers_count, customers_obeqaslksdssdfnfdfysdfxm_firm_path(firm)
     end
     column "Projects", :sortable => :projects_count do |firm|
-      link_to firm.projects_count, projects_admin_firm_path(firm)
+      link_to firm.projects_count, projects_obeqaslksdssdfnfdfysdfxm_firm_path(firm)
     end
     column "Users", :sortable => :users_count  do |firm|
-      link_to firm.users_count, users_admin_firm_path(firm)
+      link_to firm.users_count, users_obeqaslksdssdfnfdfysdfxm_firm_path(firm)
     end
     
     column "Logs", :sortable => :logs_count do |firm|
-      link_to firm.logs_count, logs_admin_firm_path(firm)
+      link_to firm.logs_count, logs_obeqaslksdssdfnfdfysdfxm_firm_path(firm)
     end
     column :created_at
     default_actions 
@@ -68,6 +71,7 @@ ActiveAdmin.register Firm do
       f.input :currency,:as => :string
       f.input :time_zone,:as => :string
       f.input :language,:as => :string
+      f.input :closed, :as => :boolean
         end
       f.buttons
     end

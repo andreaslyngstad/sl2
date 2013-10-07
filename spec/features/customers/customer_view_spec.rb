@@ -3,7 +3,7 @@ require 'features/subdomain_login_features'
 include SubdomainLoginFeatures
 feature 'customer' do
     get_the_gritty
-    let!(:user) {FactoryGirl.create(:customer, name: "Gunnar")}
+    
    def visit_the_customer
    
    sign_in_on_js

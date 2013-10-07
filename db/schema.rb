@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20101029201151) do
+ActiveRecord::Schema.define(version: 20101029201152) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "resource_id",   null: false
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20101029201151) do
     t.text     "currency"
     t.text     "language"
     t.text     "time_zone"
+    t.datetime "last_sign_in_at"
     t.boolean  "closed"
     t.integer  "time_format"
     t.integer  "date_format"
@@ -196,7 +197,6 @@ ActiveRecord::Schema.define(version: 20101029201151) do
   create_table "projects", force: true do |t|
     t.text     "name"
     t.text     "description"
-    t.date     "due"
     t.boolean  "active"
     t.float    "budget"
     t.float    "hour_price"
@@ -208,6 +208,15 @@ ActiveRecord::Schema.define(version: 20101029201151) do
 
   add_index "projects", ["customer_id"], name: "index_projects_on_customer_id", using: :btree
   add_index "projects", ["firm_id"], name: "index_projects_on_firm_id", using: :btree
+
+  create_table "queue_classic_jobs", force: true do |t|
+    t.text     "q_name",    null: false
+    t.text     "method",    null: false
+    t.text     "args",      null: false
+    t.datetime "locked_at"
+  end
+
+  add_index "queue_classic_jobs", ["q_name", "id"], name: "idx_qc_on_name_only_unlocked", where: "(locked_at IS NULL)", using: :btree
 
   create_table "statistics", force: true do |t|
     t.integer  "firms"
