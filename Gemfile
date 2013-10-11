@@ -15,8 +15,8 @@ gem 'pdfkit'
 gem 'newrelic_rpm'
 gem 'whenever', :require => false
 gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
-gem 'pg'
-gem 'queue_classic'
+gem "pg", "~> 0.15.1" 
+gem "queue_classic", "2.2.1"
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'

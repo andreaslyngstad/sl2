@@ -7,12 +7,13 @@ after "deploy:start", "foreman:start"
 namespace :foreman do
 desc 'Export the Procfile to Ubuntu upstart scripts'
 task :export, :roles => :app do
+	
 	foreman_temp = "/tmp/#{application}-foreman"
 	run [
 	  "mkdir -p #{foreman_temp}",
 	  "cd #{release_path}",
 	  "/home/deployer/.rvm/gems/ruby-2.0.0-p247/bin/bundle exec foreman export upstart #{foreman_temp} -a #{application} -u #{user} -l #{shared_path}/log -f Procfile",
-	  "sudo mv #{foreman_temp}/#{application}*.conf /etc/init/",
+	  "#{sudo} mv #{foreman_temp}/#{application}*.conf /etc/init/",
 	  "rm -rf #{foreman_temp}"
 	].join('&&')
 	# set :rvm_bin_path, "/home/deployer/.rvm/bin"
