@@ -4,9 +4,9 @@ require "rvm/capistrano"
 require "bundler/capistrano"
 require "whenever/capistrano"
 
+load "config/recipes/ssl_certificates"
 load "config/recipes/assets"
 load "config/recipes/base"
-load "config/recipes/ssl_certificates"
 load "config/recipes/nginx"
 load "config/recipes/unicorn"
 # load "config/recipes/rvm"
@@ -42,6 +42,7 @@ ssh_options[:forward_agent] = true
 set :whenever_command, "bundle exec whenever"
 
 after "deploy:finalize_update", "deploy:assets:precompile"
+before 'deploy:setup', 'certificate:setup'
 before 'deploy:install', 'rvm:install_rvm'
 before 'deploy:install', 'rvm:install_ruby'
 after "deploy", "deploy:cleanup" # keep only the last 5 releases
