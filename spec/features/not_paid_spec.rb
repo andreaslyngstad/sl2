@@ -16,7 +16,7 @@ feature 'the user is a external user' do
 	get_the_gritty
 	scenario 'what does the user see' do
 		sign_in_on_js
-		page.should have_content("test_project")
+		page.should have_content("Projects")
 		page.should have_content("Customers")
 		click_link 'Projects'
 		page.should have_content("New project")

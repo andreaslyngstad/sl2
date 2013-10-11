@@ -14,6 +14,7 @@
 /log/*.log
 /tmp
 /coverage
+/certificates
 /spec/coverage
 /spec/controllers/coverage
 /config/database.yml

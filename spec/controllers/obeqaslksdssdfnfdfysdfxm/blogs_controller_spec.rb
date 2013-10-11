@@ -1,7 +1,5 @@
 require 'spec_helper'
 require 'support/active_admin_spec_helper'
-
-
 describe Obeqaslksdssdfnfdfysdfxm::BlogsController do
 active_admin_signing_in
 describe "Get firms" do

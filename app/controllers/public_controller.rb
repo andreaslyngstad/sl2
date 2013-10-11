@@ -36,7 +36,6 @@ class PublicController < ApplicationController
     @user = @firm.users.new(permitted_params.first_user)
     @user.role = "Admin"
     
-
         if @user.save
           flash[:notice] = "Registration successful."
           QC.enqueue "FirmMailer.sign_up_confirmation", @user.id

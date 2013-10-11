@@ -38,6 +38,7 @@ feature 'Sign up' do
    end
    scenario 'emails user on succsessfull signup' do
     signing_up
-    last_email.to.should include('test@example.com')
+    r = ActiveRecord::Base.connection.execute("SELECT * FROM queue_classic_jobs")
+    r.first["method"].should == "FirmMailer.sign_up_confirmation"
    end
 end

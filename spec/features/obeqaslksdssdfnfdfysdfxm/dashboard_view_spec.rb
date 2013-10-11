@@ -43,7 +43,7 @@ feature 'dashboard' do
 		click_link 'Guides'
 		page.should have_content('There are no Guides yet. Create one')
 		click_link 'New Guide'
-		select 	guides_category.title, from:'guide[guides_category_id]'
+		select 	guides_category.title, from:'Guides category'
 		fill_in 'guide_title', with: 'What does..'
 		fill_in 'guide_content', with: '..the fox say'
 		click_button "Create Guide"

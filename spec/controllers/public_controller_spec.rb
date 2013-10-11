@@ -55,14 +55,17 @@ describe PublicController do
     end   
     describe "success" do
       it "Saves user and gets redirected to application" do
+
         @user = FactoryGirl.attributes_for(:user)
         post :create_first_user, :firm_id => @firm.id.to_s, :user => @user     
         flash[:error].should be_nil 
         user = @firm.users.first
         user.name.should  == @user[:name]
         user.email.should == @user[:email]
-       
-        #response.should redirect_to(after_sign_in_path_for(@user))
+        r = ActiveRecord::Base.connection.execute("SELECT * FROM queue_classic_jobs")
+        r.first["method"].should == "FirmMailer.sign_up_confirmation"
+        r.first["args"].should == "[#{user.id}]"
+
       end
     describe "failure" do
       it "Does not save user without name" do

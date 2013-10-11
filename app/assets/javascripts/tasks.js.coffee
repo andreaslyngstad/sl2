@@ -1,7 +1,7 @@
 jQuery.fn.countDone = ->
   done = $(".tasks_percent").data("complete")
   notDone = $(".tasks_percent").data("notcomplete")
-  if notDone > 0 
+  if done > 0 
     percent = ((done / (notDone + done)) * 100).toFixed(0)
   else
     percent = '0'

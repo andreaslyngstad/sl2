@@ -27,7 +27,6 @@ $(document).ready(function() {
 	$("text[x='0']").fixDateformat()	
 	var from = $(".one_month_back").data("lastmonth") 
 	var to = $(".one_month_back").data("today")
-	
 	$("#from_stat").val(from)
 	$("#to_stat").val(to)
 	$(".range_date_graphs").datepicker({

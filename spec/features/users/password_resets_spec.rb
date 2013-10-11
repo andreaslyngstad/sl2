@@ -6,7 +6,7 @@ describe "PasswordResets" do
   before(:each) do
     @user = FactoryGirl.create(:user)
     visit root_url
-    find("#login_link").click
+    find("#sign_in_link").click
     first(:link, 'Forgot your password?').click
     fill_in "Email", :with => @user.email
     click_button "Send instructions"

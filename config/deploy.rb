@@ -6,6 +6,7 @@ require "whenever/capistrano"
 
 load "config/recipes/assets"
 load "config/recipes/base"
+load "config/recipes/ssl_certificates"
 load "config/recipes/nginx"
 load "config/recipes/unicorn"
 # load "config/recipes/rvm"

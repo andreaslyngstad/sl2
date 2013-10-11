@@ -25,7 +25,7 @@ feature 'Sign in user' do
      
     scenario 'at root' do  
       visit @root_path
-      find("#login_link").click
+      find("#sign_in_link").click
       fill_in "user_email_popup", :with => @firm.users.first.email
       fill_in "user_password_popup", :with => "password"
       click_button "Sign in"

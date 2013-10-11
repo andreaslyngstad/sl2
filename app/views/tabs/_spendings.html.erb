@@ -28,15 +28,13 @@
 		</td>
 		<td class="user_project_price" >
 			<%= u[3] %> <%= current_firm.currency %>
-		</td>
-		
-		
+		</td>	
 	</tr>
+	<% end %>
 	<tr class="spending_total">
 		<td>Total</td>
 		<td></td>
 		<td></td>
 		<td><%= ProjectPrice.get_hours(@klass) %> <%= current_firm.currency %></td>
 	</tr>
-	<% end %>
 </table>

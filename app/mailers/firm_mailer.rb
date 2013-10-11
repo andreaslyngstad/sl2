@@ -1,3 +1,9 @@
+class Waiter 
+  def self.wait 
+    sleep 10 
+    puts 'GOOD MORNING' 
+  end 
+end 
 class FirmMailer < ActionMailer::Base
   default from: "no_reply@squadlink.com"
 
@@ -9,6 +15,7 @@ class FirmMailer < ActionMailer::Base
   
 
   def sign_up_confirmation(id)
+    sleep 10
     @user = User.find(id)
     @firm = @user.firm
     sign_up_confirmation_mail = mail to: @user.email, subject: 'Squadlink sign up confirmation.'
@@ -20,7 +27,7 @@ class FirmMailer < ActionMailer::Base
     new_plan = mail to: @user.email, subject: 'Squadlink new plan confirmation.'
     new_plan.deliver
   end
-  
+ 
   # def payment_received(id)
   #   @user = User.find(id)
   #   @firm = @user.firm

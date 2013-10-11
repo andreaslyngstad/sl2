@@ -43,7 +43,7 @@ describe TabsController do
 	 	it "should get users" do
 	  	project.users << @user
 	  	get :tabs_users, id: project.id, class: "Project", :format => 'js'
-	  	assigns(:users).should == [@user]
+	  	assigns(:members).should == [@user]
 	  end
 	end	
 	describe "statistics" do

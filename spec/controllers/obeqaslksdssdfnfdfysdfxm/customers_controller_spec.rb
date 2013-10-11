@@ -4,6 +4,7 @@ require 'support/active_admin_spec_helper'
 
 describe Obeqaslksdssdfnfdfysdfxm::LogsController do
  active_admin_signing_in 
+ 
   let!(:log)  {t = FactoryGirl.build(:log)
                 t.save(:validate => false)
                 t}
