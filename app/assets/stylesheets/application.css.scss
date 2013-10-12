@@ -572,10 +572,10 @@ float:left;
   height: 20px;
 }
 .open_tracking_select, .open_not_required{
-  background: url("/assets/open_tracking_select.png") no-repeat scroll left top transparent;
+  background: asset-url("/assets/open_tracking_select.png") no-repeat scroll left top transparent;
 }
 .close_tracking_select, .close_not_required{
-  background: url("/assets/close_tracking_select.png") no-repeat scroll left top transparent;
+  background: asset-url("/assets/close_tracking_select.png") no-repeat scroll left top transparent;
 }
 
 .open_tracking_select_container{
