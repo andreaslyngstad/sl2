@@ -15,7 +15,7 @@ describe CustomersController do
       subject.current_firm.should_not be_nil
     end
     it "populates an array of customers" do
-      customers = stub
+      customers = double
       Customer.should_receive(:order_by_name){customers}
       get :index
       assigns[:customers].should be customers   

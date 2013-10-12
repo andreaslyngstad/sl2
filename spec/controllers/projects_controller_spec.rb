@@ -28,7 +28,7 @@ describe ProjectsController, :type => :controller do
       subject.current_firm.should_not be_nil
     end
     it "populates an array of projects" do 
-      projects = stub
+      projects = double
       Project.should_receive(:order_by_name){projects} 
       get :index
       assigns[:projects].should be projects 

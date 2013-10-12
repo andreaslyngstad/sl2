@@ -43,7 +43,7 @@ describe ApplicationHelper do
 
 	end
 	it "displays gravatar image of user", :vcr do
-		helper.image(@user,"image32").should include("http://www.gravatar.com/avatar/")
+		helper.image(@user,"image32").should include("https://secure.gravatar.com/avatar/")
 	end
 	it "displays image32 of user" do
 		user = mock_model(User, avatar:double(url: "test"),  avatar_file_name: "test")

@@ -1,7 +1,7 @@
 require "./lib/log_worker.rb"
 describe LogWorker do
-	let(:todo) { mock("Todo", save!: true) }
-  let(:log) { mock("Log", todo: todo, user: "user", firm: "firm", tracking: false ) }
+	let(:todo) { double("Todo", save!: true) }
+  let(:log) { double("Log", todo: todo, user: "user", firm: "firm", tracking: false ) }
   let(:user){ mock_model("User")}
   let(:firm){mock_model("Firm")}
 	it 'should create log based on args' do
