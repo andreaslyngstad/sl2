@@ -216,7 +216,7 @@ GEM
       cocaine (~> 0.5.0)
       mime-types
     pdfkit (0.5.4)
-    pg (0.15.1)
+    pg (0.16.0)
     poltergeist (1.4.1)
       capybara (~> 2.1.0)
       cliver (~> 0.2.1)
@@ -229,8 +229,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    queue_classic (2.2.1)
-      pg (~> 0.15.1)
+    queue_classic (2.2.2)
+      pg (~> 0.16.0)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -374,9 +374,9 @@ DEPENDENCIES
   paperclip
   paymill!
   pdfkit
-  pg (~> 0.15.1)
+  pg (~> 0.16.0)
   poltergeist
-  queue_classic (= 2.2.1)
+  queue_classic (= 2.2.2)
   quiet_assets
   rack-mini-profiler
   rack-ssl
