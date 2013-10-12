@@ -9,15 +9,17 @@ set eventqueue
     slots 100
 
 set mailserver smtp.gmail.com port 587
-    username no_reply@squadlink.com
-    password 2692Z4u2731T2Dq8ahvg
+    username <%= SECRETS_CONFIG['production'][:email][:user_name] %>
+    password <%= SECRETS_CONFIG['production'][:email][:password] %>
     using tlsv1
     with timeout 30 seconds
 
-set alert andreas@squadlink.com
+set alert <%= SECRETS_CONFIG['production'][:alert_email] %>
 
-set httpd port 28124
-    allow andreaslyngstad:"d673kp35UuE41RgCWy3E"
+set httpd port <%= SECRETS_CONFIG['production'][:monit_port] %>
+    allow  <%= SECRETS_CONFIG['production'][:monit_user] %>:<%= SECRETS_CONFIG['production'][:monit_password] %>
+    SSL ENABLE
+    PEMFILE /etc/monit/monit.pem
 
 check system squadlink_server
   if loadavg(5min) > 2 for 2 cycles then alert

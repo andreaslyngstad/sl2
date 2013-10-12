@@ -7,6 +7,19 @@ namespace :monit do
 
   desc "Setup all Monit configuration"
   task :setup do
+    
+    # run "#{sudo} openssl req -new -x509 -days 365 -nodes -out /etc/monit/monit.pem -keyout /etc/monit/monit.pem"  do |ch, stream, out|
+    #   ch.send_data "NO"+"\n" if out =~ /Country Name/
+    #   ch.send_data "ostfold"+"\n" if out =~ /State or Province Name/
+    #   ch.send_data "spydeberg"+"\n" if out =~ /Locality Name/
+    #   ch.send_data "\n" if out =~ /Organization Name/
+    #   ch.send_data "\n" if out =~ /Organizational Unit Name/
+    #   ch.send_data "\n" if out =~ /Common Name/
+    #   ch.send_data "\n" if out =~ /Email Address/
+    # end
+    # run "#{sudo} openssl gendh 512 >> /etc/monit/monit.pem"
+    # run "#{sudo} openssl x509 -subject -dates -fingerprint -noout -in /etc/monit/monit.pem"
+    # run "#{sudo} chmod 700 /etc/monit/monit.pem"
     monit_config "monitrc", "/etc/monit/monitrc"
     nginx
     postgresql

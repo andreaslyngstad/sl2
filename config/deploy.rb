@@ -42,7 +42,6 @@ ssh_options[:forward_agent] = true
 set :whenever_command, "bundle exec whenever"
 
 after "deploy:finalize_update", "deploy:assets:precompile"
-before 'deploy:setup', 'certificate:setup'
 before 'deploy:install', 'rvm:install_rvm'
 before 'deploy:install', 'rvm:install_ruby'
 after "deploy", "deploy:cleanup" # keep only the last 5 releases

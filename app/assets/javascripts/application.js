@@ -1,7 +1,6 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-
 //= require jquery.ui.draggable
 //= require jquery.ui.droppable
 //= require jquery.ui.button
@@ -10,10 +9,7 @@
 //= require jquery.ui.datepicker
 //= require jquery.ui.accordion
 //= require chosen.jquery.min
-
 //= require jquery.validate.js
-
-
 //= require jquery.quicksearch
 //= require timeFormatter
 //= require navigation
