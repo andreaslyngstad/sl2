@@ -1,5 +1,5 @@
 namespace :secrets do
-  desc "Install Monit"
+  desc "copy secrets"
   task :setup, roles: :app do
   	upload("config/secrets.yml", "#{shared_path}/config/secrets.yml")
   end

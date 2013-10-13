@@ -563,14 +563,17 @@ float:left;
   margin-left: auto;
   margin-right: auto;
   display:block;
-  width: 100px;
+  width: 18px;
   height: 20px;
+  background: url("/assets/chosen-sprite-683f60c24db3cce735f843aba49c07e5.png") no-repeat 0 0px;
 }
+
 .open_tracking_select, .open_not_required{
-  background: url(image_path("open_tracking_select.png")) no-repeat scroll left top transparent;
+ 
 }
 .close_tracking_select, .close_not_required{
-  background: url(image_path("close_tracking_select.png")) no-repeat scroll left top transparent;
+background-position: -18px 2px;
+  
 }
 
 .open_tracking_select_container{
@@ -718,14 +721,14 @@ margin:0px;
 		background: -moz-linear-gradient(top,  #e6e6e6,  #ECECEC);
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#e6e6e6', EndColorStr='#ECECEC')";	
 */}
-.archive_tab_list{
-background: 			#FFF2F5;
-		background: -webkit-gradient(linear,left top,left bottom,
-		color-stop(0, 		#FFF2F5),
-		color-stop(1, 		#ECECEC));
-		background: -moz-linear-gradient(top,  #FFF2F5,  #ECECEC);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FFF2F5', EndColorStr='#ECECEC')";	
-}
+// .archive_tab_list{
+// background: 			#FFF2F5;
+// 		background: -webkit-gradient(linear,left top,left bottom,
+// 		color-stop(0, 		#FFF2F5),
+// 		color-stop(1, 		#ECECEC));
+// 		background: -moz-linear-gradient(top,  #FFF2F5,  #ECECEC);
+// 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FFF2F5', EndColorStr='#ECECEC')";	
+// }
 .tab_list_text{
 display:inline-block;
 padding:0px 0 0 0;

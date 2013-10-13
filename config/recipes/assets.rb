@@ -26,6 +26,7 @@ namespace :deploy do
   run_locally "bundle exec rake assets:precompile RAILS_ENV=production"
   run_locally "cd public; tar -zcvf assets.tar.gz assets"
   top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
+  run "cd #{shared_path}; rm -rf assets"
   run "cd #{shared_path}; tar -zxvf assets.tar.gz"
   run "ln -nfs #{shared_path}/assets #{release_path}/public/assets"
   
