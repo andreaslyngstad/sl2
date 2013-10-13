@@ -1,7 +1,19 @@
 upstream unicorn {
   server unix:/tmp/unicorn.<%= application %>.sock fail_timeout=0;
 }
-
+server {
+  listen              80;
+  server_name         *.<%= application %>.com;
+  rewrite             ^(.*) https://$host$1 permanent;
+ 
+  location ~ \.(php|html)$ {
+    deny              all;
+  }
+ 
+  access_log          /dev/null;
+  error_log           /dev/null;
+}
+ 
 server {
   listen                443;
   server_name           *.<%= application %>.com;
@@ -17,7 +29,9 @@ server {
   location ^~ /assets/ {
     gzip_static on;
     expires max;
-    add_header Cache-Control public;
+    add_header        Cache-Control public;
+    add_header        Last-Modified "";
+    add_header        ETag "";
   }
 
   if (-f $document_root/system/maintenance.html) {

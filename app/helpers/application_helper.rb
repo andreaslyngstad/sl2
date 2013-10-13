@@ -36,7 +36,7 @@ module ApplicationHelper
 
 	def image(person, css_class)
 		if person.avatar_file_name.nil?
-			 # image_tag("https://secure.gravatar.com/avatar/#{Digest::MD5::hexdigest(person.email)}?default=mm&s=100", :alt => 'Avatar', :class => css_class)
+			 image_tag("https://secure.gravatar.com/avatar/#{Digest::MD5::hexdigest(person.email)}?default=mm&s=100", :alt => 'Avatar', :class => css_class)
 		else
 			if css_class == "image32"
 				image_tag person.avatar.url(:small), :class => css_class

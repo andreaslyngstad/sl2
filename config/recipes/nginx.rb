@@ -15,7 +15,7 @@ namespace :nginx do
     # run "#{sudo} mv /tmp/nginxConf /etc/nginx/nginx.conf"
     restart
   end
-  after "deploy:setup", "nginx:setup", "certificate:setup"
+  after "deploy:setup", "nginx:setup"
 
   %w[start stop restart].each do |command|
     desc "#{command} nginx"

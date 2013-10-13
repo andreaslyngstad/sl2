@@ -9,9 +9,8 @@ margin-top:-32767px;/* thank you Erik J - negate effect of float*/
 }
 @font-face {
  font-family: magneto;
-
- src: url(font_path("Magneto_Bold.eot")), /* EOT file for IE */
- 	  url(font_path("Magneto_Bold.ttf"))
+ src: asset-url("Magneto_Bold.eot", font), /* EOT file for IE */
+ 	  	asset-url("Magneto_Bold.ttf", font)
 }		
 .magneto{
 	font-family: magneto, Verdana, Arial, sans-serif;

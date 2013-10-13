@@ -7,7 +7,7 @@
 @import "jquery-ui-1.8.7custom";
 @import "tabs";
 @import "far_right_box";
-@import "chosen.min";
+@import "chosen.min"; 
 @import "sl_graphs";
 @import "plans";
 @import "subscriptions";
@@ -22,6 +22,8 @@
 //   // background-color: #E6E9F5;
 //   height:75%;
 //   }
+
+
 textarea{
 	height: 200px;
 	width: 369px;
@@ -197,8 +199,8 @@ height: 25px;
 }
 
 
-.spinning {width:15px;height:15px;margin: 5px 0 0 15px;float: left;background: url('spinner.gif') no-repeat right !important; }
-.ajax-loader-big {background: url('ajax-loader-big.gif') no-repeat right !important; }
+.spinning {width:15px;height:15px;margin: 5px 0 0 15px;float: left;background: url(image-path('spinner.gif')) no-repeat right !important; }
+.ajax-loader-big {background: url(image_path('ajax-loader-big.gif')) no-repeat right !important; }
 #flash_messages{
 margin: 3px 0 0 15px;
 font-size:15px;
@@ -287,7 +289,7 @@ width: 980px;
   color:white;
   }
 #pointer {	
-    background: url("pointer.png") no-repeat scroll left top transparent;   
+    background: url(image_path("pointer.png")) no-repeat scroll left top transparent;   
     height: 75px;
     display: inline;
     
@@ -358,7 +360,7 @@ div.error{
   padding-right: 10px;
   padding-bottom: 2px;
 }
-.indicator {width:15px;height:15px; display:block; background: url('spinner.gif') no-repeat right !important; }
+.indicator {width:15px;height:15px; display:block; background: url(image_path('spinner.gif')) no-repeat right !important; }
 
 
 .orange_bgr {
@@ -374,8 +376,6 @@ background: -moz-linear-gradient(top,  #FAA51A,  #F47A20);
 -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FAA51A', EndColorStr='#F47A20')"; */
 			
 }
-
-
 #show_content{
   margin-bottom:0px;
 }
@@ -384,12 +384,8 @@ background: -moz-linear-gradient(top,  #FAA51A,  #F47A20);
   width:470px;
   padding:10px 10px 10px 10px;
   float:left;
-  
-      word-wrap: break-word;
-      word-break: break-all;
-      -webkit-hyphens: auto;
-      -moz-hyphens: auto;
-      hyphens: auto;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 #description .state_unit{
   font-size:90%;
@@ -571,10 +567,10 @@ float:left;
   height: 20px;
 }
 .open_tracking_select, .open_not_required{
-  background: asset-url("/assets/open_tracking_select.png") no-repeat scroll left top transparent;
+  background: url(image_path("open_tracking_select.png")) no-repeat scroll left top transparent;
 }
 .close_tracking_select, .close_not_required{
-  background: asset-url("/assets/close_tracking_select.png") no-repeat scroll left top transparent;
+  background: url(image_path("close_tracking_select.png")) no-repeat scroll left top transparent;
 }
 
 .open_tracking_select_container{

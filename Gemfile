@@ -27,6 +27,7 @@ gem 'jquery-ui-rails'
 gem 'foreman'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
+gem 'yui-compressor'
 
 group :development do
   gem 'rack-mini-profiler'
