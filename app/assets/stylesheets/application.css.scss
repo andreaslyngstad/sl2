@@ -1149,6 +1149,25 @@ display: inline-block;
 width: 150px;
 
 }
+.preferences{
+  padding: 0 0 0 10px;
+  width: 568px;
+}
+.preferences .form-field{
+  padding: 10px 0 0 0;
+}
+.preferences .form-field label{
+  width: 200px;
+  float:left;
+}
+.preferences .form-field input[type="text"] {
+  width: 350px;
+  padding: 5px;
+  border: 1px solid #999;
+}
+.preferences .form-field input[type="submit"] {
+  float:right;
+}
 
 .timesheet .submit, .firm_account .submit, .firm_preferences .submit, .plans .submit{
 background:#323CED;

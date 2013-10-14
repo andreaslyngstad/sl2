@@ -281,6 +281,9 @@ jQuery.fn.UIdialogs_edit_links = function(){
 //ok
   
 ///////////////////////////////////////////////////////////////document.ready///////////////////////////////////////////////////////
+if (document.all && document.addEventListener && !window.atob) {
+    alert('IE8 or lower');
+}
 $.ajaxSetup({
   statusCode: {
   401: function(){
