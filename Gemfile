@@ -28,6 +28,8 @@ gem 'foreman'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'yui-compressor'
+gem 'exception_notification'
+
 
 group :development do
   gem 'rack-mini-profiler'

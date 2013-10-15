@@ -1,6 +1,11 @@
 Squadlink::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
-
+ config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    :email_prefix => "[ERROR] ",
+    :sender_address => %{no_reply@squadlink.com>},
+    :exception_recipients => %w{andreas@squadlink.com}
+  }
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -24,7 +29,7 @@ Squadlink::Application.configure do
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
-    config.assets.css_compressor = :yui
+  config.assets.css_compressor = :yui
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 

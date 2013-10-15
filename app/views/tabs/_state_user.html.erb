@@ -31,6 +31,7 @@
 		</div>
 		<div class="avatar_upload" style="display:none">
 			<%= form_for(@klass, :html => { :multipart => true}) do |f| %>
+			<%= f.hidden_field :fake%>
 				<p id="firm_logo"><%= f.file_field :avatar%></p>  
 				<%= f.submit "Upload", :class => "submit"%>  <%= link_to "Cancel", "", :class => "hide_avatar_upload" %>
 			<% end %>

@@ -22,8 +22,8 @@ module Squadlink
     config.assets.version = '1.0'
     
     config.to_prepare { 
-  Devise::SessionsController.layout "registration" 
-  Devise::PasswordsController.layout "registration"
+      Devise::SessionsController.layout "registration" 
+      Devise::PasswordsController.layout "registration"
 	} 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

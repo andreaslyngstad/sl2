@@ -55,4 +55,10 @@ class User < ActiveRecord::Base
   def can_validate
     role == "External user"
   end
+
+  attr_writer :fake
+
+  def fake
+    @fake ||= 'default'
+  end
 end

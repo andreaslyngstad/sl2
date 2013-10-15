@@ -258,8 +258,8 @@ margin: 0 auto;
 	.login_form input.text{
 	padding: 10px 5px;
 	width: 208px;
-	height: 36px;
-	line-height: 36px;
+	
+	
 	font-size: 16px;
 	border: 1px solid #bfbfbf;
 	padding: 5px;
@@ -278,10 +278,10 @@ margin: 0 auto;
 	}
 	.login_form .submit{
 		float: none;
-		width: 208px;
+		width: 100px;
 		font-size: 14px;
 		font-weight: normal;
-		
+		float:right;
 		
 		border:none;
 	}

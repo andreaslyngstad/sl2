@@ -3,7 +3,7 @@ namespace :nginx do
   task :install, roles: :web do
     run "#{sudo} apt-get -y install nginx"
   end
-  after "deploy:install", "nginx:install", "certificate:setup"
+  after "deploy:install", "nginx:install"
 
   desc "Setup nginx configuration for this application"
   task :setup, roles: :web do
