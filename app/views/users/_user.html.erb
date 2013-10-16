@@ -1,16 +1,21 @@
   <li class="tab_list" id="user_<%= user.id.to_s %>"> 
-   <div class="tab_list_text">
+  
+    <% if can? :manage, user %>
+     <div class="tab_list_text">
     <%= link_to truncate(user.name, :length => 80), user_path(user) %>
     </div>
-    <% if can? :manage, user %>
-    <%= link_to(user_path(user), data: { confirm: 'Are you sure?' } ,
-		:title => "Delete user", :method => :delete, :remote => true, :class => 'delete_user') do%>
-  <span class='button'>Delete</span>
-    <% end %>
+      <%= link_to(user_path(user), data: { confirm: 'Are you sure?' } ,
+    		:title => "Delete user", :method => :delete, :remote => true, :class => 'delete_user') do%>
+        <span class='button'>Delete</span>
+      <% end %>
 
- <span class='open_user_update button edit' id="user_update" data-id="<%= user.id %>" data-object="user" title="Edit user">Edit</span>
-    <div class="dialog_form" id="user_update_<%= user.id %>_form" title="Update user" style="display:none;">
-    </div>
-<% end %>
+      <span class='open_user_update button edit' id="user_update" data-id="<%= user.id %>" data-object="user" title="Edit user">Edit</span>
+      <div class="dialog_form" id="user_update_<%= user.id %>_form" title="Update user" style="display:none;">
+      </div>
+    <% else %>
+        <div class="tab_list_text">
+        <%= truncate(user.name, :length => 80) %>
+        </div>
+    <% end %>
     <%= mail_to user.email,"Email" ,:title => "Send a email", :class => "button"%>
   </li>

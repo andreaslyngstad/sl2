@@ -2,10 +2,13 @@ class CustomersController < ApplicationController
  
   def index
     @customers = current_firm.customers.order_by_name
+     authorize! :manage, Customer
     @customer = Customer.new  
   end
   def show
+
     @klass = current_firm.customers.find(params[:id])
+    authorize! :manage, @klass
     @hours = @klass.logs.sum(:hours)
     @employees = @klass.employees
     @projects = @klass.projects.where(["active = ?", true]).includes(:firm)
@@ -25,6 +28,7 @@ class CustomersController < ApplicationController
 
   def create
     @klass = Customer.new(permitted_params.customer) 
+     authorize! :manage, @klass
     @klass.firm = current_firm
     respond_to do |format|
       if @klass.save
@@ -38,6 +42,7 @@ class CustomersController < ApplicationController
 
   def update
     @klass = Customer.find(params[:id])
+     authorize! :manage, @klass
     respond_to do |format|
       if @klass.update_attributes(permitted_params.customer)
         flash[:notice] = flash_helper("#{@klass.name}" + " was successfully updated.")
@@ -50,6 +55,7 @@ class CustomersController < ApplicationController
 
   def destroy
     @customer = Customer.find(params[:id])
+     authorize! :manage, @klass
     @customer.destroy
       respond_to do |format|
       flash[:notice] = flash_helper('Customer was successfully deleted.')

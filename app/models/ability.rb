@@ -37,7 +37,7 @@ class Ability
        
      if user.role == "External user"
       
-      can :read, Project do |project|
+      can :manage, Project do |project|
         project.firm == user.firm && project.users.include?(user)
       end
       can :manage, Todo do |todo|

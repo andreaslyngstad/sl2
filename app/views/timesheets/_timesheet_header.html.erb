@@ -1,7 +1,9 @@
 <div id="timesheet_log_menu">
-  <div class="add_some_timesheet">     
+  <div class="add_some_timesheet">  
+    <% if can? :manage, Firm %>
        <%= select_tag :user_id, options_from_collection_for_select(@users, "id", "name"), 
       :id => "timeheet_user_select",  :prompt => 'Select User' %>
+    <% end %>
    </div>
 	<div class="timesheet_for_user">Timesheet for <%= @user.name %></div> 
    	

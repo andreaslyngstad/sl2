@@ -1,9 +1,15 @@
 class ReportsController < ApplicationController
 	def index
      authorize! :read, Firm
+     if can? :manage, Firm
   	 @users = current_firm.users
   	 @projects = current_firm.projects
   	 @customers = current_firm.customers
+    else
+     @users = User.where(id: current_user.id)
+     @projects = current_user.projects
+     @customers = current_firm.customers
+   end
   end
   
   def squadlink_report

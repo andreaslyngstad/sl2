@@ -20,11 +20,13 @@ class LogsController < ApplicationController
 
   def create
     @log = LogWorker.create(permitted_params.log, check_done(params[:done]), current_user, current_firm)
+     authorize! :manage, @log 
     create_resonder(@log)
   end
 
   def update
   	@klass = Log.find(params[:id])
+    authorize! :manage, @klass
     @pre_hours = @klass.time   
     LogWorker.check_todo_on_log(@klass, current_user, check_done(params[:done])) if !@klass.todo.nil?
     update_responder(@klass,permitted_params.log)
@@ -32,6 +34,7 @@ class LogsController < ApplicationController
  
   def destroy
     @log = Log.find(params[:id])
+    authorize! :manage, @log
     @log.destroy
     respond_to do |format|
       flash[:notice] = flash_helper('Log was deleted.')

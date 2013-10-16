@@ -1,3 +1,4 @@
+<% if can? :manage, project %>
 <li class="tab_list" id="project_<%= project.id.to_s %>"> 
 	<div class="tab_list_text">
 	<%= link_to truncate(project.name, :length => 80), project_path(project) %>
@@ -12,3 +13,4 @@
 	<% end %>
 	<div class="dialog_form" id="project_update_<%= project.id %>_form" title="Update project" style="display:none;"></div>
 </li>
+<% end %>

@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
   end
   def edit
     @project = Project.find(params[:id]) 
+    authorize! :manage, @project
     @customers = current_firm.customers
     respond_to do |format|
         format.js
@@ -19,15 +20,16 @@ class ProjectsController < ApplicationController
 
   def show
     @klass = current_firm.projects.find(params[:id]) 
+    authorize! :manage, @klass
     @hours = @klass.logs.sum(:hours)
     @done_todos = @klass.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
     @not_done_todos = @klass.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC") 
     @members = @klass.users
     @not_members = all_users - @members
-    
   end
 
   def create
+    authorize! :manage, Project
     @klass = current_firm.projects.new(permitted_params.project)
     @klass.active = true
     @klass.users << current_user
@@ -58,7 +60,9 @@ class ProjectsController < ApplicationController
   end
   
   def destroy
+    authorize! :manage, Firm
    @klass = Project.find(params[:id])
+   
    @klass.destroy
     respond_to do |format|
       flash[:notice] = flash_helper('Project was deleted.')
@@ -72,6 +76,7 @@ class ProjectsController < ApplicationController
   
   def activate_projects
     @project = Project.find(params[:id])
+    authorize! :manage,  @project
       if @project.active == true
         @project.active = false
         flash[:notice] = flash_helper("Project is made inactive.")

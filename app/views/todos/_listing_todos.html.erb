@@ -1,6 +1,8 @@
 <div class="log_menu">
 	<span class="add_some">  
+		<% if can? :manage, @klass %>
 		<a id="dialog_todo" class="add_new_todo_button" data-object="todo">New task</a>
+		<% end %>
 	</span>
 	    
 	<div class="range" >	   
@@ -27,6 +29,7 @@
 	</div> 
 </div>
 <div id="todos_list">
+	<% if can? :manage, @klass %>
 	<div id="dialog_todo_form" class="dialog_form" title="Create new task" style="display:none;">	
 	    <%= form_for @klass.todos.build, :remote => true do |f| %>
 	    <%= f.hidden_field :completed, :value => false%>
@@ -106,6 +109,7 @@
 			<% end %>
 		</ul>
 	</div>
+	<% end %>
 	<div class="info"> 	
 		<div class="name_todo_head info_head">Task</div>
 		<div class="project_todo info_head">Project</div>

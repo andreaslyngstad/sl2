@@ -25,12 +25,13 @@
       	</div>
 
  <div class="delete_edit">
- 	
+ 	<% if can? :manage, log %>
   <span class="open_log_update edit" id="log_update" title="Edit log" data-id="<%= log.id %>">edit</span>
   <%= link_to "delete", log, data: { confirm: 'Are you sure?' }, :title => "Delete log", :method => :delete, :class => "delete_log", :remote => true%>
   </div>
   </div>
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="Update log" style="display:none;" data-id="<%= log.id %>"></div>
+  <% end %>
     <% else %>
     <div class="date_and_times_on_log" >
     	in progress
