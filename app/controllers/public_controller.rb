@@ -55,6 +55,8 @@ class PublicController < ApplicationController
   end	
   def termsofservice
   end
+  def privacy_policy
+  end
   def pricing
     @plans = Plan.all
   end

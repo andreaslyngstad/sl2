@@ -2,7 +2,9 @@ require 'subdomain'
 Squadlink::Application.routes.draw do
 
   resources :blogs
+
   get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
+  get "/privacy_policy" => "public#privacy_policy",  :as => :privacy_policy
   get "/pricing" => "public#pricing",  :as => :pricing
   resources :guides
   post "hooks/receiver"
