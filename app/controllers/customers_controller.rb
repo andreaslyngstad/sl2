@@ -55,7 +55,7 @@ class CustomersController < ApplicationController
 
   def destroy
     @customer = Customer.find(params[:id])
-     authorize! :manage, @klass
+     authorize! :manage, @customer 
     @customer.destroy
       respond_to do |format|
       flash[:notice] = flash_helper('Customer was successfully deleted.')
