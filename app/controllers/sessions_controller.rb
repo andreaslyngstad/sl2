@@ -12,12 +12,9 @@ class SessionsController < Devise::SessionsController
   end
   
   def destroy
-    current_user.current_sign_in_at = nil
-    current_user.save
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(current_user))
     set_flash_message :notice, :signed_out if signed_out
     redirect_to root_url(:subdomain => nil)
-
   end
 
   def sign_in_at_subdomain

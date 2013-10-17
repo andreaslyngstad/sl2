@@ -11,7 +11,7 @@ columns do
 		column :email
 		column "" do |user|
   		  links = ''.html_safe
-		  links += link_to I18n.t('active_admin.edit'), edit_user_project_path(user), :class => "member_link edit_link"
+		  links += link_to I18n.t('active_admin.edit'), edit_obeqaslksdssdfnfdfysdfxm_user_path(user), :class => "member_link edit_link"
 		  links += link_to I18n.t('active_admin.delete'), obeqaslksdssdfnfdfysdfxm_user_path(user), :method => :delete, :confirm => I18n.t('active_admin.delete_confirmation'), :class => "member_link delete_link"
 		  links
 		end 

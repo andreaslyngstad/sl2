@@ -55,7 +55,13 @@ class User < ActiveRecord::Base
   def can_validate
     role == "External user"
   end
-
+  
+  def logout_stamp!
+    self.current_sign_in_at = nil
+    self.current_sign_in_ip = nil
+    self.save
+  end
+  # This is for the image upload. When uploading without a image there are no params. Adding this fake param fixed it
   attr_writer :fake
 
   def fake

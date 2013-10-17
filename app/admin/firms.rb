@@ -39,7 +39,13 @@ ActiveAdmin.register Firm do
     column "Logs", :sortable => :logs_count do |firm|
       link_to firm.logs_count, logs_obeqaslksdssdfnfdfysdfxm_firm_path(firm)
     end
-    column :created_at
+  
+    column "created_at", :sortable => :created_at do |firm|
+      firm.created_at.try(:strftime, "%d.%m.%Y")
+    end
+     column "Last sign in", :sortable => :last_sign_in_at do |firm|
+      firm.last_sign_in_at.try(:strftime, "%d.%m.%Y")
+    end
     default_actions 
   end
   filter :name 
