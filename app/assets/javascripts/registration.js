@@ -76,5 +76,5 @@ $(document).ready(function() {
 	
 	$(".register_firm_subdomain").validates_uniqe();
 	$(".open_not_required_container").open_not_required();
-	$(".signup select, .update select").chosen({width:364, disable_search:true});
+	$(".signup select, .update select").chosen({width:364});
 })

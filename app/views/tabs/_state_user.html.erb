@@ -23,6 +23,10 @@
 	<div class="state_headers">Email</div>
 	<div class="state_unit"><%= mail_to "#{ @klass.email}" %></div>
 <% end %>
+	<% if !@klass.hourly_rate.blank? %>
+		<div class="state_headers">Hourly Rate</div>
+		<div class="state_unit"><%= @klass.hourly_rate.round(0) %> <%= @klass.firm.currency %></div>
+	<% end %>
 	<div class="show_user_image">
 	<div class="avatar_show_page">
 		<%= image(@klass, "image100") %>

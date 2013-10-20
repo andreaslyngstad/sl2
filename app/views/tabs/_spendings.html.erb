@@ -20,14 +20,14 @@
 		</td>
 		<td>
 
-			<%= u[1] %> <%= current_firm.currency %>
+			<%= u[1].round(0)%> <%= current_firm.currency %>
 			
 		</td>
 		<td class="seconds" data-hours="<%= u[2] %>">
 			
 		</td>
 		<td class="user_project_price" >
-			<%= u[3] %> <%= current_firm.currency %>
+			<%= u[3].round(0) %> <%= current_firm.currency %>
 		</td>	
 	</tr>
 	<% end %>
@@ -35,6 +35,6 @@
 		<td>Total</td>
 		<td></td>
 		<td></td>
-		<td><%= ProjectPrice.get_hours(@klass) %> <%= current_firm.currency %></td>
+		<td><%= ProjectPrice.get_hours(@klass).round(0)%> <%= current_firm.currency %></td>
 	</tr>
 </table>

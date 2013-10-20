@@ -21,7 +21,7 @@ feature 'Sign up' do
    scenario "creating an firm and first user" do 
      signing_up
    end
-   
+    
    scenario 'creating an firm and first user with wrong data' do 
      visit root_url 
      click_link 'Sign up for free'

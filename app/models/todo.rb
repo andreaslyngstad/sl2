@@ -11,7 +11,7 @@ class Todo < ActiveRecord::Base
   validates_presence_of :due
   validates_presence_of :name
   validate :made_on_current_firm
-  validate :project_must_exist
+  # validate :project_must_exist
   validate :user_must_exist
   validate :correct_time
 
