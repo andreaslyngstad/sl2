@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20101029201152) do
+ActiveRecord::Schema.define(version: 20101029201154) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "resource_id",   null: false
@@ -124,6 +124,18 @@ ActiveRecord::Schema.define(version: 20101029201152) do
     t.datetime "updated_at"
   end
 
+  create_table "invoices", force: true do |t|
+    t.string   "invoice_number"
+    t.string   "content"
+    t.integer  "project_id"
+    t.integer  "customer_id"
+    t.integer  "firm_id",        null: false
+    t.boolean  "paid"
+    t.boolean  "reminder_sent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "logs", force: true do |t|
     t.text     "event"
     t.integer  "customer_id"
@@ -139,11 +151,13 @@ ActiveRecord::Schema.define(version: 20101029201152) do
     t.float    "hours"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "invoice_id"
   end
 
   add_index "logs", ["customer_id"], name: "index_logs_on_customer_id", using: :btree
   add_index "logs", ["employee_id"], name: "index_logs_on_employee_id", using: :btree
   add_index "logs", ["firm_id"], name: "index_logs_on_firm_id", using: :btree
+  add_index "logs", ["invoice_id"], name: "index_logs_on_invoice_id", using: :btree
   add_index "logs", ["project_id"], name: "index_logs_on_project_id", using: :btree
   add_index "logs", ["todo_id"], name: "index_logs_on_todo_id", using: :btree
   add_index "logs", ["user_id"], name: "index_logs_on_user_id", using: :btree

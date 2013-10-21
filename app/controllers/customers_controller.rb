@@ -28,8 +28,8 @@ class CustomersController < ApplicationController
 
   def create
     @klass = Customer.new(permitted_params.customer) 
-     authorize! :manage, @klass
     @klass.firm = current_firm
+    authorize! :manage, @klass
     respond_to do |format|
       if @klass.save
       	flash[:notice] = flash_helper("#{@klass.name}" + " is added.")

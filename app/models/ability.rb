@@ -12,6 +12,7 @@ class Ability
         can :activate_projects, Project            
         can :manage, Log, :firm => {:id => user.firm_id}
         can :manage, Todo, :firm => {:id => user.firm_id}
+        can :manage, Invoice
      end
      if user.role == "Member"
         can :read, Firm
@@ -33,6 +34,7 @@ class Ability
            log.firm == user.firm && log.user == user
         end
         can :read, Log, :firm => {:id => user.firm_id}
+        can :read, Invoice
      end   
        
      if user.role == "External user"

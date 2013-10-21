@@ -1,8 +1,8 @@
 <div class="index-view">
 	<div class="list_header orange_bgr">
-		<a id="dialog_user" data-object="user">New user</a>
-		<div id="dialog_user_form" class="dialog_form" title="Create new user" style="display:none;">
-		<%= render 'new_form' %>
+		<a id="dialog_invoice" data-object="user">New invoice</a>
+		<div id="dialog_invoice_form" class="dialog_form" title="Create new invoice" style="display:none;">
+		<%= render 'form' %>
     </div>
 	    <div class="search">
 	        <input type="text" placeholder="Search" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
@@ -10,7 +10,7 @@
 	</div>
 	<div id="cus_pro_us_listing_container">
   <ul id="cus_pro_us_listing">
-    <%= render @users %>
+    <%= render @invoices %>
   </ul>
 </div>
 </div>

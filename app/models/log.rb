@@ -10,6 +10,7 @@ class Log < ActiveRecord::Base
   # belongs_to :recent_project, :class_name => "Project", :conditions => ['logs.log_date > ?', Time.now.beginning_of_week]
   belongs_to :todo
   belongs_to :employee
+  belongs_to :invoice
   before_save :set_hours 
   validate :log_made_on_current_firm
   validate :log_made_on_project

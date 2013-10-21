@@ -1,6 +1,5 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
-
   resources :blogs
 
   get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
@@ -132,7 +131,8 @@ Squadlink::Application.routes.draw do
       # match "/logs_pr_date" => "timerange#logs_pr_date", :as => :logs_pr_date
       get "/log_range/" => "timerange#log_range", :as => :log_range
       get "/todo_range/" => "timerange#todo_range", :as => :todo_range
-      # get "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date  
+      # get "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date 
+      resources :invoices 
       resources :customers
       resources :employees
       resources :projects

@@ -24,6 +24,7 @@ class Firm < ActiveRecord::Base
   has_many :projects, :dependent => :destroy
   has_many :milestones, :dependent => :destroy
   has_many :payments
+  has_many :invoices, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
   belongs_to :plan, counter_cache: true
    

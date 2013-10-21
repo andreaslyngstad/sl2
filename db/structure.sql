@@ -426,6 +426,43 @@ ALTER SEQUENCE guides_id_seq OWNED BY guides.id;
 
 
 --
+-- Name: invoices; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE invoices (
+    id integer NOT NULL,
+    invoice_number character varying(255),
+    content character varying(255),
+    project_id integer,
+    customer_id integer,
+    firm_id integer NOT NULL,
+    paid boolean,
+    reminder_sent boolean,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: invoices_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE invoices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invoices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE invoices_id_seq OWNED BY invoices.id;
+
+
+--
 -- Name: logs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -444,7 +481,8 @@ CREATE TABLE logs (
     log_date date,
     hours double precision,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    invoice_id integer
 );
 
 
@@ -906,6 +944,13 @@ ALTER TABLE ONLY guides_categories ALTER COLUMN id SET DEFAULT nextval('guides_c
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY invoices ALTER COLUMN id SET DEFAULT nextval('invoices_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY logs ALTER COLUMN id SET DEFAULT nextval('logs_id_seq'::regclass);
 
 
@@ -1041,6 +1086,14 @@ ALTER TABLE ONLY guides_categories
 
 ALTER TABLE ONLY guides
     ADD CONSTRAINT guides_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invoices_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY invoices
+    ADD CONSTRAINT invoices_pkey PRIMARY KEY (id);
 
 
 --
@@ -1230,6 +1283,13 @@ CREATE INDEX index_logs_on_firm_id ON logs USING btree (firm_id);
 
 
 --
+-- Name: index_logs_on_invoice_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_logs_on_invoice_id ON logs USING btree (invoice_id);
+
+
+--
 -- Name: index_logs_on_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1413,3 +1473,7 @@ INSERT INTO schema_migrations (version) VALUES ('20101029201150');
 INSERT INTO schema_migrations (version) VALUES ('20101029201151');
 
 INSERT INTO schema_migrations (version) VALUES ('20101029201152');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201153');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201154');

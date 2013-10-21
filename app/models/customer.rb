@@ -7,6 +7,7 @@ class Customer < ActiveRecord::Base
   has_many :recent_logs, -> {  where('log_date > ?', Time.now.beginning_of_week).order("log_date DESC") }, :class_name => "Log"
   has_many :projects
   has_many :employees, :dependent => :destroy
+  has_many :invoices
   validates_presence_of :name 
   validate :made_with_in_limit, :on => :create
   scope :order_by_name, -> {order("name ASC")}

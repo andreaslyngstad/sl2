@@ -32,6 +32,9 @@
           	  <% if can? :read, User %>
           	   <li class="navigation" id="users_navi" pos="300"><a href="/users">Users</a></li>
           	  <% end %>
+              <% if can? :read, Invoice %>
+               <li class="navigation" id="invoices_navi" pos="375"><a href="/invoices">Invoices</a></li>
+              <% end %>
               </ul>
           </div>
           <div id="main_container">
