@@ -7,7 +7,8 @@ old_url = location.protocol + '//' + location.host + location.pathname;
 	var text = 	old_url.match(/customers/i) || 
 				old_url.match(/projects/i) || 
 				old_url.match(/archive/i) || 
-				old_url.match(/users/i) ||  
+				old_url.match(/users/i) ||
+				old_url.match(/invoices/i) ||  
 				old_url.match(/home/i) ||  
 				old_url.match(/logs/i);
 				

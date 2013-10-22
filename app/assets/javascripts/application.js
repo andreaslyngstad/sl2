@@ -324,6 +324,7 @@ $(document).ready(function() {
   $("#dialog_customer").UIdialogs_links();
   $("#dialog_user").UIdialogs_links();
   $("#dialog_employees").UIdialogs_links();
+  $("#dialog_invoice").UIdialogs_links();
   $("#activate_project").button();
 
   

@@ -129,7 +129,14 @@ class PermittedParams < Struct.new(:params, :current_user)
       [:content, :title, :author]
     end
   end
-
+  def invoice
+    params.require(:invoice).permit(*invoice_attributes)
+  end
+  def invoice_attributes
+    if current_user
+      [:invoice_number,:content,:project_id,:customer_id,:firm_id,:paid,:reminder_sent,:due]
+    end
+  end
 end
 
  

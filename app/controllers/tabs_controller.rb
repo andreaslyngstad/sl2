@@ -52,7 +52,12 @@ class TabsController < ApplicationController
     @employees = @klass.employees
     respond_with(@employees)
   end
-
+  def tabs_invoices
+    get_instance(params)
+    @invoices = @klass.invoices
+    @logs = @klass.logs.where(invoice_id: nil)
+    respond_with(@invoices)
+  end
   private
   def get_instance(params)
     @klass = get_klass(params[:class]).find(params[:id])

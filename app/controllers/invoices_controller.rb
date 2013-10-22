@@ -1,7 +1,8 @@
 class InvoicesController < ApplicationController
   respond_to :html, :js, :json
   def index
-    @invoices = current_firm.invoices 
+    @invoices = current_firm.invoices.order_by_invoice_number
+    @invoice = Invoice.new
   end
 
   def show  
@@ -11,16 +12,20 @@ class InvoicesController < ApplicationController
   end
 
   def edit
+    @invoice = current_firm.invoices.find(params[:id])
+    authorize! :read, @invoice
+    respond_with(@invoice)
   end
 
-    def create
+  def create
     @invoice = current_firm.invoices.new(permitted_params.invoice)
     respond_to do |format|
       if @invoice.save
-        flash[:notice] = flash_helper('Invoice was successfully created.')
-        format.js { render :action => "create_success"}
+        flash[:notice] = flash_helper("Invoice is added.")
+        format.js 
         else
-        format.js { render :action => "failure"}
+          flash[:notice] = flash_helper("Wrong.")
+        format.js { render "shared/validate_create" }
       end
      end
   end

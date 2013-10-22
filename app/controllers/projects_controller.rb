@@ -29,10 +29,11 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    authorize! :manage, Project
+    
     @klass = current_firm.projects.new(permitted_params.project)
     @klass.active = true
     @klass.users << current_user
+    authorize! :manage, @klass
     respond_to do |format|
       if @klass.save
         flash[:notice] = flash_helper("Project is added.")
@@ -60,7 +61,7 @@ class ProjectsController < ApplicationController
   end
   
   def destroy
-    authorize! :manage, Firm
+    authorize! :archive, Firm
    @klass = Project.find(params[:id])
    
    @klass.destroy
@@ -76,7 +77,7 @@ class ProjectsController < ApplicationController
   
   def activate_projects
     @project = Project.find(params[:id])
-    authorize! :manage,  @project
+    authorize! :archive,  @project
       if @project.active == true
         @project.active = false
         flash[:notice] = flash_helper("Project is made inactive.")

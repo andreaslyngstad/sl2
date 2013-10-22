@@ -23,17 +23,17 @@
         	<%= yield(:help)%>
           <div id="navigation" class="hor_scroll ver_down_on_help">
           	<ul>
-              <li class="navigation" id="home_navi" pos="0"><%= link_to "Home", timesheet_week_path(current_user) %></li>
-            	<li class="navigation" id="logs_navi" pos="75"><a href="/logs">Logs</a></li>
-            	<li class="navigation" id="projects_navi" pos="150"><a href="/projects">Projects</a></li>
+              <li class="navigation" id="home_navi"><%= link_to "Home", timesheet_week_path(current_user) %></li>
+            	<li class="navigation" id="logs_navi"><a href="/logs">Logs</a></li>
+            	<li class="navigation" id="projects_navi"><a href="/projects">Projects</a></li>
             	<% if can? :read, Customer %>
-          	   <li class="navigation" id="customers_navi" pos="225"><a href="/customers">Customers</a></li>
+          	   <li class="navigation" id="customers_navi"><a href="/customers">Customers</a></li>
           	  <% end %>
           	  <% if can? :read, User %>
-          	   <li class="navigation" id="users_navi" pos="300"><a href="/users">Users</a></li>
+          	   <li class="navigation" id="users_navi"><a href="/users">Users</a></li>
           	  <% end %>
               <% if can? :read, Invoice %>
-               <li class="navigation" id="invoices_navi" pos="375"><a href="/invoices">Invoices</a></li>
+               <li class="navigation" id="invoices_navi"><a href="/invoices">Invoices</a></li>
               <% end %>
               </ul>
           </div>

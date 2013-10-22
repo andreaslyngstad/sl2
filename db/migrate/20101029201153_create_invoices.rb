@@ -7,8 +7,8 @@ class CreateInvoices < ActiveRecord::Migration
       t.integer :customer_id
       t.integer :firm_id, :null => false
       t.boolean :paid
-      t.boolean :reminder_sent
-
+      t.datetime :reminder_sent
+      t.datetime :due
       t.timestamps
     end
   end

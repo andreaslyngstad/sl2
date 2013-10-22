@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
   def destroy
    
-    @user = current_fim.users.find(params[:id])
+    @user = current_firm.users.find(params[:id])
     authorize! :manage, @user
      respond_to do |format|
     if @user == current_user

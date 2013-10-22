@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe HooksController do
   
-  let(:plan)          {FactoryGirl.create(:plan, name:"test", price: 99, paymill_id:"offer_b72bdb7a4539757ee843")}
+  let(:plan)          {FactoryGirl.create(:plan, name:"test", price: 99, paymill_id:"offer_dbe27a284b10c57ba23e")}
   let(:firm)          {FactoryGirl.create(:firm, plan: plan)}
   describe "POST 'receiver'" do
     it "finds subscription and updates it", :vcr do
@@ -12,6 +12,7 @@ describe HooksController do
       @subscription.active = false
       @subscription.next_bill_on = DateTime.now.to_date
       @subscription.save
+      Rails.logger.info(@subscription.paymill_id.to_s + "YEEEEEE")
       event = {event: {event_type: "subscription.succeeded",event_resource: { subscription: @subscription.paymill_id,transaction: "Object"},created_at: "1358027174"}}
       request.env['RAW_POST_DATA'] = event.to_json  
       post 'receiver', event 

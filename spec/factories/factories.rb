@@ -4,6 +4,7 @@ FactoryGirl.define do
   sequence(:name) { |n|"name#{n}"}
   sequence(:subdomain) { |n| "subdomain#{n}"}
   sequence(:email) { |n| "foo#{n}@example.com" }
+  sequence(:invoice_number){|n| "#{n + 10000}"}
  
  
   factory :firm do
@@ -115,5 +116,12 @@ FactoryGirl.define do
     author "test"
     title "test"
     content "test"  
+  end
+  factory :invoice do
+    invoice_number
+    content "test"  
+    
+    project
+    customer
   end
 end

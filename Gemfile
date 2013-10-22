@@ -40,6 +40,8 @@ group :development do
   gem 'quiet_assets'
   gem 'debugger'
   gem 'thin'
+  gem 'guard-livereload', require: false
+  gem "rack-livereload"
   # gem 'simplecov', :require => false
  
 end

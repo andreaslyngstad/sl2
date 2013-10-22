@@ -1,0 +1,17 @@
+<div class="log_menu">
+ <% if can? :create, Firm %>
+  <div class="add_some">
+    <a id="dialog_invoice" data-object="invoice">New invoice</a>
+    <div id="dialog_invoice_form" class="dialog_form" title="Create new invoice" style="display:none;">
+      <%= render 'invoices/form' %>
+    </div>
+  </div>
+ <% end %>
+</div>
+<div id="listing_invoices">    
+  <div class="info" >
+    <div class="name_todo info_head">Name</div>
+    <div class="invoice_desc info_head">Description</div>
+	</div>
+    <%= render @invoices %>
+</div>

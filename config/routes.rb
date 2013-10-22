@@ -84,6 +84,7 @@ Squadlink::Application.routes.draw do
       get "/tabs/tabs_users/:id/:class" => "tabs#tabs_users", :as => :tabs_users
       get "/tabs/tabs_statistics/:id/:class" => "tabs#tabs_statistics", :as => :tabs_statistics
       get "/tabs/tabs_spendings/:id/:class" => "tabs#tabs_spendings", :as => :tabs_spendings
+      get "/tabs/tabs_invoices/:id/:class" => "tabs#tabs_invoices", :as => :tabs_invoices
       #logs_controller
       post "logs/start_tracking" => "logs#start_tracking",  :as => :start_tracking
       patch "logs/stop_tracking/:id" => "logs#stop_tracking",  :as => :stop_tracking

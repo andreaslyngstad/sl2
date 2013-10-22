@@ -1,1 +1,8 @@
-_form.htlm.erb
+<%= form_for(@invoice, :remote => true) do |f| %>
+  <ul>
+      
+      <li><%= f.label :content %><%= f.text_area :content %></li>
+
+      <li><%= f.submit 'Save', :class => 'submit', :id => "submit_invoice_edit" %></li>
+  </ul>
+<% end %>
