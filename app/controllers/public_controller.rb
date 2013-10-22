@@ -4,7 +4,7 @@ class PublicController < ApplicationController
   layout "registration"
   respond_to :html
   include SubdomainLogin
-  def index
+  def xxindex
   end
 
   def register
@@ -56,6 +56,8 @@ class PublicController < ApplicationController
   def termsofservice
   end
   def privacy_policy
+  end
+  def imprint
   end
   def pricing
     @plans = Plan.all
