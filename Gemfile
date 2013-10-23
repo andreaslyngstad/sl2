@@ -29,7 +29,7 @@ gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'yui-compressor'
 gem 'exception_notification'
-
+gem 'analytics-ruby', '<1.0'
 
 group :development do
   gem 'rack-mini-profiler'

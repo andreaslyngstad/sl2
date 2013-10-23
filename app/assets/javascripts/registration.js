@@ -4,7 +4,9 @@
 //= require jquery.ui.position
 //= require jquery.ui.widget
 //= require chosen.jquery.min
+//= require segmentio
 //= require_self
+//= require turbolinks
 
 
 jQuery.ajaxSetup({ 
