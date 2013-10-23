@@ -4,8 +4,9 @@
 //= require jquery.ui.position
 //= require jquery.ui.widget
 //= require chosen.jquery.min
+//= segmentio.js
 //= require_self
-
+//= require turbolinks
 
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
