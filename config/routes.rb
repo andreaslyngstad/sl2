@@ -7,7 +7,7 @@ Squadlink::Application.routes.draw do
   get "/imprint" => "public#imprint",  :as => :imprint
   get "/privacy_policy" => "public#privacy_policy",  :as => :privacy_policy
   get "/pricing" => "public#pricing",  :as => :pricing
-  get "/xxindex" => "public#xxindex",  :as => :xxindex
+  get "/index" => "public#index",  :as => :index
 
   resources :guides
   post "hooks/receiver"
