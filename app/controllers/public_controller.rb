@@ -4,7 +4,7 @@ class PublicController < ApplicationController
   layout "registration"
   respond_to :html
   include SubdomainLogin
-  def xxindex
+  def index
   end
 
   def register
@@ -37,6 +37,15 @@ class PublicController < ApplicationController
     @user.role = "Admin"
     
         if @user.save
+          Analytics.identify(
+        user_id: @user.id,
+        traits: { email: @user.email, role: @user.role, subscription: @user.firm.subscription.name, firm: @user.firm.name, firm_users: @user.firm.users.count}
+        # context: { providers: {  'All': false, "Customer.io": true, } }
+          )
+         Analytics.track(
+          user_id: @user.id,
+          event: 'created_at'
+         )
           flash[:notice] = "Registration successful."
           QC.enqueue "FirmMailer.sign_up_confirmation", @user.id
           sign_in(@user)

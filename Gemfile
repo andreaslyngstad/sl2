@@ -30,6 +30,7 @@ gem 'turbolinks'
 gem 'yui-compressor'
 gem 'exception_notification'
 gem 'analytics-ruby', '<1.0'
+gem 'customerio', :git => 'https://github.com/customerio/customerio-ruby'
 
 group :development do
   gem 'rack-mini-profiler'

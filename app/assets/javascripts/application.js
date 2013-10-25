@@ -46,9 +46,9 @@
 //= require nvd3/src/models/multiBarChart
 //= require colorArrays
 //= require stackedAndPie
+//= analytics
 //= require_self
 //= require turbolinks
-
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 })
@@ -296,7 +296,7 @@ $.ajaxSetup({
   });
 
 $(document).ready(function() {
-
+ 
   $(".range_date").datepicker({
       onSelect: function() {
         $('#range_form').submit();
