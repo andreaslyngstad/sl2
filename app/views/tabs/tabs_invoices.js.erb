@@ -2,7 +2,9 @@ $('.flash_error').empty();
 $(".flash_notice").empty();
 var tab = $("li.active").children("a").attr("href")
 $(tab).empty().append("<%= j( render :partial => "invoices/listing_invoices")  %>")
-$("#dialog_invoices").UIdialogs_links();
+$("#dialog_invoice").UIdialogs_links();
+$("#dialog_invoice_form").UIdialogs();
+$(".date").datepicker();
 $("#invoices_pr_date_select").chosen({width:'200px'});
 $('.date_format_setter').set_date_format()
 $(".total_log_time").set_hours()
@@ -10,7 +12,6 @@ $('.clock_format_setter').set_clock_format()
 $(".range_date").datepicker({ 
 		onSelect: function() {
 			$('#range_form').submit();
-		
   		}
   		}).attr( 'readOnly' , 'true' )
 

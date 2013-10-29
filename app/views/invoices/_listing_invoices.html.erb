@@ -1,9 +1,19 @@
 <div class="log_menu">
-	<span class="add_some">  
-		<% if can? :manage, @klass %>
-		<a id="dialog_invoices" data-object="invoice">New invoice</a>
-		<% end %>
-	</span>
+	<div class="add_some">
+    <a id="dialog_invoice" data-object="invoice">New invoice</a>
+    <div id="dialog_invoice_form" class="dialog_form" title="Create new invoice" style="display:none;">  
+      <%= form_for(@klass.invoices.new, :remote => true) do |f| %>
+      <li><%= f.label :content %><%= f.text_area :content, :class => "required", :minlength => "2"%></li>
+      	<li><%= f.label :customer_id%>
+				<%= f.select(:customer_id, current_user.firm.customers.map {|customer| [customer.name, customer.id]}, {:prompt => "Select customer"})%></li>
+    <li><%= f.label :due %><%= f.text_field :due, :value => date_format(Date.today + 14.days), :class => "date", :id => "date_invoice_" %>
+       </li>
+      
+      <li><%= f.submit "save", :class => 'submit', :id => "new_invoice_submit" %></li>
+      <% end %>
+    </div>
+  </div>
+
 	    
 	<div class="range" >	   
 		<%= form_tag('/invoice_range', :id => "invoices_range_form", :remote => true, :method => :get) do -%>
@@ -35,11 +45,7 @@
 	  <% end %> 
 	<% end %>
 	</div>
-	<div class="info"> 	
-		
-	</div>
-	<div id="not_done_tasks">
+	
 		<%= render @logs %>
-	</div>
 	
 </div>

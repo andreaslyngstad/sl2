@@ -22,8 +22,18 @@
 //   // background-color: #E6E9F5;
 //   height:75%;
 //   }
+input[type=text], textarea {
 
-
+  outline: none;
+  
+  border: 1px solid #DDDDDD;
+}
+ 
+input[type=text]:focus, textarea:focus {
+  box-shadow: 0 0 5px rgba(116, 185, 239, 1);
+    
+  border: 1px solid rgba(116, 185, 239, 1);
+}
 textarea{
 	height: 200px;
 	width: 369px;
@@ -545,7 +555,6 @@ float:left;
   background: white;
   font-family:arial;
   color: #bbb;
-  width:90px;
   letter-spacing: -1px;
   font-size: 24px;
   padding: 13px 5px 2px 5px;

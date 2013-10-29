@@ -148,7 +148,9 @@ jQuery.fn.UIdialogs = function(){
     	  $("#logProjectId").val('').trigger("chosen:updated")
       	$(this).dialog("destroy"); 
       },
+
   });
+  console.log(this)
 };
 jQuery.fn.disableUIdialogs = function(){
   $(this).dialog("destroy");
@@ -187,11 +189,12 @@ jQuery.fn.UIdialogs_links = function(){
   var date = '#' + $(this).attr('id') + '_date'
   var object = $(this).attr("data-object")
   	$(form).UIdialogs();
-      $(date).datepicker();
-       $(form).find(".new_" + object).validateWithErrors();
-       $(form).find("select").chosen({width:'369px'})
-      $(form).dialog( "open" );
-    });
+    $(date).datepicker();
+    $(form).find(".new_" + object).validateWithErrors();
+    $(form).find("select").chosen({width:'369px'})
+    console.log(form)
+    $(form).dialog( "open" );
+  });
 
 }; 
 jQuery.fn.activate_projects = function(){	
@@ -324,7 +327,7 @@ $(document).ready(function() {
   $("#dialog_customer").UIdialogs_links();
   $("#dialog_user").UIdialogs_links();
   $("#dialog_employees").UIdialogs_links();
-  $("#dialog_invoice").UIdialogs_links();
+  // $("#dialog_invoice").UIdialogs_links();
   $("#activate_project").button();
 
   

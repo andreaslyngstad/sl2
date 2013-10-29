@@ -1,4 +1,4 @@
-<%= form_for(@invoice, :remote => true) do |f| %>
+<%= form_for(@klass.invoices.new, :remote => true) do |f| %>
   <ul>
       
       <li><%= f.label :content %><%= f.text_area :content %></li>
