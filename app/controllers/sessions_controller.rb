@@ -22,9 +22,7 @@ class SessionsController < Devise::SessionsController
       cookies.delete(:token, :domain => :all)
     if token_user
        sign_in(token_user)
-       # $customerio.track(
-       #  token_user.id, 'Signed in'
-       # )
+       
        token_user.firm.did_sign_in
        flash[:notice] = "Signed in successfully"
       redirect_to root_url(:subdomain => token_user.firm.subdomain )
@@ -59,6 +57,9 @@ private
      token =  Devise.friendly_token
      resource.loginable_token = token
      resource.save
+     $customerio.track(
+        resource.id, 'Signed in', date: Time.now.to_i
+       )
      cookies[:token] = { :value => token, :domain => :all }
      redirect_to sign_in_at_subdomain_url( :subdomain => resource.firm.subdomain)
   end

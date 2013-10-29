@@ -5,7 +5,7 @@ en:
                        <p>When you submit credit card information, the %{current_plan} plan 
                        subscription will canceled and the %{new_plan} 
                        plan subscription will start. </p>
-                       <p>The new subscription will be renewed and %{new_plan_price} will be withdrawn from your account every month.</p>
+                       <p>The %{new_plan} plan subscription will be renewed and %{new_plan_price} will be withdrawn from your account every month.</p>
     thank_you: Thank you!
     we_suggest: We suggest that you check your data before you proceed with the downgrade
     keep_in_mind: Keep in mind that you have more than..

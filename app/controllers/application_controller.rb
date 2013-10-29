@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 	include UrlHelper
 	# before_filter :miniprofiler
 	before_filter :user_at_current_firm
+  # before_filter :customerio
 
 
   before_filter :set_mailer_url_options, 
@@ -53,7 +54,11 @@ class ApplicationController < ActionController::Base
   # def all_users
   #   @all_users ||= current_firm.users.order("name")
   # end
-  
+  # def customerio 
+  #   if current_user
+  #     $customerio.track(current_user.id, request.original_url)
+  #   end
+  # end
   def not_found
     raise ActionController::RoutingError.new('Not Found')
   end

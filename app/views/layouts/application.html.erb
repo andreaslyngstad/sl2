@@ -3,39 +3,22 @@
     <title>Squadlink</title>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta name="google-site-verification" content="ynxbxSS6ZtwG1WFHyqmWZ5ELrgNRADdhdEFebN11h5k" />
-    
   	<%= stylesheet_link_tag  'application' %>	
     <%= javascript_include_tag "application"%>
-   	
-      <script type="text/javascript" >
-  var _cio = _cio || [];
-  (function() {
-    var a,b,c;a=function(f){return function(){_cio.push([f].
-    concat(Array.prototype.slice.call(arguments,0)))}};b=["load","identify",
-    "sidentify","track","page"];for(c=0;c<b.length;c++){_cio[b[c]]=a(b[c])};
-    var t = document.createElement('script'),
-        s = document.getElementsByTagName('script')[0];
-    t.async = true;
-    t.id    = 'cio-tracker';
-    t.setAttribute('data-site-id', '10521ac52be0a2ab8ada');
-    t.src = 'https://assets.customer.io/assets/track.js';
-    s.parentNode.insertBefore(t, s);
-  })();
-</script>
-<script type="text/javascript" >
-  _cio.identify({ 
-    id: 'prod_287',          
-    email: 'user@domain.com', 
-    created_at: 1339438758,   
-  });
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-45096341-1', 'squadlink.com');
+  ga('send',  'pageview')
 </script>
     <%= csrf_meta_tag %>
     <link rel="shortcut icon" href="/favicon.png" />
     <%= yield :head %>
-
   </head>
   <body> 
-
+   
   	<span class="current_firm_data" data-clockFormat="<%= current_firm.clock_format%>" data-timeFormat="<%= current_firm.time_format %>" data-dateFormat="<%= current_firm.date_format %>" data-current_user_id="<%= current_user.id %>" data-current_user_email="<%= current_user.email %>" data-current_user_created_at="<%= current_user.created_at.to_i %>"></span>
     <div id="centering_main">
       <div id="main">

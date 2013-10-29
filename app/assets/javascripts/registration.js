@@ -5,7 +5,7 @@
 //= require jquery.ui.position
 //= require jquery.ui.widget
 //= require chosen.jquery.min
-//= require segmentio
+//= require analytics
 //= require_self
 //= require turbolinks
 

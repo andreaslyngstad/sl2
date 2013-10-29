@@ -25,6 +25,16 @@ class UsersController < ApplicationController
     @klass.firm = current_firm 
      respond_to do |format|
       if @klass.save
+        $customerio.identify(
+           id: @klass.id,
+           email: @klass.email,
+           created_at: @klass.created_at.to_i,
+           name: @klass.name,
+           firm: @klass.firm.name,
+           firm_subdomain: @klass.firm.subdomain,
+           subscription: @klass.firm.subscription.name,
+           send_welcome_email: params[:send_welcome_email]
+        ) 
         flash[:notice] = flash_helper("Registration successful.")
         format.js
       else
@@ -56,7 +66,7 @@ class UsersController < ApplicationController
 
   def destroy
    
-    @user = current_fim.users.find(params[:id])
+    @user = current_firm.users.find(params[:id])
     authorize! :manage, @user
      respond_to do |format|
     if @user == current_user

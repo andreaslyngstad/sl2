@@ -1,8 +1,8 @@
 <div id="register_container">
   <div id="registration" class="blue">
    	<p>Please sign in.</p>
-    <span class="flash_notice" style="color: #87E32B;"><%= flash[:notice] %></span>
-    <span class="flash_notice" style="color: red;"><%= flash[:alert] %> </span>
+    <span class="flash_notice"><%= flash[:notice] %></span>
+    <span class="flash_notice"><%= flash[:alert] %> </span>
   </div>
   <div class="signup signup_firm">
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
