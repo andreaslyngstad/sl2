@@ -38,6 +38,7 @@ class PublicController < ApplicationController
     
         if @user.save
           sign_in(@user)
+          begin
           $customerio.identify(
              id: current_user.id,
              email: current_user.email,
@@ -48,6 +49,8 @@ class PublicController < ApplicationController
              firm_plan: current_user.firm.plan.name,
              first_user: true
            )
+          rescue Customerio::Client::InvalidResponse
+          end
           flash[:notice] = "Registration successful."
           # QC.enqueue "FirmMailer.sign_up_confirmation", @user.id
           sign_out_and_redirect_with_token(@user)

@@ -25,6 +25,8 @@ class UsersController < ApplicationController
     @klass.firm = current_firm 
      respond_to do |format|
       if @klass.save
+        flash[:notice] = flash_helper("Registration successful.")
+        format.js
         $customerio.identify(
            id: @klass.id,
            email: @klass.email,
@@ -35,8 +37,6 @@ class UsersController < ApplicationController
            subscription: @klass.firm.subscription.name,
            send_welcome_email: params[:send_welcome_email]
         ) 
-        flash[:notice] = flash_helper("Registration successful.")
-        format.js
       else
         format.js { render "shared/validate_create" }
     end

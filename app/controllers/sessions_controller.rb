@@ -57,10 +57,10 @@ private
      token =  Devise.friendly_token
      resource.loginable_token = token
      resource.save
+     cookies[:token] = { :value => token, :domain => :all }
+     redirect_to sign_in_at_subdomain_url( :subdomain => resource.firm.subdomain)
      $customerio.track(
         resource.id, 'Signed in', date: Time.now.to_i
        )
-     cookies[:token] = { :value => token, :domain => :all }
-     redirect_to sign_in_at_subdomain_url( :subdomain => resource.firm.subdomain)
   end
 end

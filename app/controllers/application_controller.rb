@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  rescue_from Customerio::Client::InvalidResponse, :with => :do_nothing
   include ApplicationHelper
   #rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   require "./lib/timehelp"
@@ -92,7 +93,9 @@ class ApplicationController < ActionController::Base
   	Time.zone.today
   end
   
-  
+  def do_nothing
+    
+  end
   def record_not_found
     flash[:notice] = "No record found"
     redirect_to action: :index
