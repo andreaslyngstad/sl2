@@ -8,32 +8,54 @@
 <% end %>
 <div id="left">
 	<div class="firm_account">
-		<h2>Account</h2>
+		<h2><%= t'navigation.account' %></h2>
 		<ul>
-			<li><span class="preference_label">Secure site</span><%= current_firm.name %></li>
-			<li><span class="preference_label">Memeber since</span><%= date_format(current_firm.created_at.to_date) %></li>
-			<li><span class="preference_label">Plan</span><%= current_firm.plan.name %></li>	
+			<li><span class="preference_label"><%= t('general.member_since') %></span><%= date_format(current_firm.created_at.to_date) %></li>
+			<li><span class="preference_label"><%= (t'activerecord.models.plan.one').capitalize %></span><%= current_firm.plan.name %> <span style="margin-left:20px;"><%= link_to (t'edit') , plans_path%></span></li>	
 		</ul>
-		<%= link_to "Subscription", plans_path, :class => "submit"%>
-		<%= link_to "Payments", payments_path, :class => "submit"%>
+		<%= link_to (t'general.upgrade') , plans_path, :class => "submit"%>
+		<%= link_to (t'general.payments'), payments_path, :class => "submit"%>
 		</div>
 		<div class="firm_preferences">
-			<h2>Preferences</h2>
+			<h2><%= t'general.my_firm' %></h2>
 		<ul>
-			<li><span class="preference_label">Name</span><%= current_firm.name %></span></li>
-			<li><span class="preference_label">Subdomain</span><%= current_firm.subdomain %></li>
-			<li><span class="preference_label">Phone</span><%= current_firm.phone %></li>
-			<li><span class="preference_label">Address</span><%= current_firm.address %></li>
-			<li><span class="preference_label">Language</span><%= current_firm.language %></li>
-			<li><span class="preference_label">Currency</span><%= current_firm.currency %></li>
-			<li><span class="preference_label">Time zone</span><%= current_firm.time_zone %></li>
-			<li><span class="preference_label">Time format</span><%= current_firm.time_format == 1 ? "Hour:minute" : "Hour:decimal" %></li>
-			<li><span class="preference_label">Date format</span><%= current_firm.date_format == 1 ? "Day.Month.Year" : "Month/Day/Year"  %></li>
-			<li><span class="preference_label">Clock format</span><%= current_firm.clock_format == 1 ? "24 hours" : "12 hours"  %></li>
-			<!-- <li><span class="preference_label">Logo</span><%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :original)) : ""%></li>    
-			<li><span class="preference_label">Background color</span><span style="display: inline-block;width:100px;"><%= current_firm.background %></span></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.name' %>
+			</span><%= current_firm.name %></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.subdomain' %>
+			</span><%= current_firm.subdomain %></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.phone' %>
+			</span><%= current_firm.phone %></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.address' %>
+			</span><%= current_firm.address%></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.language' %>
+			</span><%= humaunize(current_firm.language, :language)%></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.currency' %>
+			</span><%= humaunize(current_firm.currency, :currency )%></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.tax' %>
+			</span><%= current_firm.tax.try(:prettify)%>%</li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.time_zone' %>
+			</span><%= current_firm.time_zone %></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.time_format' %>
+			</span><%= current_firm.time_format == 1 ? (t'times.hour.one').capitalize + ':' + (t'times.minute.more') : (t'times.hour.one').capitalize + '.' + (t'economic.decimal') %></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.date_format' %>
+			</span><%= current_firm.date_format == 1 ? (t'datetime.prompts.day') + '.' + (t'datetime.prompts.month') + '.' + (t'datetime.prompts.year') : (t'datetime.prompts.month') + '/' + (t'datetime.prompts.day') + '/' + (t'datetime.prompts.year')  %></li>
+			<li><span class="preference_label">
+				<%= t'activerecord.attributes.firm.clock_format' %>
+			</span><%= current_firm.clock_format == 1 ? ("24 " + (t'times.hour.more')): ("12 " +(t'times.hour.more') ) %></li>
+			 <li><span class="preference_label">Logo</span><%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :original)) : ""%></li>    
+			<!-- <li><span class="preference_label">Background color</span><span style="display: inline-block;width:100px;"><%= current_firm.background %></span></li>
 			<li><span class="preference_label">Text color</span><span style="display: inline-block;width:100px;"><%= current_firm.color %></span></li> -->
 		</ul>	
-		<%= link_to "Edit preferences", firm_edit_path, :class => "submit"%>
+		<%= link_to (t('edit').capitalize), firm_edit_path, :class => "submit"%>
 	</div>  	
 </div>

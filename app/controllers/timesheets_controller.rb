@@ -27,7 +27,6 @@ class TimesheetsController < ApplicationController
     
     respond_to do |format|
       if @log.save
-        flash[:notice] = flash_helper('Log was successfully created.')
         format.js
       else
         format.js { render "shared/validate_create" }

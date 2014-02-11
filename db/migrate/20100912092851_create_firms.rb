@@ -6,8 +6,15 @@ class CreateFirms < ActiveRecord::Migration
            t.text :address
            t.text :phone
            t.text :currency
-           t.text :language
+           t.text :language, default: "en"
            t.text :time_zone
+           t.float :tax
+           t.text :invoice_email
+           t.text :invoice_email_subject
+           t.text :invoice_email_message
+           t.text :bank_account
+           t.text :vat_number
+           t.text :on_invoice_message
            t.datetime :last_sign_in_at
            t.boolean :closed
            t.integer :time_format
@@ -18,6 +25,7 @@ class CreateFirms < ActiveRecord::Migration
            t.integer :users_count, :default => 0
            t.integer :projects_count, :default => 0
            t.integer :logs_count, :default => 0  
+           t.integer :invoices_count, :default => 0  
            
       t.timestamps
     end

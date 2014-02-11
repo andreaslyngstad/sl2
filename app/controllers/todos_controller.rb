@@ -4,7 +4,7 @@ class TodosController < ApplicationController
     @todo.firm = current_firm
     respond_to do |format|
       if todo.save
-        flash[:notice] = flash_helper('Task was successfully created.')
+        flash[:notice] = flash_helper((t'activerecord.models.todo.one').capitalize + ' ' + (t'activerecord.flash.saved'))
         format.js
       else       
         format.js { render "shared/validate_create" }
@@ -22,7 +22,7 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       if todo.update_attributes(permitted_params.todo)
-        flash[:notice] = flash_helper('Task was successfully updated.')
+        flash[:notice] = flash_helper((t'activerecord.models.todo.one').capitalize + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_update" }
@@ -32,7 +32,7 @@ class TodosController < ApplicationController
 
   def destroy
     todo.destroy
-    flash[:notice] = flash_helper('Task was successfully deleted.')
+    flash[:notice] = flash_helper((t'activerecord.models.todo.one').capitalize + ' ' + (t'activerecord.flash.deleted'))
     respond_to do |format|
       format.js
     end

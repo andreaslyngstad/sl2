@@ -108,7 +108,7 @@ table.timesheet_table tr td.number,
 table.timesheet_table tr td.total, 
 table.timesheet_table tr td.timesheet_day_total,
 table.timesheet_table tr td.timesheet_week_total {
-text-align:center;
+text-align:right;
 vertical-align: middle;
 padding: 8px 5px 8px 0;
 }
@@ -132,7 +132,7 @@ text-align: right;
 }
 
 table.timesheet_table .timesheet_day {
-
+text-align: right;
 
 font-size: 12px;
 
@@ -152,6 +152,6 @@ width: 100px;
 }
 
 table.timesheet_table tfoot td.timesheet_total {
-text-align: center;
+ text-align: right;
 }
 /*timesheet end*/

@@ -1,16 +1,19 @@
 $('.flash_error').empty();
 <% if @klass %>
-var object = "<%= escape_javascript(@klass.class.to_s.downcase) %>"
-var id = "<%= escape_javascript(@klass.id.to_s) %>"
+var object = "<%= j(@klass.class.to_s.downcase) %>"
+var id = "<%= j(@klass.id.to_s) %>"
 <% elsif @todo %>
-var object = "<%= escape_javascript(@todo.class.to_s.downcase) %>"
-var id = "<%= escape_javascript(@todo.id.to_s) %>"
+var object = "<%= j(@todo.class.to_s.downcase) %>"
+var id = "<%= j(@todo.id.to_s) %>"
 <% end %>
+<% if @klass and @klass.class.to_s == "Invoice" %>
+$("#" + object + "_update_" + id + "_form").UIdialogs_invoices();
+<% else %>
 $("#" + object + "_update_" + id + "_form").UIdialogs();
 $("#" + object + "_update_" + id + "_form").children(".edit_" + object).validateWithErrors();
 $("#" + object + "_update_" + id + "_form").find(".date").datepicker();
 $("#" + object + "_update_" + id + "_form").dialog( "open" );
 $("#" + object + "_update_" + id + "_form").find(".flash_notice").empty()
-
-$("#" + object + "_update_" + id + "_form").prepend("<%= escape_javascript( render :partial => "shared/validation_error", :locals => { :object => @klass ? @klass : @todo })  %>");
+<% end %>
+$("#" + object + "_update_" + id + "_form").prepend("<%= j( render :partial => "shared/validation_error", :locals => { :object => @klass ? @klass : @todo })  %>");
 $(".spinning").hide();

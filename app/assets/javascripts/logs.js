@@ -12,7 +12,7 @@ jQuery.fn.UIdialogs_tracking_logs_links = function(){
   	$(".tracking_select").slideToggle();
   	$(".open_tracking_select").toggleClass("close_tracking_select");
   	  
-    var data_id = $(this).attr('data-id')
+    var data_id = $(".open_tracking_select").attr('data-id')
     var form_id = '#form_holder'
     
     // get todo and saving log when selecting project
@@ -270,5 +270,5 @@ $(document).ready(function() {
 	        step:10,
 	        slide: slideTime
 	    });
-	$(".open_tracking_select").UIdialogs_tracking_logs_links();
+	$(".open_tracking_select_container").UIdialogs_tracking_logs_links();
 })

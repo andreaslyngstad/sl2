@@ -2,6 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 # require "rails/test_unit/railtie"
+require 'pdfkit'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -14,6 +15,9 @@ SECRETS_CONFIG.merge! SECRETS_CONFIG.fetch(Rails.env, {})
 module Squadlink
   class Application < Rails::Application
 
+    config.middleware.use PDFKit::Middleware
+    
+    require "#{Rails.root}/lib/extensions.rb"
     config.colorize_logging = true
     # Enable the asset pipeline
     # config.assets.enabled = false
@@ -31,6 +35,7 @@ module Squadlink
     config.active_record.timestamped_migrations = false
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += Dir["#{config.root}/lib", "#{config.root}/lib/**/"]
     config.autoload_paths += %W[#{config.root}/lib]
     config.active_record.schema_format = :sql
     # Only load the plugins named here, in the order given (default is alphabetical).
@@ -48,7 +53,12 @@ module Squadlink
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     # config.i18n.default_locale = :de
+    # rails will fallback to config.i18n.default_locale translation
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
 
+    # rails will fallback to en, no matter what is set as config.i18n.default_locale
+    config.i18n.fallbacks = [:en]
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 

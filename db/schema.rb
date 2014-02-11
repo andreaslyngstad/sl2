@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20101029201154) do
+ActiveRecord::Schema.define(version: 20101029201155) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "resource_id",   null: false
@@ -59,7 +59,12 @@ ActiveRecord::Schema.define(version: 20101029201154) do
     t.text     "phone"
     t.text     "email"
     t.text     "address"
-    t.integer  "firm_id",    null: false
+    t.text     "zip"
+    t.text     "city"
+    t.text     "country"
+    t.datetime "deleted_at"
+    t.integer  "invoices_count", default: 0
+    t.integer  "firm_id",                    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -85,8 +90,12 @@ ActiveRecord::Schema.define(version: 20101029201154) do
     t.text     "address"
     t.text     "phone"
     t.text     "currency"
-    t.text     "language"
+    t.text     "language",          default: "en"
     t.text     "time_zone"
+    t.float    "tax"
+    t.text     "invoice_email"
+    t.text     "invoice_subject"
+    t.text     "invoice_message"
     t.datetime "last_sign_in_at"
     t.boolean  "closed"
     t.integer  "time_format"
@@ -97,6 +106,7 @@ ActiveRecord::Schema.define(version: 20101029201154) do
     t.integer  "users_count",       default: 0
     t.integer  "projects_count",    default: 0
     t.integer  "logs_count",        default: 0
+    t.integer  "invoices_count",    default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "logo_file_name"
@@ -124,17 +134,37 @@ ActiveRecord::Schema.define(version: 20101029201154) do
     t.datetime "updated_at"
   end
 
-  create_table "invoices", force: true do |t|
-    t.string   "invoice_number"
-    t.string   "content"
-    t.integer  "project_id"
-    t.integer  "customer_id"
-    t.integer  "firm_id",        null: false
-    t.boolean  "paid"
-    t.boolean  "reminder_sent"
+  create_table "invoice_lines", force: true do |t|
+    t.float    "quantity"
+    t.text     "description"
+    t.float    "price"
+    t.float    "amount"
+    t.float    "tax"
+    t.integer  "invoice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "invoices", force: true do |t|
+    t.integer  "number"
+    t.string   "content"
+    t.integer  "project_id"
+    t.integer  "customer_id",   null: false
+    t.integer  "firm_id",       null: false
+    t.integer  "status"
+    t.datetime "reminder_sent"
+    t.datetime "due"
+    t.float    "total"
+    t.datetime "date"
+    t.float    "discount"
+    t.text     "currency"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invoices", ["customer_id"], name: "index_invoices_on_customer_id", using: :btree
+  add_index "invoices", ["firm_id"], name: "index_invoices_on_firm_id", using: :btree
+  add_index "invoices", ["project_id"], name: "index_invoices_on_project_id", using: :btree
 
   create_table "logs", force: true do |t|
     t.text     "event"
@@ -143,15 +173,16 @@ ActiveRecord::Schema.define(version: 20101029201154) do
     t.integer  "firm_id",     null: false
     t.integer  "project_id"
     t.integer  "employee_id"
+    t.integer  "invoice_id"
     t.integer  "todo_id"
     t.boolean  "tracking"
     t.datetime "begin_time"
     t.datetime "end_time"
     t.date     "log_date"
     t.float    "hours"
+    t.float    "tax"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "invoice_id"
   end
 
   add_index "logs", ["customer_id"], name: "index_logs_on_customer_id", using: :btree

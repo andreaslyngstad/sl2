@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   require "./lib/timehelp"
 	include UrlHelper
 	# before_filter :miniprofiler
-	before_filter :user_at_current_firm
+	before_filter :user_at_current_firm, :set_locale
 
 
   before_filter :set_mailer_url_options, 
@@ -86,7 +86,11 @@ class ApplicationController < ActionController::Base
   def time_range_to_day
   	Time.zone.today
   end
-  
+  def set_locale
+    if @current_firm
+      I18n.locale = current_firm.language[/\A.+?(?=-)/mi]
+    end
+  end
   
   def record_not_found
     flash[:notice] = "No record found"

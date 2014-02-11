@@ -4,16 +4,9 @@
   <div class="project_todo"><%= employee.phone %></div>
   <div class="user_todo"><%= truncate_string(employee.email) %></div>
  <div class="delete_edit_employees">
-  <span class="open_employee_update edit" id="employee_update" data-id="<%= employee.id %>" data-object="employee">edit</span>
-  <%= link_to "delete", employee, data: { confirm: 'Are you sure?' }, :title => "Delete employee", :method => :delete, :class => "delete_employee", :remote => true%>
+  <span class="open_employee_update edit" id="employee_update" data-id="<%= employee.id %>" data-object="employee"><%= (t"edit") %></span>
+  <%= link_to (t"delete"), employee, data: { confirm: (t'are_you_sure?') }, :title => "Delete employee", :method => :delete, :class => "delete_employee", :remote => true%>
 </div>
 </div>
-<div class="dialog_form" id="employee_update_<%= employee.id %>_form" title="Update employee" style="display:none;">
-    <%= form_for(employee, :remote => true) do |f| %>
-    <li><%= f.label :name %><%= f.text_field :name %></li>
-    <li><%= f.label :phone %><%= f.text_field :phone %></li>
-    <li><%= f.label :email %><%= f.text_field :email %></li>
-    <li><%= f.submit "save", :class => 'submit', :id => "submit_employee_edit" %></li>
-    <% end %>
-</div>
+<div class="dialog_form" id="employee_update_<%= employee.id %>_form" title="Update employee" style="display:none;"></div>
 </div>

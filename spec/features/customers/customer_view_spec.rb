@@ -13,11 +13,7 @@ feature 'customer' do
     fill_in "customer_phone", with: "123456789"
     click_button "Save"
     page.should have_content("test_new customer")
-    id = page.evaluate_script("$('.open_customer_update').first().attr('data-id');")
-    li = "li#customer_#{id}"
-    within(:css, li) do
-      find(".tab_list_text").find('a').trigger('click')
-    end
+    click_link("test_new customer")
     page.should have_content("123456789")
    end
      

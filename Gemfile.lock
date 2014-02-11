@@ -88,6 +88,8 @@ GEM
       sass (>= 3.2.0)
       thor
     builder (3.1.4)
+    bullet (4.6.0)
+      uniform_notifier
     callsite (0.0.11)
     cancan (1.6.10)
     capistrano (2.15.5)
@@ -235,6 +237,8 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.0)
       mime-types
+    paranoia (2.0.1)
+      activerecord (~> 4.0)
     pdfkit (0.5.4)
     pg (0.16.0)
     poltergeist (1.4.1)
@@ -351,6 +355,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uniform_notifier (1.2.0)
     vcr (2.6.0)
     warden (1.2.3)
       rack (>= 1.0)
@@ -378,6 +383,7 @@ DEPENDENCIES
   american_date
   analytics-ruby (< 1.0)
   binding_of_caller
+  bullet
   cancan
   capistrano
   capybara
@@ -398,6 +404,7 @@ DEPENDENCIES
   meta_request
   newrelic_rpm
   paperclip
+  paranoia (~> 2.0)
   paymill!
   pdfkit
   pg (~> 0.16.0)

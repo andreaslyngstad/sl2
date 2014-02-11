@@ -18,16 +18,28 @@
     <%= firm.label :Address %>
     <%= firm.text_field :address, :class => "form-input", :AUTOCOMPLETE => "OFF" %>
     </div>
-    <!-- <div class="signup-form-field">
-    <%# firm.label :language %>
-    <%# firm.select :language,  ["English", "Deutsch"], {},  :class => "form-input" %>
-    </div> -->
+    <div class="signup-form-field">
+     <%= firm.label :language %>
+            <%= firm.select :language,    [
+            ["English", "en-US"],
+            ["Deutsch", "de-DE"],
+            ["Norwegian", "nb-NO"],
+            # ["Danish", "da-DK"],
+            # ["Dutch", "nl-NL"],
+            # ["Finnish", "fi-FI"],
+            # ["French", "fr-FR"],
+            # ["Polish", "pl-PL"],
+            # ["Spanish", "es-ES"],
+            # ["Swedish", "sv-SE"]
+            ],
+            {},  :class => "form-input" %>
+    </div> 
 	<div class="signup-form-field">
     <%= firm.label :currency %>
     <%= firm.select :currency, [
-        ["US Dollar", "$"],
-        ["Euro", "€"],
-        ["British Pound", "£"],
+        ["US Dollar", "USD"],
+        ["Euro", "EUR"],
+        ["British Pound", "GBP"],
         ["Norwegian Kroner", "NOK"],
         ["Swedish Krona", "SEK"],
         ["Australian Dollar", "AUD"],
@@ -190,6 +202,10 @@
         ["Zambian Kwacha", "ZMK"],
         ["ZWD","Zimbabwe Dollar"]
                 ],  {},  :class => "form-input"%>
+    </div>
+    <div class="signup-form-field">
+        <%= firm.label 'Tax (VAT) %' %>
+        <%= firm.text_field :tax, :class => "text-input", :AUTOCOMPLETE => "OFF", :value => 0 %>
     </div>
 	<div class="signup-form-field">
     <%= firm.label :time_zone %>

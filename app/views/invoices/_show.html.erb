@@ -1,1 +1,29 @@
-_show.html.erb
+<% content_for :help do %>
+<div class="page_help">
+	<div class="page_help_container">
+		<%= t "help.projects_show_html" %>
+	</div>
+</div>
+<% end %>
+
+<nav id="html_tabs" class="orange_bgr">
+  <div class="name_and_back_button">
+    <%= truncate(@klass.number) %>
+    <% if @klass.customer %>
+      @  <%= truncate(@klass.customer.name, length: 50, omission: "") %>
+    <% end %>
+    <% if can? :manage, @klass %>
+
+   <a class='open_customer_update  edit_text' id="customer_update" data-id="<%= @klass.customer.id %>" data-object="customer" title="Edit customer"><%= (t"edit") %></a>
+     <div class="dialog_form" id="customer_update_<%= @klass.customer.id %>_form" title="<%= t'helpers.submit.update', model: Customer.model_name.human %>" style="display:none;"></div>
+  <% end %>
+  </div>
+  <ul>
+    <li class=""><a href="#tabs-1" data-url="/tabs/tabs_state/<%= @klass.id %>/<%= @klass.class %>"><%= t('navigation.home') %></a></li>
+    <li class=""><a href="#tabs-2" data-url="/tabs/tabs_todos/<%= @klass.id %>/<%= @klass.class %>"><%= t('activerecord.models.todo.more' ).capitalize%></a></li>
+  </ul>
+</nav>
+<div class="boxes">
+  <div class="tab_box has_url" id="tabs-1"></div>
+  <div class="tab_box hide has_url" id="tabs-2"></div>
+</div>

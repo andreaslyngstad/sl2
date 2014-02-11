@@ -1,51 +1,18 @@
-<div class="log_menu">
-	<div class="add_some">
-    <a id="dialog_invoice" data-object="invoice">New invoice</a>
-    <div id="dialog_invoice_form" class="dialog_form" title="Create new invoice" style="display:none;">  
-      <%= form_for(@klass.invoices.new, :remote => true) do |f| %>
-      <li><%= f.label :content %><%= f.text_area :content, :class => "required", :minlength => "2"%></li>
-      	<li><%= f.label :customer_id%>
-				<%= f.select(:customer_id, current_user.firm.customers.map {|customer| [customer.name, customer.id]}, {:prompt => "Select customer"})%></li>
-    <li><%= f.label :due %><%= f.text_field :due, :value => date_format(Date.today + 14.days), :class => "date", :id => "date_invoice_" %>
-       </li>
-      
-      <li><%= f.submit "save", :class => 'submit', :id => "new_invoice_submit" %></li>
-      <% end %>
-    </div>
-  </div>
-
-	    
-	<div class="range" >	   
-		<%= form_tag('/invoice_range', :id => "invoices_range_form", :remote => true, :method => :get) do -%>
-		<%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
-		<%= hidden_field_tag "id", @klass ? @klass.id : "index"%>
-		<div id="range_date_fields">
-		  	<%= text_field_tag 'from', date_format(time_zone_now - 1.week), :class => "range_date"%>
-			<%= text_field_tag 'to',date_format(time_zone_now), :class => "range_date"  %>
+<div id="index_log_header">
+	<%= render "invoices/invoices_menu" %>
+</div>
+<div id="cus_pro_us_listing_container">
+	<ul id="cus_pro_us_listing">
+		<li id="invoices_head">
+			<div class="invoice_customer"><%= t'activerecord.attributes.invoice.customer' %></div>
+			<div class="status"><%= t'activerecord.attributes.invoice.status' %></div>
+			<div class="invoice_number"><%= t'activerecord.attributes.invoice.number' %></div>
+			<div class="invoice_amount"><%= t'activerecord.attributes.invoice.amount' %></div>
+			<div class="invoice_dates"><%= t'activerecord.attributes.invoice.invoice_date' %></div>
+		</li>
+		<div class="listing_invoices">
+			<%= render @invoices %>
 		</div>
-		<% end %>
+	</ul>
 	</div>
-	<div class="logs_pr_date">
-		<select class="small_selector" id="invoices_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
-			<option value="to_day">To day</option>
-			<option value="this_week">This week</option>
-			<option value="this_month">This month</option>
-			<option value="this_year">This year</option>   
-			<option value="yesterday">Yesterday</option>
-			<option value="last_week">Last week</option>
-			<option value="last_month">Last month</option>
-			<option value="last_year">Last year</option>   
-		</select>
-	</div> 
-</div>
-<div id="invoices_list">
-	<% if can? :manage, @klass %>
-	<div id="dialog_invoice_form" class="dialog_form" title="Create new invoice" style="display:none;">	
-	    <%= form_for @klass.invoices.build, :remote => true do |f| %>
-	  <% end %> 
-	<% end %>
-	</div>
-	
-		<%= render @logs %>
-	
-</div>
+<%= render "invoices/customer_project_form" %>

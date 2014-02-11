@@ -8,6 +8,7 @@ class CreateProjects < ActiveRecord::Migration
       t.float :hour_price
       t.integer :firm_id, :null => false
       t.integer :customer_id
+      t.integer :invoices_count, :default => 0
       t.timestamps
     end
     add_index :projects, :firm_id

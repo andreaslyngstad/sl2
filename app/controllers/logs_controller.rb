@@ -19,9 +19,9 @@ class LogsController < ApplicationController
   end
 
   def create
-    @log = LogWorker.create(permitted_params.log, check_done(params[:done]), current_user, current_firm)
-     authorize! :manage, @log 
-    create_resonder(@log)
+    @klass = LogWorker.create(permitted_params.log, check_done(params[:done]), current_user, current_firm)
+     authorize! :manage, @klass 
+    create_resonder(@klass)
   end
 
   def update
@@ -37,7 +37,7 @@ class LogsController < ApplicationController
     authorize! :manage, @log
     @log.destroy
     respond_to do |format|
-      flash[:notice] = flash_helper('Log was deleted.')
+      flash[:notice] = flash_helper((t'activerecord.models.log.one') + ' ' + (t'activerecord.flash.deleted'))
       format.js
     end
   end
@@ -70,7 +70,7 @@ private
   def create_resonder(log) 
      respond_to do |format|
       if log.save
-        flash[:notice] = flash_helper('Log was successfully saved.')
+        flash[:notice] = flash_helper((t'activerecord.models.log.one') + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_create" }
@@ -80,8 +80,8 @@ private
 
   def update_responder(log, params)
     respond_to do |format|
-      if log.update_attributes!(params)
-        flash[:notice] = flash_helper("Log was successfully saved.")
+      if log.update_attributes(params)
+        flash[:notice] = flash_helper((t'activerecord.models.log.one') + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_update" }

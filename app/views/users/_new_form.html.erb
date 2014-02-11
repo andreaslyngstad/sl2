@@ -10,6 +10,6 @@
 		  	<p><%= f.radio_button :role, 'Member' %> <%= label :role, 'Member (can see everything and edit projects where they are members)' %></p>
 		  	<p><%= f.radio_button :role, 'External user' %> <%= label :role, 'External user (can only see and edit projects where they are members)' %></p>
 		  </li>
-  		  <li><%= f.submit "Save", :class => "submit" %></li>
+  		  <li><%= f.submit (t'save'), :class => "submit" %></li>
   		</ul>
   <% end %>

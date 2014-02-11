@@ -10,7 +10,11 @@
 // height:448px;
 }
 // #accordion_frame{
-	
+.far_right_header{
+  font-family: magneto;
+  font-size: 1.6em;
+  float:left;
+}
 // 	// height:350px;
 // 	// width: 220px;
 // }
@@ -21,6 +25,7 @@
   box-shadow: 0 0 5px #888;
   line-height: 29px;
   color: #555;
+
 }
 .far_right_container_min{
   position:fixed;

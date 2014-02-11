@@ -1,6 +1,7 @@
 class Todo < ActiveRecord::Base
-  # attr_accessible :name,:user_id,:project_id,:customer_id,
-  # :due,:completed,:created_at,:updated_at,:project,:customer,:user,:done_by_user,:done_by_user_id,:prior,:firm
+
+  include ActiveModel::Validations
+  validates_with Validator
   
   belongs_to :customer
   belongs_to :project
@@ -10,7 +11,6 @@ class Todo < ActiveRecord::Base
   has_many :logs
   validates_presence_of :due
   validates_presence_of :name
-  validate :made_on_current_firm
   validate :project_must_exist
   validate :user_must_exist
   validate :correct_time
@@ -21,28 +21,13 @@ class Todo < ActiveRecord::Base
   def correct_time
     errors.add(:due, "is wrong format") if !DateTester.new.date?(due)
   end
+  
   def user_must_exist
     errors.add(:user_id, "must be selected.") if user_id.nil? && user.nil?
   end
+  
   def project_must_exist
     errors.add(:project_id, "must be selected.") if project_id.nil? && project.nil?
-  end
-  def self.todo_reflections
-    arr = reflections.collect{|a, b| b.class_name.downcase if b.macro==:belongs_to}.compact.uniq
-    arr.delete("firm")
-    arr
-  end
-  def check_if_current_firm 
-    Todo.todo_reflections.map do |ass|  
-      parent = eval(ass)
-      if parent && parent.firm != nil 
-         firm != parent.firm 
-      end
-    end 
-  end
-  def made_on_current_firm
-    errors.add(:firm_id, "is secure!") if
-    check_if_current_firm.include?(true) 
   end
   
   def self.not_complete

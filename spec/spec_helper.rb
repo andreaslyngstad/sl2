@@ -55,6 +55,7 @@ RSpec.configure do |config|
   end
   
   config.after(:each) do
+    Capybara.reset_sessions!
     DatabaseCleaner.clean
   end
   config.infer_base_class_for_anonymous_controllers = false

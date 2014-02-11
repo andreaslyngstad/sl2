@@ -24,16 +24,18 @@ class Firm < ActiveRecord::Base
   has_many :projects, :dependent => :destroy
   has_many :milestones, :dependent => :destroy
   has_many :payments
+  has_many :employees
   has_many :invoices, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
   belongs_to :plan, counter_cache: true
    
   
-  # has_attached_file :logo, :styles => { :original => "100x100#" },
-  #                 :url  => "/system/logos/:id/:style/:basename.:extension",
-  #                 :path => ":rails_root/public/system/logos/:id/:style/:basename.:extension"             
-  # validates_attachment_size :logo, :less_than => 2.megabytes
-  # validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png']
+  has_attached_file :logo, :styles => { :original => "200x100#", :small => "150x75#"},
+                  :url  => "/system/logos/:id/:style/:basename.:extension",
+                  :path => ":rails_root/public/system/logos/:id/:style/:basename.:extension"             
+  validates_attachment_size :logo, :less_than => 1.megabytes
+  validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png']
+  
   validates_presence_of :name
   validates_format_of :subdomain, :with => /\A[a-z0-9]+\z/i
   validates :subdomain, :presence => true, :uniqueness => true,  :subdomain_exclutions => :true

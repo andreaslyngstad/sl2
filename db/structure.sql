@@ -248,6 +248,11 @@ CREATE TABLE customers (
     phone text,
     email text,
     address text,
+    zip text,
+    city text,
+    country text,
+    deleted_at timestamp without time zone,
+    invoices_count integer DEFAULT 0,
     firm_id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -319,8 +324,15 @@ CREATE TABLE firms (
     address text,
     phone text,
     currency text,
-    language text,
+    language text DEFAULT 'en'::text,
     time_zone text,
+    tax double precision,
+    invoice_email text,
+    invoice_email_subject text,
+    invoice_email_message text,
+    bank_account text,
+    vat_number text,
+    on_invoice_message text,
     last_sign_in_at timestamp without time zone,
     closed boolean,
     time_format integer,
@@ -331,6 +343,7 @@ CREATE TABLE firms (
     users_count integer DEFAULT 0,
     projects_count integer DEFAULT 0,
     logs_count integer DEFAULT 0,
+    invoices_count integer DEFAULT 0,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     logo_file_name character varying(255),
@@ -426,18 +439,59 @@ ALTER SEQUENCE guides_id_seq OWNED BY guides.id;
 
 
 --
+-- Name: invoice_lines; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE invoice_lines (
+    id integer NOT NULL,
+    quantity double precision,
+    description text,
+    price double precision,
+    amount double precision,
+    tax double precision,
+    invoice_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: invoice_lines_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE invoice_lines_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invoice_lines_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE invoice_lines_id_seq OWNED BY invoice_lines.id;
+
+
+--
 -- Name: invoices; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE invoices (
     id integer NOT NULL,
-    invoice_number character varying(255),
-    content character varying(255),
+    number integer,
+    content text,
     project_id integer,
-    customer_id integer,
+    customer_id integer NOT NULL,
     firm_id integer NOT NULL,
-    paid boolean,
-    reminder_sent boolean,
+    status integer,
+    reminder_sent timestamp without time zone,
+    due timestamp without time zone,
+    total double precision,
+    date timestamp without time zone,
+    discount double precision,
+    currency text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -474,15 +528,16 @@ CREATE TABLE logs (
     firm_id integer NOT NULL,
     project_id integer,
     employee_id integer,
+    invoice_id integer,
     todo_id integer,
     tracking boolean,
     begin_time timestamp without time zone,
     end_time timestamp without time zone,
     log_date date,
     hours double precision,
+    tax double precision,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    invoice_id integer
+    updated_at timestamp without time zone
 );
 
 
@@ -659,6 +714,7 @@ CREATE TABLE projects (
     hour_price double precision,
     firm_id integer NOT NULL,
     customer_id integer,
+    invoices_count integer DEFAULT 0,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -944,6 +1000,13 @@ ALTER TABLE ONLY guides_categories ALTER COLUMN id SET DEFAULT nextval('guides_c
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY invoice_lines ALTER COLUMN id SET DEFAULT nextval('invoice_lines_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY invoices ALTER COLUMN id SET DEFAULT nextval('invoices_id_seq'::regclass);
 
 
@@ -1086,6 +1149,14 @@ ALTER TABLE ONLY guides_categories
 
 ALTER TABLE ONLY guides
     ADD CONSTRAINT guides_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invoice_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY invoice_lines
+    ADD CONSTRAINT invoice_lines_pkey PRIMARY KEY (id);
 
 
 --
@@ -1259,6 +1330,27 @@ CREATE INDEX index_firms_on_plan_id ON firms USING btree (plan_id);
 --
 
 CREATE INDEX index_firms_on_subdomain ON firms USING btree (subdomain);
+
+
+--
+-- Name: index_invoices_on_customer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_customer_id ON invoices USING btree (customer_id);
+
+
+--
+-- Name: index_invoices_on_firm_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_firm_id ON invoices USING btree (firm_id);
+
+
+--
+-- Name: index_invoices_on_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_project_id ON invoices USING btree (project_id);
 
 
 --
@@ -1476,4 +1568,4 @@ INSERT INTO schema_migrations (version) VALUES ('20101029201152');
 
 INSERT INTO schema_migrations (version) VALUES ('20101029201153');
 
-INSERT INTO schema_migrations (version) VALUES ('20101029201154');
+INSERT INTO schema_migrations (version) VALUES ('20101029201155');

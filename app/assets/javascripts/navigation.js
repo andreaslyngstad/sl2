@@ -31,20 +31,20 @@ old_url = location.protocol + '//' + location.host + location.pathname;
 		var tab_text = text2.toString().charAt(0).toUpperCase() + text2.toString().substr(1);
 		$("#html_tabs_home a.current_link").removeClass("current_link");	
 		$("#month_week_tabs a.current_link").removeClass("current_link");	
-		$("#html_tabs_home a:contains(" + tab_text + ")").addClass("current_link");
-		if(tab_text == "Charts" ){$("#html_tabs a:contains(Statistics)").addClass("current_link");}
-		if(tab_text == "Firm_show" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
-		if(tab_text == "Firm_edit" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
-		if(tab_text == "Firm_update" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
-		if(tab_text == "Reports" ){$("#html_tabs a:contains(Reports)").addClass("current_link");}
-		if(tab_text == "Squadlink_report" ){$("#html_tabs a:contains(Reports)").addClass("current_link");}
+		$("#html_tabs_home a[data-name*='" + tab_text + "']").addClass("current_link");
+		if(tab_text == "Charts" ){$("#html_tabs a[data-name*='Statistics']").addClass("current_link");}
+		if(tab_text == "Firm_show" ){$("#html_tabs a[data-name*='Account']").addClass("current_link");}
+		if(tab_text == "Firm_edit" ){$("#html_tabs a[data-name*='Account']").addClass("current_link");}
+		if(tab_text == "Firm_update" ){$("#html_tabs a[data-name*='Account']").addClass("current_link");}
+		if(tab_text == "Reports" ){$("#html_tabs a[data-name*='Reports']").addClass("current_link");}
+		if(tab_text == "Squadlink_report" ){$("#html_tabs a[data-name*='Reports']").addClass("current_link");}
 
-		if(tab_text == "Timesheet_day" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");}
-		if(tab_text == "Timesheet_month" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Month)").addClass("current_link");}
-		if(tab_text == "Timesheet_week" ){$("#html_tabs a:contains(Timesheets)").addClass("current_link");$("#month_week_tabs a:contains(Week)").addClass("current_link");}
-		if(tab_text == "Plans" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
-		if(tab_text == "Payments" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
-		if(tab_text == "Subscriptions" ){$("#html_tabs a:contains(Account)").addClass("current_link");}
+		if(tab_text == "Timesheet_day" ){$("#html_tabs a[data-name*='Timesheets']").addClass("current_link");}
+		if(tab_text == "Timesheet_month" ){$("#html_tabs a[data-name*='Timesheets']").addClass("current_link");$("#month_week_tabs a[data-name*='Month']").addClass("current_link");}
+		if(tab_text == "Timesheet_week" ){$("#html_tabs a[data-name*='Timesheets']").addClass("current_link");$("#month_week_tabs a[data-name*='Week']").addClass("current_link");}
+		if(tab_text == "Plans" ){$("#html_tabs a[data-name*='Account']").addClass("current_link");}
+		if(tab_text == "Payments" ){$("#html_tabs a[data-name*='Account']").addClass("current_link");}
+		if(tab_text == "Subscriptions" ){$("#html_tabs a[data-name*='Account']").addClass("current_link");}
 	}
 	if (text == null && text2 == null){
 		$('#navigation li#logs_navi').addClass("current_main")
@@ -62,7 +62,6 @@ old_url = location.protocol + '//' + location.host + location.pathname;
   $('#navigation li').on('click', function(e) { 
    $('#navigation li').removeClass("current_main")
    $(this).addClass('current_main')
-
 		});
   $("#active_projects").button();
   $("#archive").button().on('click', function(e) { 

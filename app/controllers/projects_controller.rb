@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
    
   def index
+      @project = current_firm.projects.new
     if current_user.role == "External user"
       @projects = current_user.projects.includes(:firm)
     else
@@ -21,22 +22,18 @@ class ProjectsController < ApplicationController
   def show
     @klass = current_firm.projects.find(params[:id]) 
     authorize! :manage, @klass
-    @hours = @klass.logs.sum(:hours)
-    @done_todos = @klass.todos.where(["completed = ?", true]).includes( {:user => [:memberships]}).order("due ASC")
-    @not_done_todos = @klass.todos.where(["completed = ?", false]).includes({:user => [:memberships]}).order("due ASC") 
-    @members = @klass.users
-    @not_members = all_users - @members
   end
 
   def create
     
     @klass = current_firm.projects.new(permitted_params.project)
+    @project = current_firm.projects.new
     @klass.active = true
     @klass.users << current_user
     authorize! :manage, @klass
     respond_to do |format|
       if @klass.save
-        flash[:notice] = flash_helper("Project is added.")
+        flash[:notice] = flash_helper((t'activerecord.models.project.one').capitalize + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_create" }
@@ -50,7 +47,7 @@ class ProjectsController < ApplicationController
     @klass.firm = current_firm
     respond_to do |format|
       if @klass.update_attributes(permitted_params.project)
-        flash[:notice] = flash_helper("Project was successfully saved.")
+        flash[:notice] = flash_helper("#{@klass.name}" + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_update" }
@@ -66,7 +63,7 @@ class ProjectsController < ApplicationController
    
    @klass.destroy
     respond_to do |format|
-      flash[:notice] = flash_helper('Project was deleted.')
+      flash[:notice] = flash_helper((t'activerecord.models.project.one').capitalize + ' ' + (t'activerecord.flash.deleted'))
       format.js
     end
   end
@@ -80,10 +77,10 @@ class ProjectsController < ApplicationController
     authorize! :archive,  @project
       if @project.active == true
         @project.active = false
-        flash[:notice] = flash_helper("Project is made inactive.")
+        flash[:notice] = flash_helper("#{@project.name}" + ' ' + (t'general.is_not_active'))
       else
         @project.active = true
-        flash[:notice] = flash_helper("Project is made active.")
+        flash[:notice] = flash_helper("#{@project.name}" +' ' + (t'general.is_active'))
       end  
     
     respond_to do |format|

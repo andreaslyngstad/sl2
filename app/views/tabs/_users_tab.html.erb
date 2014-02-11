@@ -1,10 +1,10 @@
 <div id="users_list_header">
 	<div class="members_header">
-		Squad on this project
+		<%= (t'activerecord.models.user.more').capitalize %> <%= t'general.on_this' %> <%= t'activerecord.models.project.one' %>
 	</div>
 	<% if can? :manage, @klass %>
 		<div class="not_members_header">
-			Available squaders
+		<%= t'general.available' %> <%= t'activerecord.models.user.more' %>
 		</div>
 	<% end %>
 </div>

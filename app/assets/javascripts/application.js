@@ -9,12 +9,17 @@
 //= require jquery.ui.datepicker
 //= require jquery.ui.accordion
 //= require chosen.jquery.min
-//= require jquery.validate.js
+/*
+ * Modded jquery.validate date format recognition
+//= require jquery.validate
+ *
+ */
+//= require translation
+//= require locales/messages_no
+//= require locales/messages_de
 //= require jquery.quicksearch
 //= require timeFormatter
 //= require navigation
-
-//= require scrolling
 //= require far_right
 //= require logs
 //= require tasks
@@ -28,9 +33,9 @@
 //= require timesheet
 //= require strftime-min.js
 //= require memberships
+//= require invoices
 //= require jquery.xcolor.min
 //= require nvd3/lib/d3.v2 
-
 //= require nvd3/src/core
 //= require nvd3/src/utils
 //= require nvd3/src/models/axis
@@ -150,18 +155,19 @@ jQuery.fn.UIdialogs = function(){
       },
 
   });
-  console.log(this)
 };
+
 jQuery.fn.disableUIdialogs = function(){
   $(this).dialog("destroy");
 };
 
 jQuery.fn.validateWithErrors = function(){
     $(this).validate({
+      lang: 'NO',
      submitHandler: function(form) {  
     $(form).submit_dialog_WithAjax();
     $(form).parent().disableUIdialogs();
-   },
+      },
    		errorElement: "div",
         wrapper: "div",  // a wrapper around the error message
      	errorPlacement: function(error, element) {
@@ -169,8 +175,11 @@ jQuery.fn.validateWithErrors = function(){
         offset = element.offset();
         error.css('left', offset.left);
         error.css('top', offset.top - element.outerHeight());
-     }
+        
+     },
+     
    }); 
+    $("div.error").text("test")
 };
 jQuery.fn.validateNoSubmit = function(){
     $(this).validate({
@@ -190,13 +199,30 @@ jQuery.fn.UIdialogs_links = function(){
   var object = $(this).attr("data-object")
   	$(form).UIdialogs();
     $(date).datepicker();
-    $(form).find(".new_" + object).validateWithErrors();
+    $(form).find("form").validateWithErrors();
     $(form).find("select").chosen({width:'369px'})
-    console.log(form)
     $(form).dialog( "open" );
   });
-
 }; 
+jQuery.fn.UIdialogs_edit_links = function(){
+  $(this).click(function(){
+    console.log("clicked")
+    var data_id = $(this).attr('data-id')
+    // get edit action via ajax for all in the ajax_form array
+    var ajax_form = ["project", "customer", "invoice","todo", "user", "employee"]
+    var object = $(this).attr("data-object")
+    if ($.inArray(object, ajax_form) >= 0){
+    $.get("/"+ object +"s/" + data_id + "/edit/")
+    }
+    var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
+    $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker();
+    // $(form_id).find(".edit_" + object).validateWithErrors();
+    $(form_id).find("li").css("display", "");
+    $(form_id).UIdialogs();
+    $(form_id).dialog( "open" );
+    });
+};
+// Project archive
 jQuery.fn.activate_projects = function(){	
 	$(this).button().click(function(){
 		if (confirm("The project, all its tasks, logged hours and milestones will be arcivated. You'll find the project in the arcivated projects page, where you can reopen it or delete it.")){
@@ -232,9 +258,12 @@ jQuery.fn.set_buget_width = function(){
         $(this).html("<p>" + this.data("procent")  +"</p>")
 
     }else if(procent < 100) {
+      if (procent > 0){
+        $(this).html(procent+ "%<p>spent</p>")
+      }
       var invert_procent = 100 - procent
       $(this).css("width", procent + "%")
-      $(this).html(procent+ "%<p>spent</p>")
+      
       // $(this).css("color", "white")
       $(".budget_red").css("width", invert_procent + "%")
       $(".budget_red").html(invert_procent+ "%<p>left</p>")
@@ -247,26 +276,12 @@ jQuery.fn.set_buget_width = function(){
     }
 };
 
+// Project archive
 
-jQuery.fn.UIdialogs_edit_links = function(){
-
-  $(this).click(function(){
-    var data_id = $(this).attr('data-id')
-    // get edit action via ajax for all in the ajax_form array
-    var ajax_form = ["project", "customer", "todo", "user"]
-    var object = $(this).attr("data-object")
-    if ($.inArray(object, ajax_form) >= 0){
-    $.get("/"+ object +"s/" + data_id + "/edit/")
-    }
-    var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
-    $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker();
-    // $(form_id).find(".edit_" + object).validateWithErrors();
-   	$(form_id).find("li").css("display", "");
-    $(form_id).UIdialogs();
-    $(form_id).dialog( "open" );
-    });
-
-};
+jQuery.fn.set_selected_value = function(from,to){
+  $(this).find('#from').val(from)
+  $(this).find('#to').val(to)
+}
 
 // jQuery.fn.add_alternate_date_field = function(){
 //   var name = $(this).attr('name')
@@ -299,7 +314,22 @@ $.ajaxSetup({
   });
 
 $(document).ready(function() {
+$(".budget_green").set_buget_width()
+$('.date_format_setter').set_date_format()
+$(".show_avatar_upload").click(function(){
+    $(".avatar_upload").show();
+    $(".avatar_show_page").hide();
+    return false  
+  });
 
+  $(".hide_avatar_upload").click(function(){
+    $(".avatar_upload").hide();
+    $(".avatar_show_page").show();
+    return false  
+  });
+$(".total_log_time").set_hours()
+$(".tasks_percent").countDone();
+$("#dialog_customer").UIdialogs_links();
   $(".range_date").datepicker({
       onSelect: function() {
         $('#range_form').submit();
@@ -327,7 +357,7 @@ $(document).ready(function() {
   $("#dialog_customer").UIdialogs_links();
   $("#dialog_user").UIdialogs_links();
   $("#dialog_employees").UIdialogs_links();
-  // $("#dialog_invoice").UIdialogs_links();
+
   $("#activate_project").button();
 
   
@@ -337,7 +367,7 @@ $(document).ready(function() {
   
   $(".open_todo_update").UIdialogs_edit_links();
 
-  $(".account_update_select").chosen({width:'364px'});
+  $(".account_update_select").chosen({width:'367px'});
   $(".big_selector").chosen({width:'369px'});
   $(".small_selector").chosen({width:'200px'});
   $(".mini_selector").chosen({width:'177px', disable_search:true});
@@ -350,11 +380,7 @@ $(document).ready(function() {
 	$(".button").button();
 	$(".activate_project").activate_projects();
 	$(".reopen_project").reopen_project();
-
-	
-  
-
- $(".background_style_color").css({"background-color":$("input.background_style").val()})
+  $(".background_style_color").css({"background-color":$("input.background_style").val()})
   $(".text_style_color").css({"background-color":$("input.text_style").val()})
   $(".background_style").keyup(function(){
   	var val_input = this.value
@@ -383,8 +409,6 @@ $(document).ready(function() {
     // });
 
 //non-ajax search
-   $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li', {
-   	
-   }); 
-
+   $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li', {}); 
+  
 })

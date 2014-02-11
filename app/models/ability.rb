@@ -12,10 +12,10 @@ class Ability
         can :activate_projects, Project            
         can :manage, Log, :firm => {:id => user.firm_id}
         can :manage, Todo, :firm => {:id => user.firm_id}
-        can :manage, Invoice
+        can :manage, Invoice, :firm => {:id => user.firm_id}
      end
      if user.role == "Member"
-        can :read, Firm
+        can :read, Firm, :firm => {:id => user.firm_id}
         can :manage, User do |member|
           member.firm == user.firm && member == user
         end
@@ -34,7 +34,7 @@ class Ability
            log.firm == user.firm && log.user == user
         end
         can :read, Log, :firm => {:id => user.firm_id}
-        can :read, Invoice
+       
      end   
        
      if user.role == "External user"
@@ -42,10 +42,12 @@ class Ability
       can :manage, Project do |project|
         project.firm == user.firm && project.users.include?(user)
       end
+      cannot :create, Project
+      cannot :archive, Project
       can :manage, Todo do |todo|
         todo.firm == user.firm && todo.user == user
       end
-      cannot :archive, Project
+      
       can :manage, Log do |log|
         log.firm == log.firm && log.user == user
       end

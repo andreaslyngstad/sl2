@@ -2,7 +2,7 @@ require 'spec_helper'
 # let(:user) { create(:user) }
   # before { login_as user }
 describe InvoicesController do 
-  let(:customer){FactoryGirl.create(:customer)}
+  let(:customer){FactoryGirl.create(:customer, firm:@user.firm)}
   login_user
  	before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com"
@@ -15,7 +15,7 @@ describe InvoicesController do
     end
     it "populates an array of invoices" do
       invoices = double
-      Invoice.should_receive(:order_by_invoice_number){invoices}
+      Invoice.should_receive(:order_by_number){invoices}
       get :index
       assigns[:invoices].should be invoices 
     end
@@ -24,23 +24,92 @@ describe InvoicesController do
       response.should render_template("index")
     end
   end 
-  
+  describe "GET #new" do 
+    it "assigns a new Invoice to @invoice" do
+      get :new, url: "index", :format => 'js'
+      assigns(:invoice).firm_id.should eq @user.firm.invoices.new.firm_id
+      assigns(:logs).should eq []
+    end
+    it "assigns an project to a invoice" do 
+      project = FactoryGirl.create(:project, firm: @user.firm)  
+      log = FactoryGirl.create(:log, project: project, :user => @user, :firm => @user.firm)
+      get :new, url: "Project", id: project.id.to_s, format: "js"
+      assigns(:instance).should eq project
+      assigns(:invoice).project.should eq project
+      assigns(:logs).should eq project.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:project,:firm,:user)
+    end
+    it "assigns an customer to a invoice" do 
+      customer = FactoryGirl.create(:customer, firm: @user.firm)  
+      log = FactoryGirl.create(:log, customer: customer, :user => @user, :firm => @user.firm)
+      get :new, url: "Customer", id: customer.id.to_s, format: "js"
+      assigns(:instance).should eq customer
+      assigns(:invoice).customer.should eq customer
+      assigns(:logs).should eq customer.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:project,:firm,:user)
+    end
+    it "renders the :new template" do
+      get :new, url: "index", :format => 'js'
+      response.should render_template("new")
+    end
+  end 
+  describe "GET customer_select" do 
+    it "assigns customer to @customer" do
+      customer = FactoryGirl.create(:customer, firm: @user.firm)
+      get :customer_select, id: customer.id.to_s, format: "js"
+      assigns(:customer).should eq customer
+    end
+    it "assigns customer logs to @logs" do 
+      customer = FactoryGirl.create(:customer, firm: @user.firm)
+      log = FactoryGirl.create(:log, customer: customer, :user => @user, firm:@user.firm)
+      get :customer_select, id: customer.id.to_s, format: "js"
+      assigns(:logs).should eq [log]
+    end
+    it "assigns customer and projects logs to @logs" do 
+      customer = FactoryGirl.create(:customer, firm: @user.firm)
+      project = FactoryGirl.create(:project, firm:@user.firm)
+      log = FactoryGirl.create(:log, project: project, customer: customer, :user => @user, firm:@user.firm)
+      log2 = FactoryGirl.create(:log, customer: customer, :user => @user, firm:@user.firm )
+      get :customer_select, id: customer.id.to_s, format: "js", other_object:project.id.to_s
+      assigns(:logs).should eq [log]
+      assigns(:logs).should_not eq [log2]
+    end
+  end
+  describe "GET project_select" do 
+    it "assigns project to @project" do
+      project = FactoryGirl.create(:project, firm: @user.firm)
+      get :project_select, id: project.id.to_s, format: "js"
+      assigns(:project).should eq project
+    end
+    it "assigns customer logs to @logs" do 
+      project = FactoryGirl.create(:project, firm:@user.firm)
+      log = FactoryGirl.create(:log, project: project, :user => @user, firm:@user.firm)
+      get :project_select, id: project.id.to_s, format: "js"
+      assigns(:logs).should eq [log]
+    end
+    it "assigns customer and projects logs to @logs" do 
+      customer = FactoryGirl.create(:customer, firm: @user.firm)
+      project = FactoryGirl.create(:project, firm:@user.firm)
+      log = FactoryGirl.create(:log, project: project, customer: customer, :user => @user, firm:@user.firm)
+      log2 = FactoryGirl.create(:log, customer: customer, :user => @user, firm:@user.firm )
+      get :project_select, id: project.id.to_s, format: "js", other_object:customer.id.to_s
+      assigns(:logs).should eq [log]
+      assigns(:logs).should_not eq [log2]
+    end
+  end
   describe "GET #show" do
     it "assigns the requested invoice to @invoice" do
-      invoice = FactoryGirl.create(:invoice, :firm => @user.firm)
+      invoice = FactoryGirl.create(:invoice, customer:customer,:firm => @user.firm)
       get :show, :id => invoice
       assigns(:klass).should eq(invoice) 
-     
     end
     it "renders the #show view" do
-      @invoice = FactoryGirl.create(:invoice, :firm => @user.firm)
+      @invoice = FactoryGirl.create(:invoice, customer:customer, :firm => @user.firm)
       get :show, :id => @invoice
       response.should render_template :show
     end
   end
   describe "GET edit" do 
     it "should assign invoice to @invoice" do
-      invoice = FactoryGirl.create(:invoice, :firm => @user.firm)
+      invoice = FactoryGirl.create(:invoice, customer:customer, :firm => @user.firm)
       get :edit, :id => invoice, :format => 'js'
       assigns(:invoice).should eq(invoice) 
     end 
@@ -61,7 +130,7 @@ describe InvoicesController do
   end
   describe 'PUT update' do
   before :each do
-    @invoice = FactoryGirl.create(:invoice, :firm => @user.firm)
+    @invoice = FactoryGirl.create(:invoice, customer:customer, :firm => @user.firm)
   end
   
   context "valid attributes" do
@@ -83,14 +152,42 @@ describe InvoicesController do
     end
     
     it "does not change @invoice's attributes" do
-      invoice_number = @invoice.invoice_number
+      number = @invoice.number
       put :update, id: @invoice, 
         invoice: FactoryGirl.attributes_for(:invoice, :invoice_number => nil), :format => 'js'
       @invoice.reload
-      @invoice.invoice_number.should eq(invoice_number)
+      @invoice.number.should eq(number)
     end
   end
   
+end
+describe "POST customers_create" do
+    context "with valid attributes" do
+      it "creates a new customer" do
+        expect{
+          post :customers_create, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
+        }.to change(Customer,:count).by(1)
+      end
+      
+      it "redirects to the new contact" do
+        post :customers_create, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
+        flash[:notice].should_not be_nil 
+      end
+    end 
+end
+describe "POST create" do
+    context "with valid attributes" do
+      it "creates a new customer" do
+        expect{
+          post :projects_create, project: FactoryGirl.attributes_for(:project), :format => 'js'
+        }.to change(Project,:count).by(1)
+      end
+      
+      it "redirects to the new contact" do
+        post :projects_create, project: FactoryGirl.attributes_for(:project), :format => 'js'
+        flash[:notice].should_not be_nil 
+      end
+    end 
 end
 #   describe 'DELETE destroy' do
 #     before :each do

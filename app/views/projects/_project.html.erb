@@ -4,20 +4,20 @@
   <div class="project_desc"><%= truncate_string(project.description) %></div>
 <div class="delete_edit">
 <% if can? :manage, project %>
-  <span class="open_project_update edit" id="project_update" data-id="<%= project.id %>" data-object="project">edit</span>
+  <span class="open_project_update edit" id="project_update" data-id="<%= project.id %>" data-object="project"><%= t'edit' %></span>
 <% end %>
 <% if can? :archive, project %>
-  <a class="activate_projects_no_button" data-object="project" data-id="<%= project.id.to_s %>">archive</a>
+  <a class="activate_projects_no_button" data-object="project" data-id="<%= project.id.to_s %>"><%= t'general.archive_verb' %></a>
 <% end %>
 </div>
 </div>
 <% if can? :manage, project %>
-<div class="dialog_form" id="project_update_<%= project.id %>_form" title="Update project" style="display:none;">
+<div class="dialog_form" id="project_update_<%= project.id %>_form" title="<%= t('helpers.submit.update', model: Project.model_name.human) %>" style="display:none;">
       <%= form_for(project, :remote => true) do |f| %>
       <ul>
       <li><%= f.label :name %><%= f.text_field :name %></li>
       <li><%= f.label :description %><%= f.text_area :description %></li>
-      <li><%= f.submit 'Save', :class => 'submit' %></li>
+      <li><%= f.submit (t'save'), :class => 'submit' %></li>
       </ul>
       <% end %>
 </div>

@@ -30,13 +30,14 @@ gem 'turbolinks'
 gem 'yui-compressor'
 gem 'exception_notification'
 gem 'analytics-ruby', '<1.0'
+gem 'paranoia', '~> 2.0'
 
 group :development do
   gem 'rack-mini-profiler'
   # gem 'better_errors'
   gem "binding_of_caller" 
   gem 'meta_request'
-  # gem 'bullet'
+  gem 'bullet'
   gem 'quiet_assets'
   gem 'debugger'
   gem 'thin'

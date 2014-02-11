@@ -2,11 +2,11 @@
 <div id="left" class="home_content">
 <div class="timesheet">
 <div class="preferences">
-	<h2>Preferences</h2>
+	<h2><%= t'general.my_firm' %></h2>
   			<%= form_for current_firm, :url => firm_update_path, :html => {:method => :put, :multipart => true }  do |firm| %>
   			
   			<div class="form-field">
-		    <%= firm.label :Firm_name %>
+		    <%= firm.label :name %>
 		    <%= firm.text_field :name, :class => "required text-input", :AUTOCOMPLETE => "OFF" %>
     		</div>
   			<div class="form-field">
@@ -15,201 +15,68 @@
     		</div>
   			<div class="form-field">
 		    <%= firm.label :Address %>
-		    <%= firm.text_field :address, :class => "text-input", :AUTOCOMPLETE => "OFF" %>
+		    <%= firm.text_area :address, :class => "text-input", :AUTOCOMPLETE => "OFF" %>
 		    </div>
   			<div class="form-field">
 		    <%= firm.label :language %>
-		    <%= firm.select :language,   ["English", "Deutsch"], {},  :class => "account_update_select" %>
+		    <%= firm.select :language,  language,
+            {},  :class => "account_update_select" %>
 		    </div>
   			<div class="form-field">
 		    <%= firm.label :currency %>
-		    <%= firm.select :currency, [
-        ["US Dollar", "$"],
-        ["Euro", "€"],
-        ["British Pound", "£"],
-        ["Norwegian Kroner", "NOK"],
-        ["Swedish Krona", "SEK"],
-        ["Australian Dollar", "AUD"],
-        ["New Zealand Dollar", "NZD"],
-        ["Japanese Yen", "JPY"],
-        ["Afghanistan Afghani", "AFA"],
-        ["Albanian Lek", "ALL"],
-        ["Algerian Dinar", "DZD"],
-        ["Andorran Franc", "ADF"],
-        ["Andorran Peseta", "ADP"],
-        ["Angolan New Kwanza", "AON"],
-        ["Argentine Peso", "ARS"],
-        ["Aruban Florin", "AWG"],
-        ["Austrian Schilling", "ATS"],
-        ["Bahamanian Dollar", "BSD"],
-        ["Bahraini Dinar", "BHD"],
-        ["Bangladeshi Taka", "BDT"],
-        ["Barbados Dollar", "BBD"],
-        ["Belgian Franc", "BEF"],
-        ["Belize Dollar", "BZD"],
-        ["Bermudian Dollar", "BMD"],
-        ["Bhutan Ngultrum", "BTN"],
-        ["Bolivian Boliviano", "BOB"],
-        ["Botswana Pula", "BWP"],
-        ["Brazilian Real", "BRL"],
-        ["Brunei Dollar", "BND"],
-        ["Bulgarian Lev", "BGL"],
-        ["Burundi Franc", "BIF"],
-        ["CFA Franc BCEAO", "XOF"],
-        ["CFA Franc BEAC", "XAF"],
-        ["Cambodian Riel", "KHR"],
-        ["Canadian Dollar", "CAD"],
-        ["Cape Verde Escudo", "CVE"],
-        ["Cayman Islands Dollar", "KYD"],
-        ["Central Pacific Franc", "CFP"],
-        ["Chilean Peso", "CLP"],
-        ["Chinese Yuan Renminbi", "CNY"],
-        ["Colombian Peso", "COP"],
-        ["Comoros Franc", "KMF"],
-        ["Costa Rican Colon", "CRC"],
-        ["Croatian Kuna", "HRK"],
-        ["Cuban Peso", "CUP"],
-        ["Cyprus Pound", "CYP"],
-        ["Czech Koruna", "CSK"],
-        ["Danish Krone", "DKK"],
-        ["Djibouti Franc", "DJF"],
-        ["Dominican R. Peso", "DOP"],
-        ["Dutch Guilder", "NLG"],
-        ["ECU", "XEU"],
-        ["East Caribbean Dollar", "XCD"],
-        ["Ecuador Sucre", "ECS"],
-        ["Egyptian Pound", "EGP"],
-        ["El Salvador Colon", "SVC"],
-        ["Estonian Kroon", "EEK"],
-        ["Ethiopian Birr", "ETB"],
-        ["Falkland Islands Pound", "FKP"],
-        ["Fiji Dollar", "FJD"],
-        ["Finnish Markka", "FIM"],
-        ["French Franc", "FRF"],
-        ["Gambian Dalasi", "GMD"],
-        ["German Mark", "DEM"],
-        ["Ghanaian Cedi", "GHC"],
-        ["Gibraltar Pound", "GIP"],
-        ["Greek Drachma", "GRD"],
-        ["Guatemalan Quetzal", "GTQ"],
-        ["Guinea Franc", "GNF"],
-        ["Guyanese Dollar", "GYD"],
-        ["Haitian Gourde", "HTG"],
-        ["Honduran Lempira", "HNL"],
-        ["Hong Kong Dollar", "HKD"],
-        ["Hungarian Forint", "HUF"],
-        ["Iceland Krona", "ISK"],
-        ["Indian Rupee", "INR"],
-        ["Indonesian Rupiah", "IDR"],
-        ["Iranian Rial", "IRR"],
-        ["Iraqi Dinar", "IQD"],
-        ["Irish Punt", "IEP"],
-        ["Israeli New Shekel", "ILS"],
-        ["Italian Lira", "ITL"],
-        ["Jamaican Dollar", "JMD"],
-        ["Jordanian Dinar", "JOD"],
-        ["Kazakhstan Tenge", "KZT"],
-        ["Kenyan Shilling", "KES"],
-        ["Kuwaiti Dinar", "KWD"],
-        ["Lao Kip", "LAK"],
-        ["Latvian Lats", "LVL"],
-        ["Lebanese Pound", "LBP"],
-        ["Lesotho Loti", "LSL"],
-        ["Liberian Dollar", "LRD"],
-        ["Libyan Dinar", "LYD"],
-        ["Lithuanian Litas", "LTL"],
-        ["Luxembourg Franc", "LUF"],
-        ["Macau Pataca", "MOP"],
-        ["Malagasy Franc", "MGF"],
-        ["Malawi Kwacha", "MWK"],
-        ["Malaysian Ringgit", "MYR"],
-        ["Maldive Rufiyaa", "MVR"],
-        ["Maltese Lira", "MTL"],
-        ["Mauritanian Ouguiya", "MRO"],
-        ["Mauritius Rupee", "MUR"],
-        ["Mexican Peso", "MXP"],
-        ["Mongolian Tugrik", "MNT"],
-        ["Moroccan Dirham", "MAD"],
-        ["Mozambique Metical", "MZM"],
-        ["Myanmar Kyat", "MMK"],
-        ["NL Antillian Guilder", "ANG"],
-        ["Namibia Dollar", "NAD"],
-        ["Nepalese Rupee", "NPR"],
-        ["Nicaraguan Cordoba Oro", "NIO"],
-        ["Nigerian Naira", "NGN"],
-        ["North Korean Won", "KPW"],
-        ["Omani Rial", "OMR"],
-        ["Pakistan Rupee", "PKR"],
-        ["Panamanian Balboa", "PAB"],
-        ["Papua New Guinea Kina", "PGK"],
-        ["Paraguay Guarani", "PYG"],
-        ["Peruvian Nuevo Sol", "PEN"],
-        ["Philippine Peso", "PHP"],
-        ["Polish Zloty", "PLZ"],
-        ["Portuguese Escudo", "PTE"],
-        ["Qatari Rial", "QAR"],
-        ["Romanian Leu", "ROL"],
-        ["Russian Rouble", "RUB"],
-        ["Samoan Tala", "WST"],
-        ["Sao Tome/Principe Dobra", "STD"],
-        ["Saudi Riyal", "SAR"],
-        ["Seychelles Rupee", "SCR"],
-        ["Sierra Leone Leone", "SLL"],
-        ["Singapore Dollar", "SGD"],
-        ["Slovak Koruna", "SKK"],
-        ["Slovenian Tolar", "SIT"],
-        ["Solomon Islands Dollar", "SBD"],
-        ["Somali Shilling", "SOS"],
-        ["South African Rand", "ZAR"],
-        ["South-Korean Won", "KRW"],
-        ["Spanish Peseta", "ESP"],
-        ["Sri Lanka Rupee", "LKR"],
-        ["St. Helena Pound", "SHP"],
-        ["Sudanese Dinar", "SDD"],
-        ["Sudanese Pound", "SDP"],
-        ["Suriname Guilder", "SRG"],
-        ["Swaziland Lilangeni", "SZL"],
-        ["Swiss Franc", "CHF"],
-        ["Syrian Pound", "SYP"],
-        ["Taiwan Dollar", "TWD"],
-        ["Tanzanian Shilling", "TZS"],
-        ["Thai Baht", "THB"],
-        ["Tonga Pa'anga", "TOP"],
-        ["Trinidad/Tobago Dollar", "TTD"],
-        ["Tunisian Dinar", "TND"],
-        ["Turkish Lira", "TRL"],
-        ["Uganda Shilling", "UGS"],
-        ["Ukraine Hryvnia", "UAH"],
-        ["Uruguayan Peso", "UYP"],
-        ["Utd. Arab Emir. Dirham", "AED"],
-        ["Vanuatu Vatu", "VUV"],
-        ["Venezuelan Bolivar", "VEB"],
-        ["Vietnamese Dong", "VND"],
-        ["Yugoslav Dinar", "YUN"],
-        ["Zambian Kwacha", "ZMK"],
-        ["ZWD","Zimbabwe Dollar"]
-		    	] , {},  :class => "account_update_select"%>
+		    <%= firm.select :currency, currency , {},  :class => "account_update_select"%>
 		    </div>
-  			
+		    <div class="form-field">
+    		<%= firm.label :bank_account %>
+    		<%= firm.text_field :bank_account, :class => "text-input", :AUTOCOMPLETE => "OFF" %>
+    		</div>
+    		<div class="form-field">
+    		<%= firm.label :vat_number %>
+    		<%= firm.text_field :vat_number, :class => "text-input", :AUTOCOMPLETE => "OFF" %>
+    		</div>
+  			<div class="form-field">
+            <%= firm.label 'Tax (VAT) %' %>
+            <%= firm.text_field :tax, :class => "text-input", :AUTOCOMPLETE => "OFF"%>
+            </div>
   			<div class="form-field">
 		    <%= firm.label :time_zone %>
 		    <%= firm.time_zone_select :time_zone,  nil, {}, {:class => "account_update_select"}%>
 		    </div>
   			<div class="form-field">
   				<%= firm.label :time_format %>
-  				<%= firm.select :time_format, options_for_select([['Hour:minute', 1], ['Hour,desimal', 2]], current_firm.time_format), {}, {:class => "account_update_select"}  %></div>
+  				<%= firm.select :time_format, options_for_select([
+                    [(t'times.hour.one').capitalize + ':' + (t'times.minute.more'), 1], [(t'times.hour.one').capitalize + '.' + (t'economic.decimal'), 2]], current_firm.time_format), {}, {:class => "account_update_select"}  %></div>
 			<div class="form-field">
 			    <%= firm.label :date_format %>
-			    <%= firm.select :date_format, options_for_select([['Day.Month.Year', 1], ['Month/Day/Year', 2]], current_firm.date_format), {}, {:class => "account_update_select"} %>
+			    <%= firm.select :date_format, options_for_select([[(t'datetime.prompts.day') + '.' + (t'datetime.prompts.month') + '.' + (t'datetime.prompts.year'), 1], [(t'datetime.prompts.month') + '/' + (t'datetime.prompts.day') + '/' + (t'datetime.prompts.year'), 2]], current_firm.date_format), {}, {:class => "account_update_select"} %>
 		    </div>	
 			<div class="form-field">
 			    <%= firm.label :clock_format %>
-		<%= firm.select :clock_format, options_for_select([['24 hours', 1], ['12 hours', 2]], current_firm.clock_format),{},:class => "account_update_select" %>	
+		<%= firm.select :clock_format, options_for_select([['24 ' + (t'times.hour.more'), 1], ['12 ' + (t'times.hour.more'), 2]], current_firm.clock_format),{},:class => "account_update_select" %>	
 		    </div>	
-  			<!-- <div class="form-field">
+		    <hr>
+            <div class="form-field"><%= t'general.for_invoice_emails' %></div>
+            <div class="form-field">
+                <%= firm.label :invoice_email %>
+                <%= firm.text_field :invoice_email, :class => "text-input" %>  
+            </div>
+            <div class="form-field">
+                <%= firm.label :invoice_email_subject %>
+                <%= firm.text_field :invoice_email_subject, :class => "text-input" %>    
+            </div>
+            <div class="form-field">
+                <%= firm.label :invoice_email_message %>
+                <%= firm.text_area :invoice_email_message, :class => "text-input-area" %>
+            </div>
+            <div class="form-field">
+                <%= firm.label :on_invoice_message %>
+                <%= firm.text_area :on_invoice_message, :class => "text-input-area" %>
+            </div>
+  			<div class="form-field">
 		    <%= firm.label :logo %>
 		     <%= firm.file_field :logo %>		    
 		   </div>
+		   <!-- 
 		  	<div class="form-field">
 		    <%= firm.label :background %>
 		    <%= firm.text_field :background, :class => "form-input background_style", :AUTOCOMPLETE => "OFF"%>
@@ -222,7 +89,7 @@
 		    <div class="text_style_color"></div>
 		    </div> -->
 		    <div class="form-field">
-  <%= firm.submit "Save", :class => "submit" %>
+  <%= firm.submit (t'save'), :class => "submit" %>
   </div>
 <% end %>
 </div>

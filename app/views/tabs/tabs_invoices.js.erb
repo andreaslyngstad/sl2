@@ -2,19 +2,17 @@ $('.flash_error').empty();
 $(".flash_notice").empty();
 var tab = $("li.active").children("a").attr("href")
 $(tab).empty().append("<%= j( render :partial => "invoices/listing_invoices")  %>")
-$("#dialog_invoice").UIdialogs_links();
-$("#dialog_invoice_form").UIdialogs();
+// $("#dialog_invoice").UIdialogs_invoices_link();
+// $("#dialog_invoice_form").UIdialogs_invoices();
 $(".date").datepicker();
-$("#invoices_pr_date_select").chosen({width:'200px'});
-$('.date_format_setter').set_date_format()
-$(".total_log_time").set_hours()
-$('.clock_format_setter').set_clock_format()
+$(".button").button();
+
+$('.invoice_list').find('.invoice_amount').set_currency()
+$("#invoices_pr_date_select").chosen({width:'175px'});
 $(".range_date").datepicker({ 
 		onSelect: function() {
 			$('#range_form').submit();
   		}
   		}).attr( 'readOnly' , 'true' )
-
-$(".open_invoices_update").UIdialogs_edit_links();
-$(".open_log_update").UIdialogs_edit_logs_links();
+$(".open_invoices_update").UIdialogs_edit_invoices_links();
 $(".spinning").hide()

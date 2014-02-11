@@ -24,16 +24,7 @@ describe User do
     user.firm = firm
     user.save
     User.valid_recover?(user.loginable_token).should == user
-  end
-  # it "Can be valid" do
-  #   user = User.new(:name => "test", :password => "secret", :email => "test@test.com", :loginable_token => "secret")
-  #   user.firm = firm
-  #   user.save
-  #   params = {:id => user.loginable_token}
-  #   User.valid?(params).should == user
-  # end
-  
-  
+  end 
   
   it "should not save if over plan limit" do
     FactoryGirl.build(:user, firm_id: firm1.id).should_not be_valid

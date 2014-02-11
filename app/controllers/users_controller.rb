@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def index
     authorize! :read, User
     @users = current_firm.users.order(:name).includes(:firm)
+    @user = current_firm.users.new
     respond_with(@users)
   end
 
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
     @klass.firm = current_firm 
      respond_to do |format|
       if @klass.save
-        flash[:notice] = flash_helper("Registration successful.")
+        flash[:notice] = flash_helper("#{@klass.name}" + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_create" }
@@ -42,7 +43,7 @@ class UsersController < ApplicationController
      authorize! :update, @klass
       respond_to do |format|
     if @klass.update_attributes(permitted_params.user)
-      flash[:notice] = flash_helper("Successfully updated profile.")
+      flash[:notice] = flash_helper("#{@klass.name}" + ' ' + (t'activerecord.flash.saved'))
       format.js
       format.html { redirect_to user_path(@klass) }
     else
@@ -60,26 +61,15 @@ class UsersController < ApplicationController
     authorize! :manage, @user
      respond_to do |format|
     if @user == current_user
-    flash[:notice] = flash_helper("You are logged in as #{@user.name}. You cannot delete yourself.")
+    flash[:notice] = flash_helper((t'activerecord.flash.you_are_logged_in_as') + ' ' + @user.name + (t'activerecord.flash.you_cannot_delete_yourself'))
       format.js
     else
     @user.destroy
-   		flash[:notice] = flash_helper("#{@user.name} was deleted.")
+   		flash[:notice] = flash_helper(@user.name + ' ' + (t'activerecord.flash.deleted'))
       format.html { redirect_to(users_url()) }
       format.xml  { head :ok }
       format.js
     end
     end
   end
-  
-  # def valid
-  # 	token_user = User.valid?(params)
-  #   if token_user
-  #     sign_in(:user, token_user)
-  #     flash[:notice] = flash_helper("You have been logged in")
-  #   else
-  #     flash[:alert] = "Login could not be validated"
-  #   end
-  #   redirect_to statistics_path
-  # end 
 end

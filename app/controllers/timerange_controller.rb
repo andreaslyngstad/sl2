@@ -1,4 +1,5 @@
 class TimerangeController < ApplicationController
+  include FormatHelper
   respond_to :js
   def log_range
     @customers = current_firm.customers.includes(:employees)
@@ -15,13 +16,15 @@ class TimerangeController < ApplicationController
   end
 
   def invoice_range
-
+    # @klass = eval(params[:url]).find(params[:id])
+    find_invoices_on(params[:url], get_time_range(params))
+    respond_with(@invoices)
   end
   private
 
   def get_time_range(params)
     if params[:from]
-      ((Date.parse(params[:from]).midnight + 1.day)..Date.parse(params[:to]).midnight + 1.day)
+      ((Date.parse(params[:from]).midnight)..Date.parse(params[:to]).midnight)
     else
       timerange(params[:time])
     end
@@ -30,6 +33,7 @@ class TimerangeController < ApplicationController
   def find_todos_on(url, time_range)
     @done_todos = eval(url).find(params[:id]).todos.where(["completed = ?", true]).where(:due => time_range).order("due ASC").includes(:logs,:project,:user)
     @not_done_todos = eval(url).find(params[:id]).todos.where(["completed = ?", false]).where(:due => time_range).order("due ASC").includes(:logs,:project,:user)
+    # first_and_last_date(time_range)
   end
 
   def find_logs_on(url, time_range)
@@ -39,6 +43,7 @@ class TimerangeController < ApplicationController
       logs_on = eval(url).find(params[:id])
     end
     @logs = logs_on.logs.where(:log_date => time_range).order("log_date DESC").includes(:project, :todo, :user, :customer, :employee,:firm )
+    # first_and_last_date(time_range)
   end
 
   def find_invoices_on(url, time_range)
@@ -47,9 +52,14 @@ class TimerangeController < ApplicationController
     else
       invoices_on = eval(url).find(params[:id])
     end
-    @invoices = invoices_on.invoices.where(:due => time_range).order("due DESC").includes(:project, :logs, :customer, :firm )
+    logger.info(time_range)
+    @invoices = invoices_on.invoices.where(:date => time_range).order("date DESC")
+    # first_and_last_date(time_range)
   end
-
+  # def first_and_last_date(time_range)
+  #   @time_range_first = date_format(time_range.first)
+  #   @time_range_last = date_format(time_range.last)
+  # end
   def timerange(time)
     case time
       when "to_day"     then (time_zone_now.midnight)..(time_zone_now.midnight + 1.day)

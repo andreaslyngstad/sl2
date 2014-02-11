@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+  <head>
+    <title>Squadlink</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript">
+      var lang = "<%= current_firm.language%>"
+    </script>
+  	<%= stylesheet_link_tag  'application' %>	
+    <%= javascript_include_tag "application"%>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <style>
+     .invoice_wrapper{
+      font-size: 100%; 
+      padding: 1.3333cm;
+      height: 29.7cm;  
+      width: 21cm;
+      box-shadow: 0 0 10px #888;
+      margin: 0 0 0 0;
+      margin-top: 0px;
+      position:relative;}
+      .invoice_wrapper .free_lines_table tbody .invoice_line td {
+padding-top: 2%;
+height: 35px;
+}
+    </style>
+   	<%= csrf_meta_tag %>
+    <link rel="shortcut icon" href="/favicon.png" />
+    <%= yield :head %>
+  </head>
+  <body> 
+  	<span class="current_firm_data" data-clockFormat="<%= current_firm.clock_format%>" data-timeFormat="<%= current_firm.time_format %>" data-dateFormat="<%= current_firm.date_format %>" data-currency="<%= current_firm.currency%>" data-language="<%= current_firm.language%>"></span>
+		<div id="main_container">
+		  <%= yield %>
+		</div>	
+  </body>
+</html>

@@ -1,4 +1,3 @@
-@import "navi_styles";
 @import "charts";
 @import "calendar";
 @import "timesheet";
@@ -13,20 +12,30 @@
 @import "subscriptions";
 @import "registration";
 @import "spendings";
+@import "invoice";
+@import "normalize";
 
-
-// html, body{
-//   margin:0;
-//   padding:0;
-//   font-family: Verdana,Helvetica,sans-serif; 
-//   // background-color: #E6E9F5;
-//   height:75%;
-//   }
-input[type=text], textarea {
+html{
+  font-size: 62.5%;
+}
+@media (max-width: 1000px) {
+  body { font-size: 62.5%; }
+}
+@media (max-width: 500px) {
+  body { font-size: 32.5%; }
+}
+html, body{
+  margin:0;
+  padding:0;
+  // font-family: Verdana,Helvetica,sans-serif; 
+  // background-color: #E6E9F5;
+  
+  }
+input[type=text], input[type=password], textarea {
 
   outline: none;
-  
-  border: 1px solid #DDDDDD;
+  resize:none;
+  border: 1px solid #aaaaaa;
 }
  
 input[type=text]:focus, textarea:focus {
@@ -36,7 +45,8 @@ input[type=text]:focus, textarea:focus {
 }
 textarea{
 	height: 200px;
-	width: 369px;
+	width: 356px;
+  
 }
 
 body a{text-decoration: none; color:#000;}
@@ -88,22 +98,21 @@ height:25px;
   line-height: 20px;
 }
 #centering_main{
-  height:75%;
+  // height:75%;
   margin-left: auto;
   margin-right: auto;
-  width: 1180px;
+  width: 92%;
 }
 #main {
   float:left;
   text-align: left; 
-  
-  
-  padding:10px 10px 100px 10px;
-  margin-top: 20px;
-  margin-bottom: 60px;
+  padding:1% 1% 10% 1%;
+  margin-top: 2%;
+  margin-bottom: 6%;
   box-shadow: 0 0 10px #888;
   background-color:white;
   border-radius:5px;
+
 } 
 #wrapper{
 
@@ -146,7 +155,7 @@ height:25px;
  
 float: right;
 font-size: 15px;
-margin: 3px 0 0 0;
+margin: 3px 5px 0 0;
 // color: white;
 
 }
@@ -224,6 +233,7 @@ color: #aaa;
 #main_container{
 float:left;
 width: 980px;
+font-size: 1.6em;
  }
     
 #navigation{
@@ -249,28 +259,16 @@ width: 980px;
   background-image: -ms-linear-gradient(top,#4D90FE,#4787ED);
   background-image: -o-linear-gradient(top,#4D90FE,#4787ED);
   background-image: linear-gradient(top,#4D90FE,#4787ED);*/
-	font-size:20px;
-	height:75px;
+	font-size: 2em;
+	height:25%;
 	list-style-type:none;
-	width:200px;
+	width:100%;
 	cursor:pointer;
   
 }
 #navigation li:hover{
   background: #E0D3EB;
-  // background: #66A0FF;
-/*  background-image: -webkit-gradient(linear,left top,left bottom,from(#4D90FE),to(#4787ED));
-  background-image: -webkit-linear-gradient(top,#4D90FE,#4787ED);
-  background-image: -moz-linear-gradient(top,#4D90FE,#4787ED);
-  background-image: -ms-linear-gradient(top,#4D90FE,#4787ED);
-  background-image: -o-linear-gradient(top,#4D90FE,#4787ED);
-  background-image: linear-gradient(top,#4D90FE,#4787ED);*/
-  font-size:20px;
-  height:75px;
-  list-style-type:none;
-  width:200px;
   cursor:pointer;
- 
 }
 #navigation li a { 
 	padding: 20px 0px 0 40px;
@@ -586,6 +584,7 @@ background-position: -18px 2px;
 }
 
 .open_tracking_select_container{
+  cursor:pointer;
   width: 800px;
   height: 20px;
   background:  #FBFBFB;
@@ -593,7 +592,8 @@ background-position: -18px 2px;
 }
 
 .open_not_required_container{
-width: 600px;
+  cursor:pointer;
+  width: 600px;
 	height: 20px;
   background:  #E6E6E6;
   margin-top: 20px;	
@@ -722,6 +722,9 @@ margin:0px;
 	color:#000;
   line-height: 40px;
 }
+.button_wrapper{
+  float:right;
+}
 .tab_list{
   // background: 			#e6e6e6;
 /*		background: -webkit-gradient(linear,left top,left bottom,
@@ -795,7 +798,7 @@ padding:4px 4px 0 0 ;
   width:200px;
   height:32px;
 }
-.range_date, .todo_range_date  {
+.range_date, .todo_range_date, .invoice_range_date {
   
   width:83px; height:23px; padding: 0 5px 0 5px; font-size: 15px; color: #777;}
 
@@ -833,10 +836,10 @@ float:left;
 }
 
 
-// .info {
-// border-bottom: 1px solid #E5E5E5;
+.info {
+  padding-bottom: 5px;
 
-// }
+}
 
 
 
@@ -883,7 +886,7 @@ float:left;
 /*all view*/
 .gravatar_on_log,.event_on_log,.pro_tod_cus_emp_on_log,
 .cus_emp_on_log, .pro_tod_on_log,.date_and_times_on_log, 
-.delete_edit, .name_todo, .name_todo_head, .name_todo_header,.name_milestone ,.date_all, .user_todo, .priority_todo, .customer_todo, .project_todo, 
+.total_on_log, .delete_edit, .name_todo, .name_todo_head, .name_todo_header,.name_milestone ,.date_all, .user_todo, .priority_todo, .customer_todo, .project_todo, 
 .delete_edit_archive, .logs_pluss, .logs_minus{
   display: inline-block;
   vertical-align:top;
@@ -955,7 +958,7 @@ font-weight: bold;
   	padding: 0 10px 0 0;
 }
 .name_todo_head{
-	margin-left:54px;
+	margin-left:44px;
 }
 .logs_pluss, .logs_minus{
  width: 10px;
@@ -1169,10 +1172,13 @@ width: 150px;
   width: 200px;
   float:left;
 }
-.preferences .form-field input[type="text"] {
-  width: 350px;
+.preferences .form-field input[type="text"]{
+  width: 355px;
   padding: 5px;
   border: 1px solid #999;
+}
+.preferences .form-field textarea {
+    width: 361px;
 }
 .preferences .form-field input[type="submit"] {
   float:right;

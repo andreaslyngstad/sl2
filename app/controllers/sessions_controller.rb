@@ -23,7 +23,7 @@ class SessionsController < Devise::SessionsController
     if token_user
        sign_in(token_user)
        token_user.firm.did_sign_in
-       flash[:notice] = "Signed in successfully"
+       flash[:notice] = I18n.t("devise.sessions.signed_in")
       redirect_to root_url(:subdomain => token_user.firm.subdomain )
     else
       flash[:alert] = "Login could not be validated"

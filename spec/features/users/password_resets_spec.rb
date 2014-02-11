@@ -23,7 +23,7 @@ describe "PasswordResets" do
     fill_in "user_password", :with => "foobar12"
     fill_in "user_password_confirmation", :with => "foobar123"
     find('.signup_firm').find(".submit").click 
-    page.should have_content("Password confirmation doesn't match Password")
+    page.should have_content("Password confirmation doesn't match")
   end
  
   it "does not email invalid user when requesting password reset" do

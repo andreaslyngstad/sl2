@@ -1,11 +1,11 @@
 <div class="state_wrapper">
 	<div class="hours_done_wrapper">
-		<div class="state_headers">Total hours</div>
+		<div class="state_headers"><%= t('times.hour.more').capitalize %> <%= t('economic.total').downcase %></div>
 		<div class="state_unit total_log_time" data-hours="<%= @klass.logs.sum(:hours) %>"></div>
 	</div>
 	<% if @klass.todos.count >= 1 %>
 <div class="hours_done_wrapper">
-<div class="state_headers ">Tasks done</div>
+<div class="state_headers "><%= t('activerecord.models.todo.more' ).capitalize%> <%= t('activerecord.attributes.todo.done' )%></div>
 <div class="state_unit tasks_percent " data-complete="<%= @klass.todos.where(["completed = ?", true]).count %>" data-notcomplete="<%= @klass.todos.where(["completed = ?", false]).count %>"></div>
 
 </div>
@@ -14,15 +14,15 @@
 </div>
 <div id="description">
 		<% unless @klass.phone.blank? %>
-		<div class="state_headers">Phone</div>
+		<div class="state_headers"><%= t('activerecord.attributes.customer.phone' )%></div>
 		<div class="state_unit"><%= @klass.phone %></div>
 		<%end %>
 		<% unless @klass.email.blank?%>
-  	<div class="state_headers">Email</div>
+  	<div class="state_headers"><%= t('activerecord.attributes.customer.email' )%></div>
   	<div class="state_unit"><%= mail_to "#{@klass.email}" %></div>
   	<% end %>
   	<% unless @klass.address.blank?%>
-  	<div class="state_headers">Address</div>
+  	<div class="state_headers"><%= t('activerecord.attributes.customer.adress' )%></div>
   	<div class="state_unit"><%= @klass.address %></div>
 		<% end %>
 </div>

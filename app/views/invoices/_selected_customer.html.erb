@@ -1,0 +1,11 @@
+<%= hidden_field(@invoice, :customer_id, value: @customer.id) %>
+<span id="selected_customer">
+		<%= @customer.name %><br/>
+		<% if !@customer.email.blank? %>
+		<%= @customer.email %><br/>
+		<% end %>
+		<% if !@customer.address.blank? %>
+		<%= @customer.address %><br/>
+		<% end %>
+		<a href="#" style="color:blue; font-size:75%;" id="change_customer" data-object="customer" data-other-object="project">Change</a>
+</span> 

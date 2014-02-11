@@ -4,5 +4,9 @@ var tab = $("li.active").children("a").attr("href")
 $(tab).empty().append("<%= j( render "spendings")  %>")
 var firm_format = $(".current_firm_data").data("timeformat")
 var hours = secondsToString($(".seconds").data("hours"), firm_format)
+$('.currency_to_convert').text(function(){
+	var value = parseFloat($(this).attr('data-amount'))
+	return currency_converter(value)
+	});
 $(".seconds").html(hours )
 $(".spinning").hide();

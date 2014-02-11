@@ -15,7 +15,6 @@ class FirmMailer < ActionMailer::Base
   
 
   def sign_up_confirmation(id)
-    sleep 10
     @user = User.find(id)
     @firm = @user.firm
     sign_up_confirmation_mail = mail to: @user.email, subject: 'Squadlink sign up confirmation.'

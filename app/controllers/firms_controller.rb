@@ -10,10 +10,10 @@ class FirmsController < ApplicationController
     @firm = current_firm
     respond_to do |format|
       if @firm.update_attributes(permitted_params.firm)
-        flash[:notice] = flash_helper('Account was successfully updated.')
+        flash[:notice] = flash_helper( (t'general.your_firm') + ' ' + (t'activerecord.flash.saved'))
         format.html { redirect_to firm_show_path }
       else
-        flash[:error] = 'Firm could not be updated'
+        flash[:error] = (t'general.your_firm') + ' ' + (t'activerecord.flash.could_not_save')
         format.html { render :action => "firm_edit" }
       end
     end

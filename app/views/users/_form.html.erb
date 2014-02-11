@@ -2,20 +2,14 @@
   <ul>
 	  <li><%= f.label :name %><%= f.text_field :name%> </li>
 	  <li><%= f.label :email %><%= f.text_field :email %></li>
-	  <li>
-		  <% if @user.id == nil %>
-		  	<%= f.label :password %><%= f.password_field :password, :class => "required", :minlength => "6" %>
-		  <% else %>
-		   	<%= f.label :password %><%= f.password_field :password, :minlength => "6" %>
-		  <% end %>
-	  </li>
+	  <li><%= f.label :password %><%= f.password_field :password, :class => "required", :minlength => "6" %></li>
 	  <li><%= f.label :phone %><%= f.text_field :phone %></li>
 	  <li><%= f.label :hourly_rate %><%= f.text_field :hourly_rate %></li>	  
 	  <li>
-	  	<p><%= f.radio_button :role, 'Admin' %> <%= label :role, 'Admin (can see and edit everything)' %></p>
-	  	<p><%= f.radio_button :role, 'Member' %> <%= label :role, 'Member (can see everything and edit projects where they are members)' %></p>
-	  	<p><%= f.radio_button :role, 'External user' %> <%= label :role, 'External user (can only see and edit projects where they are members)' %></p>
+	  	<p><%= f.radio_button :role, 'Admin', :checked => true %> <%= f.label :admin %></p>
+	  	<p><%= f.radio_button :role, 'Member' %> <%= f.label :member %></p>
+	  	<p><%= f.radio_button :role, 'External user' %> <%= f.label :external_user %></p>
 	  </li>
-	  <li><%= f.submit "Save", :class => "submit" %></li>
-	  </ul>	
+	  <li><%= f.submit (t'save'), :class => "submit" %></li>
+	</ul>	
 <% end %>

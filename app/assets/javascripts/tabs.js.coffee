@@ -25,7 +25,7 @@ showTabs = ->
 
 $(document).ready ->
   pathname = location.pathname
-  if pathname.match(/customers\//i) or pathname.match(/projects\//i) or pathname.match(/users\//i)
+  if pathname.match(/customers\//i) or pathname.match(/projects\//i) or pathname.match(/users\//i) or pathname.match(/invoices\//i) 
     showTabs()
     $("#html_tabs ul li a").click ->
       url = window.location.hash
@@ -42,8 +42,6 @@ $(document).ready ->
       if typeof (get_url) isnt "undefined"
         $(".spinning").show()
         $.get get_url
-
-
   if pathname.match(/charts/i)
 	  from = $(".one_month_back").data("lastmonth")
 	  to = $(".one_month_back").data("today")

@@ -132,7 +132,16 @@ Squadlink::Application.routes.draw do
       # match "/logs_pr_date" => "timerange#logs_pr_date", :as => :logs_pr_date
       get "/log_range/" => "timerange#log_range", :as => :log_range
       get "/todo_range/" => "timerange#todo_range", :as => :todo_range
+      get "/invoice_range/" => "timerange#invoice_range", :as => :invoice_range
       # get "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date 
+      #invoices
+      get "/invoices/customer_select/" => "invoices#customer_select"
+      get "/invoices/project_select/" => "invoices#project_select"
+      post "/invoices/customers_create/" => "invoices#customers_create"
+      post "/invoices/projects_create/" => "invoices#projects_create"
+      post "/invoices/sending_invoice/:id" => "invoices#sending_invoice", :as => :sending_invoice
+      get "/invoices/show_pdf/:id" => "invoices#show_pdf", :as => :show_pdf
+
       resources :invoices 
       resources :customers
       resources :employees

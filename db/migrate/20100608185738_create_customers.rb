@@ -5,6 +5,11 @@ class CreateCustomers < ActiveRecord::Migration
       t.text :phone
       t.text :email
       t.text :address
+      t.text :zip
+      t.text :city
+      t.text :country
+      t.datetime :deleted_at
+      t.integer :invoices_count, :default => 0
       t.integer :firm_id, :null => false
       t.timestamps
     end

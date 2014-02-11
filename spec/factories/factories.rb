@@ -15,6 +15,11 @@ FactoryGirl.define do
    time_format 1 
    date_format 1
    clock_format 1
+   language "en"
+   tax 25
+   # invoice_email "test@test.no"
+   # invoice_message "testing test"
+   # invoice_subject  "test"
   end
   factory :firm_no_plan, class: Firm do
    name
@@ -118,10 +123,9 @@ FactoryGirl.define do
     content "test"  
   end
   factory :invoice do
-    invoice_number
     content "test"  
-    
-    project
+    firm
+    status 1
     customer
   end
 end

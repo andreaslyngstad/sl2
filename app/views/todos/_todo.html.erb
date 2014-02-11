@@ -21,10 +21,10 @@
   
   <div class="date_all <% if todo.overdue %>red<% end %><% if todo.due_to_day %>green<% end %> date_format_setter" data-date="<%= todo.due %>"></div>
    <div class="delete_edit">
-  <span class="open_todo_update edit" id="todo_update" data-id="<%= todo.id %>" data-object="todo">edit</span>
-  <%= link_to "delete", todo, data: { confirm: 'Are you sure?' }, :title => "Delete task", :method => :delete, :class => "delete_todo delete", :remote => true%>
+  <span class="open_todo_update edit" id="todo_update" data-id="<%= todo.id %>" data-object="todo"><%= t('edit') %></span>
+  <%= link_to (t"delete"), todo, data: { confirm: t('are_you_sure?') }, :title => "Delete task", :method => :delete, :class => "delete_todo delete", :remote => true%>
 </div>
   
- <div class="dialog_form" id="todo_update_<%= todo.id %>_form" title="Update task" style="display:none;"></div>
+ <div class="dialog_form" id="todo_update_<%= todo.id %>_form" title="<%= t'helpers.submit.update', model: Todo.model_name.human %>" style="display:none;"></div>
 <div class="display_todo_logs" id="todo_logs_<%=todo.id%>" style="display: none"></div> 
 </div>

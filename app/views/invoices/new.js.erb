@@ -1,0 +1,55 @@
+$(".flash_notice").empty()
+$("#dialog_invoice_form").empty().append("<%= j( render "form")  %>")
+$("#dialog_invoice_form").UIdialogs_invoices()
+<% if @instance.class.to_s == "Customer" %>
+<% @customer = @instance  %>
+$('#selected_customer').remove();
+$('#invoice_customer_select').after("<%= j(render 'selected_customer') %>");
+$('#dialog_customer').hide();
+$('#invoice_customer_select').hide();
+$('.listing_logs_invoice_container').empty();
+$("#invoice_project_id").attr("data-other-object" ,"<%= j(@customer.id.to_s) %>")
+$("#change_customer").remove();
+<% end %>
+<% if @instance.class.to_s == "Project" %>
+	<% @project = @instance  %>
+		<% if @project.customer %>
+		<% @customer = @project.customer %>
+			$('#selected_customer').remove();
+			$('#invoice_customer_select').after("<%= j(render 'selected_customer', invoice: @invoice) %>");
+			$('#dialog_customer').hide();
+			$('#invoice_customer_select').hide();
+			$('.listing_logs_invoice_container').empty();
+			$('.listing_logs_invoice_container').append("<%= j(render 'invoices/logs_list', logs: @logs) %>");
+			$(".total_log_time").set_hours()
+			$('.clock_format_setter').set_clock_format()
+			$("#change_customer").remove();
+			$(".spinning").hide()
+		<% end %>
+	$('#selected_project').remove();
+	$('#invoice_project_select').after("<%= j(render 'selected_project') %>");
+	$('#dialog_project').hide();
+	$("#invoice_customer_id").attr("data-other-object" ,"<%= j(@project.id.to_s) %>")
+	$('#invoice_project_select').hide();
+	$("#change_project").remove();
+<% end %>
+$("select#invoice_customer_id").invoice_object_select();
+$("#invoice_customer_id").chosen({width:'200px'});
+$("#dialog_customer").UIdialogs_links();
+$("select#invoice_project_id").invoice_object_select();
+$("#invoice_project_id").chosen({width:'200px'});
+$("#dialog_project").UIdialogs_links();
+
+$(".date").datepicker();
+//
+$('.listing_logs_invoice_container').log_related_updates()
+//
+$('.remove_fields').remove_line_from_invoice()
+$('.invoice_line_quantity').quantity_price_vat_lines();
+$('.invoice_line_price').quantity_price_vat_lines();
+$('.invoice_line_vat').quantity_price_vat_lines();
+$('.invoice_line_vat').change_vat()
+$('.tax_field').change_vat()
+// $("#add_lines").add_lines()
+$(".add_fields").add_fields()
+$(".spinning").hide()

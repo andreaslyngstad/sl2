@@ -2,10 +2,11 @@ class TabsController < ApplicationController
   respond_to :js
   def tabs_state
     get_instance(params)
-    if @klass.class == Project
-      @milestone = @klass.milestones.next
+    if params[:class] == "Invoice"
+      @logs = @klass.logs.order(:log_date).includes(:user, :project, :todo, :customer, :employee)
+    else
+      @logs = @klass.logs.order("log_date DESC").limit(3).includes(:user)
     end
-    @logs = @klass.logs.order("log_date DESC").limit(3).includes(:user)
   end
   def tabs_milestones
     get_instance(params)
@@ -44,6 +45,7 @@ class TabsController < ApplicationController
   end
   def tabs_projects
     get_instance(params)
+    @project = current_firm.projects.new
     @projects = @klass.projects.where(:active => true)
     respond_with(@projects)
   end
@@ -56,6 +58,7 @@ class TabsController < ApplicationController
     get_instance(params)
     @invoices = @klass.invoices
     @logs = @klass.logs.where(invoice_id: nil)
+    # @logs = current_firm.logs
     respond_with(@invoices)
   end
   private
