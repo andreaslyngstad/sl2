@@ -2,10 +2,11 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 # require "rails/test_unit/railtie"
-require 'pdfkit'
-
+# require 'pdfkit'
+# require 'shrimp'
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
+require File.expand_path('../../lib/devise/sign_in_interceptor', __FILE__)
 Bundler.require(:default, Rails.env)
 
 
@@ -15,13 +16,15 @@ SECRETS_CONFIG.merge! SECRETS_CONFIG.fetch(Rails.env, {})
 module Squadlink
   class Application < Rails::Application
 
-    config.middleware.use PDFKit::Middleware
-    
+config.middleware.use Devise::SignInInterceptor, { :scope  => :user, :klass => 'User',
+                                           :secret => "our_very_very_long_secret" }
+    # config.middleware.use PDFKit::Middleware
+    # config.middleware.use Shrimp::Middleware, :margin => '1cm', :format => 'legal'
     require "#{Rails.root}/lib/extensions.rb"
     config.colorize_logging = true
     # Enable the asset pipeline
     # config.assets.enabled = false
-    config.assets.precompile += %w( registration.js registration.css .svg .eot .woff .ttf)
+    config.assets.precompile += %w( invoice.css invoice.pdf invoice.js registration.js registration.css .svg .eot .woff .ttf)
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     

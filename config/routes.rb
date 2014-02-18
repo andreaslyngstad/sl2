@@ -140,8 +140,8 @@ Squadlink::Application.routes.draw do
       post "/invoices/customers_create/" => "invoices#customers_create"
       post "/invoices/projects_create/" => "invoices#projects_create"
       post "/invoices/sending_invoice/:id" => "invoices#sending_invoice", :as => :sending_invoice
-      get "/invoices/show_pdf/:id" => "invoices#show_pdf", :as => :show_pdf
-
+      get "/show_pdf/:id" => "invoices#show_pdf", :as => :show_pdf
+      get "/invoice_pdf/:id" => "pdf#invoice", :as => :invoice_pdf
       resources :invoices 
       resources :customers
       resources :employees

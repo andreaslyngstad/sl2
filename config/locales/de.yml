@@ -1,4 +1,19 @@
 de:
+  times:
+    to_day: Heute
+    this_week: Diese Woche
+    this_month: Dieser Monat
+    this_year: Dieses Jahr
+    yesterday: Gestern
+    last_week: Vorherige Woche
+    last_month: Im vergangenen Monat
+    last_year: Letztes Jahr
+    hour:
+      one: Stunde
+      more: Stunden
+    minute:
+      one: Minute
+      more: Minuten
   economic:
     invoice_date: Rechnungsdatum
     invoice_due: Aufgrund Rechnung

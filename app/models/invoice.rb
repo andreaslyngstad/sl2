@@ -43,5 +43,12 @@ class Invoice < ActiveRecord::Base
 			number
 		end
 	end
-
+	def to_pdf
+	  host        = Rails.env.production? ? 'squadlink.com' : 'lvh.me:3000'
+	  url         = Rails.application.routes.url_helpers.show_pdf_url(:id => id, :host => host, :subdomain => firm.subdomain)
+	  cookie      = { 'our_very_very_long_secret' => firm.users.first.id } # must be admin user
+	  res         = Shrimp::Phantom.new(url, {}, cookie).to_pdf("#{Rails.root}/tmp/shrimp/invoice_#{self.id}.pdf")
+	  puts(url)
+	end
+	
 end

@@ -63,14 +63,6 @@ en:
     timesheets: Timesheets
     account: Account
     next: Next
-  button:
-    new_project: New project
-    new_log: New log
-    new_customer: New customer
-    new_user: New user
-    new_emploee: New employee
-    new_invoice: New invoice
-    new_milestone: New milestone
   times:
     to_day: To Day
     this_week: This week

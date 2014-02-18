@@ -24,11 +24,25 @@ class InvoicesController < ApplicationController
     respond_with(@klass)
   end 
 
-  def show_pdf
+  def show_pdf 
+    # QC.enqueue "FirmMailer.invoice", session
     @klass = current_firm.invoices.find(params[:id])
     authorize! :read, @klass
     @logs = @klass.logs.order(:log_date).includes(:user, :project, :todo, :customer, :employee)
-    respond_with(@klass)
+     
+     respond_with(@klass)
+
+    # respond_to do |format|
+    #   format.html
+    #   format.pdf do
+    #     html = render_to_string(:layout => false , :action => "constitution.pdf.haml")
+    #   kit = PDFKit.new(html)
+    # kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
+    # send_data(kit.to_pdf, :filename => "#{@organisation_name} Constitution.pdf",
+    #   :type => 'application/pdf', :disposition => 'inline')        
+    # return
+    #   end
+    # end
   end
 
   def edit

@@ -5,25 +5,18 @@
     <script type="text/javascript">
       var lang = "<%= current_firm.language%>"
     </script>
-  	<%= stylesheet_link_tag  'application' %>	
-    <%= javascript_include_tag "application"%>
-    <%= favicon_link_tag 'favicon.ico' %>
-    <style>
-     .invoice_wrapper{
-      font-size: 100%; 
-      padding: 1.3333cm;
-      height: 29.7cm;  
-      width: 21cm;
-      box-shadow: 0 0 10px #888;
-      margin: 0 0 0 0;
-      margin-top: 0px;
-      position:relative;}
-      .invoice_wrapper .free_lines_table tbody .invoice_line td {
-padding-top: 2%;
-height: 35px;
-}
-    </style>
-   	<%= csrf_meta_tag %>
+      
+      <%= stylesheet_link_tag('invoice', :media => "all") %>
+      <%= stylesheet_link_tag('normalize', :media => "all") %>
+      <%= javascript_include_tag('application', :media => "all") %>
+      <%= favicon_link_tag 'favicon.ico' %>
+     	<%= csrf_meta_tag %>
+       <script type="text/javascript">
+     $(document).ready(function() {
+      $('.invoice_wrapper').find('.page_counting').count_pages()
+      $('.invoice_table').put_total_at_bottom();
+    })
+    </script>
     <link rel="shortcut icon" href="/favicon.png" />
     <%= yield :head %>
   </head>

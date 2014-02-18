@@ -2,6 +2,7 @@
 <div class="logo_wrapper">
 	<%  if request.url.to_s.include? "pdf" %>
 	<%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :original)) : ""%>
+	<%=stylesheet_link_tag("invoice_pdf.css", :media => "all") %>
 	<% else %>
 	<%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :small)) : ""%>
 	<% end %>

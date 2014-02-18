@@ -59,15 +59,6 @@ nb:
     timesheets: Timeliste
     account: Konto
     next: Neste
-  button:
-    new_project: Nytt prosjekt
-    new_log: Ny logg
-    new_customer: Ny kunde
-    new_user: Ny bruker
-    new_emploee: Ny ansatt
-    new_invoice: Ny faktura
-    new_task: Ny oppgave
-    new_milestone: Ny milepæl
   times:
     to_day: I dag
     this_week: Denne uken

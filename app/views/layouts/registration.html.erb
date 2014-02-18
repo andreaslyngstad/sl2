@@ -14,11 +14,12 @@
   ga('send', 'pageview');
 
 </script>
-  <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'application', :media => "all" %>
 	<%= javascript_include_tag "registration"%>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= csrf_meta_tag %>
 </head>
+<meta charset="UTF-8">
 <body>  
 	<div class="container_registration">
     <div id="flash_messages" style="display:none;"> 

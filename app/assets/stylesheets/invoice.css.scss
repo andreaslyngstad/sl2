@@ -1,3 +1,10 @@
+ul li{
+	list-style:none;
+}
+.total_line, .invoice_wrapper .subtotal_invoice {
+    font-size: 170%;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd; }
 .status{
 	width: 7%;
 }
@@ -225,7 +232,7 @@
 			width: 20em;
 			display: block;
 			float:right;
-			}
+	}
 	}
 	.on_what{
 		float:left;
@@ -282,8 +289,12 @@
 			min-width: 40%;
 			width: 40%;
 		}
-		.date_and_times_on_log{
+		.date_and_times_on_log_print{
 			width: 18%;
+			div{padding-right: 1%; font-size: 70%}
+			div.total_log_time_print{
+				font-size: 170%
+			}
 		}
 		.total_on_this, .total_invoice_header{
 			vertical-align: top;
@@ -298,9 +309,6 @@
 		}
 	 .cus_emp_on_log{
 			padding-left:1%;
-		}
-		.clock_format_setter{
-			float:none;
 		}
 		.log_user{
 			width: 15%;
@@ -318,15 +326,13 @@
 		font-weight: bold;
 	}
 
-	.invoice_table{position:absolute; width:88.5%; top:750px;
+	.invoice_table{position:absolute; width:88.5%; bottom:10px;
 		table{
 			width: 100%;
 		}
 	}
 	
-	.total_log_time{
-		font-size: 200%
-	}
+	
 	
 		
 	// .listing_logs_invoice_container, .date_format_setter, .clock_format_setter, .total_log_time{
