@@ -12,6 +12,9 @@ end
 every :day, at: "02:58am" do
   runner "Subscription.one_month_overdue"
 end
+every :day, at: "03:58am" do
+	runner "InvoiceSender.delete_old_files"
+end
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.

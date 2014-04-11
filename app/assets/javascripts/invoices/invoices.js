@@ -1,30 +1,3 @@
-function currency_converter(value){
-    var currency = $(".current_firm_data").attr("data-currency");
-    var language = $(".current_firm_data").attr("data-language");
-
-    // return localeString(value, '.', 3, ',')
-    return value.toLocaleString(language, {style: "currency", currency: currency, minimumFractionDigits: 2, maximumFractionDigits: 2})
-}
-function localeString(x, sep, grp, cent_seperator) {
-    var sx = (''+x).split('.'), s = '', i, j;
-    sep || (sep = ' '); // default seperator
-    grp || grp === 0 || (grp = 3); // default grouping
-    i = sx[0].length;
-    while (i > grp) {
-        j = i - grp;
-        s = sep + sx[0].slice(j, i) + s;
-        i = j;
-    }
-    s = sx[0].slice(0, i) + s;
-    sx[0] = s;
-    return sx.join(cent_seperator)
-}
-jQuery.fn.convert_money_field = function(){
-  $(this).each(function(i, e){
-    $(e).text(currency_converter(parseFloat($(e).attr("data-value"))))
-  })
-}
-
 jQuery.fn.UIdialogs_invoices_link = function(){
   $(this).button().click(function(){
     $(".spinning").show()
@@ -47,6 +20,16 @@ jQuery.fn.UIdialogs_edit_invoices_links = function(){
     $(form_id).find("#date" + '_' + object + '_' + data_id).datepicker();
     });
 };
+jQuery.fn.UIdialogs_sending_invoices_links = function(){
+  $(this).click(function(){
+    var data_id = $(this).attr('data-id')
+
+    $.get("/invoices/" + data_id + "/slow_sending/")
+    var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
+    $(form_id).UIdialogs();
+    $(form_id).dialog( "open" );
+    });
+};
 jQuery.fn.UIdialogs_invoices = function(){
   $(this).dialog({
       autoOpen: false,
@@ -61,7 +44,7 @@ jQuery.fn.UIdialogs_invoices = function(){
   });
   $(this).dialog("open")
   $('.new_invoice').validateWithErrors();
-  $('.edit_invoice').validateWithErrors();
+  // $('.edit_invoice').validateWithErrors();
 };
 
 jQuery.fn.log_related_updates = function(){
@@ -151,7 +134,7 @@ var vat_array = []
     $(element).attr("data-totalExVat", value_ex_vat)
     });
  display_total_vat(jsonObject,vat_array)
- $('.total_on_this').total_on_invoice()
+  $('.total_on_this').total_on_invoice()
 }
 
 
@@ -168,8 +151,8 @@ jQuery.fn.total_on_invoice = function(){
     total += log_total
     }
   })
-  $(".subtotal_on_invoice").text(currency_converter(subtotal))
-  $(".total_on_invoice").text(currency_converter(total))
+  $(".subtotal_on_invoice").html(currency_converter(subtotal))
+  $(".total_on_invoice").html(currency_converter(total))
   $(".total_hidden_field").val(total.toFixed(2))
 }
 
@@ -221,7 +204,6 @@ jQuery.fn.quantity_price_vat_lines = function(){
 
 jQuery.fn.sum_fields = function(){
   $(".total_on_line").each(function(i, element ){
-    console.log("test")
     var total_field = $(element)
     var total = total_field.attr("data-quantity")* total_field.attr("data-price") * (1 + total_field.attr("data-vat")/100)
     total_field.attr('data-total', total )
@@ -276,12 +258,15 @@ jQuery.fn.remove_log_from_invoice = function(){
 jQuery.fn.invoice_pr_date_select = function(){
   this.change(function(){
     $('.spinning').show();
-    var time = this.value
-    var url = $(this).attr("data-url");
-    var id = $(this).attr("data-id");
-    $.get("/invoice_range", {time: time, url:url, id:id})  
+    status = $('#invoices_pr_status_select').val()
+    time = this.value
+    url = $(this).attr("data-url");
+    id = $(this).attr("data-id");
+    $.get("/invoice_range", {time: time, url:url, id:id, status:status})  
+
   });
 };
+
 jQuery.fn.set_currency = function(){
   $(this).text(function(i, text) {
     var val = parseFloat($(this).attr('data-amount'))
@@ -312,8 +297,6 @@ function make_new_page(){
   if ($('.active_height').height() + $('.active_height').find('.invoice_table').height() > $('.invoice_wrapper').height()){
     $('.old_height').removeClass('old_height')
     $('.invoice_wrapper').find('.active_height').filter(':visible').removeClass('active_height').addClass('old_height');
-    if ($('.old_height').find('.line').length == 0){$('.old_height').find('.free_lines_table_print_container').hide()}
-    if($('#invoice_wrapper0').find('.log').length == 0){$('#invoice_wrapper0').find('.listing_logs_invoice_container').remove()}
     $('.invoice_template').clone().appendTo('#tabs-1')
     $('.invoice_template').first().prepare_invoice_template($('.invoice_wrapper').length)
     }  
@@ -322,14 +305,15 @@ function move_last_line(){
   var page_count =  $('.invoice_wrapper').length
   make_new_page()
     while ($('.old_height').height() + $('.old_height').find('.invoice_table').height() > $('.invoice_wrapper').height()){
-     $('.old_height').find('.invoice_line').last().append_lines_and_logs()
+      $('.old_height').find('.invoice_line').last().append_lines_and_logs()
       if ($('.old_height').height() + $('.old_height').find('.invoice_table').height() < $('.invoice_wrapper').height()){
         make_new_page()
       }
+      if($('.old_height').find('.log').length == 0){$('.old_height').find('.listing_logs_invoice_container').remove()}
+      if($('.old_height').find('.line').length == 0){$('.old_height').find('.free_lines_table_print_container').hide()}
     }
-    
-    // make_new_page($('.active_height').height(), $('.active_height').find('.invoice_table').height())
 }
+
 
 function find_last_invoice_line(page_count) {
   $('#invoice_wrapper'  + (page_count - 1)).find('.invoice_line').last();
@@ -351,14 +335,45 @@ jQuery.fn.put_total_at_bottom = function(){
     parseFloat($('#invoice_wrapper0').css('padding')))) + "px");  
   move_last_line()
 }
-$(document).ready(function() {
-  $('.money').convert_money_field()
-  $('.total_on_this').total_on_log()
-  $(".open_invoices_update").UIdialogs_edit_invoices_links();
+
+jQuery.fn.invoice_paid = function(){
+  $(this).click(function(){
+    $(".spinning").show()
+   var id = $(this).attr("data-id")
+    $.post('jobs/invoice_paid/' + id)
+  })
+}
+jQuery.fn.set_all_to_minus = function(){
+  val = $(this).val('-' + $(this).val())
+  $(this).keyup()
+}
+jQuery.fn.set_logs_to_minus = function(){
   
+  $(this).each(function(index, element) {
+  $(element).attr('data-quantity', $(element).attr('data-quantity') * -1)
+  })
+}
+jQuery.fn.credit_invoice = function(){
+  $(this).click(function(){
+    $(".spinning").show()
+    var id = $(this).attr("data-id")
+    $.get('invoices/' + id + '/credit_note/')
+   
+  })
+}
+function ready_invoice(){
+  $('.credit_invoice').credit_invoice()
+  $('.invoice_paid').invoice_paid()
+  $(".open_invoices_update").UIdialogs_edit_invoices_links();
+  $(".dialog_sending_invoice_form").UIdialogs()
+  $(".slow_sending_invoices").UIdialogs_sending_invoices_links();
   $("#dialog_invoice").UIdialogs_invoices_link();
   $(".open_invoices_update").UIdialogs_edit_invoices_links();
   $("select#invoices_pr_date_select").invoice_pr_date_select();
+  $("select#invoices_pr_status_select").change(function() {
+       $('#invoice_range_form').submit();
+    });
+  $('.remind_invoice').UIdialogs_sending_invoices_links()
   $(".invoice_range_date").datepicker({ 
   onSelect: function() {
     $('#invoice_range_form').submit();
@@ -366,5 +381,14 @@ $(document).ready(function() {
     }).attr( 'readOnly' , 'true' )
   $('.invoice_list').find('.invoice_amount').set_currency()
   $('.invoice_wrapper').find('.page_counting').count_pages()
-$('.invoice_table').put_total_at_bottom();
+  $('.invoice_table').put_total_at_bottom();
+  $(".small_selector").chosen({width:'150px'});
+  $('.money').convert_money_field()
+  $('.total_on_this').total_on_log()
+  $('.invoice_table').put_total_at_bottom();
+  $(".open_invoices_update").UIdialogs_edit_invoices_links();
+  $('.invoice_wrapper').find('.page_counting').count_pages()
+}
+$(document).ready(function() {
+  ready_invoice()
 });

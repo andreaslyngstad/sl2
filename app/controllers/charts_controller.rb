@@ -34,7 +34,6 @@ class ChartsController < ApplicationController
   def tabs_var_setter(params,model)
     range = params[:from].to_date..params[:to].to_date
     instance = params[:klass].constantize.find(params[:id])
-    Rails.logger.info(range)
     @stacked = ChartData.new(instance,range,model).stacked
     @pie = ChartData.new(instance,range,model).pie
     render :formats => [:json] 

@@ -3,7 +3,7 @@
 //= require jquery.ui.core
 //= require jquery.ui.position
 //= require jquery.ui.widget
-//= require chosen.jquery.min
+//= require external/chosen.jquery.min
 //= require_self
 
 jQuery.ajaxSetup({ 

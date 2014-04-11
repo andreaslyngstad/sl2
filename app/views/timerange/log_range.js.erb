@@ -1,6 +1,7 @@
 $(".listing_logs").empty();
-$(".listing_logs").append("<%= escape_javascript(render(:partial => @logs)) %>");
-//$('#range_date_fields').set_selected_value("<%= j(@time_range_first) %>", "<%= j(@time_range_last) %>" )
+$(".listing_logs").append("<div class='total_header'><%= j(t('economic.total_hours') + ': ' + time_format(@hours).to_s) %></div>");
+$(".listing_logs").append("<%= j(render(:partial => @logs)) %>");
+$('#range_date_fields').set_selected_value("<%= j(@time_range_first) %>", "<%= j(@time_range_last) %>" )
 $(".total_log_time").set_hours()
 $('.date_format_setter').set_date_format()
 $('.clock_format_setter').set_clock_format()

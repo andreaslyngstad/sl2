@@ -203,6 +203,7 @@ function slideTime(event, ui){
 //     
     // return hours + ":" + minutes;
 // };
+
 function time_to_value(time){
     var b = time
     var temp = new Array
@@ -213,16 +214,13 @@ function time_to_value(time){
     
     return hours + min
 };
-jQuery.fn.logs_pr_date_select = function(){
-		this.change(function(){
-  $('.spinning').show();
-  var form = "from"
-  var to = "to"
-  var time = this.value
-  var url = $(this).attr("data-url");
-  var id = $(this).attr("data-id");
-  $.get("/log_range", {time: time, url: url, id: id });
-  
+jQuery.fn.pr_date_select = function(){
+	this.change(function(){
+    $('.spinning').show();
+    $.get("/" + $(this).attr('data-object') + "_range",{time: this.value, 
+                                        url: $(this).attr("data-url"), 
+                                        id: $(this).attr("data-id") 
+                                      });
   });
   };
 jQuery.fn.set_hours = function(){
@@ -253,11 +251,34 @@ function update_budget_useage(hours, hourly_price){
   $('.budget_green').data('procent', post_usage )
   $('.budget_green').set_buget_width()
 };
+jQuery.fn.set_view = function(){
+  $(this).click(function(){
+    val   = $(this).attr('id')
+    user  = $(this).parent().data('user')
+    date  = $(this).parent().data('date')
+    klass = $(this).parent().data('klass')
+    id    = $(this).parent().data('id')
+    $('.view_selector').find('.current').removeClass('current')
+    $('.view_selector').find('#' + val).addClass('current')
+    if (val === "week_view"){
+      $.get("/timesheet_week", {user_id: user, date: date, class: klass, id: id });
+      window.location.hash = "tabs-3#week"
+    }else if(val === "month_view")
+    {
+      $.get("/timesheet_month", {user_id: user, date: date, class: klass, id: id } )
+      window.location.hash = "tabs-3#month"
+    }else if(val === "list_view"){
+      $.get("/tabs/tabs_logs/" + id + "/" + klass)
+      window.location.hash = "tabs-3"
+    }
+  })
+}
 $(document).ready(function() {
+  $('.view_selector').find('span').set_view()
   $('.log_event_recording').save_while_typing()
 	$(".total_log_time").set_hours()
 	$(".searchableS_tracking").chosen({width: '200px'});
-  $("select#logs_pr_date_select").logs_pr_date_select();
+  $("select#logs_pr_date_select").pr_date_select();
 	$("#dialog_log").UIdialogs_log_links();
 	$(".open_log_update").UIdialogs_edit_logs_links();
 	$(".date").datepicker();

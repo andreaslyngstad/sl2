@@ -1,7 +1,3 @@
-$(".flash_notice").empty()
-$(".flash_notice").append("<%= j(flash.discard(:notice))%>")
-$('.listing_invoices').prepend('<%= j(render "invoice", invoice: @klass) %>');
-$(".open_invoices_update").UIdialogs_edit_invoices_links();
-$('.invoice_list').find('.invoice_amount').set_currency()
-$(".button").button()
-$(".spinning").hide()
+$('.listing_invoices').prepend('<%= j(render "invoices/invoice", invoice: @klass) %>');
+<%= render "js_partial" %>
+

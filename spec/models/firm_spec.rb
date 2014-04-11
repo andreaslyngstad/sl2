@@ -13,28 +13,34 @@ describe Firm do
    it {should validate_presence_of(:name) }
 
   
-  let(:f)               {FactoryGirl.create(:firm)}
+  
+  let(:f_no_plan)       {FactoryGirl.create(:firm_no_plan)}
   let(:f2)              {FactoryGirl.create(:firm)}
   let(:p)               {FactoryGirl.create(:plan, name: "costly", price: 1200)}
+  
+  let(:f)               {FactoryGirl.create(:firm_no_plan, plan_id: p.id)}
+
   let(:p1)              {FactoryGirl.create(:plan, name: "cheep", price: 12)}
   let(:customer_list)   {FactoryGirl.create_list(:customer,20, firm: f)}
   let(:user_list)       {FactoryGirl.create_list(:user,20, firm: f)}
   let(:project_list)    {FactoryGirl.create_list(:project,20, firm: f)}
  
   it "should be created with a plan" do
-    f.subscription.should_not == nil 
-    f.plan.name == "Free" 
+    f_no_plan.subscription.should_not == nil 
+    f_no_plan.plan.name.should == "Free" 
   end
   
   it "should update firm_plan" do 
    f.update_plan(f.subscription.plan_id)
-   f.plan.name == "Free"  
+   f.plan.name.should == "Free"  
   end 
   
   it "should update counters" do 
+    f.plan = p
     customer_list
     user_list  
     project_list
+
     f.update_firm_counters 
     f.customers_count.should == 20
     f.projects_count.should == 20
@@ -42,6 +48,7 @@ describe Firm do
   end
   
   it "should remove associations when downgrading" do
+    f.plan = p
     customer_list
     user_list
     project_list
@@ -54,8 +61,8 @@ describe Firm do
   end
   
   it "should check payment" do
-    f.subscription = FactoryGirl.create(:subscription, active: true, next_bill_on: Time.now.to_date - 1.day )
-    f2.subscription = FactoryGirl.create(:subscription, active: true,  next_bill_on: Time.now.to_date + 1.days)
+    f.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true, next_bill_on: Time.now.to_date - 1.day )
+    f2.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true,  next_bill_on: Time.now.to_date + 1.days)
     f.payment_check?.should == true
     f2.payment_check?.should == false
   end  
@@ -73,7 +80,7 @@ describe Firm do
   end 
   
   it "reverts to free plan" do  
-    f.subscription = FactoryGirl.create(:subscription, paymill_id: "test", plan: p)
+    f.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", paymill_id: "test", plan: p)
     customer_list
     user_list 
     project_list

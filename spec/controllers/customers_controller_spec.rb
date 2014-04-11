@@ -31,9 +31,6 @@ describe CustomersController do
       customer = FactoryGirl.create(:customer, :firm => @user.firm)
       get :show, :id => customer
       assigns(:klass).should eq(customer) 
-      assigns(:hours).should eq(customer.logs.sum(:hours)) 
-      assigns(:employees).should eq(customer.employees)
-      assigns(:projects).should eq(customer.projects.where(["active = ?", true]))
     end
     it "renders the #show view" do
       @customer = FactoryGirl.create(:customer, :firm => @user.firm)

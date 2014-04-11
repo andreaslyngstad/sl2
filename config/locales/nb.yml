@@ -5,9 +5,20 @@ nb:
   save: Lagre
   show: vis
   send: send
+  send_reminder: send påminnelse
+  download: last ned
+  quicksend: kjappsend
+  credit_note: Kreditnota
+  paid: betalt
+  not_paid: ikke betalt
   general:
+    all: Alle
+    was_sent: ble sendt
+    is_being_sent: blir sendt
+    generation_of: Produksjonen av 
+    timed_out: tok for lang tid. Prøv igjen.
     remove_from_invoice: Fjern fra faktura
-    for_invoice_emails: For faktura eposter
+    for_invoice_emails: For faktura eposter.
     my_firm: Mitt firma
     your_firm: Ditt firma
     with_out: Uten
@@ -47,15 +58,18 @@ nb:
     thank_you_for_subscribing: Takk for at du stoler på oss!
     you_are_now_on_the_free_plan: Du er nå på et gratis abonnement
   navigation:
-    home: Hjem
+    home: Oversikt
     logs: Logg
+    list: Liste
+    week: Uke
+    month: Måned
     projects: Prosjekt
     customers: Kunder
     users: Brukere
     invoices: Faktura
-    statistics: Statestikk
+    statistics: Statistikk
     spendings: Forbruk
-    reports: Raport
+    reports: Rapport
     timesheets: Timeliste
     account: Konto
     next: Neste
@@ -75,7 +89,12 @@ nb:
       one: minutt
       more: minutter
   economic:
+    total_hours: Timer totalt
+    budget: Budsjett
     invoice: faktura
+    uninvoiced: Ikke fakturerte
+    invoiced: Fakturert
+    invoice_now: Fakturer nå?
     invoice_date: Fakturadato
     invoice_due: Forfallsdato
     invoice_draft: Kladd
@@ -83,9 +102,14 @@ nb:
     invoice_due_short: Forall
     invoice_overdue: Forfalt
     invoice_reminded: Påminnet
+    invoice_paid: Betalt
+    invoice_credit: Kreditert
     invoice_no_number: Uten nummer
     invoice_number: Fakturanummer
     vat_number: Org.nr.
+    credit_note: Kreditnota
+    credit: Kredit
+    credit_on_invoice: Kredit på faktura
     bank_account: Bankkonto
     invoice_pages: Side
     goods: Varer
@@ -111,31 +135,40 @@ nb:
       you_cannot_delete_yourself: . Du kan ikke slette deg selv.
     models:
       log: 
+        other: logg
         one: logg
         more: logger
       project: 
         the: prosjektet
+        other: prosjekt
         one: prosjekt
         more: prosjekter
       todo: 
+        other: oppgave
         one: oppgave
         more: oppgaver
       customer: 
+        other: kunde
         one: kunde
         more: kunder
       user: 
+        other: bruker
         one: bruker
         more: brukere
       invoice: 
+        other: faktura
         one: faktura
         more: fakturaer
       employee: 
+        other: ansatt
         one: ansatt
         more: ansatte
       milestone:
+        other: milepæl
         one: milepæl
         more: milepæler
       plan:
+        other: abonnement
         one: abonnement
         more: abonnement
     attributes:
@@ -396,6 +429,7 @@ nb:
       too_short: er for kort (minimum %{count} tegn)
       wrong_length: er av feil lengde (maksimum %{count} tegn)
       over_limit: Ditt abonnement tillater kun %{count} %{model} 
+      validates_presence_of_legal_attributes: Du må skrive inn ditt bankkuntonummer og organisasjonsnummer under instillingene for ditt firma.
     template:
       body: ! 'Det oppstod problemer i følgende felt:'
       header:
@@ -408,6 +442,7 @@ nb:
       create: Lag %{model}
       submit: Lagre %{model}
       update: Oppdater %{model}
+      send: Send %{model}
   number:
     currency:
       format:

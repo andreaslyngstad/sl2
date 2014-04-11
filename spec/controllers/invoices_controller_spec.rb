@@ -124,7 +124,7 @@ describe InvoicesController do
       
       it "redirects to the new contact" do
         post :create, invoice: FactoryGirl.attributes_for(:invoice, customer_id:customer.id), :format => 'js'
-        flash[:notice].should == "Invoice is added." 
+        flash[:notice].should == "Invoice was successfully saved" 
       end
     end 
   end
@@ -136,7 +136,7 @@ describe InvoicesController do
   context "valid attributes" do
     it "located the requested @contact" do
       put :update, id: @invoice, invoice: FactoryGirl.attributes_for(:invoice), :format => 'js'
-      assigns(:invoice).should eq(@invoice)      
+      assigns(:klass).should eq(@invoice)      
     end
   
     it "changes @invoice's attributes" do
@@ -148,7 +148,7 @@ describe InvoicesController do
   context "invalid attributes" do
     it "locates the requested @invoice" do
       put :update, id: @invoice, invoice: FactoryGirl.attributes_for(:invoice, :content => nil), :format => 'js'
-      assigns(:invoice).should eq(@invoice)      
+      assigns(:klass).should eq(@invoice)      
     end
     
     it "does not change @invoice's attributes" do

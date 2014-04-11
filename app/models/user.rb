@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
   def can_validate?
     role == "External user"
   end
+
+  def admin?
+    role == "Admin"
+  end
   
   def logout_stamp!
     self.current_sign_in_at = nil

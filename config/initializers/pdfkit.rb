@@ -49,14 +49,14 @@ end
 #    }
   # config.root_url = "http://localhost" # Use only if your external hostname is unavailable on the server.
 # end
-# PDFKit.configure do |config|
-#   config.wkhtmltopdf = '/usr/bin/wkhtmltopdf'
-#   config.default_options = {
-#     :page_size => 'Legal',
-#     :print_media_type => true,
-#     :margin_top => "0mm"
-#   }
-#   # Use only if your external hostname is unavailable on the server.
-#   config.root_url = "http://localhost"
+PDFKit.configure do |config|
+  config.wkhtmltopdf = `which wkhtmltopdf`.gsub(/\n/, '')
+  config.default_options = {
+    :page_size => 'Legal',
+    :print_media_type => true,
+    :margin_top => "0mm"
+  }
+  # Use only if your external hostname is unavailable on the server.
+  config.root_url = "http://localhost"
 
-# end
+end

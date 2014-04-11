@@ -1,4 +1,8 @@
+<% @klass.due_today_or_overdue %>
 <div class="invoice_wrapper" id="invoice_wrapper0">
+	<% if request.original_url.include?('Invoice')%>
+	<span class="stamp" style="color:<%= @klass.status_string[0] %>"><%= @klass.status_string[1] %></span>
+	<% end %>
 	<div class="checking_height active_height">
 		<%= render :partial => "invoices/invoice_header.html.erb", :locals => {:klass => @klass} %>
 <div class="on_what">
@@ -11,7 +15,7 @@
 	<% if !@klass.invoice_lines.blank? %>
 	
 	<div class="free_lines_table_print_container">
-		<span class="invoice_print_sub_header"><%= (t'economic.goods').capitalize %></span>	
+	<span class="invoice_print_sub_header"><%= (t'economic.goods').capitalize %></span>	
 	<table class="free_lines_table" >
 		<thead>
 		<tr>

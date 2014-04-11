@@ -1,5 +1,5 @@
 <div class="log_menu">
-	<span class="add_some">  
+	<span class="add_some_todo">  
 		<% if can? :manage, @klass %>
 		<a id="dialog_todo" class="add_new_todo_button" data-object="todo"><%= t('helpers.submit.create', model: Todo.model_name.human) %></a>
 		<% end %>
@@ -16,7 +16,7 @@
 		<% end %>
 	</div>
 	<div class="logs_pr_date">
-		<select class="small_selector" id="todos_pr_date_select" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
+		<select class="small_selector" id="todos_pr_date_select" data-object="todo" data-url="<%= @klass ? @klass.class : "index" %>" data-id="<%= @klass ? @klass.id : "index" %>">
 			<option value="to_day"><%= t'times.to_day' %></option>
 			<option value="this_week"><%= t'times.this_week' %></option>
 			<option value="this_month"><%= t'times.this_month' %> </option>

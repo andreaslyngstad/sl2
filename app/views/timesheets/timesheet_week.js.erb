@@ -1,3 +1,7 @@
-var url = "/timesheet_week/" + <%= escape_javascript(@user.id.to_s) %>
-window.location = url
+$('.listing_logs').empty()
+$('#dialog_log_form').empty()
+$('#dialog_log_form').append('<%= j(render "logs/log_menu_form_tags") %>')
+$('.listing_logs').append('<%= j(render "timesheet_header") %>')
+$('.listing_logs').append('<%= j(render "timesheet_table") %>')
+ready_timesheet()
 $(".spinning").hide();

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def show  
     @klass = current_firm.users.find(params[:id])
     authorize! :read, @klass
-    respond_with(@klass)
+    redirect_to(tabs_state_path(string_for_klass(@klass),@klass.id))
   end
 
   def edit

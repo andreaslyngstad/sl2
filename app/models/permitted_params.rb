@@ -65,6 +65,7 @@ class PermittedParams < Struct.new(:params, :current_user)
         :invoice_email, 
         :invoice_email_subject, 
         :invoice_email_message, 
+        :starting_invoice_number,
         :logo,
         :bank_account,
         :vat_number,
@@ -155,9 +156,19 @@ class PermittedParams < Struct.new(:params, :current_user)
   end
   def invoice_attributes
     if current_user
-      [:number,:content,:project_id,:customer_id,:firm_id, :paid, :reminder_sent, :due, :status, :date, :total,
+      [:number,:content,:project_id, :mail_to, :mail_subject, :mail_content, :customer_id,:firm_id, :paid, :reminder_sent, :due, :status, :date, :total,
         logs_attributes: [:tax],
       invoice_lines_attributes: [:_destroy, :description, :quantity, :price, :tax, :id]
+      ]
+    end
+  end
+  def invoice_send
+    params.require(:invoice).permit(*invoice_send_attributes)
+  end
+  def invoice_send_attributes
+    if current_user
+      [ :mail_to, :mail_subject, :mail_content,  :due
+      
       ]
     end
   end

@@ -1,0 +1,13 @@
+$(".spinning").hide()
+$('.invoice_paid').invoice_paid()
+$(".flash_notice").empty()
+$(".flash_notice").append("<%= j(flash.discard(:notice))%>")
+$(".open_invoices_update").UIdialogs_edit_invoices_links();
+$('.invoice_list').find('.invoice_amount').set_currency()
+$('.quick_send_invoice').sending_to_handeling_invoice("sending")
+$('.download_invoice').sending_to_handeling_invoice("download")
+$(".dialog_sending_invoice_form").UIdialogs()
+$(".slow_sending_invoices").UIdialogs_sending_invoices_links();
+
+$('.credit_invoice').credit_invoice()
+$(".button").button()

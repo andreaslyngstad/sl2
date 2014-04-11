@@ -47,6 +47,7 @@ jQuery(function($){
     $.extend($.jsi18n.messages,{
     invoice_number: "Rechnungsnummer",
     invoice_page: "Seite",
+    crunching: "Einen Moment bitte.",
     });
 }(jQuery));
 }

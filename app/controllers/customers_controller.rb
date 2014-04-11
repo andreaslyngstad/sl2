@@ -7,6 +7,7 @@ class CustomersController < ApplicationController
   def show
     @klass = current_firm.customers.find(params[:id])
     authorize! :manage, @klass
+    redirect_to(tabs_state_path(string_for_klass(@klass),@klass.id))
   end
    
   def edit

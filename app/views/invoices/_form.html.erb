@@ -17,12 +17,17 @@
 				<a id="dialog_project" data-object="project"><%= t'helpers.submit.create', model: Project.model_name.human %></a>
 			</td>
 	<td id="dates_labels_td">
-		<%= f.label "#{t 'economic.invoice_date'}" %>
+		<%= f.label "#{t 'economic.invoice_date'}" %><br>
 		<%= f.label "#{t 'economic.invoice_due'}"  %>
 	</td>		
   <td id="dates_td">
+  	<% if @invoice.id == nil %>
 	<%= f.text_field :date, :value => date_format(Date.today), :class => "invoice_date date", :id => "invoice_date_" %>
 	<%= f.text_field :due, :value => date_format(Date.today + 14.days), :class => "invoice_due date", :id => "invoice_due_" %>
+	<% else %>
+	<%= f.text_field :date, :value => date_format(@invoice.date), :class => "invoice_date date", :id => "invoice_date_" %>
+	<%= f.text_field :due, :value => date_format(@invoice.due), :class => "invoice_due date", :id => "invoice_due_" %>
+	<% end %>
 </td>
 		</tr>
 	</table>
@@ -30,7 +35,7 @@
 <li>
 	<div>
 	<%= f.label "#{t 'economic.notes'}" %>
-	<%= f.text_area :content%>	
+	<%= f.text_area :content, value: current_firm.on_invoice_message%>	
 	</div>
 	<%= link_to_add_fields "#{t 'economic.add_line'}", f, :invoice_lines %>
 	<div class="free_lines_table_container" style="display:none;">

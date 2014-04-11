@@ -11,11 +11,13 @@ class Log < ActiveRecord::Base
   belongs_to :todo
   belongs_to :employee
   belongs_to :invoice
+  belongs_to :credit_note, class_name: "Invoice"
   before_save :set_hours 
   validate :log_made_on_project
   validate :end_time_before_begin_time
   validates_presence_of :log_date 
   
+  scope :uninvoiced, -> {where(invoice_id: nil).where.not(end_time: nil)}
   
   def log_made_on_project
     errors.add(:project_id, "cannot be empty for this log") if

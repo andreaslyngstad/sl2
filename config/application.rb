@@ -16,8 +16,8 @@ SECRETS_CONFIG.merge! SECRETS_CONFIG.fetch(Rails.env, {})
 module Squadlink
   class Application < Rails::Application
 
-config.middleware.use Devise::SignInInterceptor, { :scope  => :user, :klass => 'User',
-                                           :secret => "our_very_very_long_secret" }
+     config.middleware.use Devise::SignInInterceptor, { :scope  => :user, :klass => 'User',
+                                           :secret =>  SECRETS_CONFIG[Rails.env][:phantomjs_secret_token] }
     # config.middleware.use PDFKit::Middleware
     # config.middleware.use Shrimp::Middleware, :margin => '1cm', :format => 'legal'
     require "#{Rails.root}/lib/extensions.rb"

@@ -5,7 +5,18 @@ en:
   save: Save
   show: show
   send: send
+  send_reminder: send reminder
+  quicksend: quicksend
+  download: download
+  credit_note: credit
+  paid: paid
+  not_paid: not paid
   general:
+    all: All
+    was_sent: was sent
+    is_being_sent: is being sent
+    generation_of: The generation of
+    timed_out: timed out. Please try again.
     remove_from_invoice: Remove from invoice
     for_invoice_emails: For invoice emails
     my_firm: My firm
@@ -32,7 +43,7 @@ en:
     task: Task
     invoice: Invoice
     none: none
-    or: eller
+    or: or
     is_on: is on  
     is_not_on: is not on
     archive: Archive
@@ -51,8 +62,11 @@ en:
     thank_you_for_subscribing: Thank you for subscribing!
     you_are_now_on_the_free_plan: You are now on the free plan
   navigation:
-    home: Home
+    home: Overview
     logs: Logs
+    list: List
+    week: Week
+    month: Month
     projects: Projects
     customers: Customers
     users: Users
@@ -79,16 +93,26 @@ en:
       one: minute
       more: minutes
   economic:
+    total_hours: Total hours
+    budget: Budget
     invoice: invoice
+    uninvoiced: Not invoiced
+    invoiced: Invoiced
+    invoice_now: Invoice now?
+    invoice_date: Invoice Date
     invoice_draft: Draft
     invoice_sent: Sent
     invoice_due:  Due
     invoice_overdue: Overdue
     invoice_reminded: Reminded
-    invoice_date: Invoice Date
+    invoice_paid: Paid
+    invoice_credit: Credited
     invoice_no_number: No number
     invoice_number: Invoice nummer
+    credit_on_invoice: Credit on invoice
     vat_number: VAT number
+    credit_note: credit note
+    credit: Credit
     bank_account: Bank account
     invoice_pages: Page
     goods: Goods
@@ -116,34 +140,44 @@ en:
       log: 
         one: log
         more: logs
+        other: logs
       project: 
         the: project
         one: project
         more: projects
+        other: projects
       customer: 
         one: customer
         more: customers
+        other: customers
       todo:
         one: task
         more: tasks
+        other: tasks
       user: 
         one: user
+        other: users
         more: users
       invoice: 
         one: invoice
         more: invoices
+        other: invoices
       employee: 
         one: employee
         more: employees
+        other: employees
       milestone:
         one: milestone
         more: milestones
+        other: milestones
       plan:
         one: plan
         more: plans
+        other: plans
       subscription:
-        one:
-        more:
+        one: subscription
+        more: subscriptions
+        other: subscriptions
     attributes:
       log:
         log: Log
@@ -201,7 +235,7 @@ en:
         content: Content
         firm: Firm
         status: Status
-        reminder_sent: Reminder_sent
+        reminder_sent: Reminder sent
         due: Due
         total: Total
         date: Date
@@ -381,6 +415,7 @@ en:
       odd: must be odd
       record_invalid: ! 'Validation failed: %{errors}'
       over_limit: Your plan only allows %{count} %{model}
+      validates_presence_of_legal_attributes: you need to provide your bank account number or/and vat number in your account.
       taken: has already been taken
       too_long:
         one: is too long (maximum is 1 character)
@@ -403,6 +438,7 @@ en:
       create: Create %{model}
       submit: Save %{model}
       update: Update %{model}
+      send: Send %{model}
   number:
     currency:
       format:

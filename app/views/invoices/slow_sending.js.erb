@@ -1,0 +1,5 @@
+var form = $("#sending_invoice_<%= j (@invoice.id.to_s) %>_form")
+form.empty().append("<%= j( render "sending_form")  %>")
+form.find(".edit_invoice").validateWithErrors();
+form.find(".date").datepicker();
+

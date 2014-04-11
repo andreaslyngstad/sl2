@@ -5,10 +5,5 @@
 		</div>
 	</div>
 <% end %>	
-<div class="index-view">
-	<div class="list_header orange_bgr">
-		<div class="search">
-	        <input type="text" placeholder="<%= t'general.search' %>" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
-	    </div>
-	</div>
+<%= render "header" %>
 <%= render "invoices/listing_invoices" %>

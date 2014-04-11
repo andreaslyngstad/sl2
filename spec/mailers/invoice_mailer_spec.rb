@@ -1,6 +1,6 @@
 describe InvoiceMailer do
 	describe 'Sending invoice' do
-    let(:firm)        { FactoryGirl.create(:firm, name:"test",invoice_email:"firm@test.com", invoice_message: "TEST MESSAGE")}
+    let(:firm)        { FactoryGirl.create(:firm, name:"test",invoice_email:"firm@test.com", invoice_email_message: "TEST MESSAGE")}
     let(:user)        { FactoryGirl.create(:user, firm:firm)}
     let(:customer)		{ FactoryGirl.create(:customer, firm:firm, email: "test@test.com")}
     let(:invoice)			{ FactoryGirl.create(:invoice, firm:firm, customer:customer)}
@@ -11,7 +11,7 @@ describe InvoiceMailer do
       mail.to.should eq(["test@test.com"])
       mail.reply_to.should eq([ "firm@test.com"])
       mail.from.should eq(["no_reply@squadlink.com"])   
-      mail.body.encoded.should include(firm.invoice_message)
+      mail.body.encoded.should include(firm.invoice_email_message)
       mail.body.encoded.should include('This invoice is made in <a href="https://squadlink.com">Squadlink</a>')
     end
     it 'sends reminder' do

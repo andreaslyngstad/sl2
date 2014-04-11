@@ -1,6 +1,6 @@
 <div class="state_wrapper">
   <% if @klass.budget %>
-  <div class="state_headers">Budget</div>
+  <div class="state_headers"><%= t('economic.budget') %></div>
    <div class="state_unit">
     <div class="budget_green" data-procent="<%= ProjectPrice.set_procentage(@klass)%>" data-budget="<%= @klass.budget %>"></div>
     <div class="budget_red"></div>
@@ -42,7 +42,7 @@
 <div id="description">
   <% if !@klass.description.blank? %>
   <div id="project_description">
-    <%= @klass.description %> 
+    <%= simple_format(@klass.description )%> 
   </div>
   <% end %>
 </div>

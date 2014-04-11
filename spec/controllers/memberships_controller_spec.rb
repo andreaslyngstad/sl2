@@ -17,7 +17,7 @@ describe MembershipsController do
       assigns(:project).should == project
       assigns(:user).should == external_user
       project.users.should include external_user
-      flash[:notice].should == "#{external_user.name} is a member of the #{project.name} project."
+      flash[:notice].should == "#{external_user.name} is on #{project.name}"
     end
 	  it "removes user from project" do
       project.users << [external_user, @user]
@@ -29,7 +29,7 @@ describe MembershipsController do
       # project.users.includes?(external_user).should == true
       project.users.count.should == 1
 
-      flash[:notice].should == "#{external_user.name} is NOT a member of the #{project.name} project."
+      flash[:notice].should == "#{external_user.name} is not on #{project.name}"
 	  end
     it "assigns user to project" do
       project.users << [external_user]

@@ -8,6 +8,7 @@ class CreateLogs < ActiveRecord::Migration
       t.integer :project_id
       t.integer :employee_id
       t.integer :invoice_id
+      t.integer :credit_note_id
       t.integer :todo_id
       t.boolean :tracking
       t.datetime :begin_time

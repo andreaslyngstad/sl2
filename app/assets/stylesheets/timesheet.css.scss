@@ -4,11 +4,11 @@ float: left;
 
 }
 .timesheet_for_user{
+	text-align:right;
 	padding: 10px;
 }
 .add_some_timesheet{ 
-  width:650px;
-  padding: 0 0 0 7px;
+
   float: left;
 }
 .add_some_timesheet_buttons{
@@ -80,7 +80,7 @@ margin: 0px;
 
 height:32px;
 width:970px;
-padding:10px 5px 10px 5px;
+padding:10px 5px 10px 0px;
 background:#FFFFFF;
 
 }
@@ -99,7 +99,7 @@ float: left;
 border-collapse:collapse;
 }
 table.timesheet_table td {
-padding:.3em 1em;
+padding:.3em 0em;
 
 }
 
@@ -108,9 +108,9 @@ table.timesheet_table tr td.number,
 table.timesheet_table tr td.total, 
 table.timesheet_table tr td.timesheet_day_total,
 table.timesheet_table tr td.timesheet_week_total {
-text-align:right;
+text-align:center;
 vertical-align: middle;
-padding: 8px 5px 8px 0;
+// padding: 8px 5px 8px 0;
 }
 table.timesheet_table tbody tr td.number input {
 border: 1px solid #CCC;
@@ -132,17 +132,22 @@ text-align: right;
 }
 
 table.timesheet_table .timesheet_day {
-text-align: right;
-
-font-size: 12px;
-
+	text-align: center;
+	font-size: .8em;
+	
 }
+.go_to_day_link{
+		cursor:pointer;
+	}
+.go_to_day_link:hover{
+		text-decoration: underline;
+	}
 td.timesheet_project{
 text-align:left;
-font-size: 12px;  
+font-size: .8em;  
 }
 table.timesheet_table .timesheet_day{
-padding:10px 0 10px 0;
+// padding:10px 0 10px 0;
 }
 table.timesheet_table .timesheet_project{
 width: 100px;

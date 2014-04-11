@@ -1,8 +1,8 @@
 <div class="employee" id="employee_<%= employee.id %>">
 <div class="info" id="employee_info_<%= employee.id %>">
-  <div class="name_todo"><%= truncate_string(employee.name) %></div>
+  <div class="name_todo"><%= employee.name %></div>
   <div class="project_todo"><%= employee.phone %></div>
-  <div class="user_todo"><%= truncate_string(employee.email) %></div>
+  <div class="user_todo"><%= mail_to employee.email,  employee.email %></div>
  <div class="delete_edit_employees">
   <span class="open_employee_update edit" id="employee_update" data-id="<%= employee.id %>" data-object="employee"><%= (t"edit") %></span>
   <%= link_to (t"delete"), employee, data: { confirm: (t'are_you_sure?') }, :title => "Delete employee", :method => :delete, :class => "delete_employee", :remote => true%>

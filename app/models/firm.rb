@@ -46,9 +46,11 @@ class Firm < ActiveRecord::Base
     free_plan = Plan.where(name:"Free").first
     if free_plan
       self.subscription = Subscription.create(plan_id: free_plan.id) 
+      self.plan = free_plan
     else
       free_plan2 = Plan.create name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, paymill_id: "free"
       self.subscription = Subscription.create(plan_id: free_plan2.id) 
+      self.plan = free_plan2
     end
   end 
   

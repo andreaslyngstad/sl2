@@ -26,9 +26,9 @@
         	<%= yield(:help)%>
           <div id="navigation" class="hor_scroll ver_down_on_help">
           	<ul>
-              <li class="navigation" id="home_navi"><%= link_to (t'navigation.home'), timesheet_week_path(current_user) %></li>
+              <li class="navigation" id="home_navi"><%= link_to (t'navigation.home'), charts_path %></li>
             	<li class="navigation" id="logs_navi"><a href="/logs"><%= t 'navigation.logs' %></a></li>
-            	<li class="navigation" id="projects_navi"><a href="/projects"><%= t 'navigation.projects' %></a></li>
+            	<li class="navigation" id="projects_navi"><%= link_to (t 'navigation.projects'), projects_path %></li>
             	<% if can? :read, Customer %>
           	   <li class="navigation" id="customers_navi"><a href="/customers"><%= t 'navigation.customers' %></a></li>
           	  <% end %>

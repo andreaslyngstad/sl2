@@ -12,7 +12,7 @@ describe HooksController do
       @subscription.active = false
       @subscription.next_bill_on = DateTime.now.to_date
       @subscription.save
-      Rails.logger.info(@subscription.paymill_id.to_s + "YEEEEEE")
+
       event = {event: {event_type: "subscription.succeeded",event_resource: { subscription: @subscription.paymill_id,transaction: "Object"},created_at: "1358027174"}}
       request.env['RAW_POST_DATA'] = event.to_json  
       post 'receiver', event 
@@ -23,7 +23,7 @@ describe HooksController do
       firm.payments.where(amount: 99,  
                           plan_name: s.plan.name, 
                           card_type: s.card_type,
-                          last_four: s.last_four).count.should == 1
+                          last_four: s.last_four).count.should == 2
       s.next_bill_on.should == (Time.at(Paymill::Subscription.find(@subscription.paymill_id).next_capture_at)).to_date 
       s.active.should == true
     end  

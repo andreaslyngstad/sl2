@@ -1,9 +1,8 @@
 class InvoicesController < ApplicationController
-  respond_to :html, :js, :json, :pdf
-  layout :resolve_layout
+  respond_to :html, :js, :json
   def index
-    @invoices = current_firm.invoices.includes(:customer).order_by_number
-    @invoice = Invoice.new
+    @invoices = current_firm.invoices.where(date: ((time_zone_now - 1.week)..time_zone_now) ).includes(:customer).order_by_date
+    @invoice = current_firm.invoices.new
     @logs = current_firm.logs.includes(:customer, {:customer => :employee}, :project, {:project =>:todo}, :user)
   end
   def new
@@ -13,7 +12,11 @@ class InvoicesController < ApplicationController
     else
       @instance = eval(params[:url]).find(params[:id])
       klass = params[:url].downcase 
-      @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, {:customer => :employee}, :project, {:project =>:todo}, :user)
+      if klass = 'project'
+        @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, :project, :todo, :user, :firm)
+      elsif klass = 'customer'
+        @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, {:customer => :employee}, :project, {:project =>:todo}, :user)
+      end
       @invoice.send(klass+'=', @instance)
     end
   end
@@ -23,33 +26,58 @@ class InvoicesController < ApplicationController
     authorize! :read, @klass
     respond_with(@klass)
   end 
-
-  def show_pdf 
-    # QC.enqueue "FirmMailer.invoice", session
-    @klass = current_firm.invoices.find(params[:id])
-    authorize! :read, @klass
-    @logs = @klass.logs.order(:log_date).includes(:user, :project, :todo, :customer, :employee)
-     
-     respond_with(@klass)
-
-    # respond_to do |format|
-    #   format.html
-    #   format.pdf do
-    #     html = render_to_string(:layout => false , :action => "constitution.pdf.haml")
-    #   kit = PDFKit.new(html)
-    # kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
-    # send_data(kit.to_pdf, :filename => "#{@organisation_name} Constitution.pdf",
-    #   :type => 'application/pdf', :disposition => 'inline')        
-    # return
-    #   end
-    # end
-  end
-
-  def edit
+  def slow_sending
     @invoice = current_firm.invoices.find(params[:id])
-    @logs = @invoice.logs.includes(:customer, :project, {:project => :firm}, :user, :firm, :employee, :todo)
     authorize! :read, @invoice
     respond_with(@invoice)
+  end
+  
+  def credit_note
+    @invoice = current_firm.invoices.find(params[:id])
+    @logs = @invoice.logs.includes(:customer, :project, {:project => :firm}, :user, :firm, :employee, :todo)
+    @credit_note = current_firm.invoices.new
+    
+    authorize! :read, @invoice
+    respond_with(@invoice)
+  end
+  
+  def credit_note_create
+    @klass = current_firm.invoices.new(permitted_params.invoice)
+    @invoice = current_firm.invoices.find(params[:id])
+    @klass.set_status_and_currency(current_firm)
+    InvoiceSender.give_invoice_number(@klass,Invoice.last_with_number(current_firm)) 
+    @klass.status = 8
+    
+
+    respond_to do |format|
+      if @klass.save
+        @logs = params[:logs_attributes]
+        if @logs
+          @logs.each do |k,v|
+            log = current_firm.logs.find(k.to_i)
+            log.credit_note_id = @klass.id
+            log.save
+          end
+        end
+        @invoice.status = 7
+        @invoice.save
+        flash[:notice] = flash_helper((t'activerecord.models.invoice.one').capitalize + ' ' + (t'activerecord.flash.saved'))
+        format.js 
+        else
+          flash[:notice] = flash_helper((t'activerecord.models.invoice.one').capitalize + ' ' + (t'activerecord.flash.could_not_save'))
+        format.js { render "shared/validate_create" }
+      end
+     end
+
+  end
+  
+  def edit
+    @invoice = current_firm.invoices.find(params[:id])
+    if @invoice.status == 1
+      @logs = @invoice.logs.includes(:customer, :project, {:project => :firm}, :user, :firm, :employee, :todo)
+      authorize! :read, @invoice
+      respond_with(@invoice)
+    end
   end
 
 
@@ -69,10 +97,10 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       if @klass.save
-        flash[:notice] = flash_helper((t'activerecord.models.invoice.one') + ' ' + (t'activerecord.flash.saved'))
+        flash[:notice] = flash_helper((t'activerecord.models.invoice.one').capitalize + ' ' + (t'activerecord.flash.saved'))
         format.js 
         else
-          flash[:notice] = flash_helper((t'activerecord.models.invoice.one') + ' ' + (t'activerecord.flash.could_not_save'))
+          flash[:notice] = flash_helper((t'activerecord.models.invoice.one').capitalize + ' ' + (t'activerecord.flash.could_not_save'))
         format.js { render "shared/validate_create" }
       end
      end
@@ -81,43 +109,44 @@ class InvoicesController < ApplicationController
   
   def update
     @klass = current_firm.invoices.find(params[:id])
-    logs = params[:logs_attributes]
-    Log.update(logs.keys, logs.values) if logs
-    if @klass.update_attributes(permitted_params.invoice)
-      flash[:notice] = flash_helper((t'activerecord.models.invoice.one') + ' ' + (t'activerecord.flash.saved'))
-      respond_to do |format|
-        format.js
-      end
-    else
-      flash[:notice] = flash_helper((t'activerecord.models.invoice.one') + ' ' + (t'activerecord.flash.could_not_save'))
-      respond_to do |format|
-        format.js { render "shared/validate_update" }
+    if @klass.status == 1
+      logs = params[:logs_attributes]
+      Log.update(logs.keys, logs.values) if logs
+      if @klass.update_attributes(permitted_params.invoice)
+        flash[:notice] = flash_helper((t'activerecord.models.invoice.one').capitalize + ' ' + (t'activerecord.flash.saved'))
+        respond_to do |format|
+          format.js
+        end
+      else
+        flash[:notice] = flash_helper((t'activerecord.models.invoice.one').capitalize + ' ' + (t'activerecord.flash.could_not_save'))
+        respond_to do |format|
+          format.js { render "shared/validate_update" }
+        end
       end
     end
   end
-  def sending_invoice
-    @invoice = current_firm.invoices.find(params[:id])
-    @invoice.number = current_firm.invoices.where('number IS NOT NULL').order("number ASC").last.number + 1
-    if @invoice.save
-      InvoiceMailer.send_invoice(s).deliver
-    else
-    end
-  end
+  
   def destroy
     @invoice = Invoice.find(params[:id])
-    @invoice.destroy   
-    respond_to do |format|
-      flash[:notice] = flash_helper((t'activerecord.models.invoice.one') + ' '  + (t'activerecord.flash.deleted'))
-      format.js
+    if @invoice.status == 1
+      @invoice.logs.each do |l|
+        l.invoice_id = nil
+        l.save
+      end
+      @invoice.destroy   
+      respond_to do |format|
+        flash[:notice] = flash_helper((t'activerecord.models.invoice.one').capitalize + ' '  + (t'activerecord.flash.deleted'))
+        format.js
+      end
     end
   end
   def customer_select
     @customer = current_firm.customers.find(params[:id])
     if !params[:other_object].blank?
       @project = current_firm.projects.find(params[:other_object])
-      @logs = @customer.logs.where(invoice_id: nil, project_id: @project.id).includes(:employee, :customer, :firm, :todo, :user, :project)
+      @logs = @customer.logs.uninvoiced.where(project_id: @project.id).includes(:employee, :customer, :firm, :todo, :user, :project)
     else
-      @logs = @customer.logs.where(invoice_id: nil).includes(:employee, :customer, :firm, :todo, :user, {:project => :firm})
+      @logs = @customer.logs.uninvoiced.includes(:employee, :customer, :firm, :todo, :user, {:project => :firm})
     end
   end
   def project_select
@@ -125,9 +154,9 @@ class InvoicesController < ApplicationController
     @customer = @project.customer
     if !params[:other_object].blank? and @customer.nil?
       @selected_customer = current_firm.customers.find(params[:other_object])
-      @logs = @project.logs.where(invoice_id: nil, customer_id: @selected_customer.id).includes(:employee, :customer, :firm, :todo, :user, :project)
+      @logs = @project.logs.uninvoiced.where(customer_id: @selected_customer.id).includes(:employee, :customer, :firm, :todo, :user, :project)
     else
-      @logs = @project.logs.where(invoice_id: nil).includes(:employee, :customer, :firm, :todo, :user, :project)
+      @logs = @project.logs.uninvoiced.includes(:employee, :customer, :firm, :todo, :user, :project)
     end
     if params[:invoice] != "null"
       @invoice = Invoice.find(params[:invoice]) if params[:invoice]
@@ -138,7 +167,7 @@ class InvoicesController < ApplicationController
     authorize! :manage, @klass
     respond_to do |format|
       if @klass.save
-        flash[:notice] = flash_helper((t'activerecord.models.customer.one') + ' ' + (t'activerecord.flash.saved'))
+        flash[:notice] = flash_helper((t'activerecord.models.customer.one').capitalize + ' ' + (t'activerecord.flash.saved'))
         format.js 
         else
         format.js { render "shared/validate_create" }
@@ -152,22 +181,12 @@ class InvoicesController < ApplicationController
     authorize! :manage, @klass
     respond_to do |format|
       if @klass.save
-        flash[:notice] = flash_helper((t'activerecord.models.project.one') + ' ' + (t'activerecord.flash.saved'))
+        flash[:notice] = flash_helper((t'activerecord.models.project.one').capitalize + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_create" }
       end
     end
   end
-  private
-
-  def resolve_layout
-    case action_name
-    when "show_pdf"
-      "pdf"
-    else
-      "application"
-    end
-  end
-
+ 
 end

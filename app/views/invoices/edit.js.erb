@@ -2,14 +2,15 @@ var form = $("#invoice_update_<%= j (@invoice.id.to_s) %>_form")
 
 form.empty().append("<%= j( render "form")  %>")
 form.UIdialogs_invoices();
+form.find(".edit_invoice").validateWithErrors();
 form.find("select#invoice_customer_id").invoice_object_select();
 form.find("#invoice_customer_id").chosen({width:'200px'});
 form.find("#dialog_customer").UIdialogs_links();
 form.find("select#invoice_project_id").invoice_object_select();
 form.find("#invoice_project_id").chosen({width:'200px'});
 form.find("#dialog_project").UIdialogs_links();
+$('.remove_log').remove_log_from_invoice()
 
-form.find(".date").datepicker();
 //
 form.find('.listing_logs_invoice_container').log_related_updates()
 //
@@ -28,5 +29,4 @@ form.find('.total_on_invoice').total_on_invoice()
 // $("#add_lines").add_lines()
 form.find(".add_fields").add_fields()
 form.find('.total_on_line').sum_fields()
-
-
+form.find(".date").datepicker();

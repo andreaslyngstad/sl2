@@ -19,17 +19,19 @@ class LogsController < ApplicationController
   end
 
   def create
-    @klass = LogWorker.create(permitted_params.log, check_done(params[:done]), current_user, current_firm)
+    @klass = LogWorker.create(current_firm.logs.new(permitted_params.log), check_done(params[:done]), current_user, current_firm)
      authorize! :manage, @klass 
     create_resonder(@klass)
   end
 
   def update
-  	@klass = Log.find(params[:id])
-    authorize! :manage, @klass
-    @pre_hours = @klass.time   
-    LogWorker.check_todo_on_log(@klass, current_user, check_done(params[:done])) if !@klass.todo.nil?
-    update_responder(@klass,permitted_params.log)
+    @klass = Log.find(params[:id])
+    if @klass.invoice_id.nil?
+      authorize! :manage, @klass
+      @pre_hours = @klass.time   
+      LogWorker.check_todo_on_log(@klass, current_user, check_done(params[:done])) if !@klass.todo.nil?
+      update_responder(@klass,permitted_params.log)
+    end
   end
  
   def destroy
@@ -43,7 +45,7 @@ class LogsController < ApplicationController
   end
 
   def start_tracking
-    @log = LogWorker.start_tracking(permitted_params.log, check_done(params[:done]), current_user, current_firm)
+    @log = LogWorker.start_tracking(current_firm.logs.new(permitted_params.log), check_done(params[:done]), current_user, current_firm)
     create_resonder(@log)
   end
 

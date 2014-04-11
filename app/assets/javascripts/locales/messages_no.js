@@ -50,6 +50,7 @@ jQuery(function($){
     $.extend($.jsi18n.messages,{
     invoice_number: "Fakturanummer",
     invoice_page: "Side",
+    crunching: "Vent litt. Knuser data for deg....",
     });
 }(jQuery));
 }

@@ -1,19 +1,38 @@
 require "./lib/log_worker.rb"
 describe LogWorker do
 	let(:todo) { double("Todo", save!: true) }
-  let(:log) { double("Log", todo: todo, user: "user", firm: "firm", tracking: false ) }
-  let(:user){ mock_model("User")}
-  let(:firm){mock_model("Firm")}
+  let(:user){ double("User", name: "test")}
+  let(:firm){double("Firm")}
+  let(:log) {double("log", todo: todo, user: "user", firm: "firm", tracking: false ) }
+	
+  class FakeLog; attr_accessor :firm, :user, :tracking, :begin_time, :log_date, :todo end
 	it 'should create log based on args' do
-		LogWorker.create(Hash.new, true, user, firm).user.should == user 
-		LogWorker.create(Hash.new, true, user, firm).firm.should == firm  
+		# log = FakeLog.new
+		log.should_receive(:firm=).with(firm)
+		log.should_receive(:tracking=).with(false)
+		todo.should_receive(:done_by_user=).with(user)
+		todo.should_receive(:completed=).with(true)
+		# log.stub!(:user).and_return(user)
+		# log.stub!(:firm).and_return(firm)
+		# log.stubs(:user).returns(user)
+		# log.stubs(:firm).returns(firm)
+		# log.stubs(:tracking).returns(false)
+		LogWorker.create(log, true, user, firm) 
+		# LogWorker.create(log, true, user, firm).firm.should == firm  
 	end
 	it 'should start tracking' do
-		log = LogWorker.start_tracking(Hash.new, true, user, firm)
-		log.user.should == user
-		log.firm.should == firm 
-		log.tracking.should == true
-		log.log_date.should == Date.today
+		@time_now = Time.parse("Feb 24 1981")
+  	Time.stub(:now).and_return(@time_now)
+
+		log.should_receive(:firm=).with(firm)
+		log.should_receive(:tracking=).with(false)
+		log.should_receive(:tracking=).with(true)
+		# log.should_receive(:user=).with(user)
+		log.should_receive(:log_date=).with(Date.today)
+		log.should_receive(:begin_time=).with(Time.now)
+		todo.should_receive(:done_by_user=).with(user)
+		todo.should_receive(:completed=).with(true)
+		LogWorker.start_tracking(log, true, user, firm)
 	end
 	
 	it 'should check_todo_on_log'do

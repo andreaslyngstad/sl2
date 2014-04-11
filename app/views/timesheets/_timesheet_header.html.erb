@@ -1,24 +1,18 @@
+<% if @klass.class != User %>
 <div id="timesheet_log_menu">
-  <div class="add_some_timesheet">  
-    <% if can? :manage, Firm %>
-       <%= select_tag :user_id, options_from_collection_for_select(@users, "id", "name"), 
-      :id => "timeheet_user_select",  :prompt => (t'general.select') + ' ' + (t'activerecord.models.user.one')  %>
+  <div class="add_some_timesheet"  data-date="<%= Date.today %>", data-klass="<%= @klass ? @klass.class : "index" %>", data-id="<%= @klass ? @klass.id : "index" %>"> <% if can? :manage, Firm %>
+    <select id="timeheet_user_select" name="select_user_id">
+    	<option value=""><%= t("general.all") %></option>
+    	<% @users.each do |u| %>
+    	<% if @user == u  %>
+    	<option value="<%= u.id %>" selected="selected"><%= u.name %></option>
+    	<%else %>
+    	<option value="<%= u.id %>"><%= u.name %></option>
+    	<% end %>
+    	<% end %>
+		</select>
     <% end %>
    </div>
-  <div class="timesheet_for_user"><%= t'general.timesheet_for' %> for <%= @user.name %></div>
-   <div class="add_some_timesheet_buttons">
-       <a id="dialog_log"><%= t('helpers.submit.create', model: Log.model_name.human) %></a> 
-   </div>
-   <%# if request.original_url.match("timesheet.month") %>
-    <!-- <div style="display: inline-block;">BLÆ</div> -->
-   <%# end %>
-   <div id="month_week_tabs">
-   	<ul>
-   		<li><%= link_to (t'datetime.prompts.week'), timesheet_week_path(@user), data:{name: "Week"} %></li>
-      <li><%= link_to (t'datetime.prompts.month'), timesheet_month_path(@user, Time.now.to_date), data:{name: "Month"} %></li>
-	</ul>   
-   </div>
-   <div id="dialog_log_form" class="dialog_form" title="Create new log" style="display:none;">
-      <%= render "timesheet_log_form" %>
-   </div>
+  <div class="timesheet_for_user"><%= t'general.timesheet_for' %> <%= @user ? @user.name : t("general.all") %></div>
 </div>
+<% end %>

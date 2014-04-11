@@ -1,16 +1,8 @@
 <%= render "shared/home_header" %>
+
+
 <div id="left" class="home_content">
-	<div class="timesheet">
-  		<%= render "timesheet_header" %>
-  	</div>
-	<div id="calendar">	
-		<%= calendar @date do |date| %>
-			<%= date.day %>
-			 <ul>	
-	          <li><%= link_to logs_day_of_mounth_hours(@logs_by_date, date), timesheet_day_path(@user, (date)) %></li>
-			 </ul>
-	  	<% end %>
-	</div>
+	<%= render "month_view" %>
 </div>
 
 	 

@@ -1,5 +1,6 @@
+<% log = current_firm.logs.new %>
 <div class="log_form blue">
-	<%= form_for(@log_new, :url => start_tracking_path, :html => {:class => "start_tracking_form", :id => "start_tracking_form"} )  do |n| %>
+	<%= form_for(log, :url => start_tracking_path, :html => {:class => "start_tracking_form", :id => "start_tracking_form"} )  do |n| %>
 		<div class="tracking_container">
 			   <%= n.text_field :event, :class => "tracking_log_event", :AUTOCOMPLETE => "OFF"  %> 
 		<div class="clock_start">
@@ -11,10 +12,10 @@
 			<%= n.submit "", :class => "start"%>
 		</div>
   		</div>
-		<%= render :partial => "tracking_partial", :locals => {:log => @log_new, :n => n}%>
+		<%= render :partial => "logs/tracking_partial", :locals => {:log => log, :n => n}%>
 	<% end %>		  
     <div class="open_tracking_select_container">
-	 	<a class="open_tracking_select" title="Details" data-id="<%= @log_new.id %>"></a>
+	 	<a class="open_tracking_select" title="Details" data-id="<%= log.id %>"></a>
 	</div>
 </div>
 	

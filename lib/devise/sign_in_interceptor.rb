@@ -2,7 +2,8 @@ module Devise
   class SignInInterceptor
     def initialize(app, opts)
       @app    = app
-      @scope  =opts[:scope]
+      Rails.logger.info(app)
+      @scope  = opts[:scope]
       @secret = opts[:secret]
       @klass  = opts[:klass]
     end

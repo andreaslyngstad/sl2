@@ -4,11 +4,12 @@
 <div id="cus_pro_us_listing_container">
 	<ul id="cus_pro_us_listing">
 		<li id="invoices_head">
-			<div class="invoice_customer"><%= t'activerecord.attributes.invoice.customer' %></div>
 			<div class="status"><%= t'activerecord.attributes.invoice.status' %></div>
-			<div class="invoice_number"><%= t'activerecord.attributes.invoice.number' %></div>
-			<div class="invoice_amount"><%= t'activerecord.attributes.invoice.amount' %></div>
 			<div class="invoice_dates"><%= t'activerecord.attributes.invoice.invoice_date' %></div>
+				<div class="invoice_number"><%= t'activerecord.attributes.invoice.number' %></div>
+			<div class="invoice_customer"><%= t'activerecord.attributes.invoice.customer' %></div>
+			<div class="invoice_amount"><%= t'activerecord.attributes.invoice.amount' %></div>
+			
 		</li>
 		<div class="listing_invoices">
 			<%= render @invoices %>

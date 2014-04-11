@@ -8,16 +8,19 @@
 //= require jquery.ui.slider
 //= require jquery.ui.datepicker
 //= require jquery.ui.accordion
-//= require chosen.jquery.min
+//= require external/chosen.jquery.min
 /*
  * Modded jquery.validate date format recognition
-//= require jquery.validate
+//= require external/jquery.validate
  *
  */
+ //= require external/history
+//= require external/history_adapter_jquery
 //= require translation
 //= require locales/messages_no
 //= require locales/messages_de
-//= require jquery.quicksearch
+//= require locales/messages_en
+//= require external/jquery.quicksearch
 //= require timeFormatter
 //= require navigation
 //= require far_right
@@ -27,13 +30,15 @@
 //= require log_tracking
 //= require employees
 //= require subscriptions
-//= require tabs
+
 //= require sl_graphs
 
 //= require timesheet
-//= require strftime-min.js
+//= require external/strftime-min.js
 //= require memberships
-//= require invoices
+//= require invoices/invoices
+//= require invoices/invoices_files.js
+//= require invoices/currency.js
 //= require jquery.xcolor.min
 //= require nvd3/lib/d3.v2 
 //= require nvd3/src/core
@@ -51,9 +56,15 @@
 //= require nvd3/src/models/multiBarChart
 //= require colorArrays
 //= require stackedAndPie
+//= require tabs
+
 //= require_self
 //= require turbolinks
 
+ // History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+ //        var State = History.getState(); // Note: We are using History.getState() instead of event.state
+ //        console.log("tdsetset!" + State)
+ //    });
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 })
@@ -71,6 +82,11 @@ jQuery.fn.set_date_format = function(){
   		$(v).html(strftime(set_date_format_str(), new Date($(v).data("date"))))
     
   	});
+}
+jQuery.fn.delete_firm_link = function(){
+  $(this).click(function(){
+
+  })
 }
 jQuery.fn.set_clock_format = function(){
   var clockformat = $('.current_firm_data').data("clockformat")
@@ -191,7 +207,21 @@ jQuery.fn.validateNoSubmit = function(){
      }
    }); 
 };
+jQuery.fn.collapse_menu = function(){
+  $(this).click(function(el){
+    $('.selected').removeClass('selected')
+    $(this).addClass('selected')
+    id = $(this).attr("id")
+    type =  $(this).data('type')
+    console.log(type)
+    $('.pref_fields').hide();
+    $('.pref_buttons').hide();
+    $('#' + id + '_fields').show()
+    $('#' + type + '_buttons').show()
 
+  })
+
+}; 
 jQuery.fn.UIdialogs_links = function(){
 	$(this).button().click(function(){
   var form = '#' + $(this).attr('id') + '_form'
@@ -206,7 +236,6 @@ jQuery.fn.UIdialogs_links = function(){
 }; 
 jQuery.fn.UIdialogs_edit_links = function(){
   $(this).click(function(){
-    console.log("clicked")
     var data_id = $(this).attr('data-id')
     // get edit action via ajax for all in the ajax_form array
     var ajax_form = ["project", "customer", "invoice","todo", "user", "employee"]
@@ -279,8 +308,8 @@ jQuery.fn.set_buget_width = function(){
 // Project archive
 
 jQuery.fn.set_selected_value = function(from,to){
-  $(this).find('#from').val(from)
-  $(this).find('#to').val(to)
+  $(this).find('input#from').val(from)
+  $(this).find('input#to').val(to)
 }
 
 // jQuery.fn.add_alternate_date_field = function(){
@@ -297,6 +326,34 @@ jQuery.fn.set_selected_value = function(from,to){
 
 
 //ok
+
+jQuery.fn.delete_firm_link = function(){
+  $(this).click(function(){
+    $('.delete_for_sure').slideDown()
+    $(this).hide()
+  })
+}
+
+jQuery.fn.delete_subdomain_validation = function(){
+  $(this).keyup(function(){
+    if (this.value == $(this).data('validate')){
+        $('.name_checker').show()
+      }
+  })
+}
+jQuery.fn.delete_name_validation = function(){
+  $(this).keyup(function(){
+    if (this.value == $(this).data('validate')){
+        $('.delete_for_real_link').show()
+      }
+  })
+}
+var get_ready = new $.Deferred();
+get_ready
+    .done(function () {
+        $(".total_log_time").set_hours()
+    })
+;
   
 ///////////////////////////////////////////////////////////////document.ready///////////////////////////////////////////////////////
 if (document.all && document.addEventListener && !window.atob) {
@@ -314,22 +371,27 @@ $.ajaxSetup({
   });
 
 $(document).ready(function() {
-$(".budget_green").set_buget_width()
-$('.date_format_setter').set_date_format()
-$(".show_avatar_upload").click(function(){
-    $(".avatar_upload").show();
-    $(".avatar_show_page").hide();
-    return false  
-  });
+  $('.delete_link').delete_firm_link()
+  $('.delete_subdomain_validation').delete_subdomain_validation()
+  $('.delete_name_validation').delete_name_validation()
+
+  $('.pref_links').collapse_menu()
+  $(".budget_green").set_buget_width()
+  $('.date_format_setter').set_date_format()
+  $(".show_avatar_upload").click(function(){
+      $(".avatar_upload").show();
+      $(".avatar_show_page").hide();
+      return false  
+    });
 
   $(".hide_avatar_upload").click(function(){
     $(".avatar_upload").hide();
     $(".avatar_show_page").show();
     return false  
   });
-$(".total_log_time").set_hours()
-$(".tasks_percent").countDone();
-$("#dialog_customer").UIdialogs_links();
+  $(".total_log_time").set_hours()
+  $(".tasks_percent").countDone();
+  $("#dialog_customer").UIdialogs_links();
   $(".range_date").datepicker({
       onSelect: function() {
         $('#range_form').submit();
@@ -369,9 +431,12 @@ $("#dialog_customer").UIdialogs_links();
 
   $(".account_update_select").chosen({width:'367px'});
   $(".big_selector").chosen({width:'369px'});
-  $(".small_selector").chosen({width:'200px'});
+  $(".small_selector").chosen({width:'150px'});
+  
+  
   $(".mini_selector").chosen({width:'177px', disable_search:true});
-  $('.logs_pr_date_select').chosen({width:'200px', disable_search:true});
+  $('.logs_pr_date_select').chosen({width:'150px', disable_search:true});
+  $('.view_selector_select').chosen({width:'150px', disable_search:true});
   $(".date").datepicker();
 
  	$(".tracking_log").submitWithAjax();
@@ -380,18 +445,18 @@ $("#dialog_customer").UIdialogs_links();
 	$(".button").button();
 	$(".activate_project").activate_projects();
 	$(".reopen_project").reopen_project();
-  $(".background_style_color").css({"background-color":$("input.background_style").val()})
-  $(".text_style_color").css({"background-color":$("input.text_style").val()})
-  $(".background_style").keyup(function(){
-  	var val_input = this.value
-  $(".background_style_color").css({"background-color":val_input})
+ //  $(".background_style_color").css({"background-color":$("input.background_style").val()})
+ //  $(".text_style_color").css({"background-color":$("input.text_style").val()})
+ //  $(".background_style").keyup(function(){
+ //  	var val_input = this.value
+ //  $(".background_style_color").css({"background-color":val_input})
   
-	});
-  $(".text_style").keyup(function(){
-  	var val_input = this.value
-  $(".text_style_color").css({"background-color":val_input})
+	// });
+ //  $(".text_style").keyup(function(){
+ //  	var val_input = this.value
+ //  $(".text_style_color").css({"background-color":val_input})
   
-	});
+	// });
 
 
  $("input.membership").membership();
@@ -409,6 +474,6 @@ $("#dialog_customer").UIdialogs_links();
     // });
 
 //non-ajax search
-   $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li', {}); 
-  
+  $("input#id_search_list").quicksearch('ul#cus_pro_us_listing li', {}); 
+
 })

@@ -8,11 +8,15 @@ class CreateInvoices < ActiveRecord::Migration
       t.integer   :firm_id, :null => false
       t.integer   :status
       t.datetime  :reminder_sent
+      t.datetime  :paid
       t.datetime  :due
       t.float     :total
       t.datetime  :date
       t.float     :discount
       t.text      :currency
+      t.text      :mail_to
+      t.text      :mail_subject
+      t.text      :mail_content
       t.timestamps
     end
       add_index :invoices, :firm_id

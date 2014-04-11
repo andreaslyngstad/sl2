@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include TabsHelper
   include ApplicationHelper
   #rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   require "./lib/timehelp"

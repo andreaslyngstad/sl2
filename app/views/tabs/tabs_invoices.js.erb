@@ -6,13 +6,5 @@ $(tab).empty().append("<%= j( render :partial => "invoices/listing_invoices")  %
 // $("#dialog_invoice_form").UIdialogs_invoices();
 $(".date").datepicker();
 $(".button").button();
-
-$('.invoice_list').find('.invoice_amount').set_currency()
-$("#invoices_pr_date_select").chosen({width:'175px'});
-$(".range_date").datepicker({ 
-		onSelect: function() {
-			$('#range_form').submit();
-  		}
-  		}).attr( 'readOnly' , 'true' )
-$(".open_invoices_update").UIdialogs_edit_invoices_links();
+ready_invoice()
 $(".spinning").hide()

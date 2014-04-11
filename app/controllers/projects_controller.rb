@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-   
+
   def index
       @project = current_firm.projects.new
     if current_user.role == "External user"
@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
   def show
     @klass = current_firm.projects.find(params[:id]) 
     authorize! :manage, @klass
+    redirect_to(tabs_state_path(string_for_klass(@klass),@klass.id))
   end
 
   def create

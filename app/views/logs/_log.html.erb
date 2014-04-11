@@ -25,12 +25,16 @@
       	</div>
 
  <div class="delete_edit">
- 	<% if can? :manage, log %>
+ 	<% if can? :manage, log and %>
+  <% if log.invoice_id.nil? %>
   <span class="open_log_update edit" id="log_update" title="<%= t'edit' %>" data-id="<%= log.id %>"><%= t'edit' %></span>
   <%= link_to (t"delete"), log, data: { confirm: ( t'are_you_sure?') }, :title => (t"delete"), :method => :delete, :class => "delete_log", :remote => true%>
   </div>
   </div>
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="<%= t'helpers.submit.update', model: Log.model_name.human %>" style="display:none;" data-id="<%= log.id %>"></div>
+  <% else %>
+   <%= t'economic.invoiced' %>
+  <% end %>
   <% end %>
     <% else %>
     <div class="date_and_times_on_log" >
