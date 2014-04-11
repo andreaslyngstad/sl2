@@ -1,11 +1,11 @@
 <div class="index-view">
 	<div class="list_header orange_bgr">
-		<a id="dialog_user" data-object="user">New user</a>
+		<a id="dialog_user" data-object="user"><%= t'helpers.submit.create', model: User.model_name.human %></a>
 		<div id="dialog_user_form" class="dialog_form" title="Create new user" style="display:none;">
-		<%= render 'new_form' %>
+		<%= render 'form' %>
     </div>
 	    <div class="search">
-	        <input type="text" placeholder="Search" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
+	        <input type="text" placeholder="<%= t'general.search' %>" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
 	    </div>
 	</div>
 	<div id="cus_pro_us_listing_container">
@@ -13,5 +13,4 @@
     <%= render @users %>
   </ul>
 </div>
-
 </div>

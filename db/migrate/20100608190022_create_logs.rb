@@ -7,16 +7,20 @@ class CreateLogs < ActiveRecord::Migration
       t.integer :firm_id, :null => false
       t.integer :project_id
       t.integer :employee_id
+      t.integer :invoice_id
+      t.integer :credit_note_id
       t.integer :todo_id
       t.boolean :tracking
       t.datetime :begin_time
       t.datetime :end_time
       t.date :log_date
       t.float :hours
+      t.float :tax
       t.timestamps
     end
     
     add_index :logs, :firm_id
+    add_index :logs, :invoice_id
     add_index :logs, :user_id
     add_index :logs, :project_id
     add_index :logs, :employee_id

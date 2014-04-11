@@ -1,16 +1,12 @@
 <%= content_for :head do %>
-<script type="text/javascript">
-  var PAYMILL_PUBLIC_KEY = '2028155948642eecacb7b872c5169aa6';
-</script>
-<%= javascript_include_tag "https://bridge.paymill.com/" %>
+
 <% end %>
 <%= render "shared/home_header" %>
 <div id="left" class="home_content">
-	
-<div id="">
-	
-
-
+  <script type="text/javascript">
+  var PAYMILL_PUBLIC_KEY = '2028155948642eecacb7b872c5169aa6';
+</script>
+<%= javascript_include_tag "https://bridge.paymill.com/" %>
  <div class="blue2">
  	
 	<% if @plan.id > current_firm.plan.id %>
@@ -103,5 +99,5 @@
   </div>
 <% end %>
 </div>	 
-</div>
+
 </div>	

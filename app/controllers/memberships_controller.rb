@@ -5,10 +5,10 @@ class MembershipsController < ApplicationController
   	@user = User.find(params[:id])
   	if @project.users.include?(@user)
   		@project.users.delete(@user)
-  		flash[:notice] = flash_helper("#{@user.name} is NOT a member of the #{@project.name} project.")
+  		flash[:notice] = flash_helper(@user.name + ' ' + t('general.is_not_on') + ' '  + @project.name)
   	else
   		@project.users << @user
-  		flash[:notice] = flash_helper("#{@user.name} is a member of the #{@project.name} project.")
+  		flash[:notice] = flash_helper(@user.name +  ' ' + t('general.is_on') + ' ' + @project.name)
   	end
   	@members = @project.users
   	@not_members = current_firm.users - @members	

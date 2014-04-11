@@ -2,7 +2,7 @@ function prepareAndCallJson(){
 		var url 	= $("#stats").val()
 		var from 	= $("#from_stat").val() 
 		var to 		= $("#to_stat").val()
-		var klass 	= $("#range_date_fields_graphs").data("klass")
+		var klass = $("#range_date_fields_graphs").data("klass")
 		var id 		= $("#range_date_fields_graphs").data("id")
 		var ColorArray = eval(url + "ColorArray")
 		$("#stacked svg").empty();
@@ -11,7 +11,6 @@ function prepareAndCallJson(){
     	$.getJSON('/' + url + '.json', {from: from, to: to, klass: klass, id: id}, function(data) {
   				stackedAndPie(data, ColorArray)     
  		})
-
     } 
 jQuery.fn.fixDateformat = function() {
   this.each(function(i, el) {

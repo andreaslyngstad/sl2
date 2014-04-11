@@ -2,9 +2,11 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 # require "rails/test_unit/railtie"
-
+# require 'pdfkit'
+# require 'shrimp'
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
+require File.expand_path('../../lib/devise/sign_in_interceptor', __FILE__)
 Bundler.require(:default, Rails.env)
 
 
@@ -14,10 +16,15 @@ SECRETS_CONFIG.merge! SECRETS_CONFIG.fetch(Rails.env, {})
 module Squadlink
   class Application < Rails::Application
 
+     config.middleware.use Devise::SignInInterceptor, { :scope  => :user, :klass => 'User',
+                                           :secret =>  SECRETS_CONFIG[Rails.env][:phantomjs_secret_token] }
+    # config.middleware.use PDFKit::Middleware
+    # config.middleware.use Shrimp::Middleware, :margin => '1cm', :format => 'legal'
+    require "#{Rails.root}/lib/extensions.rb"
     config.colorize_logging = true
     # Enable the asset pipeline
     # config.assets.enabled = false
-    config.assets.precompile += %w( registration.js registration.css .svg .eot .woff .ttf)
+    config.assets.precompile += %w( invoice.css invoice.pdf invoice.js registration.js registration.css .svg .eot .woff .ttf)
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     
@@ -31,6 +38,7 @@ module Squadlink
     config.active_record.timestamped_migrations = false
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += Dir["#{config.root}/lib", "#{config.root}/lib/**/"]
     config.autoload_paths += %W[#{config.root}/lib]
     config.active_record.schema_format = :sql
     # Only load the plugins named here, in the order given (default is alphabetical).
@@ -48,7 +56,12 @@ module Squadlink
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     # config.i18n.default_locale = :de
+    # rails will fallback to config.i18n.default_locale translation
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
 
+    # rails will fallback to en, no matter what is set as config.i18n.default_locale
+    config.i18n.fallbacks = [:en]
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
 

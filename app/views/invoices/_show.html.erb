@@ -1,0 +1,14 @@
+<% content_for :help do %>
+<div class="page_help">
+	<div class="page_help_container">
+		<%= t "help.projects_show_html" %>
+	</div>
+</div>
+<% end %> 
+<div class="list_header orange_bgr">
+  <%= t 'economic.invoice_number'  %>: <%= @klass.number %><br/>
+  <%= (t'activerecord.models.customer.one').capitalize  %>: <%= @klass.customer.name %>
+</div>  
+<div id="tabs-1">
+<%= render partial: "tabs/state_invoice" %>
+</div>

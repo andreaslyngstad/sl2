@@ -4,4 +4,4 @@ $(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>");
 <% if !@log.nil? %>
   $("#log_<%= escape_javascript(@log.id.to_s)%>").replaceWith("<%= escape_javascript(render(:partial => @log)) %>");
 <% end %>
-$(".spinning").hide();
+NProgress.done();

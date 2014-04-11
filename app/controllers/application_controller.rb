@@ -1,12 +1,17 @@
 class ApplicationController < ActionController::Base
-  rescue_from Customerio::Client::InvalidResponse, :with => :do_nothing
+
+  # rescue_from Customerio::Client::InvalidResponse, :with => :do_nothing
+
+  include TabsHelper
+
   include ApplicationHelper
   #rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   require "./lib/timehelp"
 	include UrlHelper
 	# before_filter :miniprofiler
-	before_filter :user_at_current_firm
-  # before_filter :customerio
+
+	before_filter :user_at_current_firm, :set_locale
+
 
 
   before_filter :set_mailer_url_options, 
@@ -92,9 +97,11 @@ class ApplicationController < ActionController::Base
   def time_range_to_day
   	Time.zone.today
   end
-  
-  def do_nothing
-    
+
+  def set_locale
+    if @current_firm
+      I18n.locale = current_firm.language[/\A.+?(?=-)/mi]
+    end
   end
   def record_not_found
     flash[:notice] = "No record found"

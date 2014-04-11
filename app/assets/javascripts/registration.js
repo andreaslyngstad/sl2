@@ -4,11 +4,9 @@
 //= require jquery.ui.core
 //= require jquery.ui.position
 //= require jquery.ui.widget
-//= require chosen.jquery.min
-//= require analytics
+//= require external/chosen.jquery.min
 //= require_self
 //= require turbolinks
-
 
 jQuery.ajaxSetup({ 
   'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -17,7 +15,6 @@ jQuery.ajaxSetup({
 jQuery.fn.validates_uniqe = function(){
  	$(this).keyup(function(){
  	var value = $(this).val().toLowerCase();
- 	
  	if (value.length == 0){
 	$(".signup-form-field-subdomain em").remove();
  	$(".signup-form-field-subdomain").append("<em class='error'>This field is required.</em>");
@@ -38,7 +35,7 @@ jQuery.fn.open_not_required = function(){
 	 $(this).click(function(){
   	$(".not_required").slideToggle();
   	$(".open_not_required").toggleClass("close_not_required");
-  	return false
+  	event.preventDefault();
   });
 };
 

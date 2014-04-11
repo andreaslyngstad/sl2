@@ -3,6 +3,7 @@ require 'features/subdomain_login_features'
 include SubdomainLoginFeatures  
 feature 'customer' do
     get_the_gritty   
+
   scenario "make new", js: true do
     sign_in_on_js   
     visit @customers 
@@ -18,6 +19,7 @@ feature 'customer' do
     fill_in "customer_address", with: "new customer address" 
     click_button "Save"
     page.should have_content("test_new customer")
+    
   end 
   scenario "Edit customer", js: true do
     sign_in_on_js
@@ -39,7 +41,7 @@ feature 'customer' do
     id = page.evaluate_script("$('.open_customer_update').first().attr('data-id');")
     li = "li#customer_#{id}"
     within(:css, li) do
-      first(".button").click 
+      page.first('span', :text => 'Delete').click 
     end
     page.should have_content("Customer was successfully deleted.") 
   end

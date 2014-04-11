@@ -3,4 +3,4 @@ $(".flash_notice").append("<%= escape_javascript(flash.discard(:notice))%>")
 <% unless @user == current_user %>
 $("#user_<%=@user.id%>").remove();
 <% end %>
-$(".spinning").hide();
+NProgress.done()

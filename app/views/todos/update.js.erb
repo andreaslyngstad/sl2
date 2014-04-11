@@ -25,7 +25,7 @@ $("#<%= j(todo.id.to_s)%>").click(function() {
   });
 $("#todo_<%= j(todo.id.to_s)%>").find(".logs_pluss").click(function() {
  	$(".flash_notice").empty() 
- 	$(".spinning").show();
+ 	NProgress.start();
  	$(this).hide()
  	$(this).next(".logs_minus").show()
   	var id = $(this).attr("id")	
@@ -49,4 +49,4 @@ $('.date_format_setter').set_date_format()
 if($('.far_right_container[style*="none"]').data() === null){
 
 }
-$(".spinning").hide();
+NProgress.done();

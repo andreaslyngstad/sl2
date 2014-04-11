@@ -9,6 +9,7 @@ $("text[x='0']").fixDateformat()
 	var to = $(".one_month_back").data("today")
 	$("#from").val(from)
 	$("#to").val(to)
+	prepareAndCallJson()
 	$(".small_selector").chosen({width:'200px'});
 	$(".range_date_graphs").datepicker({
 		onSelect: function() {
@@ -17,5 +18,5 @@ $("text[x='0']").fixDateformat()
 	$("#stats").change(function() {
 		prepareAndCallJson()
 	});
-	prepareAndCallJson()
-$(".spinning").hide();
+	
+NProgress.done();

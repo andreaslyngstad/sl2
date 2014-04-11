@@ -11,7 +11,7 @@ class SubscriptionsController < ApplicationController
     @subscription.firm_id = current_firm.id
 
     if @subscription.save_with_payment
-      redirect_to plans_path, :notice => "Thank you for subscribing!"
+      redirect_to plans_path, :notice => (t"subscription.thank_you_for_subscribing")
       # user = @subscription.firm.users.where(role: "Admin").first 
       # QC.enqueue "FirmMailer.new_plan", user.id
     else
@@ -36,7 +36,7 @@ class SubscriptionsController < ApplicationController
     s.firm = current_firm
     s.save!
     current_firm.save
-    flash[:notice] = flash_helper("You are now on the free plan.")  
+    flash[:notice] = flash_helper(t'subscription.you_are_now_on_the_free_plan')  
     redirect_to plans_path
   end
 end

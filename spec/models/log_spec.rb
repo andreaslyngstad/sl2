@@ -15,6 +15,8 @@ describe Log do
   let(:log)       {FactoryGirl.create(:log, :user => user, :firm => firm)}
   let(:log2)      {FactoryGirl.create(:log, :log_date => Date.today.beginning_of_week + 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
   let(:log3)      {FactoryGirl.create(:log, :log_date => Date.today.beginning_of_week - 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
+  let(:log_uninvoiced) {FactoryGirl.create(:log, invoice_id: nil, :user => user, :firm => firm )}
+  let(:log_uninvoiced_in_progress) {FactoryGirl.create(:log, invoice_id: nil, :user => user, :firm => firm, end_time: nil, tracking: true)}
   let(:project)   {FactoryGirl.create(:project, :firm => firm)}
   let(:range)     {Date.today.beginning_of_week..Date.today.end_of_week}
   # it 'Displays the total time' do
@@ -27,6 +29,10 @@ describe Log do
   #   log = FactoryGirl.create(:log,:begin_time => time_now, :end_time => time_now + 13.minutes, :user => user, :firm => firm)
   #   assert_equal '0:13', log.total_time 
   # end
+  it 'returns logs with invoice_id nil' do 
+    Log.uninvoiced.should eq [log_uninvoiced]
+    Log.uninvoiced.should_not include log_uninvoiced_in_progress
+  end
   it 'does check plan limit' do
     plan = FactoryGirl.create(:plan, logs: 1 )
     firm.plan = plan
@@ -55,7 +61,7 @@ describe Log do
     assert_equal 10800.0, log.time
   end
   it 'should_not save when end is before start' do
-    FactoryGirl.build(:log, :begin_time =>  time_now + 30.hours, :end_time => time_now, :user => user, :firm => firm).should_not be_valid
+    FactoryGirl.build(:log, :begin_time =>  time_now + 30.hours, :end_time => time_now, tracking: false, :user => user, :firm => firm).should_not be_valid
   end
   
   it 'should calculate hours for timesheet' do

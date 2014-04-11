@@ -6,6 +6,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.text :name
       t.integer :firm_id
       t.text :paymill_id
+      t.text :paymill_client_id
       t.text  :card_zip
       t.text  :last_four
       t.text  :card_type

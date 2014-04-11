@@ -2,13 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: https://17cd58a53c05ca61bd329b031a7063c5:@api.paymill.de/v2/clients
+    uri: https://4ee8641e5f7fc12b7117eef1adbd0968:@api.paymill.de/v2/clients
     body:
       encoding: US-ASCII
       string: email=test2%40test.no&description=test
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
       Content-Type:
@@ -19,17 +21,19 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx
+      - nginx/1.2.1
       Date:
-      - Mon, 24 Jun 2013 08:48:53 GMT
+      - Tue, 22 Oct 2013 04:57:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
-      - close
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.4.4-14+deb7u2
       Set-Cookie:
-      - PHPSESSID=osmq6a17qpkn0iikupo33rm8v2; path=/
+      - PHPSESSID=g10e55drsp7cljdokbrruq4ev7; path=/
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Cache-Control:
@@ -37,23 +41,25 @@ http_interactions:
       Pragma:
       - no-cache
       X-Server:
-      - hrtt-frn5-de13
+      - paymill-web03.paymill.de
       Strict-Transport-Security:
       - max-age=16070400; includeSubDomains
     body:
-      encoding: US-ASCII
-      string: ! "{\n\t\"data\":{\n\t\t\"id\":\"client_67d930f3e05717c6c0a6\",\n\t\t\"email\":\"test2@test.no\",\n\t\t\"description\":\"test\",\n\t\t\"created_at\":1372063733,\n\t\t\"updated_at\":1372063733,\n\t\t\"payment\":[\n\n\t\t],\n\t\t\"subscription\":null\n\t},\n\t\"mode\":\"test\"\n}"
+      encoding: UTF-8
+      string: "{\n\t\"data\":{\n\t\t\"id\":\"client_7aad7117fc9c50e2588a\",\n\t\t\"email\":\"test2@test.no\",\n\t\t\"description\":\"test\",\n\t\t\"created_at\":1382417860,\n\t\t\"updated_at\":1382417860,\n\t\t\"app_id\":null,\n\t\t\"payment\":[\n\n\t\t],\n\t\t\"subscription\":null\n\t},\n\t\"mode\":\"test\"\n}"
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 08:48:32 GMT
+  recorded_at: Tue, 22 Oct 2013 04:57:41 GMT
 - request:
     method: post
-    uri: https://17cd58a53c05ca61bd329b031a7063c5:@api.paymill.de/v2/payments
+    uri: https://4ee8641e5f7fc12b7117eef1adbd0968:@api.paymill.de/v2/payments
     body:
       encoding: US-ASCII
-      string: token=098f6bcd4621d373cade4e832627b4f6&client=client_67d930f3e05717c6c0a6
+      string: token=098f6bcd4621d373cade4e832627b4f6&client=client_7aad7117fc9c50e2588a
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
       Content-Type:
@@ -64,17 +70,19 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx
+      - nginx/1.2.1
       Date:
-      - Mon, 24 Jun 2013 08:48:54 GMT
+      - Tue, 22 Oct 2013 04:57:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
-      - close
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.4.4-14+deb7u2
       Set-Cookie:
-      - PHPSESSID=4v8i8ffidfkjq1mt5m88acso86; path=/
+      - PHPSESSID=jjbmj9lrtjco5v5f7dh01vbn80; path=/
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Cache-Control:
@@ -82,23 +90,25 @@ http_interactions:
       Pragma:
       - no-cache
       X-Server:
-      - hrtt-frn5-de14
+      - paymill-web02.paymill.de
       Strict-Transport-Security:
       - max-age=16070400; includeSubDomains
     body:
-      encoding: US-ASCII
-      string: ! "{\n\t\"data\":{\n\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\"type\":\"creditcard\",\n\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\"card_type\":\"visa\",\n\t\t\"country\":null,\n\t\t\"expire_month\":\"12\",\n\t\t\"expire_year\":\"2014\",\n\t\t\"card_holder\":null,\n\t\t\"last4\":\"1111\",\n\t\t\"created_at\":1372063734,\n\t\t\"updated_at\":1372063734\n\t},\n\t\"mode\":\"test\"\n}"
+      encoding: UTF-8
+      string: "{\n\t\"data\":{\n\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\"type\":\"creditcard\",\n\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\"card_type\":\"visa\",\n\t\t\"country\":null,\n\t\t\"expire_month\":\"12\",\n\t\t\"expire_year\":\"2014\",\n\t\t\"card_holder\":\"\",\n\t\t\"last4\":\"1111\",\n\t\t\"created_at\":1382417861,\n\t\t\"updated_at\":1382417861,\n\t\t\"app_id\":null\n\t},\n\t\"mode\":\"test\"\n}"
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 08:48:32 GMT
+  recorded_at: Tue, 22 Oct 2013 04:57:42 GMT
 - request:
     method: post
-    uri: https://17cd58a53c05ca61bd329b031a7063c5:@api.paymill.de/v2/subscriptions
+    uri: https://4ee8641e5f7fc12b7117eef1adbd0968:@api.paymill.de/v2/subscriptions
     body:
       encoding: US-ASCII
-      string: offer=offer_b72bdb7a4539757ee843&client=client_67d930f3e05717c6c0a6&payment=pay_b34dd2de7c9f55d7e5ef1492
+      string: offer=offer_dbe27a284b10c57ba23e&client=client_7aad7117fc9c50e2588a&payment=pay_38f1328150316e5905441de6
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
       Content-Type:
@@ -109,17 +119,19 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx
+      - nginx/1.2.1
       Date:
-      - Mon, 24 Jun 2013 08:48:55 GMT
+      - Tue, 22 Oct 2013 04:57:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
-      - close
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.4.4-14+deb7u2
       Set-Cookie:
-      - PHPSESSID=all1o1b1nojjv59sqnqiuqgf70; path=/
+      - PHPSESSID=2mf8kb6raokq7t29fmqfmv98m3; path=/
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Cache-Control:
@@ -127,24 +139,26 @@ http_interactions:
       Pragma:
       - no-cache
       X-Server:
-      - hrtt-frn5-de13
+      - paymill-web01.paymill.de
       Strict-Transport-Security:
       - max-age=16070400; includeSubDomains
     body:
-      encoding: US-ASCII
-      string: ! "{\n\t\"data\":{\n\t\t\"id\":\"sub_242ab85b5dba668af6b1\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_b72bdb7a4539757ee843\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
-        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1362085309,\n\t\t\t\"updated_at\":1362085309,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"75\",\n\t\t\t\t\"inactive\":0\n\t\t\t}\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1377334135,\n\t\t\"created_at\":1372063735,\n\t\t\"updated_at\":1372063735,\n\t\t\"canceled_at\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":null,\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1372063734,\n\t\t\t\"updated_at\":1372063734\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1372063733,\n\t\t\t\"updated_at\":1372063733,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":null,\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1372063734,\n\t\t\t\t\t\"updated_at\":1372063734\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":null\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
+      encoding: UTF-8
+      string: "{\n\t\"data\":{\n\t\t\"id\":\"sub_df7e401690a2fdb542ce\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_dbe27a284b10c57ba23e\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
+        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1382389539,\n\t\t\t\"updated_at\":1382389539,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"1\",\n\t\t\t\t\"inactive\":0\n\t\t\t},\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1385099862,\n\t\t\"created_at\":1382417862,\n\t\t\"updated_at\":1382417862,\n\t\t\"canceled_at\":null,\n\t\t\"app_id\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":\"\",\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1382417861,\n\t\t\t\"updated_at\":1382417861,\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1382417860,\n\t\t\t\"updated_at\":1382417860,\n\t\t\t\"app_id\":null,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":\"\",\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1382417861,\n\t\t\t\t\t\"updated_at\":1382417861,\n\t\t\t\t\t\"app_id\":null\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":null\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 08:48:33 GMT
+  recorded_at: Tue, 22 Oct 2013 04:57:43 GMT
 - request:
     method: get
-    uri: https://17cd58a53c05ca61bd329b031a7063c5:@api.paymill.de/v2/subscriptions/sub_242ab85b5dba668af6b1
+    uri: https://4ee8641e5f7fc12b7117eef1adbd0968:@api.paymill.de/v2/subscriptions/sub_df7e401690a2fdb542ce
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -153,17 +167,19 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx
+      - nginx/1.2.1
       Date:
-      - Mon, 24 Jun 2013 08:48:55 GMT
+      - Tue, 22 Oct 2013 04:57:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
-      - close
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.4.4-14
       Set-Cookie:
-      - PHPSESSID=oou6r0kenem8v9o6kamc6motf6; path=/
+      - PHPSESSID=0pasn094i1ccmoefqaromktih1; path=/
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Cache-Control:
@@ -171,24 +187,26 @@ http_interactions:
       Pragma:
       - no-cache
       X-Server:
-      - hrtt-frn5-de13
+      - paymill-web06.paymill.de
       Strict-Transport-Security:
       - max-age=16070400; includeSubDomains
     body:
-      encoding: US-ASCII
-      string: ! "{\n\t\"data\":{\n\t\t\"id\":\"sub_242ab85b5dba668af6b1\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_b72bdb7a4539757ee843\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
-        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1362085309,\n\t\t\t\"updated_at\":1362085309,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"75\",\n\t\t\t\t\"inactive\":0\n\t\t\t}\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1374655735,\n\t\t\"created_at\":1372063735,\n\t\t\"updated_at\":1372063735,\n\t\t\"canceled_at\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":null,\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1372063734,\n\t\t\t\"updated_at\":1372063734\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1372063733,\n\t\t\t\"updated_at\":1372063733,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":null,\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1372063734,\n\t\t\t\t\t\"updated_at\":1372063734\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":[\n\t\t\t\t\"sub_242ab85b5dba668af6b1\"\n\t\t\t]\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
+      encoding: UTF-8
+      string: "{\n\t\"data\":{\n\t\t\"id\":\"sub_df7e401690a2fdb542ce\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_dbe27a284b10c57ba23e\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
+        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1382389539,\n\t\t\t\"updated_at\":1382389539,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"1\",\n\t\t\t\t\"inactive\":0\n\t\t\t},\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1385099862,\n\t\t\"created_at\":1382417862,\n\t\t\"updated_at\":1382417862,\n\t\t\"canceled_at\":null,\n\t\t\"app_id\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":\"\",\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1382417861,\n\t\t\t\"updated_at\":1382417861,\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1382417860,\n\t\t\t\"updated_at\":1382417860,\n\t\t\t\"app_id\":null,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":\"\",\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1382417861,\n\t\t\t\t\t\"updated_at\":1382417861,\n\t\t\t\t\t\"app_id\":null\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":[\n\t\t\t\t\"sub_df7e401690a2fdb542ce\"\n\t\t\t]\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 08:48:34 GMT
+  recorded_at: Tue, 22 Oct 2013 04:57:44 GMT
 - request:
     method: get
-    uri: https://17cd58a53c05ca61bd329b031a7063c5:@api.paymill.de/v2/subscriptions/sub_242ab85b5dba668af6b1
+    uri: https://4ee8641e5f7fc12b7117eef1adbd0968:@api.paymill.de/v2/subscriptions/sub_df7e401690a2fdb542ce
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -197,17 +215,19 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx
+      - nginx/1.2.1
       Date:
-      - Mon, 24 Jun 2013 08:48:56 GMT
+      - Tue, 22 Oct 2013 04:57:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
-      - close
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.4.4-14+deb7u2
       Set-Cookie:
-      - PHPSESSID=bgjt03v5923ao1rm7so3osmfj6; path=/
+      - PHPSESSID=4vf9kl1r36dthsd5ins0ccvq32; path=/
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Cache-Control:
@@ -215,24 +235,26 @@ http_interactions:
       Pragma:
       - no-cache
       X-Server:
-      - hrtt-frn5-de14
+      - paymill-web05.paymill.de
       Strict-Transport-Security:
       - max-age=16070400; includeSubDomains
     body:
-      encoding: US-ASCII
-      string: ! "{\n\t\"data\":{\n\t\t\"id\":\"sub_242ab85b5dba668af6b1\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_b72bdb7a4539757ee843\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
-        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1362085309,\n\t\t\t\"updated_at\":1362085309,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"75\",\n\t\t\t\t\"inactive\":0\n\t\t\t}\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1374655735,\n\t\t\"created_at\":1372063735,\n\t\t\"updated_at\":1372063735,\n\t\t\"canceled_at\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":null,\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1372063734,\n\t\t\t\"updated_at\":1372063734\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1372063733,\n\t\t\t\"updated_at\":1372063733,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":null,\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1372063734,\n\t\t\t\t\t\"updated_at\":1372063734\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":[\n\t\t\t\t\"sub_242ab85b5dba668af6b1\"\n\t\t\t]\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
+      encoding: UTF-8
+      string: "{\n\t\"data\":{\n\t\t\"id\":\"sub_df7e401690a2fdb542ce\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_dbe27a284b10c57ba23e\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
+        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1382389539,\n\t\t\t\"updated_at\":1382389539,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"1\",\n\t\t\t\t\"inactive\":0\n\t\t\t},\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1385099862,\n\t\t\"created_at\":1382417862,\n\t\t\"updated_at\":1382417862,\n\t\t\"canceled_at\":null,\n\t\t\"app_id\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":\"\",\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1382417861,\n\t\t\t\"updated_at\":1382417861,\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1382417860,\n\t\t\t\"updated_at\":1382417860,\n\t\t\t\"app_id\":null,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":\"\",\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1382417861,\n\t\t\t\t\t\"updated_at\":1382417861,\n\t\t\t\t\t\"app_id\":null\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":[\n\t\t\t\t\"sub_df7e401690a2fdb542ce\"\n\t\t\t]\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 08:48:34 GMT
+  recorded_at: Tue, 22 Oct 2013 04:57:45 GMT
 - request:
     method: get
-    uri: https://17cd58a53c05ca61bd329b031a7063c5:@api.paymill.de/v2/subscriptions/sub_242ab85b5dba668af6b1
+    uri: https://4ee8641e5f7fc12b7117eef1adbd0968:@api.paymill.de/v2/subscriptions/sub_df7e401690a2fdb542ce
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -241,17 +263,19 @@ http_interactions:
       message: OK
     headers:
       Server:
-      - nginx
+      - nginx/1.2.1
       Date:
-      - Mon, 24 Jun 2013 08:48:56 GMT
+      - Tue, 22 Oct 2013 04:57:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
-      - close
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.4.4-14+deb7u2
       Set-Cookie:
-      - PHPSESSID=p0dnq33eqva3fua7ghqbgi6j41; path=/
+      - PHPSESSID=ie1n11qb53uo3llps2a12huc63; path=/
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
       Cache-Control:
@@ -259,13 +283,13 @@ http_interactions:
       Pragma:
       - no-cache
       X-Server:
-      - hrtt-frn5-de14
+      - paymill-web04.paymill.de
       Strict-Transport-Security:
       - max-age=16070400; includeSubDomains
     body:
-      encoding: US-ASCII
-      string: ! "{\n\t\"data\":{\n\t\t\"id\":\"sub_242ab85b5dba668af6b1\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_b72bdb7a4539757ee843\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
-        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1362085309,\n\t\t\t\"updated_at\":1362085309,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"75\",\n\t\t\t\t\"inactive\":0\n\t\t\t}\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1374655735,\n\t\t\"created_at\":1372063735,\n\t\t\"updated_at\":1372063735,\n\t\t\"canceled_at\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":null,\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1372063734,\n\t\t\t\"updated_at\":1372063734\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1372063733,\n\t\t\t\"updated_at\":1372063733,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_b34dd2de7c9f55d7e5ef1492\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_67d930f3e05717c6c0a6\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":null,\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1372063734,\n\t\t\t\t\t\"updated_at\":1372063734\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":[\n\t\t\t\t\"sub_242ab85b5dba668af6b1\"\n\t\t\t]\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
+      encoding: UTF-8
+      string: "{\n\t\"data\":{\n\t\t\"id\":\"sub_df7e401690a2fdb542ce\",\n\t\t\"offer\":{\n\t\t\t\"id\":\"offer_dbe27a284b10c57ba23e\",\n\t\t\t\"name\":\"test\",\n\t\t\t\"amount\":9900,\n\t\t\t\"currency\":\"NOK\",\n\t\t\t\"interval\":\"1
+        MONTH\",\n\t\t\t\"trial_period_days\":0,\n\t\t\t\"created_at\":1382389539,\n\t\t\t\"updated_at\":1382389539,\n\t\t\t\"subscription_count\":{\n\t\t\t\t\"active\":\"1\",\n\t\t\t\t\"inactive\":0\n\t\t\t},\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"livemode\":false,\n\t\t\"cancel_at_period_end\":false,\n\t\t\"trial_start\":null,\n\t\t\"trial_end\":null,\n\t\t\"next_capture_at\":1385099862,\n\t\t\"created_at\":1382417862,\n\t\t\"updated_at\":1382417862,\n\t\t\"canceled_at\":null,\n\t\t\"app_id\":null,\n\t\t\"payment\":{\n\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\"type\":\"creditcard\",\n\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"card_type\":\"visa\",\n\t\t\t\"country\":null,\n\t\t\t\"expire_month\":\"12\",\n\t\t\t\"expire_year\":\"2014\",\n\t\t\t\"card_holder\":\"\",\n\t\t\t\"last4\":\"1111\",\n\t\t\t\"created_at\":1382417861,\n\t\t\t\"updated_at\":1382417861,\n\t\t\t\"app_id\":null\n\t\t},\n\t\t\"client\":{\n\t\t\t\"id\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\"email\":\"test2@test.no\",\n\t\t\t\"description\":\"test\",\n\t\t\t\"created_at\":1382417860,\n\t\t\t\"updated_at\":1382417860,\n\t\t\t\"app_id\":null,\n\t\t\t\"payment\":[\n\t\t\t\t{\n\t\t\t\t\t\"id\":\"pay_38f1328150316e5905441de6\",\n\t\t\t\t\t\"type\":\"creditcard\",\n\t\t\t\t\t\"client\":\"client_7aad7117fc9c50e2588a\",\n\t\t\t\t\t\"card_type\":\"visa\",\n\t\t\t\t\t\"country\":null,\n\t\t\t\t\t\"expire_month\":\"12\",\n\t\t\t\t\t\"expire_year\":\"2014\",\n\t\t\t\t\t\"card_holder\":\"\",\n\t\t\t\t\t\"last4\":\"1111\",\n\t\t\t\t\t\"created_at\":1382417861,\n\t\t\t\t\t\"updated_at\":1382417861,\n\t\t\t\t\t\"app_id\":null\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"subscription\":[\n\t\t\t\t\"sub_df7e401690a2fdb542ce\"\n\t\t\t]\n\t\t}\n\t},\n\t\"mode\":\"test\"\n}"
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 08:48:35 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Tue, 22 Oct 2013 04:57:46 GMT
+recorded_with: VCR 2.6.0

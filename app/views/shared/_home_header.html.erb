@@ -1,12 +1,12 @@
 <div id="html_tabs"  class="orange_bgr">
   	<ul>
   		<% if can? :read, Firm %>
-  		<li><%= link_to "Statistics", charts_path%></li>
-	    <li><%= link_to "Reports", reports_path%></li>
+  		<li><%= link_to (t 'navigation.statistics') , charts_path, data:{name: "Statistics"}%></li>
+	    <li><%= link_to (t 'navigation.reports'), reports_path, data:{name: "Reports"}%></li>
 	    <%end%>
-	   	<li><%= link_to "Timesheets", timesheet_week_path(current_user) %></li>
+	   	<li><%= link_to (t 'navigation.timesheets'), timesheet_week_path(current_user), data:{name: "Timesheets"} %></li>
 	   	<% if can? :manage, Firm %>
-	   	<li><%= link_to "Account", firm_show_path%></li>     
+	   	<li><%= link_to (t 'navigation.account'), firm_show_path, data:{name: "Account"}%></li>     
 	   	<% end %>
 	</ul>
 </div>

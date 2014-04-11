@@ -34,7 +34,7 @@ describe EmployeesController do
   context "valid attributes" do
     it "located the requested @employee" do
       put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee), :format => 'js'
-      assigns(:employee).should eq(@employee)      
+      assigns(:klass).should eq(@employee)      
     end
 
     it "changes @employee's attributes" do
@@ -46,7 +46,7 @@ describe EmployeesController do
   context "invalid attributes" do
     it "locates the requested @employee" do
       put :update, id: @employee, employee: FactoryGirl.attributes_for(:employee, :name => nil), :format => 'js'
-      assigns(:employee).should eq(@employee)      
+      assigns(:klass).should eq(@employee)      
     end
     
     it "does not change @employee's attributes" do

@@ -1,4 +1,0 @@
-<%= form_for(Log.new, :url => add_log_timesheet_path ) do |l| %>
-	<%= l.hidden_field :user_id, :value => @user.id %>
-	<%= render :partial => "logs/log_menu_form", :locals => {:l => l } %>
-<% end %>

@@ -1,11 +1,11 @@
 <table class="report_table">
 <tr>
-<th class="report_event">Evnet</th>
-<th class="report_hours">Hours</th>
-<th class="report_user">User</th>
-<th class="report_project">Customer</th>
-<th class="report_customer">Project</th>
-<th class="report_date">Date</th>
+<th class="report_event"><%= t'activerecord.attributes.log.log' %></th>
+<th class="report_hours"><%= t'activerecord.attributes.log.hours' %></th>
+<th class="report_user"><%= t'activerecord.attributes.log.user' %></th>
+<th class="report_project"><%= t'activerecord.attributes.log.project' %></th>
+<th class="report_customer"><%= t'activerecord.attributes.log.customer' %></th>
+<th class="report_date"><%= t'activerecord.attributes.log.date' %></th>
 </tr>
 <% if @logs %>
 <% @logs.each do |log| %>
@@ -20,3 +20,5 @@
 <% end %>
 <% end %>
 </table>
+
+<%= t'activerecord.attributes.log.log' %>

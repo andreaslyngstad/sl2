@@ -37,6 +37,6 @@
        <li><%= f.label :due %><%= f.text_field :due, :value => date_format(todo.due), :class => "date", :id => "date_todo_#{todo.id}" %>
        </li>
 
-       <li><%= f.submit "Save", :class => 'submit', :id => "edit_todo_submit"%></li>
+       <li><%= f.submit (t'save'), :class => 'submit', :id => "edit_todo_submit"%></li>
  </ul>
   <% end %>  

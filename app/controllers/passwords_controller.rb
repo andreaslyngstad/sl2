@@ -2,7 +2,7 @@ class PasswordsController < Devise::PasswordsController
    skip_before_filter :all_users
   def update
      self.resource = resource_class.reset_password_by_token(resource_params)
-     Rails.logger.info("HHHHHHHHHHHHHHHHEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRR" + resource_params.to_s)
+     
       if resource.errors.empty?
         sign_in(resource_name, resource)
         user = current_user

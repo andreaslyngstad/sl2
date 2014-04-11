@@ -1,7 +1,4 @@
 describe FirmMailer do
-
- 
-  
   describe 'sign up confirmation' do
     let(:firm)         { FactoryGirl.create(:firm)}
     let(:user)         { FactoryGirl.create(:user, firm:firm)}

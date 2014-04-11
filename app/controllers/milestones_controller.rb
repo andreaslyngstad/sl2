@@ -1,10 +1,9 @@
 class MilestonesController < ApplicationController
   def create
-    @milestone = Milestone.new(permitted_params.milestone)
-    @milestone.firm = current_firm
+    @milestone = current_firm.milestones.new(permitted_params.milestone)
     respond_to do |format|
       if @milestone.save
-        flash[:notice] = flash_helper('Milestone was successfully created.')
+        flash[:notice] = flash_helper((t'activerecord.models.milestone.one').capitalize + ' ' + (t'activerecord.flash.saved'))
         format.js { render :action => "create_success"}
         else
         format.js { render :action => "failure"}
@@ -13,10 +12,9 @@ class MilestonesController < ApplicationController
   end
   
   def update
-    @milestone = Milestone.find(params[:id])
-    @milestone.firm = current_firm
+    @milestone = current_firm.milestones.find(params[:id])
     if @milestone.update_attributes(permitted_params.milestone)
-      flash[:notice] = flash_helper('Milestone was successfully updated.')
+      flash[:notice] = flash_helper((t'activerecord.models.milestone.one').capitalize + ' ' + (t'activerecord.flash.saved'))
       respond_to do |format|
         format.js
       end
@@ -28,10 +26,10 @@ class MilestonesController < ApplicationController
   end
 
   def destroy
-    @milestone = Milestone.find(params[:id])
+    @milestone = current_firm.milestones.find(params[:id])
     @milestone.destroy   
     respond_to do |format|
-      flash[:notice] = flash_helper('Milestone was successfully deleted.')
+      flash[:notice] = flash_helper((t'activerecord.models.milestone.one').capitalize + ' ' + (t'activerecord.flash.deleted'))
       format.js
     end
   end

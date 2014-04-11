@@ -1,7 +1,7 @@
 jQuery.fn.tracking_logs_WithAjax = function() {
   this.submit(function() { 
     $.post(this.action, $(this).serialize(), null, "script"); 
-    $('.spinning').show();
+    NProgress.start();;
     return false;
   })
   return this;

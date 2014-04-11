@@ -4,13 +4,13 @@ describe Subscription do
   
   it {should validate_presence_of(:plan_id) }
   it {should validate_presence_of(:firm_id) }
-  let(:plan)          {FactoryGirl.create(:plan, name:"test2", price: 99, paymill_id:"offer_b72bdb7a4539757ee843")}
+  let(:plan)          {FactoryGirl.create(:plan, name:"test2", price: 99, paymill_id:"offer_dbe27a284b10c57ba23e")}
   let(:firm)          {FactoryGirl.create(:firm, plan: plan)}
   let(:subscription)  {FactoryGirl.create(:subscription, plan: plan, firm: firm)}
   
   describe 'credit card info', :vcr do
     before do
-      card = { number: '4111111111111111', exp_month: '11', exp_year: '2014' }
+      card = { number: '4111111111111111', exp_month: '11', exp_year: (Time.now.year + 1).to_s }
       @subscription = Subscription.new( firm: firm, plan: plan, name: "test", email: "test2@test.no", paymill_card_token: "098f6bcd4621d373cade4e832627b4f6") 
       @subscription.save_with_payment  
     end
@@ -24,7 +24,7 @@ describe Subscription do
     its(:next_bill_on)        {should == (Time.at(Paymill::Subscription.find(@subscription.paymill_id).next_capture_at)).to_date }
     its("firm.closed")        {should == false }
     
-  end
+  end 
   it "updates firms plan_id on save" do
     subscription.update_firm_plan 
     firm.plan.should == subscription.plan

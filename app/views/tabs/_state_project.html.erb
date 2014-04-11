@@ -1,32 +1,32 @@
 <div class="state_wrapper">
   <% if @klass.budget %>
-  <div class="state_headers">Budget</div>
+  <div class="state_headers"><%= t('economic.budget') %></div>
    <div class="state_unit">
-    <div class="budget_green" data-procent="<%= ProjectPrice.set_procentage(@klass)%>" data-budget="<%= @klass.budget %>"><p>spent</p></div>
-    <div class="budget_red"><p>left</p></div>
+    <div class="budget_green" data-procent="<%= ProjectPrice.set_procentage(@klass)%>" data-budget="<%= @klass.budget %>"></div>
+    <div class="budget_red"></div>
   </div> 
   <% end %>
   <% if @klass.logs.sum(:hours) > 0 %>
   <div class="hours_done_wrapper">
-  <div class="state_headers">Total hours</div>
+  <div class="state_headers"><%= t('times.hour.more').capitalize %> <%= t('economic.total').downcase %></div>
   <div class="state_unit total_log_time"  data-hours="<%= @klass.logs.sum(:hours) %>"></div>
   </div>
   <% end %>
   <% if @klass.todos.count >= 1 %>
   <div class="hours_done_wrapper">
-  <div class="state_headers">Tasks done</div>
+  <div class="state_headers"><%= t('activerecord.models.todo.more' ).capitalize%> <%= t('activerecord.attributes.todo.done' )%></div>
   <div class="state_unit tasks_percent" data-complete="<%= @klass.todos.where(["completed = ?", true]).count %>" data-notcomplete="<%= @klass.todos.where(["completed = ?", false]).count %>"></div>
   </div>
   <% end %>
   <% if @milestone %>
   <div class="hours_done_wrapper">
-    <div class="state_headers">Next milestone</div>
+    <div class="state_headers"><%= t('navigation.next' ).capitalize%> <%= t('activerecord.models.milestone.one' )%></div>
     <div class="state_unit"> <%=  @milestone.goal %></div>
   </div>
   <% end %>
   <%= render "tabs/state_logs" %>
 
-  <div class="state_headers">Users</div>
+  <div class="state_headers"><%= t('activerecord.models.user.more' ).capitalize%></div>
   <div class="state_unit">
       <% @klass.users.each do |user| %>
       <div class="user_on_project">
@@ -42,7 +42,7 @@
 <div id="description">
   <% if !@klass.description.blank? %>
   <div id="project_description">
-    <%= @klass.description %> 
+    <%= simple_format(@klass.description )%> 
   </div>
   <% end %>
 </div>

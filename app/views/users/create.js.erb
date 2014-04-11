@@ -4,4 +4,4 @@ $('#dialog_user_form').empty().append("<%= j(render "new_form" )%>")
 $("#cus_pro_us_listing").append("<%= escape_javascript( render :partial => "user", :locals => { :user => @klass })  %>");
 $(".open_user_update").UIdialogs_edit_links();
 $(".button").button();
-$(".spinning").hide();
+NProgress.done()

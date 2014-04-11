@@ -10,6 +10,6 @@ $(".button").button();
 $(".open_project_update").UIdialogs_edit_links();
 $(".activate_project").activate_projects();
 $(".activate_projects_no_button").activate_projects_no_button();
-$('#dialog_project_form').empty().append("<%= j(render "new_form" )%>")
+$('#dialog_project_form').empty().append("<%= j(render "form" )%>")
 $("#new_project")[0].reset();
-$(".spinning").hide();
+NProgress.done();

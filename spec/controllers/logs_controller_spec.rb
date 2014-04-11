@@ -45,6 +45,20 @@ describe LogsController do
       end
     end 
   end
+  describe "POST create" do
+    context "with invalid attributes" do
+      it "creates a new log" do
+        expect{
+          post :create, log: FactoryGirl.attributes_for(:log, begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+        }.to change(Log,:count).by(0)
+      end
+      
+      it "gives flash notice when creating new log" do
+        post :create, log: FactoryGirl.attributes_for(:log, begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+        response.should render_template("shared/validate_create")
+      end
+    end 
+  end
   describe 'PUT update' do
   before :each do
     @log = FactoryGirl.create(:log, user: @user, firm: @user.firm)
@@ -59,7 +73,18 @@ describe LogsController do
       @log.event.should eq("something else")
     end
   end
-  
+  context "with invalid attributes" do
+    it "does not changes a invalid log" do
+      put :update, id: @log, log: FactoryGirl.attributes_for(:log, :event => "something wrong", begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+      @log.reload
+      @log.event.should eq("customer man")
+    end
+    
+    it "gives error when changes invalid log" do
+      put :update, id: @log, log: FactoryGirl.attributes_for(:log, begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+      response.should render_template("shared/validate_update")
+    end
+  end
   
 end
   describe 'DELETE destroy' do

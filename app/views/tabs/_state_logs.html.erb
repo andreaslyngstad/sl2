@@ -1,6 +1,6 @@
 <% if !@klass.logs.empty? %>
 <div class="state_logs">
-  	<div class="state_headers">Last logs</div>
+  	<div class="state_headers"><%= t('general.last') %> <%= t('activerecord.models.log.more' )%></div>
     <% @logs.each do |log| %>
 	    <div class="state_log">
 	    <%= image(log.user, "image32") %>

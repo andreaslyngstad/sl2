@@ -11,9 +11,12 @@ describe ProjectsController, :type => :controller do
   describe "activate_projects and deactivate_projects" do
     it "deactivate_projects" do 
       @project = FactoryGirl.create(:project) 
+      @project.users << @user
+      
       expect{
           post :activate_projects, :id => @project.id, :format => 'js'
         }.to change(Project.where(:active => true),:count).by(-1)
+        
     end
     it "activate_projects" do 
       @project = FactoryGirl.create(:project, :active => false)

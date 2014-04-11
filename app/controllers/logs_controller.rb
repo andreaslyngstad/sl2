@@ -19,17 +19,19 @@ class LogsController < ApplicationController
   end
 
   def create
-    @log = LogWorker.create(permitted_params.log, check_done(params[:done]), current_user, current_firm)
-     authorize! :manage, @log 
-    create_resonder(@log)
+    @klass = LogWorker.create(current_firm.logs.new(permitted_params.log), check_done(params[:done]), current_user, current_firm)
+     authorize! :manage, @klass 
+    create_resonder(@klass)
   end
 
   def update
-  	@klass = Log.find(params[:id])
-    authorize! :manage, @klass
-    @pre_hours = @klass.time   
-    LogWorker.check_todo_on_log(@klass, current_user, check_done(params[:done])) if !@klass.todo.nil?
-    update_responder(@klass,permitted_params.log)
+    @klass = Log.find(params[:id])
+    if @klass.invoice_id.nil?
+      authorize! :manage, @klass
+      @pre_hours = @klass.time   
+      LogWorker.check_todo_on_log(@klass, current_user, check_done(params[:done])) if !@klass.todo.nil?
+      update_responder(@klass,permitted_params.log)
+    end
   end
  
   def destroy
@@ -37,13 +39,13 @@ class LogsController < ApplicationController
     authorize! :manage, @log
     @log.destroy
     respond_to do |format|
-      flash[:notice] = flash_helper('Log was deleted.')
+      flash[:notice] = flash_helper((t'activerecord.models.log.one') + ' ' + (t'activerecord.flash.deleted'))
       format.js
     end
   end
 
   def start_tracking
-    @log = LogWorker.start_tracking(permitted_params.log, check_done(params[:done]), current_user, current_firm)
+    @log = LogWorker.start_tracking(current_firm.logs.new(permitted_params.log), check_done(params[:done]), current_user, current_firm)
     create_resonder(@log)
   end
 
@@ -70,7 +72,7 @@ private
   def create_resonder(log) 
      respond_to do |format|
       if log.save
-        flash[:notice] = flash_helper('Log was successfully saved.')
+        flash[:notice] = flash_helper((t'activerecord.models.log.one') + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_create" }
@@ -80,8 +82,8 @@ private
 
   def update_responder(log, params)
     respond_to do |format|
-      if log.update_attributes!(params)
-        flash[:notice] = flash_helper("Log was successfully saved.")
+      if log.update_attributes(params)
+        flash[:notice] = flash_helper((t'activerecord.models.log.one') + ' ' + (t'activerecord.flash.saved'))
         format.js
       else
         format.js { render "shared/validate_update" }

@@ -23,6 +23,7 @@ require 'factory_girl'
 require 'ruby-debug'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+
 Capybara.javascript_driver = :poltergeist
 include Warden::Test::Helpers
 Warden.test_mode!
@@ -55,6 +56,7 @@ RSpec.configure do |config|
   end
   
   config.after(:each) do
+    # Capybara.reset_sessions!
     DatabaseCleaner.clean
   end
   config.infer_base_class_for_anonymous_controllers = false

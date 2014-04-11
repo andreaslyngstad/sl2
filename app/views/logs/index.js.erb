@@ -1,15 +1,13 @@
 $('.flash_error').empty();
 $(".flash_notice").empty();
-
 $("#main_container").replaceWith("<%= escape_javascript(render("logs/index")) %>");
- $(".tracking_log").submitWithAjax();
+$(".tracking_log").submitWithAjax();
 $("#form_holder").find(".edit_log").submitWithAjax();
- $(".small_selector").chosen({width:'200px'});
- $("#dialog_log").UIdialogs_log_links();
-  $(".open_tracking_select").UIdialogs_tracking_logs_links();
-  $(".open_log_update").UIdialogs_edit_logs_links();
-  $(".new_log").validateWithErrors();
-
+$(".small_selector").chosen({width:'200px'});
+$("#dialog_log").UIdialogs_log_links();
+$(".open_tracking_select").UIdialogs_tracking_logs_links();
+$(".open_log_update").UIdialogs_edit_logs_links();
+$(".new_log").validateWithErrors();
 $(".slider_range").slider({
         range: true,
         min: 0,
@@ -19,7 +17,7 @@ $(".slider_range").slider({
         slide: slideTime
     });
 $("select#logs_pr_date_select").change(function(){
-  $('.spinning').show();
+  NProgress.start();;
   var time = this.value
   $.get("/logs_pr_date/" + time)
   

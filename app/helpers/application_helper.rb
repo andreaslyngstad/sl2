@@ -45,7 +45,34 @@ module ApplicationHelper
 			end
 		end
 	end
-
+  
+  def link_to_add_fields(name, f, association)
+    new_object = f.object.send(association).klass.new
+    id = new_object.object_id
+    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+      render("invoices/" + association.to_s.singularize + "_fields", f: builder)
+    end
+    link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+  end
+  def add_fields_to_table( f, association, lines)
+    fields = ""
+    lines.each do |l|
+    new_object = f.object.send(association).klass.new(description: l.description, quantity: l.quantity, price: l.price, tax: l.tax)
+    id = new_object.object_id
+    fields << f.fields_for(association, new_object, child_index: id) do |builder|
+      render(association.to_s.singularize + "_fields", f: builder)
+    end
+  end
+    fields.gsub("\n", "")
+  end
+  #for PDF
+  def asset_data_base64(path)
+    asset = Rails.application.assets.find_asset(path)
+    throw "Could not find asset '#{path}'" if asset.nil?
+    base64 = Base64.encode64(asset.to_s).gsub(/\s+/, "")
+    "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
+  end
+  
   #for devise
   def resource_name
     :user

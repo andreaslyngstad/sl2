@@ -13,14 +13,14 @@ describe TimerangeController do
 		let(:range)   	{Date.today - 5.days..Date.today}
 		let(:log)	{FactoryGirl.create(:log, project: project, firm: @user.firm, user: @user, log_date: Date.today)}
 
-	  it "log_range" do
+	  it "log_range date fields" do
 	  	project.users << @user
 	  	get :log_range, from:(Date.today - 5.days).strftime('%Y-%m-%d'), to:(Date.today).strftime('%Y-%m-%d'), url: "Project", id: project.id, :format => 'js'
 	  	assigns(:customers).should == [customer]
 	  	assigns(:all_projects).should == [project]
 	  	assigns(:logs).should == [log]
 	  end
-	  it "log_range" do
+	  it "log_range select field" do
 	  	project.users << @user
 	  	get :log_range, time: "to_day", url: "Project", id: project.id, :format => 'js'
 	  	assigns(:customers).should == [customer]

@@ -17,8 +17,8 @@ Squadlink::Application.configure do
   config.cache_classes = false
   config.eager_load = false
   # config.force_ssl = true
-	
-	Paperclip.options[:command_path] = "C:/ImageM~1"
+	config.middleware.use Rack::LiveReload
+	Paperclip.options[:command_path] = "/usr/bin/convert"
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   # config.action_view.debug_rjs             = true

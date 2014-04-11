@@ -23,7 +23,6 @@ class Subscription < ActiveRecord::Base
         firm.open!
         Subscription.delete_old_subscription(firm)
       end
-      set_properties(subscription)
       save!
     end
   rescue Paymill::PaymillError => e
@@ -40,7 +39,8 @@ class Subscription < ActiveRecord::Base
     Paymill::Subscription.delete(sub_paymill_id)
   end
    
-  def update_firm_plan 
+  def update_firm_plan
+    Payment.make(self) 
     self.firm.update_plan(plan_id)
   end
   
@@ -97,6 +97,7 @@ class Subscription < ActiveRecord::Base
     payment = subscription.client["payment"][0]
     self.active          = true
     self.paymill_id      = subscription.id 
+    self.paymill_client_id = subscription.client["id"]
     self.card_holder     = payment["card_holder"]
     self.last_four       = payment["last4"]
     self.card_type       = payment["card_type"]

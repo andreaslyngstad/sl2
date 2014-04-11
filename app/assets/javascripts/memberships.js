@@ -7,7 +7,7 @@ function droppable_members(){
     $("#members").droppable({
   		accept: ".not_member",
       	drop: function(event,ui) { 
-	      	$('.spinning').show();
+	      	NProgress.start();;
 	      	ui.draggable.addClass("member")
 	      	ui.draggable.removeClass("not_member") 
 	      	ui.draggable.draggable( 'option', 'revert', false );
@@ -19,7 +19,7 @@ function droppable_members(){
     $("#not_members").droppable({
 		accept: ".member",
   		drop: function(event,ui) { 
-      	$('.spinning').show(); 
+      	NProgress.start();; 
       	ui.draggable.addClass("not_member")
       	ui.draggable.removeClass("member")  
       	ui.draggable.draggable( 'option', 'revert', false );

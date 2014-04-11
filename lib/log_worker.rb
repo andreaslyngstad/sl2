@@ -1,7 +1,6 @@
 module LogWorker
   extend self
-  def create(params, done, user, firm)
-    log      = Log.new(params)
+  def create(log, done, user, firm)
     unless log.user
     log.user = user
     end

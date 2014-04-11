@@ -1,0 +1,4 @@
+$('#invoice_<%= j(@klass.id.to_s) %>').replaceWith('<%= j(render "invoices/invoice", invoice: @klass) %>')
+$('#invoice_<%= j(@klass.id.to_s) %>').append("<div style='font-size:0.8em;'><%= j((t'general.generation_of') + ' ' + (t'activerecord.models.invoice.one').capitalize + ' ' + @klass.number.to_s + ' ' + (t'general.timed_out')) %></div>")
+$('#invoice_<%= j(@klass.id.to_s) %>').css('background-color', '#F5E6F5');
+<%= render "invoices/js_partial" %>

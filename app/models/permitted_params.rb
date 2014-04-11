@@ -48,9 +48,31 @@ class PermittedParams < Struct.new(:params, :current_user)
   def firm_attributes
   	  
     if current_user
-      [:subscription_id,:plan, :name,:subdomain,:address,:phone, :currency, :time_zone, :language,:time_format,:date_format,:clock_format,:closed]
+      [:subscription_id,
+        :plan, 
+        :tax, 
+        :name,
+        :subdomain,
+        :address,
+        :phone, 
+        :currency, 
+        :time_zone, 
+        :language,
+        :time_format,
+        :date_format,
+        :clock_format,
+        :closed,
+        :invoice_email, 
+        :invoice_email_subject, 
+        :invoice_email_message, 
+        :starting_invoice_number,
+        :logo,
+        :bank_account,
+        :vat_number,
+        :on_invoice_message
+      ]
     else
-      [:name,:subdomain,:address,:phone, :currency, :time_zone, :language,:time_format,:date_format,:clock_format,:closed]
+      [:name,:subdomain,:address, :tax, :phone, :currency, :time_zone, :language,:time_format,:date_format,:clock_format,:closed]
     end
   end
   def plan
@@ -83,7 +105,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   def log_attributes
     if current_user
       [:event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
-	 :hours,:project,:customer,:user,:todo, :firm]
+	 :hours,:project,:customer,:user,:todo, :firm, :log_attributes]
     end
   end
   def subscription
@@ -129,7 +151,27 @@ class PermittedParams < Struct.new(:params, :current_user)
       [:content, :title, :author]
     end
   end
-
+  def invoice
+    params.require(:invoice).permit(*invoice_attributes)
+  end
+  def invoice_attributes
+    if current_user
+      [:number,:content,:project_id, :mail_to, :mail_subject, :mail_content, :customer_id,:firm_id, :paid, :reminder_sent, :due, :status, :date, :total,
+        logs_attributes: [:tax],
+      invoice_lines_attributes: [:_destroy, :description, :quantity, :price, :tax, :id]
+      ]
+    end
+  end
+  def invoice_send
+    params.require(:invoice).permit(*invoice_send_attributes)
+  end
+  def invoice_send_attributes
+    if current_user
+      [ :mail_to, :mail_subject, :mail_content,  :due
+      
+      ]
+    end
+  end
 end
 
  

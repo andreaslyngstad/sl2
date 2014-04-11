@@ -31,9 +31,6 @@ describe CustomersController do
       customer = FactoryGirl.create(:customer, :firm => @user.firm)
       get :show, :id => customer
       assigns(:klass).should eq(customer) 
-      assigns(:hours).should eq(customer.logs.sum(:hours)) 
-      assigns(:employees).should eq(customer.employees)
-      assigns(:projects).should eq(customer.projects.where(["active = ?", true]))
     end
     it "renders the #show view" do
       @customer = FactoryGirl.create(:customer, :firm => @user.firm)
@@ -42,7 +39,7 @@ describe CustomersController do
     end
   end
   describe "GET edit" do 
-    it "should assign user to @user" do
+    it "should assign customer to @customer" do
       customer = FactoryGirl.create(:customer, :firm => @user.firm)
       get :edit, :id => customer, :format => 'js'
       assigns(:customer).should eq(customer) 
@@ -50,13 +47,13 @@ describe CustomersController do
   end
   describe "POST create" do
     context "with valid attributes" do
-      it "creates a new contact" do
+      it "creates a new customer" do
         expect{
           post :create, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
         }.to change(Customer,:count).by(1)
       end
       
-      it "redirects to the new contact" do
+      it "redirects to the new customer" do
         post :create, customer: FactoryGirl.attributes_for(:customer), :format => 'js'
         flash[:notice].should_not be_nil 
       end

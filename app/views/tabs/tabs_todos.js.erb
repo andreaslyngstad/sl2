@@ -3,7 +3,7 @@ $(".flash_notice").empty();
 var tab = $("li.active").children("a").attr("href")
 jQuery.fn.todo_pr_date_select = function(){
 		this.change(function(){
-  $('.spinning').show();
+  NProgress.start();;
   var time = this.value
   var url = $(this).attr("data-url");
   var id = $(this).attr("data-id");
@@ -11,18 +11,15 @@ jQuery.fn.todo_pr_date_select = function(){
   
   });
   };
-  
-  		
- 
 <% if @range %>
 	$("#not_done_tasks").empty().append("<%= j( render @not_done_todos)  %>")
 	$("#done_tasks").empty().append("<%= j( render @done_todos)  %>")
+  $('#range_date_fields').set_selected_value("<%= j(@time_range_first) %>", "<%= j(@time_range_last) %>" )
 	$(".todo_range_date").datepicker({ 
 		onSelect: function() {
 			$('#todo_range_form').submit();
   		}
-  		}).attr( 'readOnly' , 'true' )
-  		
+  		}).attr( 'readOnly' , 'true' )		
 <% else %>
 $(tab).empty().append("<%= j( render :partial => "todos/listing_todos")  %>")
 	$(".todo_range_date").datepicker({ 
@@ -30,39 +27,4 @@ $(tab).empty().append("<%= j( render :partial => "todos/listing_todos")  %>")
 			$('#todo_range_form').submit();
   		}
   		}).attr( 'readOnly' , 'true' )
-  	
-	
-	
 <% end %>
-$('.date_format_setter').set_date_format()
-$("#dialog_todo").UIdialogs_links();
-$(".searchableTaskCustomer").chosen({width: '369px'});
-$("select#todos_pr_date_select").todo_pr_date_select();
-$(".small_selector").chosen({width:'200px'});
-$(".open_todo_update").UIdialogs_edit_links();
-jQuery.fn.submitDoneWithAjax = function(id) {
-   $.post("/todos/" + id, $(this).serialize(), null, "script");
-};
-$(".done_box").on("click", function() { 
-  	 var id = $(this).attr("id")
-  	 $("#edit_done_todo_" + id).submitDoneWithAjax(id)
-  });
-
-$(".logs_pluss").click(function() {
- 	$(".flash_notice").empty() 
- 	$(".spinning").show();
- 	$(this).hide()
- 	$(this).next(".logs_minus").show()
-  	var id = $(this).attr("id")	
-  	$.get("/get_logs_todo/" + id)
-  });
-   
- $(".logs_minus").click(function() {
- 	$(".flash_notice").empty() 
- 	var id = $(this).attr("id")
- 	$("#todo_logs_"+ id ).slideUp()
- 	$("#todo_logs_"+ id ).children().empty().remove()
- 	$(this).hide()
- 	$(this).prev(".logs_pluss").show()
-  });
-$(".spinning").hide()

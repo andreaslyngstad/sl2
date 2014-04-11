@@ -92,12 +92,18 @@
 					<%= link_to "Cancel Plan?", plans_cancel_path, :class => "red_font"%>
 				<% end %>
 				<% elsif current_firm.plan == plan && current_firm.plan.name == "Free" %>
-					<%= link_to "Delete Firm?", current_firm, data: { confirm: 'Are you sure?' }, :class => "red_font", :title => "Delete Firm", :method => :delete %>
+				<a class="red_font delete_link" title="Delete Firm">Delete Firm?</a>
+				<div class="delete_for_sure" style="display:none; background-color: #F5E6F5; padding: 10px;">
+					<p>Are you really sure you want to delete your firm? All data will be gone forever!</p>
+					<input class="subdomain_checker delete_subdomain_validation delete_validation" data-validate="<%= current_firm.subdomain %>" placeholder="Enter your subdomain" ><br>
+					<input class="name_checker delete_name_validation delete_validation" style="display:none;" data-validate="<%= current_user.name %>" placeholder="Enter your name" ><br>
+					<%= link_to "Delete Firm?", current_firm, data: { confirm: t('are_you_sure?') }, :class => "red_font delete_for_real_link delete_validation", :style => "display:none;", :title => "Delete Firm", :method => :delete %>
 	          	<% else %>	
 					<% if plan.name != "Free" %>
 	          			<%= link_to "Sign up", new_subscription_path(:plan_id => plan.id), :class => "submit" %>
 	          		<% end %>
           		<% end %>
+          		</div>
         	</td>
 		<% end %>
 	</tr>

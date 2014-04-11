@@ -12,10 +12,21 @@ class FirmMailer < ActionMailer::Base
   #
   #   en.firm_mailer.sign_up_confirmation.subject
   #
-  
+  def invoice(id)
+    # @invoice = current_firm.invoices.find(id)
+    # @user = User.find(id)
+    phantom = Shrimp::Phantom.new('http://lizz.lvh.me:3000/show_pdf/1', {}, {user_session:id})
+    puts("test " + phantom.source.to_s)
+    pdf = phantom.to_pdf
+    puts(phantom.error)
+    attachments['faktura.pdf'] = File.read(pdf)
+    invoice_mail = mail to:"andreaslyngstad@gmail.com", subject: 'Squadlink sign up confirmation.'
+    invoice_mail.deliver
+     
+    File.delete(pdf)
+  end
 
   def sign_up_confirmation(id)
-    sleep 10
     @user = User.find(id)
     @firm = @user.firm
     sign_up_confirmation_mail = mail to: @user.email, subject: 'Squadlink sign up confirmation.'

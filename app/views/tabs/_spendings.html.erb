@@ -1,16 +1,16 @@
 <table class="spendings_table">
 	<tr class="spendings_headers">
 		<th>
-			User
+			<%= (t'activerecord.models.user.one').capitalize %>
 		</th>
 		<th>
-			Hourly price
+			<%= (t'activerecord.attributes.user.hourly_rate') %>
 		</th>
 		<th>
-			Logged hours
+			<%= (t'times.hour.more').capitalize %>
 		</th>
 		<th>
-			Total
+			<%= (t'economic.total') %>
 		</th>
 	</tr>
 	<% ProjectPrice.get_cost_per_user(@klass).each do |u| %>
@@ -18,23 +18,21 @@
 		<td>
 			<%= u[0] %>
 		</td>
-		<td>
-
-			<%= u[1].round(0)%> <%= current_firm.currency %>
-			
+		<td class="currency_to_convert" data-amount="<%= u[1].try(:round,0)%>">
+			 
 		</td>
 		<td class="seconds" data-hours="<%= u[2] %>">
 			
 		</td>
-		<td class="user_project_price" >
-			<%= u[3].round(0) %> <%= current_firm.currency %>
+		<td class="user_project_price currency_to_convert" data-amount="<%= u[3].try(:round,0) %>" >
+			 
 		</td>	
 	</tr>
 	<% end %>
 	<tr class="spending_total">
-		<td>Total</td>
+		<td><%= (t'economic.total') %></td>
 		<td></td>
 		<td></td>
-		<td><%= ProjectPrice.get_hours(@klass).round(0)%> <%= current_firm.currency %></td>
+		<td class="currency_to_convert" data-amount="<%= ProjectPrice.get_hours(@klass).try(:round,0)%>"></td>
 	</tr>
 </table>

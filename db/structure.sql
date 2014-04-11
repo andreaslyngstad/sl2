@@ -248,6 +248,11 @@ CREATE TABLE customers (
     phone text,
     email text,
     address text,
+    zip text,
+    city text,
+    country text,
+    deleted_at timestamp without time zone,
+    invoices_count integer DEFAULT 0,
     firm_id integer NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -319,18 +324,30 @@ CREATE TABLE firms (
     address text,
     phone text,
     currency text,
-    language text,
+    language text DEFAULT 'en'::text,
     time_zone text,
+    tax double precision,
+    invoice_email text,
+    invoice_email_subject text,
+    invoice_email_message text,
+    on_invoice_message text,
+    reminder_email_subject text,
+    reminder_email_message text,
+    on_reminder_message text,
+    bank_account text,
+    vat_number text,
     last_sign_in_at timestamp without time zone,
     closed boolean,
     time_format integer,
     date_format integer,
     clock_format integer,
     plan_id integer,
+    starting_invoice_number integer DEFAULT 1,
     customers_count integer DEFAULT 0,
     users_count integer DEFAULT 0,
     projects_count integer DEFAULT 0,
     logs_count integer DEFAULT 0,
+    invoices_count integer DEFAULT 0,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     logo_file_name character varying(255),
@@ -426,6 +443,88 @@ ALTER SEQUENCE guides_id_seq OWNED BY guides.id;
 
 
 --
+-- Name: invoice_lines; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE invoice_lines (
+    id integer NOT NULL,
+    quantity double precision,
+    description text,
+    price double precision,
+    amount double precision,
+    tax double precision,
+    invoice_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: invoice_lines_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE invoice_lines_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invoice_lines_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE invoice_lines_id_seq OWNED BY invoice_lines.id;
+
+
+--
+-- Name: invoices; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE invoices (
+    id integer NOT NULL,
+    number integer,
+    content text,
+    project_id integer,
+    customer_id integer NOT NULL,
+    firm_id integer NOT NULL,
+    status integer,
+    reminder_sent timestamp without time zone,
+    paid timestamp without time zone,
+    due timestamp without time zone,
+    total double precision,
+    date timestamp without time zone,
+    discount double precision,
+    currency text,
+    mail_to text,
+    mail_subject text,
+    mail_content text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: invoices_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE invoices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invoices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE invoices_id_seq OWNED BY invoices.id;
+
+
+--
 -- Name: logs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -437,12 +536,15 @@ CREATE TABLE logs (
     firm_id integer NOT NULL,
     project_id integer,
     employee_id integer,
+    invoice_id integer,
+    credit_note_id integer,
     todo_id integer,
     tracking boolean,
     begin_time timestamp without time zone,
     end_time timestamp without time zone,
     log_date date,
     hours double precision,
+    tax double precision,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -621,6 +723,7 @@ CREATE TABLE projects (
     hour_price double precision,
     firm_id integer NOT NULL,
     customer_id integer,
+    invoices_count integer DEFAULT 0,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -724,6 +827,7 @@ CREATE TABLE subscriptions (
     name text,
     firm_id integer,
     paymill_id text,
+    paymill_client_id text,
     card_zip text,
     last_four text,
     card_type text,
@@ -906,6 +1010,20 @@ ALTER TABLE ONLY guides_categories ALTER COLUMN id SET DEFAULT nextval('guides_c
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY invoice_lines ALTER COLUMN id SET DEFAULT nextval('invoice_lines_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY invoices ALTER COLUMN id SET DEFAULT nextval('invoices_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY logs ALTER COLUMN id SET DEFAULT nextval('logs_id_seq'::regclass);
 
 
@@ -1041,6 +1159,22 @@ ALTER TABLE ONLY guides_categories
 
 ALTER TABLE ONLY guides
     ADD CONSTRAINT guides_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invoice_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY invoice_lines
+    ADD CONSTRAINT invoice_lines_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invoices_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY invoices
+    ADD CONSTRAINT invoices_pkey PRIMARY KEY (id);
 
 
 --
@@ -1209,6 +1343,27 @@ CREATE INDEX index_firms_on_subdomain ON firms USING btree (subdomain);
 
 
 --
+-- Name: index_invoices_on_customer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_customer_id ON invoices USING btree (customer_id);
+
+
+--
+-- Name: index_invoices_on_firm_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_firm_id ON invoices USING btree (firm_id);
+
+
+--
+-- Name: index_invoices_on_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_project_id ON invoices USING btree (project_id);
+
+
+--
 -- Name: index_logs_on_customer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1227,6 +1382,13 @@ CREATE INDEX index_logs_on_employee_id ON logs USING btree (employee_id);
 --
 
 CREATE INDEX index_logs_on_firm_id ON logs USING btree (firm_id);
+
+
+--
+-- Name: index_logs_on_invoice_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_logs_on_invoice_id ON logs USING btree (invoice_id);
 
 
 --
@@ -1413,3 +1575,7 @@ INSERT INTO schema_migrations (version) VALUES ('20101029201150');
 INSERT INTO schema_migrations (version) VALUES ('20101029201151');
 
 INSERT INTO schema_migrations (version) VALUES ('20101029201152');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201153');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201155');

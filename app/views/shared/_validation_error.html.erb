@@ -1,6 +1,5 @@
 <% if object.errors.any? %>
-    <div class='flash_error' style="color:red;">
-      <p>Sorry</p>	
+    <div class='flash_error' style="color:red;">	
       <% object.errors.full_messages.each do |msg| %>
         <p><%= msg.html_safe %></p>
       <% end %>  

@@ -5,6 +5,7 @@ describe Project do
   it {should have_many(:todos)}
   it {should have_many(:milestones)}
   it {should have_many(:users)}
+  it {should have_many(:invoices)}
   it {should belong_to(:customer) }
   it {should belong_to(:firm) }
   

@@ -1,0 +1,49 @@
+<div class="invoice_header">
+<div class="logo_wrapper">
+	<%  if request.url.to_s.include? "pdf" %>
+	<%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :original)) : ""%>
+	<%=stylesheet_link_tag("invoice_pdf.css", :media => "all") %>
+	<% else %>
+	<%=  current_firm.logo_file_name ?  image_tag(current_firm.logo.url( :small)) : ""%>
+	<% end %>
+</div>
+<div class="invoice_about_customer">
+	<%= klass.customer.name %>
+	<%= simple_format(klass.customer.address) %>
+	<%= klass.customer.email %>
+</div>
+
+<div class="invoice_about_firm">
+	<h1><%=  (t'economic.invoice').capitalize %></h1>
+	<%= current_firm.name %>
+	<%= simple_format(current_firm.address, {}, wrapper_tag: "br") %>
+
+	<table class="firm_invoice_info">
+		
+		<tr>
+			<td><%=  "#{t 'economic.vat_number'}" %></td>
+			<td><%= current_firm.vat_number %></td>
+		</tr>
+		<tr>
+			<td><%=  "#{t 'economic.bank_account'}" %></td>
+			<td><%= current_firm.bank_account %></td>
+		</tr>
+		<tr>
+			<td><%=  "#{t 'economic.invoice_date'}" %></td>
+			<td><%= date_format(klass.date) %></td>
+		</tr>
+		<tr>
+			<td><%= "#{t 'economic.invoice_due'}"  %></td>
+			<td><%= date_format(klass.due) %></td>
+		</tr>
+		<tr>
+			<td><%= "#{t 'economic.invoice_number'}"  %></td>
+			<td class="get_invoice_number" data-number="<%= klass.number %>"><%= klass.number %></td>
+		</tr>
+		<tr>
+			<td><%= "#{t 'economic.invoice_pages'}"  %></td>
+			<td class="page_counting"></td>
+		</tr>
+</table>
+</div>
+</div>

@@ -1,6 +1,5 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
-
   resources :blogs
 
   get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
@@ -79,15 +78,16 @@ Squadlink::Application.routes.draw do
       post "projects/create_index/" => "projects#create_index",  :as => :create_index
       post "/activate_projects/:id" => "projects#activate_projects", :as => :activate_projects
       #tabs_controller
-      get "/tabs/tabs_state/:id/:class" => "tabs#tabs_state"
-      get "/tabs/tabs_todos/:id/:class" => "tabs#tabs_todos", :as => :tabs_todos
-      get "/tabs/tabs_milestones/:id/:class" => "tabs#tabs_milestones", :as => :tabs_milestones
-      get "/tabs/tabs_projects/:id/:class" => "tabs#tabs_projects", :as => :tabs_projects
-      get "/tabs/tabs_employees/:id/:class" => "tabs#tabs_employees", :as => :tabs_employees
-      get "/tabs/tabs_logs/:id/:class" => "tabs#tabs_logs", :as => :tabs_logs
-      get "/tabs/tabs_users/:id/:class" => "tabs#tabs_users", :as => :tabs_users
-      get "/tabs/tabs_statistics/:id/:class" => "tabs#tabs_statistics", :as => :tabs_statistics
-      get "/tabs/tabs_spendings/:id/:class" => "tabs#tabs_spendings", :as => :tabs_spendings
+      get "/:class/:id/state"       => "tabs#state", :as => :tabs_state
+      get "/:class/:id/tasks"       => "tabs#todos", :as => :tabs_todos
+      get "/:class/:id/milestones"  => "tabs#milestones", :as => :tabs_milestones
+      get "/:class/:id/projects"    => "tabs#projects", :as => :tabs_projects
+      get "/:class/:id/employees/"  => "tabs#employees", :as => :tabs_employees
+      get "/:class/:id/logs"        => "tabs#logs", :as => :tabs_logs
+      get "/:class/:id/users"       => "tabs#users", :as => :tabs_users
+      get "/:class/:id/statistics"  => "tabs#statistics", :as => :tabs_statistics
+      get "/:class/:id/spendings"   => "tabs#spendings", :as => :tabs_spendings
+      get "/:class/:id/invoices"    => "tabs#invoices", :as => :tabs_invoices
       #logs_controller
       post "logs/start_tracking" => "logs#start_tracking",  :as => :start_tracking
       patch "logs/stop_tracking/:id" => "logs#stop_tracking",  :as => :stop_tracking
@@ -113,9 +113,9 @@ Squadlink::Application.routes.draw do
       post "/todo_select_tracking/:todo_id/" => "select#todo_select_tracking"
 
       #timesheets_controller
-      get "/timesheet_week/:user_id" => 'timesheets#timesheet_week', :as => :timesheet_week
-      get "/timesheet_day/:user_id/:date" => 'timesheets#timesheet_day', :as => :timesheet_day
-      get "/timesheet_month/:user_id/:date" => "timesheets#timesheet_month", :as => :timesheet_month
+      get "/timesheet_week" => 'timesheets#timesheet_week', :as => :timesheet_week
+      # get "/timesheet_day/:user_id/:date/:klass" => 'timesheets#timesheet_day', :as => :timesheet_day
+      get "/timesheet_month" => "timesheets#timesheet_month", :as => :timesheet_month
       post "/add_hour_to_project/" => 'timesheets#add_hour_to_project', :as => :add_hour_to_projects
       post "/add_log_timesheet" => 'timesheets#add_log_timesheet', :as => :add_log_timesheet
       #reports_controller
@@ -135,7 +135,29 @@ Squadlink::Application.routes.draw do
       # match "/logs_pr_date" => "timerange#logs_pr_date", :as => :logs_pr_date
       get "/log_range/" => "timerange#log_range", :as => :log_range
       get "/todo_range/" => "timerange#todo_range", :as => :todo_range
-      # get "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date  
+      get "/invoice_range/" => "timerange#invoice_range", :as => :invoice_range
+      # get "/todos_pr_date/:time/:url/:id" => "timerange#todos_pr_date", :as => :todos_pr_date 
+      #invoices
+      get "/invoices/customer_select/" => "invoices#customer_select"
+      get "/invoices/project_select/" => "invoices#project_select"
+      post "/invoices/customers_create/" => "invoices#customers_create"
+      post "/invoices/projects_create/" => "invoices#projects_create"
+      get "/invoices/:id/slow_sending/" => "invoices#slow_sending"
+      get "/invoices/:id/credit_note/" => "invoices#credit_note"
+      post "/invoices/:id/credit_note_create/" => "invoices#credit_note_create", :as => :credit_note_create
+
+      # post "/jobs/sending_invoice/" => "jobs#sending_invoice", :as => :sending_invoice
+      post "/jobs/handeling_invoice/" => "jobs#handeling_invoice", :as => :handeling_invoice
+      post "/jobs/invoice_paid/:id" => "jobs#invoice_paid", :as => :invoice_paid
+      patch "/jobs/create_slow_sending/:id" => "jobs#create_slow_sending", :as => :create_slow_sending
+      get "/jobs/fetch_job/" => "jobs#fetch_job", :as => :fetch_job
+      get "/jobs/ajax_download/" => "jobs#ajax_download", :as => :ajax_download
+      get "/jobs/ajax_sending/" => "jobs#ajax_sending", :as => :ajax_sending
+      get "/jobs/time_out/" => "jobs#time_out", :as => :time_out
+      
+      get "jobs/show_pdf/:id" => "jobs#show_pdf", :as => :show_pdf
+      get "/invoice_pdf/:id" => "pdf#invoice", :as => :invoice_pdf
+      resources :invoices 
       resources :customers
       resources :employees
       resources :projects

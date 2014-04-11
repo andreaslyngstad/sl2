@@ -1,10 +1,10 @@
-<table class="timesheet_table" data-user="<%= @user.id.to_s %>">
+<table class="timesheet_table" data-klass="<%= @klass ? @klass.class.to_s.downcase : "user" %>" data-id="<%= @klass ? @klass.id.to_s : current_user.id.to_s%>">
 <tr>
 	<th class="timesheet_day"></th>
 	<% @dates.each do |date|%>
-		<th class="timesheet_day"><%= link_to date.strftime('%a %d.%m'), timesheet_day_path(@user, (date))  %></th>
+		<th class="timesheet_day"><span class="go_to_day_link" data-from="<%= date %>", data-to="<%= date %>", data-url="<%= @klass ? @klass.class : "index" %>", data-id="<%= @klass ? @klass.id : "index" %>"><%= l(date, format: :short_with_day) %></span></th>
 	<% end %>
-	<th class="timesheet_day">Total</th>		
+	<th class="timesheet_day" ><%= t'economic.total' %>   </th>		
 </tr>
 <% for project in @projects do %>
 <% if project_week_log_hour_total(@log_project, project) != "<span style='color:grey;'>0:00</span>" %>
@@ -18,26 +18,31 @@
 </tr>
 <% end %>
 <% end %>
+
+<% if !@log_week_no_project.blank? %>
 <tr class="project_hours">
-	<td class="timesheet_project">No project</td>
+	<td class="timesheet_project"><%= t'general.with_out' %> <%= (t'activerecord.models.project.one') %></td>
 <% @dates.each do |date| %>
 	<td class="number project_date__<%= date %>" data-hours="<%= every_day_log_hour_no_project(@log_week_no_project, date) %>">
 		<%= every_day_log_hour_no_project(@log_week_no_project, date)%>
 	</td>
 <% end %>
+
 <td class="project_total_ total" data-hours="0"></td>
 </tr>
-<td class="timesheet_project"><%= select_tag :project_id, options_from_collection_for_select(@projects, "id", "name"), 
-  		:id => "timeheet_project_select", :prompt =>  'Select Project' %></td>
+<% end %>
+<% klass = @projects.first.class.to_s.downcase %>
+<td class="timesheet_project"><%= select_tag return_symbol(@projects.first), options_from_collection_for_select(@projects, "id", "name"), 
+  		:id => "timeheet_project_select", :prompt => (t'general.select') + ' ' + (t'activerecord.models.' +  (klass != 'nilclass' ? klass : 'project') + '.one'), :data =>{klass: klass}%></td>
 <% @dates.each do |date| %>
 	<td class="number">
-<input class="form_input_cell" id="" data-project="<%=  %>" data-date="<%= date %>" data-logid="" data-prehours="0" name="" size="3" type="text" value="<%= %>" disabled>
+<input class="form_input_cell" id="" data-date="<%= date %>" data-logid="" data-prehours="0" name="" size="3" type="text" value="<%= %>" disabled>
 		</td>
 		<% end %>	
 		<td class="number"> </td>			
 <tr>
 	  <tfoot>
-	<td class="timesheet_project"><b>Total</b></td>
+	<td class="timesheet_project"><b><%= t'economic.total' %></b></td>
 	<% @dates.each do |date| %>
 			<td class="timesheet_day_total day_<%= date %>" data-hours="<%= every_day_log_hour_total(@log_week, date)%>"></td>
 		<% end %>

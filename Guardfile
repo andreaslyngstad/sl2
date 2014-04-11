@@ -1,4 +1,4 @@
-guard 'rspec', all_on_start: false, all_after_pass: false, cmd: 'zeus rspec' do
+guard 'rspec', all_on_start: false, all_after_pass: false, cmd: 'zeus rspec', keep_failed: false, focus_on_failed: false do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -13,4 +13,14 @@ guard 'rspec', all_on_start: false, all_after_pass: false, cmd: 'zeus rspec' do
 
   # Capybara features specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/features/#{m[1]}_spec.rb" }
+end
+
+guard 'livereload' do
+
+  watch(%r{app/views/.+\.(erb|haml|slim)$})
+  watch(%r{app/helpers/.+\.rb})
+  watch(%r{public/.+\.(css|js|html)})
+  watch(%r{config/locales/.+\.yml})
+  # Rails Assets Pipeline
+  watch(%r{(app|vendor)(/assets/\w+/(.+\.(css|js|html))).*}) { |m| "/assets/#{m[3]}" }
 end

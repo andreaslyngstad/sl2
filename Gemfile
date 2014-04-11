@@ -11,6 +11,9 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'american_date'
 gem 'paperclip'
 gem 'cancan'
+gem 'shrimp'
+# gem 'wkhtmltopdf-binary'
+# gem 'wicked_pdf'
 gem 'pdfkit'
 gem 'newrelic_rpm'
 gem 'whenever', :require => false
@@ -32,15 +35,20 @@ gem 'exception_notification'
 gem 'analytics-ruby', '<1.0'
 gem 'customerio', :git => 'https://github.com/customerio/customerio-ruby'
 
+gem 'paranoia', '~> 2.0'
+
+
 group :development do
-  gem 'rack-mini-profiler'
-  # gem 'better_errors'
+  # gem 'rack-mini-profiler'
+  gem 'better_errors'
   gem "binding_of_caller" 
   gem 'meta_request'
-  # gem 'bullet'
+  gem 'bullet'
   gem 'quiet_assets'
   gem 'debugger'
-  gem 'thin'
+  gem 'puma'
+  gem 'guard-livereload', require: false
+  gem "rack-livereload"
   # gem 'simplecov', :require => false
  
 end

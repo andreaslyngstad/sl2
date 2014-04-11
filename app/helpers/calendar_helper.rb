@@ -6,7 +6,8 @@ module CalendarHelper
 
  class Calendar < Struct.new(:view, :date, :callback)
     
-    HEADER = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
+    # HEADER = translated_day_names
+
     START_DAY = :monday
 
     delegate :content_tag, to: :view
@@ -19,7 +20,7 @@ module CalendarHelper
 
     def header
       content_tag :tr do
-        HEADER.map { |day| content_tag :th, day }.join.html_safe
+        translated_day_names.map { |day| content_tag :th, day }.join.html_safe
       end
     end
 
@@ -42,6 +43,13 @@ module CalendarHelper
       classes.empty? ? nil : classes.join(" ")
     end
 
+    def translated_day_names
+      first = date.beginning_of_week()
+      last = date.end_of_week()
+      (first..last).map do |n|
+        I18n.localize n, :format => '%A'
+      end
+    end
     def weeks
       first = date.beginning_of_month.beginning_of_week(START_DAY)
       last = date.end_of_month.end_of_week(START_DAY)

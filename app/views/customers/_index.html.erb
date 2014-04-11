@@ -7,18 +7,12 @@
 <% end %>	
 <div class="index-view">
 	<div class="list_header orange_bgr">
-		<a id="dialog_customer" data-object="customer">New customer</a>
-		<div id="dialog_customer_form" class="dialog_form" title="Create new customer" style="display:none;">
-			<%= form_for(@customer, :remote => true) do |f| %>
-			   <li><%= f.label :name %><%= f.text_field :name, :class => "required", :minlength => "2"  %></li>
-			   <li><%= f.label :phone %><%= f.text_field :phone %></li>
-			   <li><%= f.label :email %><%= f.text_field :email %></li>
-			   <li><%= f.label :address %><%= f.text_field :address %></li>
-			   <li><%= f.submit 'Save', :class => 'submit' %></li>
-			<% end %>
+		<a id="dialog_customer" data-object="customer"><%= t('helpers.submit.create', model: Customer.model_name.human) %></a>
+		<div id="dialog_customer_form" class="dialog_form" title="<%= t('helpers.submit.create', model: Customer.model_name.human) %>" style="display:none;">
+			<%= render "customers/new_form" %>
     	</div>
 	    <div class="search">
-	        <input type="text" placeholder="Search" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
+	        <input type="text" placeholder="<%= t'general.search' %>" name="search" AUTOCOMPLETE=OFF value="" id="id_search_list">
 	    </div>
 	</div>
 	<div id="cus_pro_us_listing_container">
