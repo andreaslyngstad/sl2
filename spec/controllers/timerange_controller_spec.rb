@@ -37,15 +37,13 @@ describe TimerangeController do
 
 	  it "todo_range" do
 	  	project.users << @user
-	  	get :todo_range,{from:Date.today - 5.days, to:Date.today, url: "Project", id: project.id , :format => [:js]}
-	  	assigns(:klass).should == project
+	  	get :todo_range,{from: (Date.today - 5.days).to_s, to:Date.today.to_s, url: "Project", id: project.id , :format => 'js'}
 	  	assigns(:done_todos).should == [todo1]
 	  	assigns(:not_done_todos).should == [todo2]
 	  end
 	  it "todo_range" do
 	  	project.users << @user
-	  	get :todo_range, time: "to_day", url: "Project", id: project.id, :format => [:js]
-	  	assigns(:klass).should == project
+	  	get :todo_range, time: "to_day", url: "Project", id: project.id, :format => 'js'
 	  	assigns(:done_todos).should == [todo1]
 	  	assigns(:not_done_todos).should == [todo2]
 	  end

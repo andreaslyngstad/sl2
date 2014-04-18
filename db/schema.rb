@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 20101029201155) do
     t.datetime "end_time"
     t.date     "log_date"
     t.float    "hours"
+    t.float    "rate"
     t.float    "tax"
     t.datetime "created_at"
     t.datetime "updated_at"

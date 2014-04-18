@@ -51,7 +51,6 @@ statisticsTab = ->
   	prepareAndCallJson()
 
 currentLink = ->
-	$('.current_link').removeClass('current_link')
 	path = location.pathname.split('/')
 	route = path[path.length - 1]
 	$('#html_tabs').find('.tab_' + route).addClass('current_link')

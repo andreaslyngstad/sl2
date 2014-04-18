@@ -1,9 +1,8 @@
 jQuery.fn.timeheet_user_select = function(){
 	$(this).change(function(){
-  NProgress.start();;
-  user = $(this).val()
-  klass
-  $.get("/timesheet_week", {user_id: user,
+  NProgress.start();
+
+  $.get("/timesheetWeek", {user_id: $(this).val(),
   													class: $(this).parent('.add_some_timesheet').data('klass'),
   													id: $(this).parent('.add_some_timesheet').data('id'), 
   													date:$(this).parent('.add_some_timesheet').data('date')  });
@@ -12,10 +11,9 @@ jQuery.fn.timeheet_user_select = function(){
 
 jQuery.fn.timeheet_month_user_select = function(){
 	$(this).change(function(){
-  NProgress.start();;
-  user = $(this).val()
-  klass
-  $.get("/timesheet_month", {user_id: user,
+		console.log($(this).parent('.add_some_timesheet').data('klass'))
+  NProgress.start();
+  $.get("/timesheetMonth", {user_id: $(this).val(),
   													class: $(this).parent('.add_some_timesheet').data('klass'),
   													id: $(this).parent('.add_some_timesheet').data('id'), 
   													date:$(this).parent('.add_some_timesheet').data('date')  });
@@ -59,14 +57,14 @@ function ready_timesheet(){
 	})
 	$("select#timeheet_user_select").chosen()
 	$("select#timeheet_user_select").timeheet_user_select();
-	$("select#timeheet__month_user_select").chosen()
-	$("select#timeheet__month_user_select").timeheet_month_user_select();
+	$("select#timeheet_month_user_select").chosen()
+	$("select#timeheet_month_user_select").timeheet_month_user_select();
 	$("table.timesheet_table tbody tr td.number input").focusout(function(){
 	val_input = this.value
 	regexp1 	= /^[0-9]+.[0-9]+$/  // test denne => /[0-9,:]+(?:\.[0-9]*)?/
 	regexp2		= /^[0-9][0-9]*$/
 	params    = {	select_klass: $(this).data("select_klass"), 
-								select_id: 		$(this).data("select_id"),
+								select_id: 		$(this).data("select_id"),		 
 								klass: 				$(".timesheet_table").data("klass"),
 								id: 					$(".timesheet_table").data("id"),
 								date: 				$(this).data("date"), 

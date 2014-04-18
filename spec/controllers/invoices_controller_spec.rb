@@ -14,10 +14,10 @@ describe InvoicesController do
       subject.current_firm.should_not be_nil
     end
     it "populates an array of invoices" do
-      invoices = double
-      Invoice.should_receive(:order_by_number){invoices}
+      invoice = FactoryGirl.create(:invoice, customer: customer, firm:@user.firm, date: Date.today - 1.day)
+      # Invoice.should_receive(:order_by_number)
       get :index
-      assigns[:invoices].should be invoices 
+      assigns[:invoices].should == [invoice] 
     end
     it "renders the :index view" do
       get :index

@@ -16,30 +16,8 @@ describe FirmsController do
      get :firm_show, :id => @user.firm
      response.should render_template :firm_show
    end
-   it "renders access_denied when user is External user" do
-      @user.role = "External user"
-      @user.save
-      get :firm_edit, :id => @user.firm
-      expect(response).to render_template("access_denied")
-    end
+   
  end
-  describe "GET #firm_edit" do
-   it "assigns the requested project to @project" do
-     get :firm_edit, :id => @user.firm
-     assigns(:firm) == [@user.firm] 
-   end
-   it "renders the #firm_edit view" do
-     get :firm_edit, :id => @user.firm
-     response.should render_template :firm_edit
-   end
-   it "renders access_denied when user is member" do
-      @user.role = "Member"
-      @user.save
-      get :firm_edit, :id => @user.firm
-      expect(response).to render_template("access_denied")
-    end
-  end
-  
   describe 'PUT update' do
   before :each do 
     @firm = @user.firm

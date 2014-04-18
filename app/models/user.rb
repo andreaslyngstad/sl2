@@ -1,6 +1,6 @@
-class User < ActiveRecord::Base
-  
+class User < ActiveRecord::Base  
   include ActiveModel::Validations
+  validates_with Validator
   validates_with MadeWithInLimit, on: :create
 
 	has_attached_file :avatar, :styles => { :original => "100x100#", :small => "32x32#" }                       

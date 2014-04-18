@@ -10,7 +10,7 @@ describe SessionsController do
       	user.loginable_token.should == 'secret'
       	@request.cookies[:token] = 'secret'
       	get :sign_in_at_subdomain
-      	flash[:notice].should == "Signed in successfully"
+      	flash[:notice].should == "Signed in successfully."
       	firm.reload
       	firm.last_sign_in_at.should == Date.today
       end
@@ -39,7 +39,7 @@ describe SessionsController do
       end
     end
     context "with invalid password" do
-      it "redirects to root with flash" do
+      it "redirects to root with flash", :vcr do
       	@request.env["devise.mapping"] = Devise.mappings[:user]
         @request.session["user_return_to"] = 'foo.bar'	
       	post :create, user: {

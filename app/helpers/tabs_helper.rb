@@ -9,7 +9,5 @@ module TabsHelper
   def return_symbol(instance)
   	(instance.class.to_s + '_id').downcase.to_sym
   end
-  def string_for_klass(klass)
-  	klass.class.to_s.downcase.pluralize
-  end
+  
 end

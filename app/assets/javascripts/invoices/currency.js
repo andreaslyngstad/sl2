@@ -7,7 +7,7 @@ function currency_converter(value){
       case "DKK":
       case "SEK":
       case "ISK":
-      return localeString(value_pretty, '.', 3, ',', 'kr ')
+      return localeString(value_pretty, ' ', 3, ',', 'kr ')
       break;
       case "USD":
       case "AUD":

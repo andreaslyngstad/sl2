@@ -2,14 +2,15 @@ require 'spec_helper'
 require 'features/subdomain_login_features'
 include SubdomainLoginFeatures  
 feature 'customer' do
+    
     get_the_gritty   
 
   scenario "make new", js: true do
     sign_in_on_js   
     visit @customers 
-    page.should have_content("New customer")        
+    page.should have_content("Create customer")        
     find("#dialog_customer").click
-    page.should have_content("Create new customer")
+    page.should have_content("Create customer")
     fill_in "customer_name", with: "" 
     click_button "Save"
     page.should have_content("This field is required.")
@@ -24,7 +25,7 @@ feature 'customer' do
   scenario "Edit customer", js: true do
     sign_in_on_js
     visit @customers 
-    page.should have_content("test_new customer")  
+    page.should have_content("test_customer")  
     id = page.evaluate_script("$('.open_customer_update').first().attr('data-id');")
     li = "li#customer_#{id}"
     within(:css, li) do
@@ -41,8 +42,8 @@ feature 'customer' do
     id = page.evaluate_script("$('.open_customer_update').first().attr('data-id');")
     li = "li#customer_#{id}"
     within(:css, li) do
-      page.first('span', :text => 'Delete').click 
+      page.first('span', :text => 'delete').click 
     end
-    page.should have_content("Customer was successfully deleted.") 
+    page.should have_content("test_new customer was deleted") 
   end
 end

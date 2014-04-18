@@ -2,6 +2,7 @@ VCR.configure do |c|
   c.cassette_library_dir = Rails.root.join("spec", "vcr")
   c.ignore_localhost = true
   c.hook_into :webmock
+  c.default_cassette_options = { :record => :new_episodes }
   c.filter_sensitive_data('<WSDL>') { "http://www.webservicex.net:80/uszip.asmx?WSDL" }
 end
 

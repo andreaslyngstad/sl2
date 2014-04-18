@@ -1,11 +1,13 @@
 <ul>
 <li><%= l.label :log %><%= l.text_field(:event, :class => "required log_new_event", :minlength => "2", :AUTOCOMPLETE => "OFF") %></li>
 <li><div class="date_on_log">
-	<%= l.label :date %><%= l.text_field(:log_date, :value => date_format(Date.today), :class => "date", :id => "log_date_new") %>
+	<%= l.label :date %><%= l.text_field(:log_date, :value => date_format(time_zone_now.to_date), :class => "date", :id => "log_date_new") %>
 </div></li>
 <li style="margin-bottom: 0px;"><%= l.label :from %><%= l.label :to, :style => "margin-left: 35px;" %></li>
 <li><%= l.text_field(:begin_time, :value => clock_format(time_zone_now), :class => "log_times required clock", :id => "log_times_from_") %>
-	<%= l.text_field(:end_time, :value => clock_format(time_zone_now), :class => "log_times required clock", :id => "log_times_to_") %></li>
+	<%= l.text_field(:end_time, :value => clock_format(time_zone_now), :class => "log_times required clock", :id => "log_times_to_") %>
+	 <%= l.text_field(:rate, :value => current_user.hourly_rate, :class => "log_times required clock") %>
+</li>
 <li class="slider_range" log=""></li>
 <% if @klass.class.to_s == "User"%>
 	<%= l.hidden_field :user_id, :value => @klass.id %>

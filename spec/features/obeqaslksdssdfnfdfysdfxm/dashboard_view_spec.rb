@@ -27,15 +27,15 @@ feature 'dashboard' do
 		click_link 'Firms'
 		page.should have_content(firm.name)
 		click_link 'Dashboard'
-		click_link 'Users'
+		click_link 'users'
 		page.should have_content(user.name)
-		click_link 'Customers'
+		click_link 'customers'
 		page.should have_content(customer.name)
-		click_link 'Logs'
+		click_link 'logs'
 		page.should have_content(log.event)
-		click_link 'Projects'
+		click_link 'projects'
 		page.should have_content(project.name)
-		click_link 'Subscriptions'
+		click_link 'subscriptions'
 		page.should have_content(firm.name)
 	end
 	scenario 'Guide crud' do 

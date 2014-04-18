@@ -54,7 +54,7 @@ describe PublicController do
       @firm = FactoryGirl.create(:firm)
     end   
     describe "success" do
-      it "Saves user and gets redirected to application" do
+      it "Saves user and gets redirected to application", :vcr do
 
         @user = FactoryGirl.attributes_for(:user)
         post :create_first_user, :firm_id => @firm.id.to_s, :user => @user     
@@ -62,9 +62,9 @@ describe PublicController do
         user = @firm.users.first
         user.name.should  == @user[:name]
         user.email.should == @user[:email]
-        r = ActiveRecord::Base.connection.execute("SELECT * FROM queue_classic_jobs")
-        r.first["method"].should == "FirmMailer.sign_up_confirmation"
-        r.first["args"].should == "[#{user.id}]"
+        # r = ActiveRecord::Base.connection.execute("SELECT * FROM queue_classic_jobs")
+        # r.first["method"].should == "FirmMailer.sign_up_confirmation"
+        # r.first["args"].should == "[#{user.id}]"
 
       end
     describe "failure" do

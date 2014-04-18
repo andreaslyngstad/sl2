@@ -12,9 +12,9 @@ class InvoicesController < ApplicationController
     else
       @instance = eval(params[:url]).find(params[:id])
       klass = params[:url].downcase 
-      if klass = 'project'
+      if klass == 'project'
         @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, :project, :todo, :user, :firm)
-      elsif klass = 'customer'
+      elsif klass == 'customer'
         @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, {:customer => :employee}, :project, {:project =>:todo}, :user)
       end
       @invoice.send(klass+'=', @instance)
@@ -23,6 +23,7 @@ class InvoicesController < ApplicationController
 
   def show  
     @klass = current_firm.invoices.find(params[:id])
+    @logs = @klass.logs
     authorize! :read, @klass
     respond_with(@klass)
   end 

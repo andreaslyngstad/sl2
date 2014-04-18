@@ -58,7 +58,7 @@ describe ProjectsController, :type => :controller do
     it "renders the #show view" do
       @project = FactoryGirl.create(:project, :firm => @user.firm)
       get :show, :id => @project
-      response.should render_template :show
+      response.should redirect_to tabs_state_path(@project.class.to_s.downcase.pluralize, @project.id)
     end
   end
   describe "GET edit" do

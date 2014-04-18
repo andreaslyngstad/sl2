@@ -6,9 +6,9 @@ feature 'user' do
   scenario "make new", js: true do
     sign_in_on_js   
     visit @users 
-    page.should have_content("New user")       
+    page.should have_content("Create user")       
     find("#dialog_user").click
-    page.should have_content("Create new user")
+    page.should have_content("Create user")
     fill_in "user_name", with: "" 
     click_button "Save"
     page.should have_content("This field is required.")
@@ -17,29 +17,30 @@ feature 'user' do
     fill_in "user_email", with: "test@tes.no"
     fill_in "user_password", with: "password" 
     page.find('#new_user').find('.submit').click
-    page.should have_content("Registration successful")
+    page.should have_content("was successfully saved")
     page.should have_content("test_new user")
   end 
   scenario "Edit user", js: true do
     sign_in_on_js
     visit @users 
     page.should have_content("test_new user")  
-    id = page.evaluate_script("$('.open_user_update').first().attr('data-id');")
-    li = "li#user_#{id}"
+    id = page.evaluate_script("$('.tab_list').find('a:contains(\"test_new user\")').parent().parent().attr('id');")
+    li = "li##{id}"
     within(:css, li) do
       first(".open_user_update").click  
     end 
     page.should have_content("Update user")
     fill_in "user_name", with: "test_new_edit user"
-    page.find("#edit_user_#{id}").find(".submit").click
+    fill_in "user_password", with: "test_new_edit user"
+    page.find("#edit_#{id}").find(".submit").click
     page.should have_content("test_new_edit user") 
-    page.should have_content("Successfully updated profile") 
+    page.should have_content("successfully saved") 
   end 
   scenario "delete yourself", js: true do
     sign_in_on_js
     visit @users
-    id = page.evaluate_script("$('.open_user_update').first().attr('data-id');")
-    li = "li#user_#{id}"
+    id = page.evaluate_script("$('.tab_list').find('a:contains(\"#{@user.name}\")').parent().parent().attr('id');")
+    li = "li##{id}"
     within(:css, li) do
       first(".delete_user").trigger('click')
     end
@@ -48,11 +49,11 @@ feature 'user' do
   scenario "delete user", js: true do
     sign_in_on_js
     visit @users
-    id = page.evaluate_script("$('.open_user_update').last().attr('data-id');")
-    li = "li#user_#{id}"
+    id = page.evaluate_script("$('.tab_list').find('a:contains(\"test_new_edit user\")').parent().parent().attr('id');")
+    li = "li##{id}"
     within(:css, li) do
       first(".delete_user").trigger('click')
     end
-    page.should have_content("test_new user was deleted") 
+    page.should have_content("test_new_edit user was deleted") 
   end
 end

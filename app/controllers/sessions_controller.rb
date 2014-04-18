@@ -59,8 +59,11 @@ private
      resource.save
      cookies[:token] = { :value => token, :domain => :all }
      redirect_to sign_in_at_subdomain_url( :subdomain => resource.firm.subdomain)
+     if Rails.env.production?
      $customerio.track(
         resource.id, 'Signed in', date: Time.now.to_i
+
        )
+   end
   end
 end

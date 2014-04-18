@@ -544,6 +544,7 @@ CREATE TABLE logs (
     end_time timestamp without time zone,
     log_date date,
     hours double precision,
+    rate double precision,
     tax double precision,
     created_at timestamp without time zone,
     updated_at timestamp without time zone

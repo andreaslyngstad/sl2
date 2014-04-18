@@ -1,4 +1,6 @@
+require 'vcr'
 module SubdomainLoginFeatures
+
 	def get_the_gritty
 		# let(:user)        {FactoryGirl.create(:user)}
   #   let(:firm)        {user.firm} 
@@ -22,8 +24,8 @@ module SubdomainLoginFeatures
       @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
 	    @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
       @project.users << @user
-      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Date.today.beginning_of_week)
-      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Date.today.beginning_of_week + 1.day)
+      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
+      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
       Capybara.server_port = 31234 
       sub = @firm.subdomain
       Capybara.app_host = @root_url 
@@ -31,11 +33,11 @@ module SubdomainLoginFeatures
 	end  
 	  
 	def sign_in_on_js 
-    visit @root_url  
-    fill_in "user_email2", :with => @user.email
-    fill_in "user_password2", :with => "password"
-    click_button "sign_in2"
-    page.should have_content("Signed in successfully") 
+      visit @root_url  
+      fill_in "user_email2", :with => @user.email
+      fill_in "user_password2", :with => "password"
+      click_button "sign_in2"
+      page.should have_content("Signed in successfully") 
 	end
 
   def wait_for_ajax

@@ -46,6 +46,8 @@ en:
     or: or
     is_on: is on  
     is_not_on: is not on
+    is_active: is active
+    is_not_active: is not active
     archive: Archive
     archive_verb: Archive
     open: open
@@ -56,6 +58,7 @@ en:
     export_to_csv: Export CSV
     export_to_excel: Export excel
     timesheet_for: Timesheet for
+    timesheet: Timesheet
     available: Available
     on_this: on this
   subscription:

@@ -1,21 +1,19 @@
 <div class="log_menu">
    <div class="add_some">
        <a id="dialog_log"><%= t('helpers.submit.create', model: Log.model_name.human) %></a>
-      
-
    </div>
    <div id="dialog_log_form" class="dialog_form" title="<%= t('helpers.submit.create', model: Log.model_name.human) %>" style="display:none;">
     <%= render 'logs/log_menu_form_tags' %>
    </div>
-    <div class="view_selector" data-klass="<%=  @klass ? @klass.class : "index"  %>" data-id="<%= @klass ? @klass.id : "index"%>" data-date="<%= Date.today %>" data-user="<%=  @user.try(:id) %>">
+    <div class="view_selector" data-klass="<%=  @klass ? @klass.class : "index"  %>" data-id="<%= @klass ? @klass.id : "index"%>" data-date="<%= time_zone_now.to_date %>" data-user="<%=  @user.try(:id) %>">
       <% if @klass %>
-      <span id="list_view" class="current">List</span>
+      <%= link_to t("navigation.list"), timesheet_day_path( @klass ? string_for_klass(@klass) : "index" , @klass ? @klass.id : "index",time_zone_now.to_date), id: "day_link" %>
       <% else %>
-      <%= link_to t("navigation.list"), logs_path, id: "list_view", class: "current" %>
+      <%= link_to t("navigation.list"), logs_path, id: "day_link" %>
       <% end %>
-      <span id="week_view"><%= t('navigation.week') %></span>
-      <span id="month_view"><%= t('navigation.month') %></span>
-      
+      <!-- <span id="week_view"><#= t('navigation.week') %></span> -->
+      <%= link_to t('navigation.week'),  timesheet_week_path( @klass ? string_for_klass(@klass) : "index" , @klass ? @klass.id : "index",time_zone_now.to_date), id: 'week_link'%>
+      <%= link_to t('navigation.month'),  timesheet_month_path( @klass ? string_for_klass(@klass) : "index" , @klass ? @klass.id : "index",time_zone_now.to_date), id: 'month_link'%>
     </div> 
    <div class="range" >	   
 	    <%= form_tag('/log_range', :id => "range_form", :remote => true, method: :get) do -%>

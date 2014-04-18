@@ -3,9 +3,6 @@ class FirmsController < ApplicationController
     authorize! :read, Firm
   end
 
-  def firm_edit
-    authorize! :manage, Firm
-  end
   def firm_update
     @firm = current_firm
     respond_to do |format|
@@ -14,7 +11,7 @@ class FirmsController < ApplicationController
         format.html { redirect_to firm_show_path }
       else
         flash[:error] = (t'general.your_firm') + ' ' + (t'activerecord.flash.could_not_save')
-        format.html { render :action => "firm_edit" }
+        format.html { render :action => "firm_show" }
       end
     end
   end

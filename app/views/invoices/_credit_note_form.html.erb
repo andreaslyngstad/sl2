@@ -1,6 +1,6 @@
 <%= form_for(@credit_note, :remote => true, url: credit_note_create_path(@invoice)) do |f| %>
 <%= f.hidden_field :customer_id, value: @invoice.customer.id, id: "hidden_customer_field"%>
-<%= f.hidden_field :due, value: Date.today %>
+<%= f.hidden_field :due, value: time_zone_now.to_date %>
 <ul>
 	<li>
 		<table class="customer_project_invoice_dates">
@@ -19,7 +19,7 @@
 	</td>		
   <td id="dates_td">
   	<span class="invoice_date" style="float:none;"><%= @invoice.number %></span><br><br>
-	<%= f.text_field :date, :value => date_format(Date.today), :class => "invoice_date date", :id => "invoice_date_", :style => "float:none;"%>
+	<%= f.text_field :date, :value => date_format(time_zone_now.to_date), :class => "invoice_date date", :id => "invoice_date_", :style => "float:none;"%>
 	 
 </td>
 		</tr>

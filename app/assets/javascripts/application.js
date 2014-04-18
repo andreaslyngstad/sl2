@@ -214,7 +214,6 @@ jQuery.fn.collapse_menu = function(){
     $(this).addClass('selected')
     id = $(this).attr("id")
     type =  $(this).data('type')
-    console.log(type)
     $('.pref_fields').hide();
     $('.pref_buttons').hide();
     $('#' + id + '_fields').show()

@@ -35,7 +35,7 @@ describe CustomersController do
     it "renders the #show view" do
       @customer = FactoryGirl.create(:customer, :firm => @user.firm)
       get :show, :id => @customer
-      response.should render_template :show
+      response.should redirect_to tabs_state_path(@customer.class.to_s.downcase.pluralize, @customer.id)
     end
   end
   describe "GET edit" do 

@@ -5,7 +5,9 @@ module ApplicationHelper
   # return @current_firm if defined?(@current_firm)
   # @current_firm = current_user.firm
   end
-
+  def string_for_klass(klass)
+    klass.class.to_s.downcase.pluralize
+  end
   def all_users
     @all_users ||= current_firm.users.order("name")
   end 

@@ -104,7 +104,7 @@
 			  	</select> 
 			</li>
 			<% end %>
-			<li><%= f.label :due %><%= f.text_field :due, :value => date_format(Date.today), :class => "date", :id => "dialog_todo_date" %></li>
+			<li><%= f.label :due %><%= f.text_field :due, :value => date_format(time_zone_now.to_date), :class => "date", :id => "dialog_todo_date" %></li>
 			<li><%= f.submit (t'save'), :class => 'submit', :id => "new_todo_submit"%></li>
 			<% end %>
 		</ul>

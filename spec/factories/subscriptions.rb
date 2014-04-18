@@ -4,6 +4,8 @@ FactoryGirl.define do
   factory :subscription do
     active true
     paymill_id "test"
+    last_four "1234"
+    card_type "none"
     email
     name 
     firm

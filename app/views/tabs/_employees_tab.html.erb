@@ -1,6 +1,6 @@
 <div class="log_menu">
 	<div class="add_some">
-    <a id="dialog_employees" data-object="employee"><%= t('general.new') %> <%= t('activerecord.models.employee.one') %></a>
+    <a id="dialog_employees" data-object="employee"><%= t('helpers.submit.create', model: Employee.model_name.human) %></a>
     <div id="dialog_employees_form" class="dialog_form" title="Create new employee" style="display:none;">  
       <%= form_for(Employee.new, :remote => true) do |f| %>
       <%= f.hidden_field :customer_id, value: @klass.id %>

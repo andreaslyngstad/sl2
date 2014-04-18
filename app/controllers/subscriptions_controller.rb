@@ -32,7 +32,7 @@ class SubscriptionsController < ApplicationController
     current_firm.remove_associations_when_downgrading(plan.id)
     @subscription.delete
     current_firm.plan = plan
-    s = Subscription.new(plan_id: plan.id)
+    s = Subscription.new(plan_id: plan.id, last_four: "0000", card_type: "NONE")
     s.firm = current_firm
     s.save!
     current_firm.save

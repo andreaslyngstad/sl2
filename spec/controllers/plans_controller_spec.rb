@@ -18,11 +18,10 @@ login_user
       response.should be_success
     end
     it "returns http success" do
-      plan = Plan.where(name:"Free").first
-      plan1 = FactoryGirl.create(:plan, price: 1)
-      plan2 = FactoryGirl.create(:plan, price: 2)
+      plan = Plan.where(name: "Factories_test")
+      plans = [plan,@user.firm.plan]
       get :index
-      assigns(:plans).should eq([plan, plan1, plan2, @user.firm.plan])
+      expect(assigns(:plans)).to eq(Plan.order("price"))
     end
   end
   describe "get canel" do

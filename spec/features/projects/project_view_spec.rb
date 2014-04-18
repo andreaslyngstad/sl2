@@ -2,35 +2,57 @@ require 'spec_helper'
 require 'features/subdomain_login_features'
 include SubdomainLoginFeatures
 feature 'Project' do
-  
-    get_the_gritty
+     before(:all) do 
+      date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
+      
+      
+      @user = FactoryGirl.create(:user, hourly_rate: 2)
+      @firm = @user.firm
+      @firm.users.should include @user
+      @firm.users.first.should eq @user
+      @project = FactoryGirl.create :project, name: "test_project", firm: @firm, budget:10  
+      @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm
+      @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.today, user: @user)         
+      @customers = "http://#{@firm.subdomain}.lvh.me:31234/customers"
+      @projects = "http://#{@firm.subdomain}.lvh.me:31234/projects"
+      @users = "http://#{@firm.subdomain}.lvh.me:31234/users"
+      @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
+      @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
+      @project.users << @user
+      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
+      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
+      Capybara.server_port = 31234 
+      sub = @firm.subdomain
+      Capybara.app_host = @root_url 
+    end
     
-   def visit_the_project
+  def visit_the_project
     sign_in_on_js
+
     visit @projects
+    id = @project.id
     page.should have_content("test_project")
-    id = page.evaluate_script("$('.open_project_update').first().attr('data-id');")
-    li = "li#project_#{id}"
+    # id = page.evaluate_script("$('.tab_list').first().attr('id')")
+    li = "li#project_#{id.gsub(/project_/, '')}"
     within(:css, li) do
       find(".tab_list_text").find('a').trigger('click')
     end
-   end
+  end
    
   scenario "cycle trough links project", js: true do
     visit_the_project
+    @user.firm.users.count.should == 1
+    @project.should_not be nil
     page.should have_content("test_project", visible: true)
     page.find('#html_tabs').click_link('Logs')
-    
-    page.should have_content('New log', visible: true)
-    page.find('#html_tabs').click_link('Users') 
-    
-    page.should have_content('Squad on this project', visible: true)
- 
+    page.should have_content('Create log', visible: true)
+    page.find('#html_tabs').click_link('Users')
+    page.should have_content('Users on this project', visible: true)
     click_link('Milestones')
-    page.should have_content("New milestone", visible: true)
+    page.should have_content("Create milestone", visible: true)
     click_link('Statistics')
     click_link('Spendings')
-    page.should have_content("Hourly price", visible: true)
+    page.should have_content("Hourly rate", visible: true)
     click_link('Tasks')
     page.should have_content("Task", visible: true)
   end  
@@ -39,7 +61,7 @@ feature 'Project' do
     visit_the_project
     click_link('Tasks')
     page.find("#dialog_todo", visible: true).trigger('click')
-    page.should have_content("Create new task")
+    page.should have_content("Create task")
     fill_in "todo_name", with: "This a task"
     find('#dialog_todo_date').click
     click_link('13')
@@ -50,20 +72,20 @@ feature 'Project' do
     id = find('.task_info')['id'].gsub('todo_', '')
     page.should have_content("This a task")  
     page.should have_content("13." + Date.today.strftime('%m.%y'))  
-    page.should have_content("Task was successfully created.")
+    page.should have_content("Task was successfully saved")
     page.find("div#not_done_tasks").first('div')[:id].should eql('todo_' + id )
     within(:css, "#todo_" + id) do 
       find(".done_box").click
     end
     
-    page.should have_content("Task was successfully updated.")
+    page.should have_content("Task was successfully saved")
     page.find("div#done_tasks").should have_content('This a task')
     
     within(:css, "#todo_" + id) do 
       find(".done_box").click
     end
   
-    page.should have_content("Task was successfully updated.")
+    page.should have_content("Task was successfully saved")
     page.find("div#not_done_tasks").should have_content('This a task')
     within(:css, "#todo_" + id) do 
       find("#todo_update").click
@@ -75,7 +97,7 @@ feature 'Project' do
     find('#edit_todo_' + id).find('.submit').click
     page.should have_content("14." + Date.today.strftime('%m.%y')) 
     find("#todo_" + id).find(".delete_todo").click
-    page.should have_content("Task was successfully deleted.")
+    page.should have_content("Task was deleted")
     page.should_not have_content("This a task")
   end
   scenario 'project log crud', js: true do
@@ -84,10 +106,10 @@ feature 'Project' do
       click_link('Logs')
     end 
     page.find('#html_tabs').click_link('Logs') 
-    page.should have_content('New log', visible: true)
+    page.should have_content('Create log', visible: true)
    
     find("#dialog_log").click
-    page.should have_content("Create new log")
+    page.should have_content("Create log")
     fill_in "log_event", with: "This a log"
     find('#log_date_new').click
     click_link('13')
@@ -107,7 +129,7 @@ feature 'Project' do
     within(:css, '#log_info_'+ @log.id.to_s) do 
       find('.delete_log').click
     end
-    page.should have_content("Log was deleted")
+    page.should have_content("log was deleted")
     page.should_not have_content("This a log edit")
   end
 
@@ -117,7 +139,7 @@ feature 'Project' do
       click_link('Milestones') 
     end
     find("#dialog_milestone", visible: true).click
-    page.should have_content("Create new milestone")
+    page.should have_content("Create milestone")
     fill_in "milestone_goal", with: "This a milestone"
     find('#dialog_milestone_date').click
     click_link('13')
@@ -141,7 +163,7 @@ feature 'Project' do
     within(:css, '#milestone_' + id) do  
       find('.delete_milestone').click
     end
-    page.should have_content("Milestone was successfully deleted") 
+    page.should have_content("Milestone was deleted") 
 end
   # scenario 'project users', js: true do
   #   visit_the_project

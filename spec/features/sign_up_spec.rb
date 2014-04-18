@@ -36,9 +36,9 @@ feature 'Sign up' do
      page.should have_content("can't be blank")
      page.should have_content("Registration could not be saved")
    end
-   scenario 'emails user on succsessfull signup' do
-    signing_up
-    r = ActiveRecord::Base.connection.execute("SELECT * FROM queue_classic_jobs")
-    r.first["method"].should == "FirmMailer.sign_up_confirmation"
-   end
+   # scenario 'emails user on succsessfull signup' do
+   #  signing_up
+   #  r = ActiveRecord::Base.connection.execute("SELECT * FROM queue_classic_jobs")
+   #  r.first["method"].should == "FirmMailer.sign_up_confirmation"
+   # end
 end

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   # rescue_from Customerio::Client::InvalidResponse, :with => :do_nothing
 
-  include TabsHelper
+
 
   include ApplicationHelper
   #rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
@@ -24,11 +24,13 @@ class ApplicationController < ActionController::Base
   
   helper :layout
   helper_method :is_root_domain?, 
-                #:can_sign_up?, 
+                
                 :current_subdomain, 
                 :time_zone_now,  
                 :time_range_to_day,
                 :permitted_params
+                #:can_sign_up?, 
+                
   # skip_before_filter :find_firm, :only => [:sign_up_and_redirect]
 
   def permitted_params
@@ -56,7 +58,7 @@ class ApplicationController < ActionController::Base
     # return @current_firm if defined?(@current_firm)
     # @current_firm = current_user.firm
   end
-
+  
   # def all_users
   #   @all_users ||= current_firm.users.order("name")
   # end

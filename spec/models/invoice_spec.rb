@@ -8,16 +8,16 @@ describe Invoice do
   it {should validate_presence_of(:customer_id) } 
   it {should accept_nested_attributes_for :invoice_lines }
   let(:firm)     {FactoryGirl.create(:firm, bank_account: 12, vat_number: 123)}
-  let(:firm1)     {FactoryGirl.create(:firm)}
-  let(:invoice)  {FactoryGirl.create(:invoice, customer:customer, firm:firm, due: Date.today)}
-  let(:invoice1)   {FactoryGirl.create(:invoice, customer:customer, firm:firm , number: 2, due: Date.today + 1.day, paid: nil)}
-  let(:invoice2)   {FactoryGirl.create(:invoice, customer:customer, firm:firm , number:3, due: Date.today - 1.day, paid: Date.today)}
+  let(:firm1)    {FactoryGirl.create(:firm)}
+  let(:invoice)  {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm, due: Date.today)}
+  let(:invoice1) {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm , number: 2, due: Date.today + 1.day, paid: nil)}
+  let(:invoice2) {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm , number:3, due: Date.today - 1.day, paid: Date.today)}
   let(:customer) {FactoryGirl.create(:customer, firm:firm)}
 
   it "gives translated string for status" do
-  	FactoryGirl.create(:invoice, customer:customer, firm:firm).status_string.should eq "Draft"
-  	FactoryGirl.create(:invoice, customer:customer, firm:firm, status: 2).status_string.should eq "Sent"
-  	FactoryGirl.create(:invoice, customer:customer, firm:firm, status: 5).status_string.should eq "Reminded"
+  	FactoryGirl.create(:invoice, customer:customer, firm:firm).status_string.should eq ['black', "Draft"]
+  	FactoryGirl.create(:invoice, customer:customer, firm:firm, status: 2).status_string.should eq ['black', "Sent"]
+  	FactoryGirl.create(:invoice, customer:customer, firm:firm, status: 5).status_string.should eq ['orange',"Reminded"]
   end
   it "gives number or string" do
   	invoice.number_string.should eq "No number"
@@ -45,7 +45,7 @@ describe Invoice do
       invoice.due_today_or_overdue
       invoice.status.should eq 3
       invoice1.due_today_or_overdue
-      invoice1.status.should eq 1
+      invoice1.status.should eq 2
       invoice2.due_today_or_overdue
       invoice2.status.should eq 4
     end

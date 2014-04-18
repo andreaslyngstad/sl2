@@ -1,5 +1,6 @@
 module CalendarHelper
-  def calendar(date = Date.today, &block)
+  include ApplicationHelper
+  def calendar(date, &block)
     Calendar.new(self, date, block).table
   end
 
@@ -38,7 +39,7 @@ module CalendarHelper
 
     def day_classes(day)
       classes = []
-      classes << "today" if day == Date.today
+      classes << "today" if day == date
       classes << "notmonth" if day.month != date.month
       classes.empty? ? nil : classes.join(" ")
     end

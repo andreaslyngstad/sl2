@@ -3,19 +3,24 @@ require 'spec_helper'
 describe TimesheetsController do
 	login_user
   
+  
+    let(:firm)          {@user.firm}
+    let(:customer)      {FactoryGirl.create(:customer, firm: firm)}
+    let(:project)       {FactoryGirl.create(:project, firm: firm)}
+    let(:log)           {FactoryGirl.create(:log, customer: customer, firm: firm, user: @user, hours:1, log_date: Date.today)}
+    let(:log_no_customer){FactoryGirl.create(:log, firm: firm, user: @user, hours:1,log_date: Date.today)}
+    let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+    let(:log_ex)           {FactoryGirl.create(:log,  customer: customer, firm: firm, project:project,user: external_user, hours:1, log_date: Date.today)}
+  
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com" 
-  
   end
-  describe "timesheet_day" do
-  	let(:firm) 					{@user.firm}
-  	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+
+  describe "timesheet_day" do	
 	  it "timesheet_week user admin" do
 	  	firm.users << external_user
-	  	get :timesheet_day, user_id: @user.id, date: Date.today
-	  	assigns(:user).should == @user
-	  	assigns(:users).should =~ [@user, external_user]
-	  	assigns(:logs).should == @user.logs.where(:log_date => Date.today)
+	  	get :timesheet_day, class: "customers", id: customer.id, date: Date.today
+	  	assigns(:logs).should == customer.logs.where(:log_date => Date.today)
 	  end
   end
 
@@ -23,25 +28,25 @@ describe TimesheetsController do
   	let(:firm) 					{@user.firm}
   	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
 	  it "timesheet_week user admin" do
+      log
+      log_no_customer
+      log_ex
 	  	firm.users << external_user
-	  	get :timesheet_week, user_id: @user.id, :format => 'js'
-	  	assigns(:user).should == @user
+	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.today
 	  	assigns(:users).should =~ [@user, external_user]
 	  	assigns(:dates).should == ((Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date))
-    	range = Time.zone.today..Time.zone.today + 7.days
-    	assigns(:log_project).should == @user.logs.where(:log_date => @dates).group("project_id").sum(:hours)
-    	assigns(:log_week).should == @user.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
-    	assigns(:log_week_project).should == @user.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-    	assigns(:log_week_no_project).should == @user.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
+    	assigns(:log_project).should == {nil=>60.0, project.id=>60.0}
+    	assigns(:log_week).should == {Date.today=>120.0}
+    	assigns(:log_week_project).should == {[project.id,Date.today]=>60.0, [nil, Date.today]=>60.0}
+    	assigns(:log_week_no_project).should == {Date.today=>60.0}
     	assigns(:projects).should == @user.projects
-    	assigns(:log_total).should == @user.logs.where(:log_date => range).sum(:hours) 
+    	# assigns(:log_total).should == @user.logs.where(:log_date => range).sum(:hours) 
 	  end
   	it "timesheet_week user external_user" do
   		@user.role = "External user"
   		@user.save
 	  	firm.users << external_user
-	  	get :timesheet_week, user_id: @user.id
-	  	assigns(:user).should == @user
+	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.today
 	  	assigns(:users).should == []
 	  end
   end
@@ -49,12 +54,13 @@ describe TimesheetsController do
   	let(:firm) 					{@user.firm}
   	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
 	  it "timesheet_week user admin" do
+      log
+      log_no_customer
+      log_ex
 	  	firm.users << external_user
-	  	get :timesheet_month, user_id: @user.id, date: Date.today
-	  	assigns(:user).should == @user
-	  	assigns(:users).should =~ [@user, external_user]
+	  	get :timesheet_month, class: "customers", id: customer.id, date: Date.today
 	  	assigns(:date).should == Date.today
-	  	assigns(:logs_by_date).should == @user.logs.group("date(log_date)").sum(:hours)
+	  	assigns(:logs_by_date).should == {Date.today=>120.0}
     end
   end
   describe "adding logs to timesheet" do
@@ -75,13 +81,13 @@ describe TimesheetsController do
     let(:project)  {FactoryGirl.create(:project, firm: firm)}
     let(:log)      {FactoryGirl.create(:log, event: "old log", user: @user, project: project, firm: firm)}
     it "With empty field" do
-  		post :add_hour_to_project, user_id: @user.id, project_id: project.id, date: Date.today, val_input: "3:34", :format => [:js]
+  		post :add_hour_to_project, select_klass: project.class.to_s.downcase, select_id: project.id, klass: @user.class.to_s.downcase, id: @user.id, date: Date.today, val_input: "3:34", :format => 'js'
   		assigns(:log).project.should == project
   	end
   	it "with already typed field" do
-  		 post :add_hour_to_project, log_id: log.id, user_id: @user.id, project_id: project.id, date: Date.today, val_input: "3:34", :format => [:js]
+  		 post :add_hour_to_project, log_id: log.id, select_klass: project.class.to_s.downcase, select_id: project.id, klass: @user.class.to_s.downcase, id: @user.id, date: Date.today, val_input: "3:34", :format => 'js'
       assigns(:log).project.should == project
-      assigns(:log).event.should == "Added on timesheet"
+      assigns(:log).event.should == "Timesheet"
   	end
   end
 end

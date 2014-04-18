@@ -7,7 +7,7 @@
       <%= n.hidden_field :project_id, value: @klass.id %>
       <ul>
       <li><%= n.label :goal %><%= n.text_area :goal, :class => "required", :minlength => "2" %></li>
-      <li><%= n.label :due %><%= n.text_field :due, :value => date_format(Date.today), :class => "date required", :id => "dialog_milestone_date" %>
+      <li><%= n.label :due %><%= n.text_field :due, :value => date_format(time_zone_now.to_date), :class => "date required", :id => "dialog_milestone_date" %>
       </li> 
       <li><%= n.submit (t'save'), :class => 'submit', :id => "new_milestone_submit"%></li> 
      </ul>

@@ -113,9 +113,13 @@ Squadlink::Application.routes.draw do
       post "/todo_select_tracking/:todo_id/" => "select#todo_select_tracking"
 
       #timesheets_controller
-      get "/timesheet_week" => 'timesheets#timesheet_week', :as => :timesheet_week
-      # get "/timesheet_day/:user_id/:date/:klass" => 'timesheets#timesheet_day', :as => :timesheet_day
-      get "/timesheet_month" => "timesheets#timesheet_month", :as => :timesheet_month
+      get "/timesheetWeek"   => "timesheets#timesheet_week"
+      get "/timesheetMonth"  => "timesheets#timesheet_month"
+
+      get "/:class/:id/timesheet_day/:date"   => 'timesheets#timesheet_day',   :as => :timesheet_day
+      get "/:class/:id/timesheet_week/:date"   => 'timesheets#timesheet_week',   :as => :timesheet_week
+      get "/:class/:id/timesheet_month/:date"  => "timesheets#timesheet_month",  :as => :timesheet_month
+      
       post "/add_hour_to_project/" => 'timesheets#add_hour_to_project', :as => :add_hour_to_projects
       post "/add_log_timesheet" => 'timesheets#add_log_timesheet', :as => :add_log_timesheet
       #reports_controller
@@ -125,7 +129,6 @@ Squadlink::Application.routes.draw do
       post "/membership/:id/:project_id" => "memberships#index", :as => :membership
       #firms_controller
       put "/firm_update" => "firms#firm_update",  :as => :firm_update
-      get "/firm_edit" => "firms#firm_edit",  :as => :firm_edit
       get "/firm_show" => "firms#firm_show",  :as => :firm_show
       #roster
       get "/roster_milestone" => "roster#get_milestones", :as => :roster_milestone

@@ -38,18 +38,20 @@ class PublicController < ApplicationController
     
         if @user.save
           sign_in(@user)
-          begin
-          $customerio.identify(
-             id: current_user.id,
-             email: current_user.email,
-             created_at: current_user.created_at.to_i,
-             name: current_user.name,
-             firm: current_user.firm.name,
-             firm_subdomain: current_user.firm.subdomain,
-             firm_plan: current_user.firm.plan.name,
-             first_user: true
-           )
-          rescue Customerio::Client::InvalidResponse
+          if Rails.env.production?
+            begin
+            $customerio.identify(
+               id: current_user.id,
+               email: current_user.email,
+               created_at: current_user.created_at.to_i,
+               name: current_user.name,
+               firm: current_user.firm.name,
+               firm_subdomain: current_user.firm.subdomain,
+               firm_plan: current_user.firm.plan.name,
+               first_user: true
+             )
+            rescue Customerio::Client::InvalidResponse
+            end
           end
           flash[:notice] = "Registration successful."
           # QC.enqueue "FirmMailer.sign_up_confirmation", @user.id

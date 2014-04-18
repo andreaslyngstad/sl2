@@ -1,6 +1,6 @@
 <ul>
 	<% @milestones.each do |milestone|%>
-	<% if milestone.due >= Date.today %>
+	<% if milestone.due >= time_zone_now.to_date %>
 	<li>
 	  	<div class="row_milestone green">
 		  	<%= link_to truncate(milestone.goal, :omission => "...", :length => 18), project_path(milestone.project).to_s + "/#tabs-4"%>

@@ -52,6 +52,7 @@ nb:
     export_to_csv: Exporter CSV
     export_to_excel: Exporter excel
     timesheet_for: Timeliste for
+    timesheet: Timeliste
     available: Tilgjengelige
     on_this: på dette
   subscription:

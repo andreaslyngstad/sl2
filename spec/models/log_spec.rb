@@ -13,7 +13,7 @@ describe Log do
   let(:user)      {FactoryGirl.create(:user, :firm => firm)}
   let(:time_now)  {Time.now}
   let(:log)       {FactoryGirl.create(:log, :user => user, :firm => firm)}
-  let(:log2)      {FactoryGirl.create(:log, :log_date => Date.today.beginning_of_week + 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
+  let(:log2)      {FactoryGirl.create(:log, rate: 100, tax: 25, :log_date => Date.today.beginning_of_week + 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
   let(:log3)      {FactoryGirl.create(:log, :log_date => Date.today.beginning_of_week - 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
   let(:log_uninvoiced) {FactoryGirl.create(:log, invoice_id: nil, :user => user, :firm => firm )}
   let(:log_uninvoiced_in_progress) {FactoryGirl.create(:log, invoice_id: nil, :user => user, :firm => firm, end_time: nil, tracking: true)}
@@ -100,5 +100,9 @@ describe Log do
     log5 = FactoryGirl.create(:log, :user => user, :firm => firm, :project => project)
     Log.try_find_logs(user_id: user.id,project_id: project.id).should =~ [log4,log5]
     Log.try_find_logs(user_id: user.id,project_id: project.id).should_not == [log]
+  end
+
+  it 'should return total price' do
+    log2.total_price.should eq 125
   end
 end

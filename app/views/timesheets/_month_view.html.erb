@@ -1,8 +1,8 @@
 <% if @klass.class != User %>
 <div id="timesheet_log_menu">
-  <div class="add_some_timesheet"  data-date="<%= Date.today %>", data-klass="<%= @klass ? @klass.class : "index" %>", data-id="<%= @klass ? @klass.id : "index" %>">  
+  <div class="add_some_timesheet"  data-date="<%= time_zone_now.to_date %>", data-klass="<%= @klass ? @klass.class : "index" %>", data-id="<%= @klass ? @klass.id : "index" %>">  
     <% if can? :manage, Firm %>
-    <select id="timeheet__month_user_select" name="select_user_id">
+    <select id="timeheet_month_user_select" name="select_user_id">
     	<option value=""><%= t("general.all") %></option>
     	<% @users.each do |u| %>
     	<% if @user == u  %>
@@ -18,7 +18,7 @@
 </div>
 <% end %>
 <div id="calendar">	
-	<%= calendar @date do |date| %>
+	<%= calendar time_zone_now.to_date do |date| %>
 		<%= date.day %>
 		 <ul>	
           <li class="go_to_day_link" data-from="<%= date %>", data-to="<%= date %>", data-url="<%= @klass ? @klass.class : "index" %>", data-id="<%= @klass ? @klass.id : "index" %>">

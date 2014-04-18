@@ -31,7 +31,7 @@ describe UsersController do
     it "renders the #show view" do
       @user = FactoryGirl.create(:user, :firm => @user.firm)
       get :show, :id => @user
-      response.should render_template("show")
+      response.should redirect_to tabs_state_path(@user.class.to_s.downcase.pluralize, @user.id)
     end
   end
   describe "GET edit" do

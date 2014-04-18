@@ -19,7 +19,7 @@ feature 'the user is a external user' do
 		page.should have_content("Projects")
 		page.should have_content("Customers")
 		click_link 'Projects'
-		page.should have_content("New project")
+		page.should have_content("Create project")
 		page.should have_content("test_project")
 		click_link 'Sign out'
 		
@@ -29,7 +29,7 @@ feature 'the user is a external user' do
 		page.should_not have_content("test_project")
 		page.should_not have_content("Customers")
 		click_link 'Projects'
-		page.should_not have_content("New project")
+		page.should_not have_content("Create project")
 		page.should_not have_content("test_project")
 		# page.should_not have_content("Users")
 	end

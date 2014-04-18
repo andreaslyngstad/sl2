@@ -2,7 +2,10 @@
 <tr>
 	<th class="timesheet_day"></th>
 	<% @dates.each do |date|%>
-		<th class="timesheet_day"><span class="go_to_day_link" data-from="<%= date %>", data-to="<%= date %>", data-url="<%= @klass ? @klass.class : "index" %>", data-id="<%= @klass ? @klass.id : "index" %>"><%= l(date, format: :short_with_day) %></span></th>
+		<th class="timesheet_day">
+			<%= link_to l(date, format: :short_with_day), timesheet_day_path( @klass ? string_for_klass(@klass) : "index" , @klass ? @klass.id : "index", date) %>
+
+		</th>
 	<% end %>
 	<th class="timesheet_day" ><%= t'economic.total' %>   </th>		
 </tr>

@@ -22,8 +22,8 @@
 	</td>		
   <td id="dates_td">
   	<% if @invoice.id == nil %>
-	<%= f.text_field :date, :value => date_format(Date.today), :class => "invoice_date date", :id => "invoice_date_" %>
-	<%= f.text_field :due, :value => date_format(Date.today + 14.days), :class => "invoice_due date", :id => "invoice_due_" %>
+	<%= f.text_field :date, :value => date_format(time_zone_now.to_date), :class => "invoice_date date", :id => "invoice_date_" %>
+	<%= f.text_field :due, :value => date_format(time_zone_now.to_date + 14.days), :class => "invoice_due date", :id => "invoice_due_" %>
 	<% else %>
 	<%= f.text_field :date, :value => date_format(@invoice.date), :class => "invoice_date date", :id => "invoice_date_" %>
 	<%= f.text_field :due, :value => date_format(@invoice.due), :class => "invoice_due date", :id => "invoice_due_" %>

@@ -91,6 +91,8 @@ class Log < ActiveRecord::Base
        end
      end.compact.inject(:&)
   end
-  
+  def total_price
+    (hours*rate*tax/360000) + (hours*rate/3600)
+  end
   
 end

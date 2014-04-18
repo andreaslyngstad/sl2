@@ -57,6 +57,7 @@ module Squadlink
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     # config.i18n.default_locale = :de
     # rails will fallback to config.i18n.default_locale translation
+    config.i18n.enforce_available_locales = true
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
 

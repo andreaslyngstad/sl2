@@ -2,10 +2,8 @@ class TimesheetsController < ApplicationController
   include TabsHelper 
   include FormatHelper
   def timesheet_day
-    @user = current_firm.users.find(params[:user_id])
-    find_users(@user)
-    @date = params[:date]
-    @logs = @user.logs.where(:log_date => params[:date])
+    get_instance_if_not_index(params)
+    @logs = @klass.logs.where(:log_date => params[:date])
   end
 
   def timesheet_week  
@@ -13,7 +11,7 @@ class TimesheetsController < ApplicationController
     if !params[:user_id].blank?
       @user = current_firm.users.find(params[:user_id])
     end
-    date = params[:date] ? Date.parse(params[:date]) : Date.today
+    date = params[:date] ? Date.parse(params[:date]) : time_zone_now.to_date
     @dates = (date.beginning_of_week.to_date)..(date.end_of_week.to_date)
     find_users(current_user)
     variables_bag(@klass, @user)
@@ -21,7 +19,7 @@ class TimesheetsController < ApplicationController
 
   def timesheet_month
     get_instance_if_not_index(params)
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @date = params[:date] ? Date.parse(params[:date]) : time_zone_now.to_date
     if !params[:user_id].blank?
       @user = current_firm.users.find(params[:user_id])
       if @klass
@@ -42,11 +40,11 @@ class TimesheetsController < ApplicationController
   end
  
   def add_log_timesheet
-    date = params[:log][:log_date] ? Date.parse(params[:log][:log_date]) : Date.today
+    date = params[:log][:log_date] ? Date.parse(params[:log][:log_date]) : time_zone_now.to_date
     @dates = (date.beginning_of_week.to_date)..(date.end_of_week.to_date)
     @user = current_firm.users.find(params[:log][:user_id])
     @log = LogWorker.create(current_firm.logs.new(permitted_params.log), params[:done], @user, current_firm)
-    variables_bag(@user)
+    variables_bag(nil, @user)
     
     respond_to do |format|
       if @log.save
@@ -61,12 +59,12 @@ class TimesheetsController < ApplicationController
     @log = Log.find_by_id(params[:log_id]) || current_firm.logs.new
     select_klass = params[:select_klass]
     klass        = params[:klass]
-    
+    @log.user = current_user
     @log.send(select_klass + '=', current_firm.send(params[:select_klass].pluralize).find(params[:select_id]))
     @log.send(klass + '=', current_firm.send(params[:klass].pluralize).find(params[:id]))
     @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
     @log.log_date = params[:date]
-    @log.event = date_format(Date.today)
+    @log.event = t('general.timesheet')
     @log.begin_time = @log.log_date.beginning_of_day
     @log.firm = current_firm
     if params[:val_input].include?(":")
@@ -99,43 +97,43 @@ class TimesheetsController < ApplicationController
     
     elsif klass.class == Customer or klass.class == User
       @projects = current_user.projects
+
       if user
-      @log_project = klass.logs.where(user_id: user.id).where(:log_date => @dates).group("project_id").sum(:hours)
-      @log_week = klass.logs.where(user_id: user.id).where(:log_date => @dates).group("date(log_date)").sum(:hours)
-      @log_week_project = klass.logs.where(user_id: user.id).where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-      @log_week_no_project = klass.logs.where(user_id: user.id).where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
-      @log_total = klass.logs.where(user_id: user.id).where(:log_date => @dates).sum(:hours)   
+      @log_project          = fetcher(klass).where(user_id: user.id).group("project_id").sum(:hours)
+      @log_week             = fetcher(klass).where(user_id: user.id).group("date(log_date)").sum(:hours)
+      @log_week_project     = fetcher(klass).where(user_id: user.id).group("project_id").group("date(log_date)").sum(:hours)
+      @log_week_no_project  = fetcher(klass).where(user_id: user.id).where( :project_id => nil).group("date(log_date)").sum(:hours)
+      @log_total            = fetcher(klass).where(user_id: user.id).sum(:hours)   
       else
-      @log_project = klass.logs.where(:log_date => @dates).group("project_id").sum(:hours)
-      @log_week = klass.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
-      @log_week_project = klass.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-      @log_week_no_project = klass.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
-      @log_total = klass.logs.where(:log_date => @dates).sum(:hours)     
+      @log_project          = fetcher(klass).group("project_id").sum(:hours)
+      @log_week             = fetcher(klass).group("date(log_date)").sum(:hours)
+      @log_week_project     = fetcher(klass).group("project_id").group("date(log_date)").sum(:hours)
+      @log_week_no_project  = fetcher(klass).where( :project_id => nil).group("date(log_date)").sum(:hours)
+      @log_total            = fetcher(klass).sum(:hours)     
       end
     else
       if current_user.admin?
+        @projects             = current_firm.projects
         if user
-        @projects             = current_firm.projects
-        @log_project          = current_firm.logs.where(user_id: user.id).where(:log_date => @dates).group("project_id").sum(:hours)
-        @log_week             = current_firm.logs.where(user_id: user.id).where(:log_date => @dates).group("date(log_date)").sum(:hours)
-        @log_week_project     = current_firm.logs.where(user_id: user.id).where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-        @log_week_no_project  = current_firm.logs.where(user_id: user.id).where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
-        @log_total            = current_firm.logs.where(user_id: user.id).where(:log_date => @dates).sum(:hours)  
+        @log_project          = fetcher(current_firm).where(user_id: user.id).group("project_id").sum(:hours)
+        @log_week             = fetcher(current_firm).where(user_id: user.id).group("date(log_date)").sum(:hours)
+        @log_week_project     = fetcher(current_firm).where(user_id: user.id).group("project_id").group("date(log_date)").sum(:hours)
+        @log_week_no_project  = fetcher(current_firm).where(user_id: user.id).where(:project_id => nil).group("date(log_date)").sum(:hours)
+        @log_total            = fetcher(current_firm).where(user_id: user.id).sum(:hours)  
         else
-        @projects             = current_firm.projects
-        @log_project          = current_firm.logs.where(:log_date => @dates).group("project_id").sum(:hours)
-        @log_week             = current_firm.logs.where(:log_date => @dates).group("date(log_date)").sum(:hours)
-        @log_week_project     = current_firm.logs.where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-        @log_week_no_project  = current_firm.logs.where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
-        @log_total            = current_firm.logs.where(:log_date => @dates).sum(:hours)  
+        @log_project          = fetcher(current_firm).group("project_id").sum(:hours)
+        @log_week             = fetcher(current_firm).group("date(log_date)").sum(:hours)
+        @log_week_project     = fetcher(current_firm).group("project_id").group("date(log_date)").sum(:hours)
+        @log_week_no_project  = fetcher(current_firm).where(:project_id => nil).group("date(log_date)").sum(:hours)
+        @log_total            = fetcher(current_firm).sum(:hours)  
         end
       else
         @projects             = current_user.projects
-        @log_project          = current_firm.logs.where(project_id: projects).where(user_id: user.id).where(:log_date => @dates).group("project_id").sum(:hours)
-        @log_week             = current_firm.logs.where(project_id: projects).where(user_id: user.id).where(:log_date => @dates).group("date(log_date)").sum(:hours)
-        @log_week_project     = current_firm.logs.where(project_id: projects).where(user_id: user.id).where(:log_date => @dates).group("project_id").group("date(log_date)").sum(:hours)
-        @log_week_no_project  = current_firm.logs.where(project_id: projects).where(user_id: user.id).where(:log_date => @dates, :project_id => nil).group("date(log_date)").sum(:hours)
-        @log_total            = current_firm.logs.where(project_id: projects).where(user_id: user.id).where(:log_date => @dates).sum(:hours) 
+        @log_project          = fetcher(current_firm).where(project_id: @projects).where(user_id: user.id).group("project_id").sum(:hours)
+        @log_week             = fetcher(current_firm).where(project_id: @projects).where(user_id: user.id).group("date(log_date)").sum(:hours)
+        @log_week_project     = fetcher(current_firm).where(project_id: @projects).where(user_id: user.id).group("project_id").group("date(log_date)").sum(:hours)
+        @log_week_no_project  = fetcher(current_firm).where(project_id: @projects).where(user_id: user.id).where(:project_id => nil).group("date(log_date)").sum(:hours)
+        @log_total            = fetcher(current_firm).where(project_id: @projects).where(user_id: user.id).sum(:hours) 
       end
       
   end
@@ -145,6 +143,9 @@ class TimesheetsController < ApplicationController
     # else
     #   # @projects = current_user.projects.where(id: klass.id )
     # end
+  end
+  def fetcher(klass)
+    klass.logs.where(:log_date => @dates)
   end
   def get_instance_if_not_index(params)
     if params[:id] != "index"

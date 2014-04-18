@@ -18,7 +18,7 @@ feature 'User' do
 	  	click_link(@user.name)
 		click_link('Tasks')
     find("#dialog_todo").click
-    page.should have_content("Create new task")
+    page.should have_content("Create task")
     fill_in "todo_name", with: "This a task"
     page.find("#new_todo").find(".submit").click
     page.should have_content("Project must be selected") 
@@ -35,20 +35,20 @@ feature 'User' do
     id = find('.task_info')['id'].gsub('todo_', '')
     page.should have_content("This a task")  
     page.should have_content("13." + Date.today.strftime('%m.%y'))  
-    page.should have_content("Task was successfully created.")
+    page.should have_content("Task was successfully saved")
     page.find("div#not_done_tasks").first('div')[:id].should eql('todo_' + id )
     within(:css, "#todo_" + id) do 
       find(".done_box").click
     end
     
-    page.should have_content("Task was successfully updated.")
+    page.should have_content("Task was successfully saved")
     page.find("div#done_tasks").should have_content('This a task')
     
     within(:css, "#todo_" + id) do 
       find(".done_box").click
     end
   
-    page.should have_content("Task was successfully updated.")
+    page.should have_content("Task was successfully saved")
     page.find("div#not_done_tasks").should have_content('This a task')
     within(:css, "#todo_" + id) do 
       find("#todo_update").click
@@ -60,7 +60,7 @@ feature 'User' do
     find('#edit_todo_' + id).find('.submit').click
     page.should have_content("14." + Date.today.strftime('%m.%y')) 
     find("#todo_" + id).find(".delete_todo").click
-    page.should have_content("Task was successfully deleted.")
+    page.should have_content("Task was deleted")
     page.should_not have_content("This a task")
 	end
 	scenario 'customer log crud', js: true do
@@ -72,7 +72,7 @@ feature 'User' do
       click_link('Logs')
     end
     find("#dialog_log").click
-    page.should have_content("Create new log")
+    page.should have_content("Create log")
     fill_in "log_event", with: "This a log"
     find('#logProjectId_chosen').trigger("mousedown")
     page.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
@@ -97,12 +97,12 @@ feature 'User' do
    
     page.should have_content('Update log')
     fill_in "log_event", with: "This a log edit"
-    find('#log_edit_submit').click
+    find('#edit_log_' + @log.id.to_s).find('#log_edit_submit').click
     page.should have_content("This a log edit")
     within(:css, '#log_info_'+ @log.id.to_s) do 
         find('.delete_log').click
     end
-    page.should have_content("Log was deleted")
+    page.should have_content("log was deleted")
     page.should_not have_content("This a log edit")
   end
   scenario "edit on home page", js: true do
@@ -112,7 +112,8 @@ feature 'User' do
 		find('#user_update').click
 		page.should have_content('Update user')
 		fill_in 'user_name', with: 'test testersen'
+        fill_in "user_password", with: "test_new_edit user"
 		find('.submit').click
-		page.should have_content('Successfully updated profile')
+		page.should have_content('successfully saved')
 	end
 end

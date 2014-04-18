@@ -5,7 +5,9 @@
   </div></li>
   <li style="margin-bottom: 0px;"><%= f.label :from %><%= f.label :to, :style => "margin-left: 35px;" %></li>
   <li><%= f.text_field(:begin_time, :value => clock_format(@log.begin_time), :class => "log_times required clock", :id => "log_times_from_#{@log.id}") %>
-  <%= f.text_field(:end_time, :value => clock_format(@log.end_time), :class => "log_times required clock", :id => "log_times_to_#{@log.id}") %></li>
+  <%= f.text_field(:end_time, :value => clock_format(@log.end_time), :class => "log_times required clock", :id => "log_times_to_#{@log.id}") %>
+  <%= f.text_field(:rate, :value => current_user.hourly_rate, :class => "log_times required clock", :id => "log_times_to_#{@log.id}") %>
+</li>
  <li id="slider_range_<%= @log.id %>" log="<%= @log.id %>"></li>
   
   <li><%= f.label :project %>

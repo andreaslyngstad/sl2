@@ -2,13 +2,35 @@ require 'spec_helper'
 require 'features/subdomain_login_features'
 include SubdomainLoginFeatures  
 feature 'project' do
-    get_the_gritty   
+     before(:all) do 
+      date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
+      
+      
+        @user = FactoryGirl.create(:user, hourly_rate: 2)
+      @firm = @user.firm
+      @firm.users.should include @user
+      @firm.users.first.should eq @user
+      @project = FactoryGirl.create :project, name: "test_project", firm: @firm, budget:10  
+        @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm
+      @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.today, user: @user)         
+        @customers = "http://#{@firm.subdomain}.lvh.me:31234/customers"
+      @projects = "http://#{@firm.subdomain}.lvh.me:31234/projects"
+      @users = "http://#{@firm.subdomain}.lvh.me:31234/users"
+      @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
+        @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
+      @project.users << @user
+      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
+      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
+      Capybara.server_port = 31234 
+      sub = @firm.subdomain
+      Capybara.app_host = @root_url 
+    end 
   scenario "make new", js: true do
     sign_in_on_js   
     visit @projects 
-    page.should have_content("New project")       
+    page.should have_content("Create project")       
     find("#dialog_project").click
-    page.should have_content("Create new project")
+    page.should have_content("Create project")
     fill_in "project_name", with: "" 
     click_button "Save"
     page.should have_content("This field is required.")
@@ -23,38 +45,39 @@ feature 'project' do
     sign_in_on_js
     visit @projects 
     page.should have_content("test_new project")  
-    id = page.evaluate_script("$('.open_project_update').first().attr('data-id');")
-    li = "li#project_#{id}"
+    id = page.evaluate_script("$('.tab_list').first().attr('id')")
+    li = "li##{id}"
     within(:css, li) do
       first(".open_project_update").click  
     end 
     page.should have_content("Update project")
     fill_in "project_name", with: "test_new_edit project"
-    page.find("#edit_project_#{id}").find(".submit").click
+    page.find("#edit_#{id}").find(".submit").click
     page.should have_content("test_new_edit project") 
   end 
   scenario "archive project", js: true do
     sign_in_on_js
     visit @projects
-    id = page.evaluate_script("$('.open_project_update').first().attr('data-id');")
-    li = "li#project_#{id}"
+    id = page.evaluate_script("$('.tab_list').first().attr('id')")
+    li = "li##{id}"
     within(:css, li) do
-      find("#archive_#{id}").click 
+      find("#archive_#{id.gsub(/project_/, '')  }").click 
     end
-    page.should have_content("Project is made inactive") 
+    page.should have_content("is not active") 
   end
   scenario "reopen and delete project", js: true do
     sign_in_on_js
     visit @projects
+     page.should have_content("test_project")
     find("#archive").click
-    page.should have_content("test_new_edit project")
+    page.should_not have_content("test_project")
     id = page.evaluate_script("$('.reopen_project').first();")
     first('.reopen_project').click
-    page.should have_content("Project is made active")
+    page.should have_content("is active")
     find("#active_projects").click 
     page.should have_content("test_new_edit project")
     first('.activate_project').click
-    page.should have_content("Project is made inactive")
+    page.should have_content("is not active")
     find("#archive").click
     first('.delete_project').trigger('click')
 	page.should have_content("Project was deleted")

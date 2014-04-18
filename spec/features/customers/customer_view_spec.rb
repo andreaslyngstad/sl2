@@ -1,9 +1,31 @@
 require 'spec_helper'
-require 'features/subdomain_login_features'
+
 include SubdomainLoginFeatures
 feature 'customer' do
-    get_the_gritty
     
+   before(:all) do 
+      date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
+      
+      
+        @user = FactoryGirl.create(:user, hourly_rate: 2)
+      @firm = @user.firm
+      @firm.users.should include @user
+      @firm.users.first.should eq @user
+      @project = FactoryGirl.create :project, name: "test_project", firm: @firm, budget:10  
+        @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm
+      @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.today, user: @user)         
+        @customers = "http://#{@firm.subdomain}.lvh.me:31234/customers"
+      @projects = "http://#{@firm.subdomain}.lvh.me:31234/projects"
+      @users = "http://#{@firm.subdomain}.lvh.me:31234/users"
+      @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
+        @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
+      @project.users << @user
+      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
+      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
+      Capybara.server_port = 31234 
+      sub = @firm.subdomain
+      Capybara.app_host = @root_url 
+    end
    def visit_the_customer
    
    sign_in_on_js
@@ -21,24 +43,24 @@ feature 'customer' do
     visit_the_customer
     page.should have_content("test_new customer")
     click_link('Tasks')
-    page.should have_content("New task", visible: true)
+    page.should have_content("Create task", visible: true)
     within(:css, ('#html_tabs')) do
       click_link('Logs')
     end
-    page.should have_content("New log", visible: true)
+    page.should have_content("Create log", visible: true)
     within(:css, ('#html_tabs')) do
       click_link('Projects')
     end
-    page.should have_content("New project", visible: true)
+    page.should have_content("Create project", visible: true)
     click_link('Employees')
-    page.should have_content("New employee", visible: true)
+    page.should have_content("Create employee", visible: true)
   end 
 
   scenario 'customer task crud' , js: true do
     visit_the_customer  
     click_link('Tasks')
     find("#dialog_todo").click
-    page.should have_content("Create new task")
+    page.should have_content("Create task")
     fill_in "todo_name", with: "This a task"
     page.find("#new_todo").find(".submit").click
     page.should have_content("Project must be selected") 
@@ -55,20 +77,20 @@ feature 'customer' do
     id = find('.task_info')['id'].gsub('todo_', '')
     page.should have_content("This a task")  
     page.should have_content("13." + Date.today.strftime('%m.%y'))  
-    page.should have_content("Task was successfully created.")
+    page.should have_content("Task was successfully saved")
     page.find("div#not_done_tasks").first('div')[:id].should eql('todo_' + id )
     within(:css, "#todo_" + id) do 
       find(".done_box").click
     end
     
-    page.should have_content("Task was successfully updated.")
+    page.should have_content("Task was successfully saved")
     page.find("div#done_tasks").should have_content('This a task')
     
     within(:css, "#todo_" + id) do 
       find(".done_box").click
     end
   
-    page.should have_content("Task was successfully updated.")
+    page.should have_content("Task was successfully saved")
     page.find("div#not_done_tasks").should have_content('This a task')
     within(:css, "#todo_" + id) do 
       find("#todo_update").click
@@ -80,7 +102,7 @@ feature 'customer' do
     find('#edit_todo_' + id).find('.submit').click
     page.should have_content("14." + Date.today.strftime('%m.%y')) 
     find("#todo_" + id).find(".delete_todo").click
-    page.should have_content("Task was successfully deleted.")
+    page.should have_content("Task was deleted")
     page.should_not have_content("This a task")
   end
   scenario 'customer log crud', js: true do
@@ -89,7 +111,7 @@ feature 'customer' do
       click_link('Logs')
     end
     find("#dialog_log").click
-    page.should have_content("Create new log")
+    page.should have_content("Create log")
     fill_in "log_event", with: "This a log"
     find('#logProjectId_chosen').trigger("mousedown")
     page.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
@@ -119,17 +141,40 @@ feature 'customer' do
     
     find('.delete_log').click
     
-    page.should have_content("Log was deleted")
+    page.should have_content("log was deleted")
     page.should_not have_content("This a log edit")
   end
+  scenario 'customer timesheets', js: true do
 
+      visit_the_customer
+        within(:css, ('#html_tabs')) do
+          click_link('Logs')
+        end
+        click_link('Week')
+      page.should have_content("Timesheet for All")
+      # page.should have_content("2:00")
+      find('#timeheet_project_select_chosen').trigger("mousedown")
+      page.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
+      
+      find(".log_date_#{(Date.today.beginning_of_week + 3.days).strftime('%Y-%m-%d')}").set("10")
+      page.should have_content("14:00")
+      # page.should have_content("10:00")
+      find(".project_date_#{@project.id}_#{(Date.today.beginning_of_week + 3.days).strftime('%Y-%m-%d')}").should have_content("10:00")
+      click_link('Month')
+      page.should_not have_content("14:00")
+      page.should have_content("10:00")
+      find(".calendar_span", :text => '10:00').click
+      page.should have_content("Added on timesheet")
+      click_link('Week')
+      find(".project_date_#{@project.id}_#{(Date.today.beginning_of_week + 3.days).strftime('%Y-%m-%d')}").should have_content("10:00")
+    end
   scenario 'customer project crud', js: true do
     visit_the_customer
     within(:css, ('#html_tabs')) do
       click_link('Projects')
     end
     find("#dialog_project").click
-    page.should have_content("Create new project")
+    page.should have_content("Create project")
     fill_in "project_name", with: "This a project"
     fill_in "project_description", with: "This a project description"
     fill_in "project_budget", with: "3000"
@@ -152,7 +197,7 @@ feature 'customer' do
     within(:css, '#project_info_' + id) do  
       find('.activate_projects_no_button').click
     end
-    page.should have_content("Project is made inactive") 
+    page.should have_content("is not active") 
 end
   scenario 'customer employee crud', js: true do
     visit_the_customer
@@ -160,7 +205,7 @@ end
       click_link('Employee')
     end
     find("#dialog_employees").click
-    page.should have_content("Create new employee")
+    page.should have_content("Create employee")
     
     fill_in "employee_name", with: "test_new employee"
     fill_in "employee_phone", with: "123456789"
@@ -168,7 +213,7 @@ end
     find('#new_employee').find('.submit').click
     page.should have_content("test_new employee")
     page.should have_content("123456789")
-    page.should have_content("employee@employ...")
+    page.should have_content("employee@employee.no")
 
     id = Employee.where(name: 'test_new employee').first.id.to_s
     

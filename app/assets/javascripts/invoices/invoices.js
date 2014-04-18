@@ -269,11 +269,9 @@ jQuery.fn.invoice_pr_date_select = function(){
 
 jQuery.fn.set_currency = function(){
   $(this).text(function(i, text) {
-    var val = parseFloat($(this).attr('data-amount'))
-    var converted = currency_converter(val)
-    return converted
+    currency_converter(parseFloat($(this).attr('data-amount')))
     })
-} 
+  } 
 jQuery.fn.prepare_invoice_template = function(page_count){
   $(this).find('.page_counting_placeholder')
          .addClass('page_counting')
@@ -294,7 +292,9 @@ jQuery.fn.append_lines_and_logs = function(){
   }
 }
 function make_new_page(){
+  console.log("test")
   if ($('.active_height').height() + $('.active_height').find('.invoice_table').height() > $('.invoice_wrapper').height()){
+   
     $('.old_height').removeClass('old_height')
     $('.invoice_wrapper').find('.active_height').filter(':visible').removeClass('active_height').addClass('old_height');
     $('.invoice_template').clone().appendTo('#tabs-1')
@@ -304,6 +304,7 @@ function make_new_page(){
 function move_last_line(){
   var page_count =  $('.invoice_wrapper').length
   make_new_page()
+
     while ($('.old_height').height() + $('.old_height').find('.invoice_table').height() > $('.invoice_wrapper').height()){
       $('.old_height').find('.invoice_line').last().append_lines_and_logs()
       if ($('.old_height').height() + $('.old_height').find('.invoice_table').height() < $('.invoice_wrapper').height()){
@@ -320,11 +321,10 @@ function find_last_invoice_line(page_count) {
 };
 
 jQuery.fn.count_pages = function(){
-  var number_of_pages = $(this).length
-  
+  console.log($(this).length)
   $(this).each(function(i, e){
     j = i + 1
-    $(e).text(j + '/' + number_of_pages)
+    $(e).text(j + '/' + $(this).length)
   })
 }
 jQuery.fn.put_total_at_bottom = function(){
@@ -370,7 +370,7 @@ function ready_invoice(){
   $("#dialog_invoice").UIdialogs_invoices_link();
   $(".open_invoices_update").UIdialogs_edit_invoices_links();
   $("select#invoices_pr_date_select").invoice_pr_date_select();
-  $("select#invoices_pr_status_select").change(function() {
+  $("select#invoices_pr_status_select").change(function(){
        $('#invoice_range_form').submit();
     });
   $('.remind_invoice').UIdialogs_sending_invoices_links()
@@ -380,14 +380,13 @@ function ready_invoice(){
     }
     }).attr( 'readOnly' , 'true' )
   $('.invoice_list').find('.invoice_amount').set_currency()
-  $('.invoice_wrapper').find('.page_counting').count_pages()
   $('.invoice_table').put_total_at_bottom();
   $(".small_selector").chosen({width:'150px'});
   $('.money').convert_money_field()
   $('.total_on_this').total_on_log()
-  $('.invoice_table').put_total_at_bottom();
   $(".open_invoices_update").UIdialogs_edit_invoices_links();
   $('.invoice_wrapper').find('.page_counting').count_pages()
+
 }
 $(document).ready(function() {
   ready_invoice()

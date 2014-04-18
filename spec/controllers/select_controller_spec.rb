@@ -19,10 +19,7 @@ describe SelectController do
       assigns(:project).should == project
       assigns(:todos).should == [todo]
     end
-    it 'says select a project if no project' do
-      get :project_select, project_id: 0, log_id: nil, format: [:js]
-      assigns(:todos).should == "Select a project"
-    end
+    
     it 'assigns log when log_id > 0' do
       get :project_select, project_id: 0, log_id: log.id, format: [:js]
       assigns(:log).should == log
@@ -41,10 +38,7 @@ describe SelectController do
       assigns(:project).should == project
       assigns(:todos).should == [todo]
     end
-    it 'says select a project if no project' do
-      post :project_select_tracking, project_id: 0, log_id: nil, format: [:js]
-      assigns(:todos).should == "Select a project"
-    end 
+   
     it 'assigns log when log_id > 0' do
       post :project_select_tracking, project_id: 0, log_id: log.id, format: [:js]
       assigns(:log).should == log
@@ -117,12 +111,8 @@ describe SelectController do
       customer.employees << employee
       get :customer_select, customer_id: customer.id, log_id: log.id, format: [:js]
       assigns(:customer).should == customer
-      assigns(:employees).should == [employee]
     end
-    it 'assigns customer and employees when customer_id > 0' do
-      get :customer_select, customer_id: 0, log_id: log.id, format: [:js]
-      assigns(:employees).should == "Select a customer"
-    end
+   
     it 'assigns log when log_id > 0' do
       get :customer_select, customer_id: 0, log_id: log.id, format: [:js]
       assigns(:log).should == log
@@ -139,12 +129,8 @@ describe SelectController do
       customer.employees << employee
       post :customer_select_tracking, customer_id: customer.id, log_id: nil, format: [:js]
       assigns(:customer).should == customer
-      assigns(:employees).should == [employee]
     end
-    it 'says select a customer if no customer' do
-      post :customer_select_tracking, customer_id: 0, log_id: nil, format: [:js]
-      assigns(:employees).should == "Select a customer"
-    end 
+    
     it 'assigns log when log_id > 0' do
       post :customer_select_tracking, customer_id: 0, log_id: log.id, format: [:js]
       assigns(:log).should == log

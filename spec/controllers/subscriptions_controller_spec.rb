@@ -58,7 +58,7 @@ describe SubscriptionsController do
   end 
   describe 'DELETE destroy', :vcr do
     let(:firm)          { FactoryGirl.create(:firm)}
-    let(:subscription)  { FactoryGirl.create(:subscription, firm_id: firm.id, paymill_id: "test")}
+    let(:subscription)  { FactoryGirl.create(:subscription, last_four: "1234", card_type: "VISA", firm_id: firm.id, paymill_id: "test")}
     let(:plan)          { FactoryGirl.create(:plan, name: 'Free')}
    
     it "deletes the subscription" do
@@ -75,7 +75,7 @@ describe SubscriptionsController do
     end
     it "shows flach notice" do
       delete :destroy, id: subscription
-      flash[:notice].should == "You are now on the free plan."
+      flash[:notice].should == "You are now on the free plan"
     end
 
   end
