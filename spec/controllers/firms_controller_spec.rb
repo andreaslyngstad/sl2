@@ -62,8 +62,8 @@ end
       get :destroy, :id => firm
       expect(response).to render_template("access_denied")
     end
-    it "renders access_denied when user is External user" do
-      @user.role = "External user"
+    it "renders access_denied when user is external_user" do
+      @user.role = "external_user"
       @user.save
       get :destroy, :id => @user.firm
       expect(response).to render_template("access_denied")

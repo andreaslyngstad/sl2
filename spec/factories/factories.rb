@@ -5,6 +5,7 @@ FactoryGirl.define do
   sequence(:subdomain) { |n| "subdomain#{n}"}
   sequence(:email) { |n| "foo#{n}@example.com" }
   sequence(:invoice_number){|n| "#{n + 10000}"}
+  sequence(:address) { |n| "customer#{n}@example.com" }
  
  
   factory :firm do
@@ -16,7 +17,11 @@ FactoryGirl.define do
    date_format 1
    clock_format 1
    language "en"
+   currency "NOK"
    tax 25
+   bank_account 1
+   vat_number 1
+
    # invoice_email "test@test.no"
    # invoice_message "testing test"
    # invoice_subject  "test"
@@ -59,6 +64,9 @@ FactoryGirl.define do
     role "Admin"
     firm
   end 
+  factory :email2, class: Email do
+    address
+  end
 
   factory :project do
     name
@@ -127,5 +135,9 @@ FactoryGirl.define do
     firm
     status 1
     customer
+  end
+  factory :invoice_line do
+    description "test"
+    invoice
   end
 end

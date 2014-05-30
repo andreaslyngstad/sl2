@@ -9,6 +9,8 @@ class CreateFirms < ActiveRecord::Migration
            t.text :language, default: "en"
            t.text :time_zone
            t.float :tax
+           t.float :reminder_fee
+           t.integer :days_to_due, default: 14
            t.text :invoice_email
            t.text :invoice_email_subject
            t.text :invoice_email_message

@@ -17,7 +17,7 @@ class PublicController < ApplicationController
   end
   
   def create_firm  
-    @firm = Firm.new(permitted_params.firm)
+    @firm = Firm.create(permitted_params.firm)
     @firm.subdomain = @firm.subdomain.downcase
     respond_to do |format|
       if @firm.save
@@ -53,7 +53,7 @@ class PublicController < ApplicationController
             rescue Customerio::Client::InvalidResponse
             end
           end
-          flash[:notice] = "Registration successful."
+          flash[:notice] = "Registration successfull."
           # QC.enqueue "FirmMailer.sign_up_confirmation", @user.id
           sign_out_and_redirect_with_token(@user)
         else

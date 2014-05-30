@@ -26,6 +26,15 @@ class PermittedParams < Struct.new(:params, :current_user)
       [:goal,:due,:completed,:project_id,:created_at,:updated_at, :project,:firm]
     end
   end
+  def email
+    params.require(:email).permit(*email_attributes)
+  end
+  def email_attributes
+    if current_user
+      [ :address,:subject, :content,:invoice_id, :firm_id, :sent,:status, 
+      invoice_attributes: [:date, :due, :reminder_fee, :status, :id]]
+    end
+  end
   def customer
     params.require(:customer).permit(*customer_attributes)
   end
@@ -64,7 +73,11 @@ class PermittedParams < Struct.new(:params, :current_user)
         :closed,
         :invoice_email, 
         :invoice_email_subject, 
-        :invoice_email_message, 
+        :invoice_email_message,
+        :reminder_email_subject, 
+        :reminder_email_message, 
+        :on_reminder_message,
+        :reminder_fee,
         :starting_invoice_number,
         :logo,
         :bank_account,
@@ -72,7 +85,8 @@ class PermittedParams < Struct.new(:params, :current_user)
         :on_invoice_message
       ]
     else
-      [:name,:subdomain,:address, :tax, :phone, :currency, :time_zone, :language,:time_format,:date_format,:clock_format,:closed]
+      [:name,:subdomain,:address, :tax, :phone, :currency, :bank_account,
+        :vat_number,:time_zone, :language,:time_format,:date_format,:clock_format,:closed]
     end
   end
   def plan
@@ -80,7 +94,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   end
   def plan_attributes
     if current_user
-      [:name, :price,:customers, :logs, :projects, :users, :paymill_id]
+      [:name, :price,:customers, :logs, :projects, :users, :invoices, :paymill_id]
     end
   end
   def user
@@ -97,7 +111,7 @@ class PermittedParams < Struct.new(:params, :current_user)
     params.require(:user).permit(*first_user_attributes)
   end
   def first_user_attributes
-      [:phone, :name, :email, :remember_me,:password, :password_confirmation, :role, :firm_id, :firm, :user]
+      [:phone, :name, :email, :remember_me,:password, :hourly_rate, :password_confirmation, :role, :firm_id, :firm, :user]
   end
   def log
     params.require(:log).permit(*log_attributes)
@@ -105,7 +119,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   def log_attributes
     if current_user
       [:event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
-	 :hours,:project,:customer,:user,:todo, :firm, :log_attributes]
+	 :hours,:project,:customer,:user,:todo, :rate, :firm, :log_attributes]
     end
   end
   def subscription
@@ -156,7 +170,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   end
   def invoice_attributes
     if current_user
-      [:number,:content,:project_id, :mail_to, :mail_subject, :mail_content, :customer_id,:firm_id, :paid, :reminder_sent, :due, :status, :date, :total,
+      [:number,:content,:project_id, :mail_to, :mail_subject, :mail_content, :customer_id,:firm_id, :paid, :reminder_sent, :reminder_fee, :due, :status, :date, :total, :invoice_id,
         logs_attributes: [:tax],
       invoice_lines_attributes: [:_destroy, :description, :quantity, :price, :tax, :id]
       ]
@@ -167,7 +181,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   end
   def invoice_send_attributes
     if current_user
-      [ :mail_to, :mail_subject, :mail_content,  :due
+      [ :mail_to, :mail_subject, :mail_content,  :due, :status
       
       ]
     end

@@ -16,7 +16,7 @@ describe User do
   
   it { should validate_presence_of(:name) }
   
-  
+ 
   it "validates uniqueness of email" do
     user1 = FactoryGirl.create(:user, email: 'a@b.com', firm: firm2)
     user2 = FactoryGirl.build(:user, email: 'a@b.com', firm: firm2).should_not be_valid

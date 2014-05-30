@@ -7,10 +7,10 @@
     </script>
       
       <%= stylesheet_link_tag('invoice', :media => "all") %>
-      <%= stylesheet_link_tag('normalize', :media => "all") %>
-      <%= javascript_include_tag('application', :media => "all") %>
-      <%= favicon_link_tag 'favicon.ico' %>
-     	<%= csrf_meta_tag %>
+     <%= stylesheet_link_tag('normalize', :media => "all") %>
+    
+      <%= javascript_include_tag('invoices/invoice_pdf', :media => "all") %>
+ 
        <script type="text/javascript">
      $(document).ready(function() {
       $('.invoice_wrapper').find('.page_counting').count_pages()
@@ -18,12 +18,14 @@
     })
     </script>
     <link rel="shortcut icon" href="/favicon.png" />
+
     <%= yield :head %>
   </head>
   <body> 
   	<span class="current_firm_data" data-clockFormat="<%= current_firm.clock_format%>" data-timeFormat="<%= current_firm.time_format %>" data-dateFormat="<%= current_firm.date_format %>" data-currency="<%= current_firm.currency%>" data-language="<%= current_firm.language%>"></span>
 		<div id="main_container">
-		  <%= yield %>
+		  
+      <%= yield %>
 		</div>	
   </body>
 </html>

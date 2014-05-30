@@ -10,25 +10,25 @@ describe SelectController do
   describe "project_select" do
     let(:firm)          {@user.firm}
     let(:project)       {FactoryGirl.create(:project, firm:firm)} 
-    let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+    let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
     let(:todo)          {FactoryGirl.create(:todo, completed: false, project: project, user: @user, firm: firm)}    
     let(:log)           {FactoryGirl.create(:log, user: @user, firm: firm)}
     it "assigns project with todos if project_id" do
       # project.todos << todo
-    	get :project_select, project_id: project.id, log_id:nil, format: [:js]
+    	xhr :get, :project_select, project_id: project.id, log_id:nil, format: [:js]
       assigns(:project).should == project
       assigns(:todos).should == [todo]
     end
     
     it 'assigns log when log_id > 0' do
-      get :project_select, project_id: 0, log_id: log.id, format: [:js]
+      xhr :get, :project_select, project_id: 0, log_id: log.id, format: [:js]
       assigns(:log).should == log
     end
 	end
   describe "project_select_tracking" do
     let(:firm)          {@user.firm}
     let(:project)       {FactoryGirl.create(:project, firm:firm)} 
-    let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+    let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
     let(:todo)          {FactoryGirl.create(:todo, completed: false, project: project, user: @user, firm: firm)}    
     let(:log)           {FactoryGirl.create(:log, user: @user, firm: firm)}
     let(:log1)          {FactoryGirl.create(:log, project: project, user: @user, firm: firm)}
@@ -64,11 +64,11 @@ describe SelectController do
     let(:log1)          {FactoryGirl.create(:log, customer: customer, user: @user, firm: firm)}
     
     it 'assigns todo todo_id > 0' do
-      get :todo_select, todo_id: todo.id, log_id: log.id, format: [:js]
+      xhr :get, :todo_select, todo_id: todo.id, log_id: log.id, format: [:js]
       assigns(:todo).should == todo
     end
     it 'assigns log when log_id > 0' do
-      get :todo_select, todo_id: 0, log_id: log.id, format: [:js]
+      xhr :get, :todo_select, todo_id: 0, log_id: log.id, format: [:js]
       assigns(:log).should == log
     end
   end
@@ -109,12 +109,12 @@ describe SelectController do
     
     it 'assigns customer and employees when customer_id > 0' do
       customer.employees << employee
-      get :customer_select, customer_id: customer.id, log_id: log.id, format: [:js]
+      xhr :get, :customer_select, customer_id: customer.id, log_id: log.id, format: [:js]
       assigns(:customer).should == customer
     end
    
     it 'assigns log when log_id > 0' do
-      get :customer_select, customer_id: 0, log_id: log.id, format: [:js]
+      xhr :get, :customer_select, customer_id: 0, log_id: log.id, format: [:js]
       assigns(:log).should == log
     end
   end

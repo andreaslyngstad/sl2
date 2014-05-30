@@ -4,8 +4,6 @@ include SubdomainLoginFeatures
 feature 'Project' do
      before(:all) do 
       date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
-      
-      
       @user = FactoryGirl.create(:user, hourly_rate: 2)
       @firm = @user.firm
       @firm.users.should include @user
@@ -32,7 +30,7 @@ feature 'Project' do
     visit @projects
     id = @project.id
     page.should have_content("test_project")
-    # id = page.evaluate_script("$('.tab_list').first().attr('id')")
+    id = page.evaluate_script("$('.tab_list').first().attr('id')")
     li = "li#project_#{id.gsub(/project_/, '')}"
     within(:css, li) do
       find(".tab_list_text").find('a').trigger('click')
@@ -50,9 +48,9 @@ feature 'Project' do
     page.should have_content('Users on this project', visible: true)
     click_link('Milestones')
     page.should have_content("Create milestone", visible: true)
-    click_link('Statistics')
-    click_link('Spendings')
-    page.should have_content("Hourly rate", visible: true)
+    # click_link('Statistics')
+    # click_link('Spendings')
+    # page.should have_content("Hourly rate", visible: true)
     click_link('Tasks')
     page.should have_content("Task", visible: true)
   end  
@@ -101,6 +99,7 @@ feature 'Project' do
     page.should_not have_content("This a task")
   end
   scenario 'project log crud', js: true do
+
     visit_the_project 
     within(:css, ('#html_tabs')) do
       click_link('Logs')
@@ -119,16 +118,13 @@ feature 'Project' do
     page.should have_content("This a log")
     page.should have_content("13." + Date.today.strftime('%m.%y'))
     page.should have_content("1:30")
-    within(:css, '#log_info_'+ @log.id.to_s) do 
-      find('.open_log_update').click
-    end
+    find('.open_log_update').click
+    
     page.should have_content('Update log')
     fill_in "log_event", with: "This a log edit"
     find('#log_edit_submit').click
     page.should have_content("This a log edit")
-    within(:css, '#log_info_'+ @log.id.to_s) do 
-      find('.delete_log').click
-    end
+    find('.delete_log').click
     page.should have_content("log was deleted")
     page.should_not have_content("This a log edit")
   end

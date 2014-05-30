@@ -13,6 +13,7 @@ class Ability
         can :manage, Log, :firm => {:id => user.firm_id}
         can :manage, Todo, :firm => {:id => user.firm_id}
         can :manage, Invoice, :firm => {:id => user.firm_id}
+        can :manage, Email, :firm => {:id => user.firm_id}
      end
      if user.role == "Member"
         can :read, Firm, :firm => {:id => user.firm_id}
@@ -37,7 +38,7 @@ class Ability
        
      end   
        
-     if user.role == "External user"
+     if user.role == "external_user"
       
       can :manage, Project do |project|
         project.firm == user.firm && project.users.include?(user)
@@ -54,7 +55,8 @@ class Ability
       can :read, Log do |log|
         log.firm == log.firm && log.user == user
       end
-
+      cannot :read, Invoice
+      cannot :manage, Invoice
      end     
    end
 end

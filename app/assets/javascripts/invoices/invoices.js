@@ -24,12 +24,24 @@ jQuery.fn.UIdialogs_sending_invoices_links = function(){
   $(this).click(function(){
     var data_id = $(this).attr('data-id')
 
-    $.get("/invoices/" + data_id + "/slow_sending/")
+    $.get("/emails/" + data_id + "/new/")
     var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
     $(form_id).UIdialogs();
     $(form_id).dialog( "open" );
     });
 };
+
+jQuery.fn.UIdialogs_sending_reminder_links = function(){
+  $(this).click(function(){
+    var data_id = $(this).attr('data-id')
+
+    $.get("/emails/" + data_id + "/reminder/")
+    var form_id = '#' + $(this).attr('id') + '_' + data_id + '_form'
+    $(form_id).UIdialogs();
+    $(form_id).dialog( "open" );
+    });
+};
+
 jQuery.fn.UIdialogs_invoices = function(){
   $(this).dialog({
       autoOpen: false,
@@ -54,7 +66,7 @@ jQuery.fn.log_related_updates = function(){
   $(".open_log_update").UIdialogs_edit_logs_links();
   $('.remove_log').remove_log_from_invoice()
   $('.total_on_this').total_on_log()
-  $('.total_on_this').total_on_invoice()
+  // $('.total_on_this').total_on_invoice()
   $('.tax_field').change_vat()
 }
 
@@ -151,6 +163,7 @@ jQuery.fn.total_on_invoice = function(){
     total += log_total
     }
   })
+
   $(".subtotal_on_invoice").html(currency_converter(subtotal))
   $(".total_on_invoice").html(currency_converter(total))
   $(".total_hidden_field").val(total.toFixed(2))
@@ -195,7 +208,7 @@ jQuery.fn.quantity_price_vat_lines = function(){
       total_field.attr('data-total', total )
       total_field.attr('data-totalexvat', total_field.attr("data-quantity")* total_field.attr("data-price") )
       total_field.text( currency_converter(total))
-      $(this).css("border","1px solid #dddddd")
+      $(this).css("border","1px solid #aaaaaa")
     }
     
     $('.total_on_this').total_on_log()
@@ -242,13 +255,15 @@ jQuery.fn.remove_line_from_invoice = function(){
 }
 jQuery.fn.remove_log_from_invoice = function(){
   $(this).click(function(){
+    id = $(this).attr('data-log-id')
     if($(".info").length > 1){
-        var id = $(this).attr('data-log-id')
-        $('#logs_attributes_' + id + '_invoice_id').val("nil")
-        $("#log_" + id).hide()
+        
+        $('#logs_attributes_' + id + '_invoice_id').val("0")
+        $("#log_" + id).remove()
 
       }else{
-        $(".log_list_element").hide()
+        $(".log_list_element").remove()
+        $('#logs_attributes_' + id + '_invoice_id').val("0")
       }
 
     $('.total_on_invoice').total_on_invoice()
@@ -257,7 +272,7 @@ jQuery.fn.remove_log_from_invoice = function(){
 }
 jQuery.fn.invoice_pr_date_select = function(){
   this.change(function(){
-    NProgress.start();;
+    NProgress.start();
     status = $('#invoices_pr_status_select').val()
     time = this.value
     url = $(this).attr("data-url");
@@ -267,11 +282,7 @@ jQuery.fn.invoice_pr_date_select = function(){
   });
 };
 
-jQuery.fn.set_currency = function(){
-  $(this).text(function(i, text) {
-    currency_converter(parseFloat($(this).attr('data-amount')))
-    })
-  } 
+ 
 jQuery.fn.prepare_invoice_template = function(page_count){
   $(this).find('.page_counting_placeholder')
          .addClass('page_counting')
@@ -292,9 +303,7 @@ jQuery.fn.append_lines_and_logs = function(){
   }
 }
 function make_new_page(){
-  console.log("test")
   if ($('.active_height').height() + $('.active_height').find('.invoice_table').height() > $('.invoice_wrapper').height()){
-   
     $('.old_height').removeClass('old_height')
     $('.invoice_wrapper').find('.active_height').filter(':visible').removeClass('active_height').addClass('old_height');
     $('.invoice_template').clone().appendTo('#tabs-1')
@@ -321,7 +330,6 @@ function find_last_invoice_line(page_count) {
 };
 
 jQuery.fn.count_pages = function(){
-  console.log($(this).length)
   $(this).each(function(i, e){
     j = i + 1
     $(e).text(j + '/' + $(this).length)
@@ -339,10 +347,20 @@ jQuery.fn.put_total_at_bottom = function(){
 jQuery.fn.invoice_paid = function(){
   $(this).click(function(){
     NProgress.start();
-   var id = $(this).attr("data-id")
-    $.post('jobs/invoice_paid/' + id)
+    url = window.location.host
+    id = $(this).attr("data-id")
+    $.post(window.location.protocol + "//" + url +'/jobs/invoice_paid/' + id)
   })
 }
+jQuery.fn.invoice_lost = function(){
+  $(this).click(function(){
+    NProgress.start();
+    url = window.location.host
+    id = $(this).attr("data-id")
+    $.post(window.location.protocol + "//" + url +'/jobs/invoice_lost/' + id)
+  })
+}
+
 jQuery.fn.set_all_to_minus = function(){
   val = $(this).val('-' + $(this).val())
   $(this).keyup()
@@ -364,6 +382,7 @@ jQuery.fn.credit_invoice = function(){
 function ready_invoice(){
   $('.credit_invoice').credit_invoice()
   $('.invoice_paid').invoice_paid()
+  $('.invoice_lost').invoice_lost()
   $(".open_invoices_update").UIdialogs_edit_invoices_links();
   $(".dialog_sending_invoice_form").UIdialogs()
   $(".slow_sending_invoices").UIdialogs_sending_invoices_links();
@@ -371,23 +390,27 @@ function ready_invoice(){
   $(".open_invoices_update").UIdialogs_edit_invoices_links();
   $("select#invoices_pr_date_select").invoice_pr_date_select();
   $("select#invoices_pr_status_select").change(function(){
+    NProgress.start();
        $('#invoice_range_form').submit();
     });
-  $('.remind_invoice').UIdialogs_sending_invoices_links()
+  $('.remind_invoice').UIdialogs_sending_reminder_links()
   $(".invoice_range_date").datepicker({ 
   onSelect: function() {
+    NProgress.start();
     $('#invoice_range_form').submit();
     }
     }).attr( 'readOnly' , 'true' )
-  $('.invoice_list').find('.invoice_amount').set_currency()
+  // $('.invoice_list').find('.invoice_amount').convert_money_field()
   $('.invoice_table').put_total_at_bottom();
   $(".small_selector").chosen({width:'150px'});
-  $('.money').convert_money_field()
-  $('.total_on_this').total_on_log()
+  // $('.money').convert_money_field()
+  // $('.total_on_this').total_on_log()
   $(".open_invoices_update").UIdialogs_edit_invoices_links();
   $('.invoice_wrapper').find('.page_counting').count_pages()
 
 }
 $(document).ready(function() {
   ready_invoice()
+   
+
 });

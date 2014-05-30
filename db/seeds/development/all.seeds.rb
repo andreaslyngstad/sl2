@@ -156,12 +156,12 @@ projects4.firm = firm1
 projects4.save
 puts 'New project created: ' << projects4.name
 
-projects5 = Project.new :name => "fix barn", :active => true, :due => Time.now + 3000000
+projects5 = Project.new :name => "fix barn", :active => true
 Membership.create!(:user_id => 5, :project_id => projects5.id)
 projects5.firm = firm2
 projects5.save
 puts 'New project created: ' << projects5.name
-projects6 = Project.new :name => "Paint fence", :active => true, :due => Time.now + 3000000, :customer_id => "4"
+projects6 = Project.new :name => "Paint fence", :active => true, :customer_id => "4"
 Membership.create!(:user_id => 5, :project_id => projects6.id)
 projects6.firm = firm2
 projects6.save
@@ -173,7 +173,7 @@ open("db/seeds/fillers/projects") do |projects|
     c = n[0]
     p = n[1]
     
-    projects_made = Project.new(:name => c, :description => p , :active => true, :due => Time.now + 3000000)
+    projects_made = Project.new(:name => c, :description => p , :active => true)
     projects_made.firm = firm1
     projects_made.save
     puts "Made Project : " << projects_made.name

@@ -21,7 +21,7 @@ feature 'dashboard' do
 	let!(:guides_category){FactoryGirl.create(:guides_category)}
 	scenario 'sign in' do 	
 		signing_in
-	end
+	end 
 	scenario 'go trough the links' do 
 		signing_in
 		click_link 'Firms'
@@ -43,7 +43,8 @@ feature 'dashboard' do
 		click_link 'Guides'
 		page.should have_content('There are no Guides yet. Create one')
 		click_link 'New Guide'
-		select 	guides_category.title, from:'Guides category'
+		sleep 2
+		select 	guides_category.title, from:'guide_guides_category_id'
 		fill_in 'guide_title', with: 'What does..'
 		fill_in 'guide_content', with: '..the fox say'
 		click_button "Create Guide"

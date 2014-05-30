@@ -8,6 +8,7 @@ class CreatePlans < ActiveRecord::Migration
       t.integer :logs
       t.integer :projects
       t.integer :users
+      t.integer :invoices
       t.integer :firms_count, :default => 0
       t.integer :subscriptions_count, :default => 0
       t.timestamps

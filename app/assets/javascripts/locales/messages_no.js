@@ -51,6 +51,11 @@ jQuery(function($){
     invoice_number: "Fakturanummer",
     invoice_page: "Side",
     crunching: "Vent litt. Knuser data for deg....",
+    no_data: "Beklager, mangler data.",
+    left: "Igjen",
+    spent: "Brukt",
+    nothing_used: "Ingenting er brukt",
+    not_set: "Ikke satt opp"
     });
 }(jQuery));
 }

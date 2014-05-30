@@ -9,7 +9,7 @@ describe TimesheetsController do
     let(:project)       {FactoryGirl.create(:project, firm: firm)}
     let(:log)           {FactoryGirl.create(:log, customer: customer, firm: firm, user: @user, hours:1, log_date: Date.today)}
     let(:log_no_customer){FactoryGirl.create(:log, firm: firm, user: @user, hours:1,log_date: Date.today)}
-    let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+    let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
     let(:log_ex)           {FactoryGirl.create(:log,  customer: customer, firm: firm, project:project,user: external_user, hours:1, log_date: Date.today)}
   
   before(:each) do
@@ -26,7 +26,7 @@ describe TimesheetsController do
 
   describe "timesheet_week different users" do
   	let(:firm) 					{@user.firm}
-  	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+  	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
 	  it "timesheet_week user admin" do
       log
       log_no_customer
@@ -43,16 +43,16 @@ describe TimesheetsController do
     	# assigns(:log_total).should == @user.logs.where(:log_date => range).sum(:hours) 
 	  end
   	it "timesheet_week user external_user" do
-  		@user.role = "External user"
+  		@user.role = "external_user"
   		@user.save
 	  	firm.users << external_user
 	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.today
-	  	assigns(:users).should == []
+	  	expect(response).to render_template("access_denied")
 	  end
   end
   describe "timesheet_month" do
   	let(:firm) 					{@user.firm}
-  	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+  	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
 	  it "timesheet_week user admin" do
       log
       log_no_customer

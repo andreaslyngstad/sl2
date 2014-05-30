@@ -3,6 +3,7 @@
 @import "calendar";
 @import "timesheet";
 @import "reports";
+@import "nvd3_new/nv.d3";
 @import "nv_d3";
 @import "jquery-ui-1.8.7custom";
 @import "tabs";
@@ -15,6 +16,11 @@
 @import "spendings";
 @import "invoice";
 @import "normalize";
+@import "dashboard";
+@import "employees";
+@import "economic_statistics";
+@import "style";
+
 
 html{
   font-size: 62.5%;
@@ -29,20 +35,14 @@ html{
 html, body{
   margin:0;
   padding:0;
-  // font-family: Verdana,Helvetica,sans-serif; 
+  font-family: Verdana,Helvetica,sans-serif; 
   // background-color: #E6E9F5;
   
   }
-input[type=text], input[type=password], textarea {
 
-  outline: none;
-  resize:none;
-  border: 1px solid #aaaaaa;
-}
  
 input[type=text]:focus, textarea:focus {
   box-shadow: 0 0 5px rgba(116, 185, 239, 1);
-    
   border: 1px solid rgba(116, 185, 239, 1);
 }
 textarea{
@@ -211,6 +211,7 @@ height: 25px;
  background: #FDFFCF;
  border: 1px solid #dddddd;
  border-radius: 5px;
+ font-size: 1.6em;
 
 }
 .page_help{
@@ -228,7 +229,9 @@ height: 25px;
 
 
 .spinning {width:15px;height:15px;margin: 5px 0 0 15px;float: left;background: url(image-path('spinner.gif')) no-repeat right !important; }
-.ajax-loader-big {background: url(image_path('ajax-loader-big.gif')) no-repeat right !important; }
+
+
+// .ajax-loader-big {background: url(image_path('ajax-loader-big.gif')) no-repeat right !important; }
 #flash_messages{
 margin: 3px 0 0 15px;
 font-size:15px;
@@ -346,16 +349,19 @@ margin-right: 10px;
 .ui-dialog, .ui-dialog-content {
     overflow: visible !important
 }
-.dialog_form ul {padding:0}
-.dialog_form li          {margin-bottom:12px; }
-.dialog_form input       {width:359px;padding: 5px;}
-.dialog_form select      {width:369px;}
-.dialog_form li .submit  {cursor:pointer;padding-top:2px;float:right;width:100px;}
-.dialog_form .log_times  {width:55px;}
-.dialog_form input#done {width:15px; float:right;}
-.dialog_form input#user_roles_admin {width:15px; float:left;}
-.dialog_form input#user_roles_member {width:15px; float:left;}
-.dialog_form input#user_roles_external_user {width:15px; float:left;}
+.dialog_form, .dialog_credit_note_form{ ul {padding:0}
+ li          {margin-bottom:12px; }
+ input       {width:359px;padding: 5px;}
+ select      {width:369px;}
+ li .submit  {cursor:pointer;padding-top:2px;float:right;width:100px;}
+//  .log_time_labels
+ .log_times {width:55px;}
+ .log_time_labels  {width: 67px;display: inline-block;}
+ input#done {width:15px; float:right;}
+ input#user_roles_admin {width:15px; float:left;}
+ input#user_roles_member {width:15px; float:left;}
+ input#user_roles_external_user {width:15px; float:left;}
+}
 #tabs{
 float:left;
 width:980px;
@@ -369,12 +375,12 @@ border-radius: 0px;
 
 input.error  {border:1px solid red }
 div.error{
-  width:355px;
+  // width:355px;
   font-size:12px;
   color:red;
   white-space:nowrap;
   padding-top: 2px;
-  padding-right: 10px;
+  // padding-right: 10px;
   padding-bottom: 2px;
 }
 .indicator {width:15px;height:15px; display:block; background: url(image_path('spinner.gif')) no-repeat right !important; }
@@ -453,16 +459,32 @@ min-height: 130px;
 
 }
 .hours_done_wrapper{
-  width: 156px;
+  width: 30%;
   float: left;
   padding-bottom: 10px;
+  margin-right: 3%;
 
+}
+.state_logs{
+  float:left;
+  width: 100%;
 }
 .state_log{
   font-size: 90%;
   float:left;
   padding-top:5px;
   width: 100%;
+}
+.state_last_logs_header{
+  float: left;
+   width: 100%;
+  div{
+    float:left;
+  }
+}
+.state_last_logs_text{
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 3%
 }
 .state_log img{
   float:left;
@@ -483,11 +505,15 @@ float:left;
 
 }
 .state_headers{
-  float: left;
+  font-size: .9em;
+  float:left;
   padding: 10px 0 5px 0;
   color: green;
-  margin:0px;
+  border-bottom: 1px solid #999;
+  margin: 0px 10px 10px 0;
   width: 100%;
+  font-weight: bold;
+
 }
 
 .list_header{
@@ -543,8 +569,8 @@ float:left;
 }
 
 .tracking_log_event {
-  height: 50px;
-  padding: 0px 5px 0px 5px;
+  height: 40px;
+  padding: 10px 5px 0px 5px;
   background: white;
   border: 0em;
   color: black;
@@ -552,8 +578,11 @@ float:left;
   float:left;
   width:500px;
   margin-right: 7px;
+  
 }
-
+input#tracking_log_event_field{
+    border:0px;
+  }
 .searchableS_tracking{
   width:200px;
 }
@@ -675,8 +704,8 @@ background-color:#D42626;
 
 }
 #tracking_customer_employee label, #tracking_project_task label{
-  width:90px;
- display: inline-block;
+  width:85px;
+  display: inline-block;
   line-height: 1.8;
   vertical-align: top;
   
@@ -762,7 +791,6 @@ padding-top: 10px;
 
 }
 #project_description{
-  padding-top: 10px;
   color: #333333;
 }
 .what_project, .what_todo{
@@ -786,8 +814,14 @@ background:#FFFFFF;
 }
 .view_selector{
   margin:5px 0 0 0;
-  font-size: .8em;
+  font-size: 12px;
+
   span, a{
+    width:40px;
+    height: 15px;
+    display: inline-block;
+    margin: -10px 0 0 0;
+    text-align:center;
     cursor:pointer;
     border: 1px solid #aaaaaa;
     padding: 4px 5px 4px 5px;
@@ -817,40 +851,26 @@ float:left;
 }
 
 #range_date_fields{
-  width:200px;
+  width:194px;
   height:32px;
+  margin-left: 3px;
 }
 #range_date_fields_invoice{
  padding: 4px;
  float: left;
 }
 
-.range_date, .todo_range_date, .invoice_range_date {
+.range_date, .todo_range_date, .invoice_range_date, .range_date_graphs {
   
-  width:83px; height:23px; padding: 0 5px 0 5px; font-size: 15px; color: #777;}
+  width:83px; height:23px; padding: 0 5px 0 5px; font-size: 80%; color: #777;}
 
-.listing_logs, #listing_milestones, #todos_list, #listing_projects, #listing_employees{
-padding-left: 5px;
-}
-#log{
-  font-size:15px;
-  border: 1px solid #999;
-  padding: 2px;
-  width:800px;
-  
-  } 
-.logs_pr_date,.view_selector{
-  float:left;
-  margin-right: 10px;
-  padding:4px 0 0 0 ;
-}
 
 .invoices_pr_status{
   float:left;
   padding:4px 4px 0 0 ;
 }
 .add_some{ 
-  width:462px;
+  width:432px;
   float: left;
 }
 .add_some_todo{ 
@@ -878,21 +898,6 @@ float:left;
 }
 
 
-.info {
-  padding-bottom: 5px;
-
-}
-
-
-
-.log_date{
-  width:70px;
-  
-}
-.date_on_log{
-  display: inline-block;
-  width:74px;
-}
 
 /*employee begin*/
 
@@ -916,11 +921,11 @@ float:left;
   width:420px;
 }
 /*project form*/
-#project_budget_wrapper{
+#money_input_wrapper{
   width:369px;
-}
-#project_budget{
-  width: 270px;
+  input{
+    width: 270px;
+  }
 }
 
 /*project end*/
@@ -935,6 +940,27 @@ float:left;
 }
 /*log begin*/
 
+.listing_logs, #listing_milestones, #todos_list, #listing_projects, #listing_employees{
+padding-left: 5px;
+}
+.listing_logs li.log_list_element:nth-child(even){
+  float:left;
+  background-color: #FAFDFF;
+  border-top: 1px solid #E5EFF8;
+  border-bottom: 1px solid #E5EFF8;
+}
+#log{
+  font-size:15px;
+  border: 1px solid #999;
+  padding: 2px;
+  width:100%;
+  
+  } 
+.logs_pr_date,.view_selector{
+  float:left;
+  // margin-right: 10px;
+  padding:4px 0 0 0 ;
+}
 
 .date_and_times_on_log .date_format_setter{
 	float: left;
@@ -954,9 +980,32 @@ margin-right: 10px;
 width: 32px;
 }
 
+.info {
+  padding-top: 5px;
+  float:left; 
+  
+   // width:100%;
+}
+
+textarea#log_event{
+  height: 100px;
+}
+
+.log_date{
+  width:70px;
+  
+}
+.date_on_log{
+  display: inline-block;
+  width:74px;
+}
 .event_on_log {
-  width: 455px;
+  width: 480px;
  margin: 0 10px 0 0;
+
+}
+.log_event_paragraf{
+  margin: 0 0 .5em 0; 
 }
 .date_and_times_on_log{
   width: 115px;
@@ -1018,6 +1067,7 @@ font-weight: bold;
   box-shadow: 0 3px 10px 1px #888;
   padding: 15px 10px 10px 10px;
   background-color: #EEEEEE;
+  float: left;
 }
 .name_todo_header{
  width: 512px;
@@ -1232,6 +1282,9 @@ width: 150px;
     cursor:pointer
 
   }
+  div.pref_links_image{
+    border-top: 1px solid #fff;
+  }
   div.pref_links:hover{
     background-color: #ddd;
   }
@@ -1304,4 +1357,9 @@ input[type="radio"]{
 	vertical-align:middle; 
 	margin-bottom: 4px;
 	width: 10px;
+}
+input[type=text], input[type=password], textarea {
+  outline: none;
+  resize:none;
+  border: 1px solid #aaaaaa;
 }

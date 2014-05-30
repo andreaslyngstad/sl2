@@ -4,12 +4,13 @@
   <li id="roster_todo_<%=todo.id%>">
   	<div class="row_task <% if todo.overdue %>red<% else %>green<% end %>" >
   		<%= form_for todo, :remote => true, :html => {:id => "roster_edit_done_todo_#{todo.id}"} do |f| %>
+      <div class="priority_todo <%=todo_priority(todo.prior)%>" title="Priority"></div>
   		<%= f.check_box :completed, :class => "roster_done_box", :id => todo.id %>
 	  	<% end %>
 	  	<% if todo.project %>
-	  	<%= link_to todo.name, project_path(todo.project).to_s + "/#tabs-2" %>
+	  	<%= link_to todo.name, tabs_todos_path("projects", todo.project.id ) %>
 	  	<% else %>
-	  	<%= link_to todo.name, customer_path(todo.customer).to_s + "/#tabs-2" %>
+	  	<%= link_to todo.name, tabs_todos_path("customers", todo.customer.id)%>
 	  	<% end %>
   	</div> 
   </li>

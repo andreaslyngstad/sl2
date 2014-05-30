@@ -1,6 +1,8 @@
 function currency_converter(value){
+
     var value_pretty = value.toFixed(2)
     var currency = $(".current_firm_data").attr("data-currency");
+
     switch(currency)
     {
       case "NOK":
@@ -27,7 +29,7 @@ function currency_converter(value){
 
     var language = $(".current_firm_data").attr("data-language");
 
-    // return localeString(value, '.', 3, ',')
+    return localeString(value, '.', 3, ',')
     // return value.toLocaleString(language, {style: "currency", currency: currency, minimumFractionDigits: 2, maximumFractionDigits: 2})
 }
 function localeString(x, sep, grp, cent_seperator, currency) {
@@ -48,6 +50,8 @@ function localeString(x, sep, grp, cent_seperator, currency) {
     s = sx[0].slice(0, i) + s;
     sx[0] = s;
     var sum = sx.join(cent_seperator)
+    
+    // console.log(currency + y + sum)
     return currency + y + sum
 }
 

@@ -9,10 +9,12 @@ describe MembershipsController do
   describe "index" do
   	let(:firm) 					{@user.firm}
     let(:project)       {FactoryGirl.create(:project, firm:firm)}
-  	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+  	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
 	  
 
     it "assigns user to project" do
+      project.users << @user
+      @user.role.should eq "Admin"
       post :index, id: external_user.id, project_id: project.id, format: [:js]
       assigns(:project).should == project
       assigns(:user).should == external_user
@@ -22,7 +24,7 @@ describe MembershipsController do
 	  it "removes user from project" do
       project.users << [external_user, @user]
       project.users.count.should == 2
-      post :index, id: external_user.id, project_id: project.id, format: [:js]
+      post :index, id: external_user.id, project_id: project.id, membership: "false", format: [:js]
       assigns(:project).should == project
       assigns(:user).should == external_user
 
@@ -33,12 +35,10 @@ describe MembershipsController do
 	  end
     it "assigns user to project" do
       project.users << [external_user]
-      @user.role = "External user"
+      @user.role = "external_user"
       @user.save
-      post :index, id: external_user.id, project_id: project.id, format: [:js]
-      assigns(:project).should == project
-      assigns(:user).should == nil   
-      # flash[:notice].should == "Access denied."
+      post :index, id: external_user.id, project_id: project.id, membership: "false", format: [:js]  
+      expect(response).to render_template("access_denied")
     end
   end
 end

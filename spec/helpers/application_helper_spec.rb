@@ -21,12 +21,12 @@ describe ApplicationHelper do
 		project.save
 		helper.all_projects.should == [project] 
 	end 
-	it 'returns all_customers when not External user' do
+	it 'returns all_customers when not external_user' do
 		customer = FactoryGirl.create(:customer, firm:@firm)
 		helper.all_customers.should == [customer]
 	end 
-	it 'returns no customers when External user' do
-		@user.role = "External user"
+	it 'returns no customers when external_user' do
+		@user.role = "external_user"
 		@user.save
 		customer = FactoryGirl.create(:customer, firm:@firm)
 		helper.all_customers.should == []

@@ -14,7 +14,7 @@ describe Milestone do
     firm2 = FactoryGirl.create(:firm)
     test = FactoryGirl.build(:milestone,:project => project, :firm => firm2)
     test.should_not be_valid
-    test.errors[:firm_id].should be_present
+    test.errors[:base].should be_present
   end
   
  	it "has a passed date" do
@@ -31,8 +31,8 @@ describe Milestone do
     milestone1
     milestone2
     milestone3
-    Milestone.next.should == milestone2
-    Milestone.next.should_not == milestone3
-    Milestone.next.should_not == milestone1
+    Milestone.next.first.should == milestone2
+    Milestone.next.first.should_not == milestone3
+    Milestone.next.first.should_not == milestone1
   end
 end

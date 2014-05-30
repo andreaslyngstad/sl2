@@ -24,6 +24,24 @@ class ChartsController < ApplicationController
   def project_todos_logs
     tabs_var_setter(params,:todo) 
   end
+  def statistics
+    @log_worth = LogWorker.calulate_logs_worth(current_firm.logs.uninvoiced.group(:rate).sum(:hours)).try(:prettify_to_s)
+    @logs_uninvoiced = current_firm.logs.uninvoiced.sum(:hours)
+  end
+  
+  def economicstatistics_json
+    range2 = Date.today - 12.months..Date.today
+    @income_stack = ChartData.new(current_firm,range2,:invoice).income_per_month
+  end
+  
+  def dashboard_json
+    range = params[:from].to_date..params[:to].to_date
+    range2 = Date.today - 12.months..Date.today
+    @user_pie = ChartData.new(current_firm,range,:user).pie
+    @project_pie = ChartData.new(current_firm,range,:project).pie
+    @income_stack = ChartData.new(current_firm,range2,:invoice).income_per_month
+    render :formats => [:json] 
+  end
   # def customer_users_logs
   #   tabs_var_setter(params,:user) 
   # end

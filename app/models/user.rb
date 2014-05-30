@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :done_todos, :class_name => "Todo", :foreign_key => "done_by_user"
   belongs_to :firm, :counter_cache => true
   validates_presence_of :name
+  validates :hourly_rate, numericality: true, :allow_nil => true
   validates :email, :presence => true, :email_format => true
   
   def self.valid_recover?(params)
@@ -32,7 +33,7 @@ class User < ActiveRecord::Base
   end
   
   def can_validate?
-    role == "External user"
+    role == "external_user"
   end
 
   def admin?

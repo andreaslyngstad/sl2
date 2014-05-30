@@ -1,5 +1,7 @@
 <%= form_for(@credit_note, :remote => true, url: credit_note_create_path(@invoice)) do |f| %>
 <%= f.hidden_field :customer_id, value: @invoice.customer.id, id: "hidden_customer_field"%>
+<%= f.hidden_field :invoice_id, value: @invoice.id%>
+<%= f.hidden_field :invoice_receivable, value: @invoice.receivable%>
 <%= f.hidden_field :due, value: time_zone_now.to_date %>
 <ul>
 	<li>
@@ -7,11 +9,12 @@
 		<tr>
 			<td class="customer_project_td">
 
-				<span id="invoice_customer_select"><%= (t'activerecord.models.customer.one').capitalize %>: <%= @invoice.customer.name%></span>
+				<span id=""><%= @invoice.customer.name%></span>
 			</td>
+			<%# 
 			<td class="customer_project_td">
-				<span id="invoice_project_select"><%= (t'activerecord.models.project.one').capitalize %>: <%= @invoice.project.try(:name)%></span>
-			</td>
+				<span id="invoice_project_select"><%= (t'activerecord.models.project.one').capitalize %> <%# @invoice.project.try(:name)%><%# </span>
+			</td>%>
 	<td id="dates_labels_td">
 		<%=t'economic.invoice'.capitalize%><br><br>
 		<%= f.label "#{t 'economic.invoice_credit'}" %>
@@ -50,7 +53,7 @@
 </li>
 <li class="log_list_element">
 	<div class="listing_logs_invoice_container">
-		<%= render partial: "invoices/logs_list", locals: {logs: @logs} %>
+		<%= render partial: "invoices/logs_list", locals: {logs: @invoice.logs} %>
 	</div>	
 </li>
 <li>

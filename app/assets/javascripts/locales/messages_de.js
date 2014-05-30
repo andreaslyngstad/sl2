@@ -48,6 +48,7 @@ jQuery(function($){
     invoice_number: "Rechnungsnummer",
     invoice_page: "Seite",
     crunching: "Einen Moment bitte.",
+    no_data: "Keine data."
     });
 }(jQuery));
 }

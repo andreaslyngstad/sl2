@@ -41,7 +41,7 @@ describe CustomersController do
   describe "GET edit" do 
     it "should assign customer to @customer" do
       customer = FactoryGirl.create(:customer, :firm => @user.firm)
-      get :edit, :id => customer, :format => 'js'
+      xhr :get, :edit, :id => customer, :format => 'js' 
       assigns(:customer).should eq(customer) 
     end 
   end

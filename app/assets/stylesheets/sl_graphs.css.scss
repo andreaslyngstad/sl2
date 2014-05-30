@@ -3,8 +3,8 @@
 	width:200px;
   height:32px;
 }
-.range_date_graphs{
-  	width:85px; height:23px; padding: 0 5px 0 5px; font-size: 15px; color: #777;}
+// .range_date_graphs{
+//   	width:85px; height:23px; padding: 0 5px 0 5px; font-size: 15px; color: #777;}
 
 #legend{
 	margin-left: 0;
@@ -46,4 +46,7 @@ circle{
 }
 .tick:not(.zero) {
   opacity: 0;
+}
+.nvd3.nv-noData{
+	fill: #999; stroke: none;
 }

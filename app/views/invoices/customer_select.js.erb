@@ -1,6 +1,5 @@
 $(".flash_error").empty()
 $(".flash_notice").empty()
-
 $('#selected_customer').remove();
 $('#invoice_customer_select').after("<%= j(render 'selected_customer',  locals: {customer: @customer}) %>");
 $('#dialog_customer').hide();

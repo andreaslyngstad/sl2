@@ -7,7 +7,7 @@
       <% else %>
 	      <li><%= f.label :customer %><%= f.select(:customer_id, all_customers.map {|customer| [customer.name, customer.id]}, {:include_blank => t('general.none')})%></li>
 	    <% end %>
-      <li><%= f.label :budget %><div id="project_budget_wrapper"><%= f.text_field(:budget)%> <%= current_firm.currency %></div> </li>
+      <li><%= f.label :budget %><div id="money_input_wrapper"><%= f.text_field(:budget)%> <%= currency_symbol %></div></li>
       <li><%= f.submit (t'save'), :class => 'submit', :id => "submit_project_edit" %></li>
   </ul>
 <% end %>

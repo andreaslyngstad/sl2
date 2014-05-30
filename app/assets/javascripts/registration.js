@@ -35,7 +35,7 @@ jQuery.fn.open_not_required = function(){
 	 $(this).click(function(){
   	$(".not_required").slideToggle();
   	$(".open_not_required").toggleClass("close_not_required");
-  	event.preventDefault();
+  	// event.preventDefault();
   });
 };
 

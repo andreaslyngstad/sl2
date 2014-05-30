@@ -7,7 +7,7 @@ feature 'home' do
   # let(:root_url)    {"http://#{firm.subdomain}.example.com/"}
   # let(:root_path)    {"http://example.com/"}
   let(:project)     {FactoryGirl.create(:project, firm:firm)}
-  let(:firm_show)     {"http://#{firm.subdomain}.example.com/firm_show"}
+  let(:firm_show)     {"http://#{firm.subdomain}.example.com/account"}
   let(:payment_url)     {"http://#{firm.subdomain}.example.com/payments"} 
   let(:payment1)     {FactoryGirl.create(:payment, firm: firm)}
 	let(:payment2)     {FactoryGirl.create(:payment, firm: firm)}

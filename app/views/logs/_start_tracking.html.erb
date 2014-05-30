@@ -2,7 +2,7 @@
 <div class="log_form blue">
 	<%= form_for(log, :url => start_tracking_path, :html => {:class => "start_tracking_form", :id => "start_tracking_form"} )  do |n| %>
 		<div class="tracking_container">
-			   <%= n.text_field :event, :class => "tracking_log_event", :AUTOCOMPLETE => "OFF"  %> 
+			   <%= n.text_area :event, :class => "tracking_log_event", :id => "tracking_log_event_field", :AUTOCOMPLETE => "OFF", :autofocus=>"autofocus" %> 
 		<div class="clock_start">
 			<div class="display">
 				<span class="hr">00</span>:<span class="min">00</span>:<span class="sec">00</span>

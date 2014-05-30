@@ -13,8 +13,10 @@ class ReportsController < ApplicationController
   end
   
   def squadlink_report
+    authorize! :read, Firm
     range = (params[:from].to_date..params[:to].to_date)
   	@logs = current_firm.logs
+                        .where.not(end_time: nil)
   	                    .where(log_date: range)
   	                    .order(:log_date)
   	                    .includes(:user, :project, :customer)
@@ -33,5 +35,13 @@ class ReportsController < ApplicationController
         render "squadlink_report", formats: [:xls], handler: [:erb]
       end
     end
+  end
+  def dashboard
+    authorize! :read, Firm
+    @users = current_firm.users.includes(:logs).order(:current_sign_in_at)
+    @log_worth = LogWorker.calulate_logs_worth(current_firm.logs.uninvoiced.group(:rate).sum(:hours)).try(:prettify_to_s)
+    @tasks_overdue_and_to_day = current_user.todos.overdue_and_to_day
+    # @logs = @klass.logs.order("log_date DESC").limit(3).includes(:user)
+    @logs_uninvoiced = current_firm.logs.uninvoiced.sum(:hours)
   end
 end   

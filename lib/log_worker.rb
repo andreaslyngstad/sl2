@@ -15,6 +15,7 @@ module LogWorker
   def start_tracking(log,done,user,firm)
     log = LogWorker.create(log,done,user,firm)
     log.tracking = true
+    log.rate = user.hourly_rate
     log.begin_time = Time.now
     log.log_date = Date.today
     log
@@ -25,4 +26,9 @@ module LogWorker
     log.todo.completed = done
     log.todo.save!
   end 
+  def calulate_logs_worth(hash)
+    hash.map do |k,v|
+      k*v/3600
+    end.inject(:+)
+  end
 end

@@ -5,13 +5,19 @@ nb:
   save: Lagre
   show: vis
   send: send
-  send_reminder: send påminnelse
+  send_reminder: purring
   download: last ned
   quicksend: kjappsend
   credit_note: Kreditnota
   paid: betalt
   not_paid: ikke betalt
+  lost: tapt
+  not_lost: ikke tapt
   general:
+    latest_activity: Nylig aktivitet
+    online: online
+    offline: offline
+    in_progress: pågår
     all: Alle
     was_sent: ble sendt
     is_being_sent: blir sendt
@@ -29,7 +35,8 @@ nb:
     email: epost
     subdomain: Subdomain
     member_since: Medlem siden
-    nott: Ingen
+    nott: Ingen 
+    no_model: Uten %{model}
     sign_out: Logg ut
     new: Ny
     new_tt: Nytt
@@ -45,7 +52,7 @@ nb:
     archive: Arkiv
     archive_verb: arkiver
     open: åpne
-    generate_report: Lag raport
+    generate_report: Lag rapport
     range: Tidsrom
     format: Format
     view_in_brower: Se i nettleser
@@ -55,10 +62,21 @@ nb:
     timesheet: Timeliste
     available: Tilgjengelige
     on_this: på dette
+  account_page:
+    account: Konto
+    contact: Kontakt
+    economic: Økonomisk
+    formats: Formater
+    invoicing: Fakturering
   subscription:
     thank_you_for_subscribing: Takk for at du stoler på oss!
-    you_are_now_on_the_free_plan: Du er nå på et gratis abonnement
+    you_are_now_on_the_free_plan: Du er nå på et gratis abonnement.
   navigation:
+    access_denied: Ingen tilgang.
+    your_current_role_is: Din nåværende rolle er
+    you_do_not_have_permission: Du har ikke tillatelse til å se denne siden.
+    dashboard: Dashbord
+    settings: Innstillinger
     home: Oversikt
     logs: Logg
     list: Liste
@@ -90,13 +108,17 @@ nb:
       one: minutt
       more: minutter
   economic:
+    receivable: utestående
+    value: verdi
     total_hours: Timer totalt
     budget: Budsjett
     invoice: faktura
-    uninvoiced: Ikke fakturerte
+    uninvoiced: Ikke fakturert
     invoiced: Fakturert
     invoice_now: Fakturer nå?
     invoice_date: Fakturadato
+    reminder_date: Reminder date
+    reminder_fee: Reminder fee
     invoice_due: Forfallsdato
     invoice_draft: Kladd
     invoice_sent: Sendt
@@ -105,8 +127,12 @@ nb:
     invoice_reminded: Påminnet
     invoice_paid: Betalt
     invoice_credit: Kreditert
+    invoice_lost: Tapt
     invoice_no_number: Uten nummer
     invoice_number: Fakturanummer
+    email_sent: Sendt
+    email_reminder: Purring
+    send_error: Feil
     vat_number: Org.nr.
     credit_note: Kreditnota
     credit: Kredit
@@ -127,6 +153,10 @@ nb:
     subtotal: Subtotal
     basis: Grunnlag
     decimal: desimal
+  dashboard:
+    time_spent_projects: Tidsforbruk fordelt på prosjekter
+    time_spent_users: Tidsforbruk fordelt på brukere
+    income_last_12: Inntekt siste 12 måneder
   activerecord:
     flash:
       saved: ble lagret
@@ -169,15 +199,24 @@ nb:
         one: milepæl
         more: milepæler
       plan:
-        other: abonnement
+        other: abonnement  
         one: abonnement
         more: abonnement
+      subscription:
+        one: abonnement
+        more: abonnement
+        other: abonnement
+      email:
+        other: epost
+        one: epost
+        more: epost
     attributes:
       log:
         log: Logg
         date: Dato
         from: Fra  
         to: Til
+        rate: Timepris
         project: Prosjekt
         task: Oppgave
         user: Bruker
@@ -197,7 +236,7 @@ nb:
       todo:
         name: Navn
         priority: Prioritet
-        project: Prosject
+        project: Prosjekt
         customer: Kunde
         user: Bruker
         due: Frist
@@ -212,6 +251,7 @@ nb:
         name: Navn
         phone: Telefon
         email: Epost
+        role: Rolle
         password: Passord
         hourly_rate: Timespris
         admin: Admin ( kan se og endre alt )
@@ -229,15 +269,25 @@ nb:
         address: Adresse
         language: Språk
         currency: Valuta
+        bank_account: Bank konto
+        reminder_fee: Purregebyr
+        vat_number: Organisasjonsnummer
         tax: MVA%
         time_zone: Tidssone
         time_format: Tidsformat
         date_format: Datoformat
         clock_format: Klokkeformat
-        invoice_email: Svar til 
-        invoice_subject: Emne
-        invoice_message: Melding
+        invoice_email: Faktura epost 
+        invoice_email_subject: Faktura epost emne
+        invoice_email_message: Faktura epost melding
+        starting_invoice_number: Første fakturanummer
+        on_invoice_message: Melding på faktura
+        reminder_email_subject: Purreepost emne
+        reminder_email_message: Purreepost melding
+        on_reminder_message: Melding på purring
       invoice:
+        receivable: Utestående
+        customer: Kunde
         customer_id: Kunde
         project_id: Prosjekt
         status: Status
@@ -248,16 +298,20 @@ nb:
         total: Totalt
         discount: Rabatt
         currency: Valuta
-        reminder_sent: Påminnet
+        subject: emne
+        reminder_sent: Purret
         invoice_date: Fakturadato
         invoice_due: Forfallsdato
+        sent: Sendt
       invoice_lines:
         quantity: Antall
         description: Beskrivelse
         price: Pris
         amount: Totalt
         tax: MVA%
-        invoice: Faktura        
+        invoice: Faktura   
+      email:
+        was_sent: ble sendt.     
 
   help:
     account_html: <h2>Account settings</h2>
@@ -341,6 +395,7 @@ nb:
       default: ! '%d.%m.%Y'
       long: ! '%e. %B %Y'
       short: ! '%e. %b'
+      month_n: ! '%B %Y'
       short_with_day: ! '%a %e. %b'
     month_names:
     - 
@@ -430,7 +485,9 @@ nb:
       too_short: er for kort (minimum %{count} tegn)
       wrong_length: er av feil lengde (maksimum %{count} tegn)
       over_limit: Ditt abonnement tillater kun %{count} %{model} 
-      validates_presence_of_legal_attributes: Du må skrive inn ditt bankkuntonummer og organisasjonsnummer under instillingene for ditt firma.
+      validates_presence_of_legal_attributes: Du må skrive inn ditt bankkuntonummer og organisasjonsnummer under innstillingene for ditt firma.
+      credit_note_less_than_invoice: Du kan ikke kreditere mer enn utestående på fakturaen.
+      firm_is_secure: Brukerens firma er ikke det samme som objectes firma.
     template:
       body: ! 'Det oppstod problemer i følgende felt:'
       header:
@@ -452,7 +509,7 @@ nb:
         precision: 2
         separator: ! ','
         significant: false
-        strip_insignificant_zeros: true
+        strip_insignificant_zeros: false
         unit: kr
     format:
       delimiter: ! ' '

@@ -27,7 +27,7 @@ describe LogsController do
   describe "GET edit" do
     it "should assign project to @project" do
       log = FactoryGirl.create(:log, :user => @user, :firm => @user.firm)
-      get :edit, :id => log, :format => 'js'
+      xhr :get, :edit, :id => log, :format => 'js'
       assigns(:log).should eq(log) 
     end 
   end
@@ -127,7 +127,7 @@ end
       project.users << @user
       todo = FactoryGirl.create(:todo, user: @user, firm: @user.firm, project: project)
       log = FactoryGirl.create(:log, todo: todo, project: project, user: @user, firm: @user.firm)
-      get :get_logs_todo, todo_id: todo, :format => 'js'
+      xhr :get, :get_logs_todo, todo_id: todo, :format => 'js'
       assigns(:todo).should eq(todo)
     end
     it 'should send it off to LogWorker' do

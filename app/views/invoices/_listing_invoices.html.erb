@@ -1,19 +1,20 @@
 <div id="index_log_header">
 	<%= render "invoices/invoices_menu" %>
 </div>
-<div id="cus_pro_us_listing_container">
-	<ul id="cus_pro_us_listing">
-		<li id="invoices_head">
-			<div class="status"><%= t'activerecord.attributes.invoice.status' %></div>
-			<div class="invoice_dates"><%= t'activerecord.attributes.invoice.invoice_date' %></div>
-				<div class="invoice_number"><%= t'activerecord.attributes.invoice.number' %></div>
-			<div class="invoice_customer"><%= t'activerecord.attributes.invoice.customer' %></div>
-			<div class="invoice_amount"><%= t'activerecord.attributes.invoice.amount' %></div>
-			
-		</li>
-		<div class="listing_invoices">
-			<%= render @invoices %>
-		</div>
-	</ul>
+<div>
+	<table id="invoices_table" class="listing_invoices tablesorter">
+		<thead>
+		<tr id="invoices_head">
+			<th class="status"><%= t'activerecord.attributes.invoice.status' %></th>
+			<th class="invoice_dates"><%= t'activerecord.attributes.invoice.invoice_due' %></th>
+			<th class="invoice_number"><%= t'activerecord.attributes.invoice.number' %></th>
+			<th class="invoice_customer"><%= t'activerecord.attributes.invoice.customer' %></th>
+			<th class="invoice_amount"><%= t'activerecord.attributes.invoice.receivable' %></th>
+		</tr>
+</thead>
+<tbody id="tbodyid">
+	<%= render @invoices %>
+		</tbody>
+	</table>
 	</div>
 <%= render "invoices/customer_project_form" %>

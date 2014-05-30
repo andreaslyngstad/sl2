@@ -14,14 +14,13 @@ class Subscription < ActiveRecord::Base
       payment = Paymill::Payment.create token: paymill_card_token, client: client.id
       subscription_create = Paymill::Subscription.create offer: plan.paymill_id, client: client.id, payment: payment.id
       subscription = Paymill::Subscription.find(subscription_create.id)
-      
       if subscription
         if plan_id < firm.plan.id
           firm.remove_associations_when_downgrading(plan_id)
         end
         set_properties(subscription) 
         firm.open!
-        Subscription.delete_old_subscription(firm)
+        Subscription.delete_old_subscription(firm, id)
       end
       save!
     end
@@ -31,8 +30,8 @@ class Subscription < ActiveRecord::Base
     false
   end
   
-  def self.delete_old_subscription(firm) 
-    self.where(firm_id: firm.id).destroy_all 
+  def self.delete_old_subscription(firm, id) 
+    self.where(firm_id: firm.id).where.not(id:id).destroy_all 
   end
   
   def self.delete_old_paymill_sub(sub_paymill_id)

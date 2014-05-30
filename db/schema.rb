@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20101029201155) do
+ActiveRecord::Schema.define(version: 20101029201156) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "resource_id",   null: false
@@ -29,7 +32,7 @@ ActiveRecord::Schema.define(version: 20101029201155) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "admin_users", force: true do |t|
-    t.text     "email",                  default: "", null: false
+    t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -71,6 +74,18 @@ ActiveRecord::Schema.define(version: 20101029201155) do
 
   add_index "customers", ["firm_id"], name: "index_customers_on_firm_id", using: :btree
 
+  create_table "emails", force: true do |t|
+    t.string   "address"
+    t.text     "subject"
+    t.text     "content"
+    t.integer  "invoice_id"
+    t.integer  "firm_id"
+    t.date     "sent"
+    t.text     "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "employees", force: true do |t|
     t.text     "name"
     t.text     "phone"
@@ -93,6 +108,8 @@ ActiveRecord::Schema.define(version: 20101029201155) do
     t.text     "language",                default: "en"
     t.text     "time_zone"
     t.float    "tax"
+    t.float    "reminder_fee"
+    t.integer  "days_to_due",             default: 14
     t.text     "invoice_email"
     t.text     "invoice_email_subject"
     t.text     "invoice_email_message"
@@ -156,43 +173,49 @@ ActiveRecord::Schema.define(version: 20101029201155) do
     t.integer  "number"
     t.text     "content"
     t.integer  "project_id"
-    t.integer  "customer_id",   null: false
-    t.integer  "firm_id",       null: false
+    t.integer  "customer_id",        null: false
+    t.integer  "invoice_id"
+    t.integer  "reminder_on_id"
+    t.integer  "firm_id",            null: false
     t.integer  "status"
     t.datetime "reminder_sent"
+    t.float    "reminder_fee"
+    t.datetime "sent"
     t.datetime "paid"
     t.datetime "due"
+    t.datetime "last_due"
     t.float    "total"
+    t.float    "receivable"
+    t.float    "invoice_receivable"
     t.datetime "date"
-    t.float    "discount"
+    t.float    "lost"
     t.text     "currency"
-    t.text     "mail_to"
-    t.text     "mail_subject"
-    t.text     "mail_content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "invoices", ["customer_id"], name: "index_invoices_on_customer_id", using: :btree
   add_index "invoices", ["firm_id"], name: "index_invoices_on_firm_id", using: :btree
+  add_index "invoices", ["invoice_id"], name: "index_invoices_on_invoice_id", using: :btree
   add_index "invoices", ["project_id"], name: "index_invoices_on_project_id", using: :btree
+  add_index "invoices", ["reminder_on_id"], name: "index_invoices_on_reminder_on_id", using: :btree
 
   create_table "logs", force: true do |t|
     t.text     "event"
     t.integer  "customer_id"
-    t.integer  "user_id",        null: false
-    t.integer  "firm_id",        null: false
+    t.integer  "user_id",                      null: false
+    t.integer  "firm_id",                      null: false
     t.integer  "project_id"
     t.integer  "employee_id"
-    t.integer  "invoice_id"
-    t.integer  "credit_note_id"
+    t.integer  "invoice_id",     default: 0
+    t.integer  "credit_note_id", default: 0
     t.integer  "todo_id"
     t.boolean  "tracking"
     t.datetime "begin_time"
     t.datetime "end_time"
     t.date     "log_date"
-    t.float    "hours"
-    t.float    "rate"
+    t.float    "hours",          default: 0.0
+    t.float    "rate",           default: 0.0
     t.float    "tax"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -246,6 +269,7 @@ ActiveRecord::Schema.define(version: 20101029201155) do
     t.integer  "logs"
     t.integer  "projects"
     t.integer  "users"
+    t.integer  "invoices"
     t.integer  "firms_count",         default: 0
     t.integer  "subscriptions_count", default: 0
     t.datetime "created_at"
@@ -336,8 +360,8 @@ ActiveRecord::Schema.define(version: 20101029201155) do
     t.text     "role"
     t.text     "phone"
     t.text     "name"
-    t.integer  "firm_id",                                        null: false
-    t.float    "hourly_rate"
+    t.integer  "firm_id",                                         null: false
+    t.float    "hourly_rate",                       default: 0.0
     t.string   "loginable_type",         limit: 40
     t.integer  "loginable_id"
     t.text     "loginable_token"
@@ -347,8 +371,8 @@ ActiveRecord::Schema.define(version: 20101029201155) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.text     "email",                             default: "", null: false
-    t.string   "encrypted_password",                default: "", null: false
+    t.text     "email",                             default: "",  null: false
+    t.string   "encrypted_password",                default: "",  null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

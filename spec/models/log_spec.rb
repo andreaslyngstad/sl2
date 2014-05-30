@@ -1,6 +1,4 @@
 require 'spec_helper'
-
-
 describe Log do  
   
   it { should belong_to(:user) }
@@ -13,9 +11,16 @@ describe Log do
   let(:user)      {FactoryGirl.create(:user, :firm => firm)}
   let(:time_now)  {Time.now}
   let(:log)       {FactoryGirl.create(:log, :user => user, :firm => firm)}
-  let(:log2)      {FactoryGirl.create(:log, rate: 100, tax: 25, :log_date => Date.today.beginning_of_week + 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
+  let(:log2)      {FactoryGirl.create(:log, rate: 100, 
+                                            tax: 25, 
+                                            log_date: Date.today.beginning_of_week + 1.day, 
+                                            begin_time: time_now, 
+                                            end_time: time_now + 1.hours, 
+                                            user: user, 
+                                            firm: firm, 
+                                            invoice_id: 1)}
   let(:log3)      {FactoryGirl.create(:log, :log_date => Date.today.beginning_of_week - 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
-  let(:log_uninvoiced) {FactoryGirl.create(:log, invoice_id: nil, :user => user, :firm => firm )}
+  let(:log_uninvoiced) {FactoryGirl.create(:log, invoice_id: 0, :user => user, :firm => firm, :rate => 889.0)}
   let(:log_uninvoiced_in_progress) {FactoryGirl.create(:log, invoice_id: nil, :user => user, :firm => firm, end_time: nil, tracking: true)}
   let(:project)   {FactoryGirl.create(:project, :firm => firm)}
   let(:range)     {Date.today.beginning_of_week..Date.today.end_of_week}
@@ -30,7 +35,8 @@ describe Log do
   #   assert_equal '0:13', log.total_time 
   # end
   it 'returns logs with invoice_id nil' do 
-    Log.uninvoiced.should eq [log_uninvoiced]
+    log_uninvoiced
+    Log.uninvoiced.should include log_uninvoiced
     Log.uninvoiced.should_not include log_uninvoiced_in_progress
   end
   it 'does check plan limit' do
@@ -43,12 +49,16 @@ describe Log do
     firm2 = FactoryGirl.create(:firm)
     FactoryGirl.build(:log, :begin_time => time_now, :end_time => time_now + 30.hours, :user => user, :firm => firm2).should_not be_valid
   end
-  it 'should demand project for external users' do
-    user = FactoryGirl.create(:user, :firm => firm, role: 'External user')
+  it 'should demand project for external_users' do
+    user = FactoryGirl.create(:user, :firm => firm, role: 'external_user')
     FactoryGirl.build(:log, :project => nil, :firm => firm, :user => user).should_not be_valid
   end
   it 'Should set hour spent in right format before save' do 
     log.hours.should == log.end_time - log.begin_time
+  end
+
+  it "returns true if invoiced" do
+    log2.invoiced?.should eq true
   end
   # it 'Has a total_time' do
   #   time = time_now

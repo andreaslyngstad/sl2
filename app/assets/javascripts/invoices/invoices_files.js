@@ -1,7 +1,7 @@
 function pollJob(jobId, url) {
       function poll() {
         poll.calledTimes++;
-        if(poll.calledTimes < 15){
+        if(poll.calledTimes < 10){
         $.ajax({
           url: "/jobs/fetch_job/", // coupled to your app's routes
           type: "GET",
@@ -16,10 +16,10 @@ function pollJob(jobId, url) {
                       data: {id: jobId, file: data.file},
                       })
                 }else{
-                  window.location.href = "/jobs/" + url + "?file=" + data.file + "&id=" + jobId; NProgress.done(); $('.flash_notice').empty() 
+                  window.location.href = "/jobs/" + url + "?file=" + data.file + "&id=" + jobId;  $('.flash_notice').empty() 
                 }
               },
-              202: function(data) { setTimeout(poll, 2000); $('.flash_notice').empty().append().text($.jsi18n.messages.crunching) },
+              202: function(data) { setTimeout(poll, 2000); $('.flash_notice').empty() },
               500: function(data) { console.log('Error!'); }
             }
         });
@@ -38,8 +38,8 @@ function pollJob(jobId, url) {
     }
 
 jQuery.fn.sending_to_handeling_invoice = function(action){
-  $(this).click(function(){
-    $(this).hide()
+  $(document).on('click', '.download_invoice:not(.clicked2)', function(){
+    $(this).addClass('clicked2')
     var id = $(this).attr("data-id")
     handeling_invoice(action, id)
      });
@@ -52,13 +52,32 @@ function handeling_invoice(action, id){
           data: {id: id},
           dateType: "JSON",
           statusCode: {
-            202: function(data) {$('.flash_notice').empty().append().text(data.flash), $('.spinning').hide()},
+            202: function(data) {$('.flash_notice').empty(), NProgress.done()},
             200: function(data) {pollJob(data.id, "ajax_" + action)} 
           }
         });
   };
+jQuery.fn.download_invoice = function(){
+   $(this).click(function(){
+    $(this).hide()
+    var id = $(this).attr("data-id")
+    window.location.href = "/jobs/download/" + id;  $('.flash_notice').empty() 
+  })
+}
+jQuery.fn.send_invoice = function(){
+   $(this).click(function(){
+    $(this).hide()
+    var id = $(this).attr("data-id")
+  $.ajax({
+        url: "/emails/quick_send/" + id,  
+        type: "GET"
+        });
+  });
+};
+
 $(document).ready(function() {
-  // $('.quick_send_invoice').send_invoice()
-  $('.quick_send_invoice').sending_to_handeling_invoice("sending")
+  $('.quick_send_invoice').send_invoice()
+  // $('.download_invoice').download_invoice()
+  // $('.quick_send_invoice').sending_to_handeling_invoice("sending")
   $('.download_invoice').sending_to_handeling_invoice("download")
 });

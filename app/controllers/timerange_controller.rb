@@ -5,7 +5,12 @@ class TimerangeController < ApplicationController
     @customers = current_firm.customers.includes(:employees)
     @all_projects = current_user.projects.where(["active = ?", true]).includes(:customer, {:todos => [:logs]})
     find_logs_on(params[:url], get_time_range(params))
+    if ["Admin", "Member"].include? current_user.role
     @hours = @logs.sum(:hours)
+  else
+    ids = current_user.projects.pluck(:id)
+    @hours = current_firm.logs.where(project:ids).where(log_date: get_time_range(params)).sum(:hours)
+  end
     respond_with( @logs)
   end
   
@@ -48,12 +53,12 @@ class TimerangeController < ApplicationController
 
   def find_invoices_on(url, time_range, status)
     if url == "index"
-      invoices_on = current_firm 
+      invoices_on = current_firm
     else
       invoices_on = eval(url).find(params[:id])
     end
     logger.info(time_range)
-    @invoices = invoices_on.invoices.where(:date => time_range).where(status: eval(status)).order("date DESC").includes(:customer)
+    @invoices = invoices_on.invoices.where(:date => time_range).where(status: eval(status)).where.not(status: 10).order("date DESC").includes(:customer)
     first_and_last_date(time_range)
   end
   def first_and_last_date(time_range)

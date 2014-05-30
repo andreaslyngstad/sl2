@@ -73,7 +73,7 @@ feature 'User' do
     end
     find("#dialog_log").click
     page.should have_content("Create log")
-    fill_in "log_event", with: "This a log"
+    fill_in "log_event", with: "This a log special log"
     find('#logProjectId_chosen').trigger("mousedown")
     page.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
     # sleep 5
@@ -91,15 +91,16 @@ feature 'User' do
     # page.should have_content("test_task")
     page.should have_content("13." + Date.today.strftime('%m.%y'))
     page.should have_content("1:30")   
-    within(:css, '#log_info_'+ @log.id.to_s) do 
+    id = Log.where(event: "This a log special log").first.id.to_s
+    within(:css, 'div#log_info_'+ id) do 
         find('.open_log_update').click
     end
    
     page.should have_content('Update log')
     fill_in "log_event", with: "This a log edit"
-    find('#edit_log_' + @log.id.to_s).find('#log_edit_submit').click
+    find('#edit_log_' + id).find('#log_edit_submit').click
     page.should have_content("This a log edit")
-    within(:css, '#log_info_'+ @log.id.to_s) do 
+    within(:css, 'div#log_info_'+ id) do 
         find('.delete_log').click
     end
     page.should have_content("log was deleted")

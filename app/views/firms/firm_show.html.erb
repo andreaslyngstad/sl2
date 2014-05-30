@@ -3,11 +3,11 @@
 <div class="timesheet">
   <div class="collapse_menu">
     <div class="pref_links_image"><%= image_tag(current_firm.logo) if !current_firm.logo.blank? %></div>
-    <div class="pref_links selected" id="account_link" data-type="account">Account</div>
-    <div class="pref_links" id="contact_link"  data-type="pref">Contact</div>
-    <div class="pref_links" id="economic_link" data-type="pref">Economic</div>
-    <div class="pref_links" id="formats_link" data-type="pref">Formats</div>
-    <div class="pref_links" id="invoicing_link" data-type="pref">Invoicing</div>
+    <div class="pref_links selected" id="account_link" data-type="account"><%= t'account_page.account' %></div>
+    <div class="pref_links" id="contact_link"  data-type="pref"><%= t'account_page.contact' %></div>
+    <div class="pref_links" id="economic_link" data-type="pref"><%= t'account_page.economic' %></div>
+    <div class="pref_links" id="formats_link" data-type="pref"><%= t'account_page.formats' %></div>
+    <div class="pref_links" id="invoicing_link" data-type="pref"><%= t'account_page.invoicing' %></div>
     <div class="bottom_filler"></div>
   </div>
 <div class="preferences">
@@ -28,7 +28,7 @@
     		<%= firm.text_field :phone, :class => "text-input", :AUTOCOMPLETE => "OFF" %>
   		</div>
 			<div class="form-field">
-		    <%= firm.label :Address %>
+		    <%= firm.label :address %>
 		    <%= firm.text_area :address, :class => "text-input", :AUTOCOMPLETE => "OFF" %>
 	    </div>
       <div class="form-field">
@@ -46,8 +46,16 @@
     		<%= firm.text_field :vat_number, :class => "text-input", :AUTOCOMPLETE => "OFF" %>
   		</div>
 			<div class="form-field">
-          <%= firm.label 'Tax (VAT) %' %>
+          <%= firm.label :tax %>
           <%= firm.text_field :tax, :class => "text-input", :AUTOCOMPLETE => "OFF"%>
+      </div>
+      <div class="form-field">
+          <%= firm.label :reminder_fee %>
+          <%= firm.text_field :reminder_fee, :class => "text-input", :AUTOCOMPLETE => "OFF"%>
+      </div>
+      <div class="form-field">
+          <%= firm.label :days_to_due %>
+          <%= firm.text_field :days_to_due %>
       </div>
     </div>
     <div class="pref_fields" id="formats_link_fields" style="display:none">

@@ -10,7 +10,7 @@
 		<%if !@log.nil?%>
 			<%= render :partial => "logs/stop_tracking", :locals => {:log => @log}%>
 		<%else%> 
-		     <%= render :partial => "logs/start_tracking", :locals => {:log => @log_new}%>
+		     <%= render :partial => "logs/start_tracking" %>
 		<% end %>
 	</div>
 </div>	

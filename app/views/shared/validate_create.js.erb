@@ -1,12 +1,11 @@
 $('.flash_error').empty();
 <% if @klass %>
-var object = "<%= j(@klass.class.to_s.downcase) %>"
+	object = "<%= j(@klass.class.to_s.downcase) %>"
 <% elsif @todo %>
-var object = "<%= j(@todo.class.to_s.downcase) %>"
+	object = "<%= j(@todo.class.to_s.downcase) %>"
 <% end %>
 <% if @klass and @klass.class.to_s == "Invoice" %>
 	$("#dialog_invoice_form").UIdialogs_invoices();
-	console.log("test")
 <% else %>
 	$("#dialog_" + object + "_form").UIdialogs();
 <% end %>

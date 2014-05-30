@@ -1,7 +1,7 @@
 <div id="project_list_<%= project.id %>">
 <div class="info" id="project_info_<%= project.id %>">
   <div class="name_todo"><%= link_to project.name, project_path( project) %></div>
-  <div class="project_desc"><%= truncate_string(project.description) %></div>
+  <div class="project_desc"><%= truncate_string(project.description, 70, '...') %></div>
 <div class="delete_edit">
 <% if can? :manage, project %>
   <span class="open_project_update edit" id="project_update" data-id="<%= project.id %>" data-object="project"><%= t'edit' %></span>

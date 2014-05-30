@@ -35,25 +35,31 @@
 
 //= require timesheet
 //= require external/strftime-min.js
+//= require external/jquery.tablesorter.min
 //= require memberships
 //= require invoices/invoices
 //= require invoices/invoices_files.js
 //= require invoices/currency.js
 //= require jquery.xcolor.min
-//= require nvd3/lib/d3.v2 
-//= require nvd3/src/core
-//= require nvd3/src/utils
-//= require nvd3/src/models/axis
-//= require nvd3/src/tooltip
-//= require nvd3/src/models/legend
-//= require nvd3/src/models/axis
-//= require nvd3/src/models/scatter
-//= require nvd3/src/models/stackedArea
-//= require nvd3/src/models/stackedAreaChart
-//= require nvd3/src/models/pie
-//= require nvd3/src/models/pieChart
-//= require nvd3/src/models/multiBar
-//= require nvd3/src/models/multiBarChart
+//= require nvd3_new/lib/d3.v2 
+//= require nvd3_new/nv.d3.js
+//= require nvd3_new/src/core
+//= require nvd3_new/src/utils
+//= require nvd3_new/src/models/axis
+//= require nvd3_new/src/tooltip
+//= require nvd3_new/src/models/legend
+//= require nvd3_new/src/models/axis
+//= require nvd3_new/src/models/scatter
+//= require nvd3_new/src/models/stackedArea
+//= require nvd3_new/src/models/stackedAreaChart
+//= require nvd3_new/src/models/pie
+//= require nvd3_new/src/models/pieChart
+//= require nvd3_new/src/models/multiBar
+//= require nvd3_new/src/models/multiBarChart
+//= require nvd3_new/src/models/discreteBar
+//= require nvd3_new/src/models/discreteBarChart
+//= require dashboard
+//= require economic_statistics
 //= require colorArrays
 //= require stackedAndPie
 //= require tabs
@@ -136,19 +142,19 @@ jQuery.fn.display_help = function(){
 jQuery.fn.submitWithAjax = function() {
   this.submit(function() { 
     $.post(this.action, $(this).serialize(), null, "script");
-    NProgress.start();;
+    NProgress.start();
     return false;
   })
   return this;
 };
 jQuery.fn.submit_dialog_WithAjax = function() {
     $.post(this.attr("action"), $(this).serialize(), null, "script");
-    NProgress.start();; 
+    NProgress.start();
     return false;
 };
 jQuery.fn.membership = function (){
   this.on('click', function() { 
-    NProgress.start();;
+    NProgress.start();
     var user_id =  $(this).attr("id");
     var project_id = $(this).attr("project_id") 
   $.getScript("/membership/" + user_id + "/" + project_id)
@@ -169,18 +175,30 @@ jQuery.fn.UIdialogs = function(){
       	$(this).find(".hasDatepicker").datepicker( "destroy" );
     	  $("#logProjectId").val('').trigger("chosen:updated")
       	$(this).dialog("destroy"); 
-      },
-
+      }
   });
 };
 
+jQuery.fn.UIdialogs_autoopen = function(){
+  $(this).dialog({
+      autoOpen: true,
+      resizable: false,
+      width: 400,
+      modal: true,
+      position: ['middle',50],
+      close: function(event, ui) {  
+        $(this).find(".hasDatepicker").datepicker( "destroy" );
+        $("#logProjectId").val('').trigger("chosen:updated")
+        $(this).dialog("destroy"); 
+      }
+  });
+};
 jQuery.fn.disableUIdialogs = function(){
   $(this).dialog("destroy");
 };
 
 jQuery.fn.validateWithErrors = function(){
     $(this).validate({
-      lang: 'NO',
      submitHandler: function(form) {  
     $(form).submit_dialog_WithAjax();
     $(form).parent().disableUIdialogs();
@@ -196,7 +214,7 @@ jQuery.fn.validateWithErrors = function(){
      },
      
    }); 
-    $("div.error").text("test")
+
 };
 jQuery.fn.validateNoSubmit = function(){
     $(this).validate({
@@ -280,28 +298,32 @@ jQuery.fn.activate_projects_no_button = function(){
 };
 jQuery.fn.set_buget_width = function(){
     var procent = Math.round(this.data("procent") * 100)
-    if (this.data("procent") == "Not set" || this.data("procent") == "Nothing used"){
+    if (this.data("procent") == 10000 || this.data("procent") == 20000){
       $(this).css("width", "100%")
         $(".budget_red").css("width", "0%")
         $(".budget_red").html("")
-        $(this).html("<p>" + this.data("procent")  +"</p>")
+        if (this.data("procent") == 10000){
+                $(this).html("<p>" + $.jsi18n.messages.not_set    +"</p>")
 
+              }else if(this.data("procent") == 20000){
+                $(this).html("<p>" + $.jsi18n.messages.nothing_used  +"</p>")
+              }
     }else if(procent < 100) {
       if (procent > 0){
-        $(this).html(procent+ "%<p>spent</p>")
+        $(this).html(procent+ "%<p>" + $.jsi18n.messages.spent + "</p>")
       }
       var invert_procent = 100 - procent
       $(this).css("width", procent + "%")
       
       // $(this).css("color", "white")
       $(".budget_red").css("width", invert_procent + "%")
-      $(".budget_red").html(invert_procent+ "%<p>left</p>")
+      $(".budget_red").html(invert_procent+ "%<p>" + $.jsi18n.messages.left + "</p>")
       
     }else if(procent > 100){
       var invert_procent = 100 - procent
       $(this).css("width", "100%")
       $(".budget_red").hide()
-      $(this).html(procent+ "%<p>spent</p>")
+      $(this).html(procent+ "%<p>" + $.jsi18n.messages.spent + "</p>")
     }
 };
 
@@ -375,7 +397,7 @@ $.ajaxSetup({
   });
 
 $(document).ready(function() {
-
+$("#invoices_table").tablesorter();
   $('.delete_link').delete_firm_link()
   $('.delete_subdomain_validation').delete_subdomain_validation()
   $('.delete_name_validation').delete_name_validation()

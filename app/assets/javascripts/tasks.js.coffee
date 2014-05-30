@@ -9,7 +9,7 @@ jQuery.fn.countDone = ->
   @text percent + '%'
     
 jQuery.fn.submitDoneWithAjax = (id) -> 
-  $.post("/todos/" + id, $(this).serialize(), null, "script")
+	$.post("/todos/" + id, $(this).serialize(), null, "script")
 
 sQuadLink.todosTab = ->
 	$(".logs_pluss").click ->

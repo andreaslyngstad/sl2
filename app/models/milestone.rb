@@ -10,6 +10,7 @@ class Milestone < ActiveRecord::Base
   validates_presence_of :due
   scope :overdue, -> {where(["due < ?",  Date.today])}
   scope :due_this_week, -> {where(due:  Date.today, :completed => false)} 
+  scope :next, -> {where('due >= ?', DateTime.now).order("due ASC") }
 
   def self.user_milestones_two_weeks(firm, user)
     where(:firm_id => firm.id, :project_id => user.projects, :due => Time.current - 1.week..Time.current + 1.week).order("due ASC")
@@ -22,7 +23,7 @@ class Milestone < ActiveRecord::Base
   def overdue?
     due < Date.today
   end 
-  def self.next
-    where("due > ?", Date.today).order("due asc").try(:first)
-  end
+  # def self.next
+  #   where("due > ?", Date.today).order("due asc").try(:first)
+  # end
 end

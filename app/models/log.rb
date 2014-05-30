@@ -17,11 +17,15 @@ class Log < ActiveRecord::Base
   validate :end_time_before_begin_time
   validates_presence_of :log_date 
   
-  scope :uninvoiced, -> {where(invoice_id: nil).where.not(end_time: nil)}
+  scope :uninvoiced, -> {where(invoice_id: 0).where.not(end_time: nil).where.not(rate: 0)}
   
   def log_made_on_project
     errors.add(:project_id, "cannot be empty for this log") if
     user.can_validate? && project == nil
+  end
+
+  def invoiced?
+    invoice_id != 0
   end
 
   def set_hours
@@ -60,30 +64,16 @@ class Log < ActiveRecord::Base
   end
   def self.hours_by_model(firm, range, model)
       model_id = model.to_s + "_id"
-     logs = firm.logs
-     .where(log_date: range).includes(model)
+     logs = firm.logs.includes(model)
+     .where(log_date: range)
+     .where(Log.arel_table[:end_time].not_eq(nil))
      .group([model_id.intern])
      .select("sum(hours) as total_hours, #{model_id}")    
   end
   def placed_between?(date_range)
     date_range.include?(log_date)
   end
-  # comment 06.06.13
-  # def self.project_try(project)
-  #   if project
-  #     where(project_id: project)
-  #   else
-  #     where("end_time IS NOT NULL")
-  #   end
-  # end
-  # def self.user_try(user)
-  #   if user
-  #     where(user_id: user)
-  #   else
-  #     where("end_time IS NOT NULL")
-  #   end
-  # end
-  # comment end
+
   def self.try_find_logs(options)
      options.map do |k,v|
        unless v.blank?
@@ -92,7 +82,6 @@ class Log < ActiveRecord::Base
      end.compact.inject(:&)
   end
   def total_price
-    (hours*rate*tax/360000) + (hours*rate/3600)
+    ((hours*rate*tax/360000) + (hours*rate/3600)).prettify
   end
-  
 end

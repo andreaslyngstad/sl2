@@ -23,6 +23,7 @@ class Firm < ActiveRecord::Base
   has_many :logs, :dependent => :destroy
   has_many :projects, :dependent => :destroy
   has_many :milestones, :dependent => :destroy
+  has_many :emails, :dependent => :destroy
   has_many :payments
   has_many :employees
   has_many :invoices, :dependent => :destroy
@@ -48,7 +49,7 @@ class Firm < ActiveRecord::Base
       self.subscription = Subscription.create(plan_id: free_plan.id) 
       self.plan = free_plan
     else
-      free_plan2 = Plan.create name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, paymill_id: "free"
+      free_plan2 = Plan.create name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, invoices: 2, paymill_id: "free"
       self.subscription = Subscription.create(plan_id: free_plan2.id) 
       self.plan = free_plan2
     end

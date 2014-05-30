@@ -1,5 +1,8 @@
-var form = $("#credit_note_<%= j (@invoice.id.to_s) %>_form")
+$('.dialog_credit_note_form').remove()
 
+$('body').append('<div class="dialog_credit_note_form" id="credit_note_<%= @invoice.id %>_form" title="<%= t"general.create_new" %> <%= t"economic.credit_note" %>" style="display:none;"></div>')
+
+var form = $('#credit_note_<%= j (@invoice.id.to_s) %>_form')
 form.empty().append("<%= j( render "credit_note_form")  %>")
 form.UIdialogs_invoices();
 form.find(".new_invoice").validateWithErrors();
@@ -14,8 +17,8 @@ $('.remove_log').remove_log_from_invoice()
 //
 form.find('.listing_logs_invoice_container').log_related_updates()
 //
-<% if @invoice.invoice_lines %>
-$('.free_lines_table_container').show();
+<% if @invoice.invoice_lines.count > 0 %>
+ $('.free_lines_table_container').show();
 <% end %>
 
 form.find('.remove_fields').remove_line_from_invoice()
@@ -34,4 +37,4 @@ form.find('.total_on_line').sum_fields()
 form.find(".date").datepicker();
 form.find('.invoice_line_price').set_all_to_minus();
 // form.find('.total_on_this').total_on_log()
-$('.spinning').hide();
+NProgress.done()

@@ -25,11 +25,11 @@
 #     $.get get_url
 
 spendingsTab = ->
-	$("input#id_search_list").quicksearch "ul#cus_pro_us_listing li", {}
-	$(".currency_to_convert").text ->
-  value = parseFloat($(this).attr("data-amount"))
-  currency_converter value
-	$(".seconds").html secondsToString($(".seconds").data("hours"), $(".current_firm_data").data("timeformat"))
+	# $("input#id_search_list").quicksearch "ul#cus_pro_us_listing li", {}
+	# $(".currency_to_convert").text ->
+ #  value = parseFloat($(this).attr("data-amount"))
+ #  currency_converter value
+	# $(".seconds").html secondsToString($(".seconds").data("hours"), $(".current_firm_data").data("timeformat"))
 
 logsTab = ->
 
@@ -50,12 +50,21 @@ statisticsTab = ->
   	$("#to_stat").val $(".one_month_back").data("today")
   	prepareAndCallJson()
 
+dashboardTab = ->
+	unless $("#dashboard_charts").length is 0
+  	prepareAndCallDashboardJson()
+
+econimoc_statisticsTab = ->
+	unless $("#ecominc_statistics_charts").length is 0
+		prepareAndCallEconomicStatisticsJson()
+
 currentLink = ->
 	path = location.pathname.split('/')
 	route = path[path.length - 1]
 	$('#html_tabs').find('.tab_' + route).addClass('current_link')
 
 $(document).ready ->
+	econimoc_statisticsTab()
 	currentLink()
 	spendingsTab()
 	usersTab()
@@ -65,6 +74,7 @@ $(document).ready ->
 	projectsTab()
 	logsTab()
 	statisticsTab()
+	dashboardTab()
 #   pathname = location.pathname
 #   if pathname.match(/customers\//i) or pathname.match(/projects\//i) or pathname.match(/users\//i)
 #     showTabs()

@@ -5,13 +5,19 @@ en:
   save: Save
   show: show
   send: send
-  send_reminder: send reminder
+  send_reminder: reminder
   quicksend: quicksend
   download: download
   credit_note: credit
   paid: paid
   not_paid: not paid
+  lost: lost
+  not_lost: not lost
   general:
+    latest_activity: Latest activity
+    online: online
+    offline: offline
+    in_progress: in progress
     all: All
     was_sent: was sent
     is_being_sent: is being sent
@@ -30,11 +36,14 @@ en:
     member_since: Memeber since
     email: Email
     nott: "no"
+    no_model: No %{model}
     sign_out: Sign out
     new: New
     new_tt: New
     create_new: Create new
     select: Select
+    none: Not selected
+    last: Last
     log: Log
     project: Project
     customer: Customer
@@ -61,10 +70,21 @@ en:
     timesheet: Timesheet
     available: Available
     on_this: on this
+  account_page:
+    account: Account
+    contact: Contact
+    economic: Economic
+    formats: Formats
+    invoicing: Invoicing
   subscription:
     thank_you_for_subscribing: Thank you for subscribing!
     you_are_now_on_the_free_plan: You are now on the free plan
   navigation:
+    access_denied: Access is denied.
+    your_current_role_is: Your current role is
+    you_do_not_have_permission: You do not have permission to view this page.
+    dashboard: Dashboard
+    settings: Settings
     home: Overview
     logs: Logs
     list: List
@@ -96,6 +116,8 @@ en:
       one: minute
       more: minutes
   economic:
+    receivable: receivable
+    value: value
     total_hours: Total hours
     budget: Budget
     invoice: invoice
@@ -103,6 +125,8 @@ en:
     invoiced: Invoiced
     invoice_now: Invoice now?
     invoice_date: Invoice Date
+    reminder_date: Reminder date
+    reminder_fee: Reminder fee
     invoice_draft: Draft
     invoice_sent: Sent
     invoice_due:  Due
@@ -110,6 +134,10 @@ en:
     invoice_reminded: Reminded
     invoice_paid: Paid
     invoice_credit: Credited
+    invoice_lost: Lost
+    email_sent: Sent
+    email_reminder: Reminder
+    send_error: Error
     invoice_no_number: No number
     invoice_number: Invoice nummer
     credit_on_invoice: Credit on invoice
@@ -132,11 +160,16 @@ en:
     subtotal: Subtotal
     basis: Basis
     decimal: decimal
+  dashboard:
+    time_spent_projects: Time spent on projects last 30 days
+    time_spent_users: Time spent by users last 30 days
+    income_last_12: Income last 12 months
   activerecord:
     flash:
       saved: was successfully saved
       deleted: was deleted
       could_not_save: could not be saved
+      nothing_to_collect: receivable is zero
       you_are_logged_in_as: You are logged in as
       you_cannot_delete_yourself: . You cannot delete yourself.
     models:
@@ -181,12 +214,17 @@ en:
         one: subscription
         more: subscriptions
         other: subscriptions
+      email:
+        other: email
+        one: email
+        more: emails
     attributes:
       log:
         log: Log
         date: Date
         from: From  
         to: To
+        rate: Rate
         user: User
         project: Project
         task: Task
@@ -221,6 +259,7 @@ en:
         name: Name
         phone: Phone
         email: Email
+        role: Role
         password: Password
         hourly_rate: Hourly rate
         admin: Admin (can see and edit everything)
@@ -231,19 +270,46 @@ en:
         description: Description
         customer: Customer
         budget: Budget
+      firm:
+        name: Name
+        subdomain: Subdomain
+        phone: Phone
+        address: Address
+        language: Language
+        currency: Currency
+        bank_account: Bank account
+        reminder_fee: Late fee
+        tax: VAT%
+        time_zone: Time zone
+        time_format: Time format
+        date_format: Date format
+        clock_format: Clock format
+        invoice_email: Invoice email
+        invoice_email_subject: Invoice email subject
+        invoice_email_message: Invoice email message
+        starting_invoice_number: Starting invoice number
+        on_invoice_message: On invoice message
+        reminder_email_subject: Reminder email subject
+        reminder_email_message: Reminder email message
+        on_reminder_message: On reminder message
       invoice:
+        receivable: Receivable
         customer: Customer
         project: Project
         number: Number
         content: Content
         firm: Firm
         status: Status
-        reminder_sent: Reminder sent
+        reminder_sent: Reminded 
         due: Due
         total: Total
         date: Date
         discount: Discount
         currency: Currency
+        subject: subject
+        invoice_date: Invoice date
+        invoice_due: Due
+        sent: Sent
       invoice_lines:
         quantity: Quantity
         description: Description
@@ -251,6 +317,8 @@ en:
         amount: Amount
         tax: Tax
         invoice: Invoice
+      email:
+        was_sent: was sent. 
   help:
    account_html: <h2>Account settings</h2>
                  <p>You can see and change you account settings.</p>
@@ -334,6 +402,7 @@ en:
       default: ! '%Y-%m-%d'
       long: ! '%B %d, %Y'
       short: ! '%b %d'
+      month_n: ! '%B %Y'
       short_with_day: ! '%a %b %d'
     month_names:
     - 
@@ -418,7 +487,9 @@ en:
       odd: must be odd
       record_invalid: ! 'Validation failed: %{errors}'
       over_limit: Your plan only allows %{count} %{model}
-      validates_presence_of_legal_attributes: you need to provide your bank account number or/and vat number in your account.
+      validates_presence_of_legal_attributes: You need to provide your bank account number or/and vat number in your account.
+      credit_note_less_than_invoice: Credit note total is greater than the receivable amount of the invoice.
+      firm_is_secure: Users firm is not equal to the intance firm
       taken: has already been taken
       too_long:
         one: is too long (maximum is 1 character)

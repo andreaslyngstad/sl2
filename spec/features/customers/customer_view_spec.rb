@@ -1,24 +1,25 @@
 require 'spec_helper'
-
+require 'features/subdomain_login_features'
 include SubdomainLoginFeatures
 feature 'customer' do
-    
    before(:all) do 
       date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
       
-      
-        @user = FactoryGirl.create(:user, hourly_rate: 2)
+      Customer.destroy_all
+      @user = FactoryGirl.create(:user, hourly_rate: 2)
       @firm = @user.firm
+      @plan = FactoryGirl.create(:plan, name: "test", customers: nil, projects: nil)
+      @firm.plan = @plan
       @firm.users.should include @user
       @firm.users.first.should eq @user
       @project = FactoryGirl.create :project, name: "test_project", firm: @firm, budget:10  
-        @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm
+      @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm, email: "te@test.com"
       @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.today, user: @user)         
-        @customers = "http://#{@firm.subdomain}.lvh.me:31234/customers"
+      @customers = "http://#{@firm.subdomain}.lvh.me:31234/customers"
       @projects = "http://#{@firm.subdomain}.lvh.me:31234/projects"
       @users = "http://#{@firm.subdomain}.lvh.me:31234/users"
       @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
-        @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
+      @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
       @project.users << @user
       @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
       @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
@@ -145,7 +146,6 @@ feature 'customer' do
     page.should_not have_content("This a log edit")
   end
   scenario 'customer timesheets', js: true do
-
       visit_the_customer
         within(:css, ('#html_tabs')) do
           click_link('Logs')
@@ -157,14 +157,14 @@ feature 'customer' do
       page.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
       
       find(".log_date_#{(Date.today.beginning_of_week + 3.days).strftime('%Y-%m-%d')}").set("10")
-      page.should have_content("14:00")
-      # page.should have_content("10:00")
+      # page.should have_content("14:00")
+      page.should have_content("10:00")
       find(".project_date_#{@project.id}_#{(Date.today.beginning_of_week + 3.days).strftime('%Y-%m-%d')}").should have_content("10:00")
       click_link('Month')
       page.should_not have_content("14:00")
       page.should have_content("10:00")
       find(".calendar_span", :text => '10:00').click
-      page.should have_content("Added on timesheet")
+      page.should have_content("Timesheet")
       click_link('Week')
       find(".project_date_#{@project.id}_#{(Date.today.beginning_of_week + 3.days).strftime('%Y-%m-%d')}").should have_content("10:00")
     end
@@ -181,7 +181,6 @@ feature 'customer' do
     
     find('#new_project').find('.submit').click
     page.should have_content("This a project")
-    page.should have_content("This a project ...")
     id = Project.where(name: 'This a project').first.id.to_s
     
     within(:css, '#project_info_' + id) do 
@@ -217,7 +216,7 @@ end
 
     id = Employee.where(name: 'test_new employee').first.id.to_s
     
-    within(:css, '#employee_info_' + id) do 
+    within(:css, '#employee_' + id) do 
       find('.open_employee_update').click
     end
    
@@ -227,7 +226,7 @@ end
       find('.submit').click
     end
     page.should have_content("This a edit")
-    within(:css, '#employee_info_' + id) do 
+    within(:css, '#employee_' + id) do 
       find('.delete_employee').click
     end
   

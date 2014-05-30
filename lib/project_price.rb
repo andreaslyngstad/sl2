@@ -1,17 +1,12 @@
 class ProjectPrice
 	def self.get_hours(project)
-		project.logs.group("user").sum(:hours).map do |k,v| 
-			if !k.hourly_rate.nil? 
-				k.hourly_rate*v/3600
-			else 
-				0
-			end 
-		end.inject(:+).try(:round, 2) 
+		project.logs.group("rate").sum(:hours).map {|k,v| k * v/3600}.inject(:+).try(:round, 2) 
 	end
 
-	def self.get_cost_per_user(project)
-		project.logs.group("user").sum(:hours).map {|k,v| [k.name,k.hourly_rate, v,  if !k.hourly_rate.nil?; (k.hourly_rate*v/3600).round(2); end ]}
-	end
+	# def self.get_cost_per_user(project)
+	# 	# fiks bruk rate fra
+	# 	project.logs.group("user").group("rate").sum(:hours).map {|k,v| [k[1],k[0], (k[0]*v/3600).round(2) ]}
+	# end
 
 	def self.set_procentage(project)
 		used = ProjectPrice.get_hours(project) || 0  
@@ -19,9 +14,9 @@ class ProjectPrice
 		if used > 0 && budget > 0
 			(used / budget).round(2)
 		elsif budget == 0
-			"Not set"
+			10000
 		elsif used == 0
-			"Nothing used"
+			20000
 		end
 
 	end

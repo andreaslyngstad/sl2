@@ -4,7 +4,7 @@
   </div>
 	<div class="button_wrapper">   
 <div class="dialog_form" id="customer_update_<%= customer.id %>_form" title="<%= t'helpers.submit.update', model: Customer.model_name.human %>" style="display:none;"></div>
-    <%= mail_to customer.email, (t"general.email") ,:title =>(t"general.email"), :class => "button"%>
+    <%= mail_to customer.email, (t"general.email").downcase ,:title =>(t"general.email").downcase, :class => "button"%>
 
  <span class='open_customer_update button edit' id="customer_update" data-id="<%= customer.id %>" data-object="customer" title="<%= t'edit' %> <%= t'activerecord.models.customer.one' %>"><%= t'edit' %></span>
  <%= link_to(customer_path(customer), data: { confirm: ( t'are_you_sure?' ) }, :title => (t'delete' ), :method => :delete, :remote => true) do%>

@@ -171,7 +171,7 @@ ALTER SEQUENCE active_admin_comments_id_seq OWNED BY active_admin_comments.id;
 
 CREATE TABLE admin_users (
     id integer NOT NULL,
-    email text DEFAULT ''::text NOT NULL,
+    email character varying(255) DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying(255) DEFAULT ''::character varying NOT NULL,
     reset_password_token character varying(255),
     reset_password_sent_at timestamp without time zone,
@@ -279,6 +279,43 @@ ALTER SEQUENCE customers_id_seq OWNED BY customers.id;
 
 
 --
+-- Name: emails; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE emails (
+    id integer NOT NULL,
+    address character varying(255),
+    subject text,
+    content text,
+    invoice_id integer,
+    firm_id integer,
+    sent date,
+    status text,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE emails_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE emails_id_seq OWNED BY emails.id;
+
+
+--
 -- Name: employees; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -327,6 +364,8 @@ CREATE TABLE firms (
     language text DEFAULT 'en'::text,
     time_zone text,
     tax double precision,
+    reminder_fee double precision,
+    days_to_due integer DEFAULT 14,
     invoice_email text,
     invoice_email_subject text,
     invoice_email_message text,
@@ -488,18 +527,22 @@ CREATE TABLE invoices (
     content text,
     project_id integer,
     customer_id integer NOT NULL,
+    invoice_id integer,
+    reminder_on_id integer,
     firm_id integer NOT NULL,
     status integer,
     reminder_sent timestamp without time zone,
+    reminder_fee double precision,
+    sent timestamp without time zone,
     paid timestamp without time zone,
     due timestamp without time zone,
+    last_due timestamp without time zone,
     total double precision,
+    receivable double precision,
+    invoice_receivable double precision,
     date timestamp without time zone,
-    discount double precision,
+    lost double precision,
     currency text,
-    mail_to text,
-    mail_subject text,
-    mail_content text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -536,15 +579,15 @@ CREATE TABLE logs (
     firm_id integer NOT NULL,
     project_id integer,
     employee_id integer,
-    invoice_id integer,
-    credit_note_id integer,
+    invoice_id integer DEFAULT 0,
+    credit_note_id integer DEFAULT 0,
     todo_id integer,
     tracking boolean,
     begin_time timestamp without time zone,
     end_time timestamp without time zone,
     log_date date,
-    hours double precision,
-    rate double precision,
+    hours double precision DEFAULT 0,
+    rate double precision DEFAULT 0,
     tax double precision,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
@@ -685,6 +728,7 @@ CREATE TABLE plans (
     logs integer,
     projects integer,
     users integer,
+    invoices integer,
     firms_count integer DEFAULT 0,
     subscriptions_count integer DEFAULT 0,
     created_at timestamp without time zone,
@@ -909,7 +953,7 @@ CREATE TABLE users (
     phone text,
     name text,
     firm_id integer NOT NULL,
-    hourly_rate double precision,
+    hourly_rate double precision DEFAULT 0,
     loginable_type character varying(40),
     loginable_id integer,
     loginable_token text,
@@ -977,6 +1021,13 @@ ALTER TABLE ONLY blogs ALTER COLUMN id SET DEFAULT nextval('blogs_id_seq'::regcl
 --
 
 ALTER TABLE ONLY customers ALTER COLUMN id SET DEFAULT nextval('customers_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY emails ALTER COLUMN id SET DEFAULT nextval('emails_id_seq'::regclass);
 
 
 --
@@ -1128,6 +1179,14 @@ ALTER TABLE ONLY blogs
 
 ALTER TABLE ONLY customers
     ADD CONSTRAINT customers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY emails
+    ADD CONSTRAINT emails_pkey PRIMARY KEY (id);
 
 
 --
@@ -1358,10 +1417,24 @@ CREATE INDEX index_invoices_on_firm_id ON invoices USING btree (firm_id);
 
 
 --
+-- Name: index_invoices_on_invoice_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_invoice_id ON invoices USING btree (invoice_id);
+
+
+--
 -- Name: index_invoices_on_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_invoices_on_project_id ON invoices USING btree (project_id);
+
+
+--
+-- Name: index_invoices_on_reminder_on_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_invoices_on_reminder_on_id ON invoices USING btree (reminder_on_id);
 
 
 --
@@ -1580,3 +1653,6 @@ INSERT INTO schema_migrations (version) VALUES ('20101029201152');
 INSERT INTO schema_migrations (version) VALUES ('20101029201153');
 
 INSERT INTO schema_migrations (version) VALUES ('20101029201155');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201156');
+

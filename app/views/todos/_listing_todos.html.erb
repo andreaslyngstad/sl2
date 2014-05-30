@@ -62,13 +62,14 @@
 			<% if @klass.class == Project%>
 			<li><%= f.label :user %>
 			<select class="searchableTaskCustomer" id="todoUserId" name="todo[user_id]"><option value=""><%= t'general.select' %> <%= t'activerecord.models.user.one' %></option>
-			  <%for user in all_users do %>
+			  <%for user in @klass.users do %>
 			  <option value="<%=user.id.to_i%>"<%if user == current_user%>selected="<%=current_user.id.to_i%>"<%end%>>
 			  <%= user.name %></option>
 			  <% end %>
 			</select> 
 			</li>
 				<%= f.hidden_field :project_id, :value => @klass.id %>
+				<% if can? :read, Customer %>
 			  	<% if @klass.customer.nil? %>
 			      <li><%= f.label :customer %>
 			      	<select class="searchableTaskCustomer" id="todoCustomerId" name="todo[customer_id]">
@@ -81,6 +82,7 @@
 			  	<% else %>
 			  		<%= f.hidden_field :customer_id, :value => @klass.customer.id%>
 			  	<% end %> 
+			  	<% end %>
 			<% end %> 
 			<% if @klass.class == User%>
 			<li><%= f.label :user %>:

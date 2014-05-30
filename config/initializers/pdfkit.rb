@@ -6,7 +6,7 @@ Shrimp.configure do |config|
 
   # the default pdf output format
   # e.g. "5in*7.5in", "10cm*20cm", "A4", "Letter"
-  config.format           = '210mm*297mm'
+  config.format           = 'A4'
 
   # the default margin
   config.margin           = '0cm'
@@ -25,11 +25,11 @@ Shrimp.configure do |config|
 	
   # the default rendering time in ms
   # increase if you need to render very complex pages
-  config.rendering_time   = 3000
+  config.rendering_time   = 1000
 
   # the timeout for the phantomjs rendering process in ms
   # this needs always to be higher than rendering_time
-  config.rendering_timeout = 9000
+  config.rendering_timeout = 3000
 end
 # WickedPdf.config = {
 #   :exe_path => `which wkhtmltopdf`.gsub(/\n/, '')

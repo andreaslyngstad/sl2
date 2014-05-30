@@ -7,15 +7,15 @@ class CreateLogs < ActiveRecord::Migration
       t.integer   :firm_id, :null => false
       t.integer   :project_id
       t.integer   :employee_id
-      t.integer   :invoice_id
-      t.integer   :credit_note_id
+      t.integer   :invoice_id, :default => 0
+      t.integer   :credit_note_id, :default => 0
       t.integer   :todo_id
       t.boolean   :tracking
       t.datetime  :begin_time
       t.datetime  :end_time
       t.date      :log_date
-      t.float     :hours
-      t.float     :rate
+      t.float     :hours, default: 0
+      t.float     :rate, default: 0 
       t.float     :tax
       t.timestamps
     end

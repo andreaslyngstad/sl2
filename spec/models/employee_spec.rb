@@ -11,6 +11,6 @@ describe Employee do
   it 'should not save on different firm' do
     test = FactoryGirl.build(:employee, customer: customer,firm_id: firm1.id)
     test.should_not be_valid
-    test.errors[:firm_id].should be_present
+    test.errors[:base].should be_present
   end
 end

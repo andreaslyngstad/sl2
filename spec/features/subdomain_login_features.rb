@@ -11,12 +11,18 @@ module SubdomainLoginFeatures
       date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
       
       
-	    @user = FactoryGirl.create(:user, hourly_rate: 2)
-      @firm = @user.firm
+	    @user = FactoryGirl.create(:user, hourly_rate: 2, name: "Tiril Pharo")
+      
+      @firm = FactoryGirl.create(:firm)
+      plan = @firm.plan
+      plan.invoices = 3002
+      plan.save!
+      @firm.plan.invoices.should eq 3002
+      @firm.users << @user
       @firm.users.should include @user
       @firm.users.first.should eq @user
       @project = FactoryGirl.create :project, name: "test_project", firm: @firm, budget:10  
-	    @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm
+	    @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm, email: "test@test.com"
       @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.today, user: @user)			
 	    @customers = "http://#{@firm.subdomain}.lvh.me:31234/customers"
       @projects = "http://#{@firm.subdomain}.lvh.me:31234/projects"
@@ -24,8 +30,10 @@ module SubdomainLoginFeatures
       @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
 	    @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
       @project.users << @user
-      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
+      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week, rate: 100)
+      @log3 = FactoryGirl.create(:log, event: "test_log3", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
       @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
+      
       Capybara.server_port = 31234 
       sub = @firm.subdomain
       Capybara.app_host = @root_url 

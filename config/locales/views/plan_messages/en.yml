@@ -16,7 +16,7 @@ en:
                   <p>Remember that either way data may be lost. </p>
                   <p>If you delete the firm all data will be deleted.</p>
                   <p>By revering to the free plan, all data that extends the limit of the free plan will be deleted.</p> 
-                  <p>We are trying to improve the service all the time.Do you want to pop us a line about why you are canceling?</p> 
+                  <p>We are trying to improve the service all the time. Do you want to pop us a line about why you are canceling?</p> 
                   <p>%{link}</p>
     closed_message_html: Hi. We have not recived payment and your account is locked.<br>No worries though, just
                     sign up to the subscription you want and submit your card to unlock your account.<br>

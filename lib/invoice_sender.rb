@@ -1,4 +1,5 @@
 module InvoiceSender
+require 'mail'
 	extend self
 	def give_invoice_number(invoice,last_invoice)
 		if invoice.number.nil?
@@ -9,9 +10,28 @@ module InvoiceSender
 	    end
   	end
 	end
+
+	def format_address(email,name)
+		address = Mail::Address.new email # ex: "john@example.com"
+		address.display_name = name # ex: "John Doe"
+		# Set the From or Reply-To header to the following:
+		address.format
+	end
 	
 	def invoice_to_pdf(invoice_id)
 		Invoice.find(invoice_id).to_pdf
+	end
+
+	def invoice_to_pdf_and_send(invoice_id, email_id)
+		invoice_to_pdf(invoice_id)
+		InvoiceMailer.invoice(invoice_id, email_id)
+	end
+
+	def invoice_to_pdf_and_download(invoice_id)
+		invoice_to_pdf(invoice_id)
+		Invoice.find(invoice_id).to_pdf
+		filename = 
+		send_file("#{Rails.root}/tmp/shrimp/" + params[:file], :filename => params[:file],  :type=>"application/pdf" )
 	end
 
 	def pdf_finished?(invoice)

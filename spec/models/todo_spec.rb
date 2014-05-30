@@ -14,7 +14,7 @@ describe Todo do
     firm2 = FactoryGirl.create(:firm)
     test = FactoryGirl.build(:todo,:project => project, :firm => firm2)
     test.should_not be_valid
-    test.errors[:firm_id].should be_present
+    test.errors[:base].should be_present 
   end
   it "Can be due to day" do
     todo = Todo.create!(:name => "Test", :due => Time.now, :completed => false, :firm => firm, :project => project, :user => user)

@@ -1,7 +1,6 @@
 require 'subdomain'
 Squadlink::Application.routes.draw do
   resources :blogs
-
   get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
   get "/imprint" => "public#imprint",  :as => :imprint
   get "/privacy_policy" => "public#privacy_policy",  :as => :privacy_policy
@@ -49,7 +48,12 @@ Squadlink::Application.routes.draw do
 
 
   constraints(Subdomain) do
-    get "plans/index", :as => :plans
+    post 'emails/create/:id' => 'emails#create', as: :emails
+    get 'emails/:id/new' => 'emails#new', as: :new_email
+    get 'emails/:id/reminder' => 'emails#reminder', as: :reminder_email
+    post 'emails/reminder_create/:id' => 'emails#reminder_create', as: :reminder_create
+    get "/emails/quick_send/:id" => "emails#quick_send", :as => :quick_send
+    get "plans" => 'plans#index', :as => :plans
     # delete "plans/index", :as => :plans_delete
     get "plans/cancel", :as => :plans_cancel
     resources :subscriptions
@@ -72,6 +76,9 @@ Squadlink::Application.routes.draw do
       # get "customer_todos_logs" => "charts#customer_todos_logs",  :as => :customer_todos_logs
       get "projects_logs" => "charts#projects_logs",  :as => :projects_logs
       get "customers_logs" => "charts#customers_logs",  :as => :customers_logs
+      get "dashboard_json" => "charts#dashboard_json",  :as => :dashboard_json
+      get "statistics" => "charts#statistics",  :as => :statistics
+      get "economicstatistics_json" => "charts#economicstatistics_json",  :as => :economicstatistics_json
       #projects_controller
       get "/archive" => "projects#archive",  :as => :archive
       put "projects/update_index/:id" => "projects#update_index",  :as => :update_index
@@ -125,11 +132,12 @@ Squadlink::Application.routes.draw do
       #reports_controller
       get "/reports" => 'reports#index', :as => :reports
       get "/squadlink_report" => 'reports#squadlink_report', :as => :squadlink_report
+      get "/dashboard" => 'reports#dashboard', as: :dashboard
       #memberships_controller
       post "/membership/:id/:project_id" => "memberships#index", :as => :membership
       #firms_controller
       put "/firm_update" => "firms#firm_update",  :as => :firm_update
-      get "/firm_show" => "firms#firm_show",  :as => :firm_show
+      get "/account" => "firms#firm_show",  :as => :firm_show
       #roster
       get "/roster_milestone" => "roster#get_milestones", :as => :roster_milestone
       get "/roster_task" => "roster#get_tasks", :as => :roster_task
@@ -151,13 +159,16 @@ Squadlink::Application.routes.draw do
 
       # post "/jobs/sending_invoice/" => "jobs#sending_invoice", :as => :sending_invoice
       post "/jobs/handeling_invoice/" => "jobs#handeling_invoice", :as => :handeling_invoice
+      
+      get "/jobs/download/:id" => "jobs#download", :as => :download
       post "/jobs/invoice_paid/:id" => "jobs#invoice_paid", :as => :invoice_paid
+      post "/jobs/invoice_lost/:id" => "jobs#invoice_lost", :as => :invoice_lost
       patch "/jobs/create_slow_sending/:id" => "jobs#create_slow_sending", :as => :create_slow_sending
       get "/jobs/fetch_job/" => "jobs#fetch_job", :as => :fetch_job
       get "/jobs/ajax_download/" => "jobs#ajax_download", :as => :ajax_download
       get "/jobs/ajax_sending/" => "jobs#ajax_sending", :as => :ajax_sending
       get "/jobs/time_out/" => "jobs#time_out", :as => :time_out
-      
+      get "jobs/download_invoice/:id" => "jobs#download_invoice", :as => :download_invoice
       get "jobs/show_pdf/:id" => "jobs#show_pdf", :as => :show_pdf
       get "/invoice_pdf/:id" => "pdf#invoice", :as => :invoice_pdf
       resources :invoices 

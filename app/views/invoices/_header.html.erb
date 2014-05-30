@@ -2,7 +2,7 @@
   	<ul>
   		<% if can? :read, Firm %>
   		<li><%= link_to (t 'navigation.invoices') , invoices_path, data:{name: "Invoices"}%></li>
-	    <li><%= link_to (t 'navigation.reports'), reports_path, data:{name: "Reports"}%></li>
+	    <li><%= link_to (t 'navigation.statistics'), statistics_path, data:{name: "Statistics"}%></li>
 	    <%end%>
 	</ul>
 </div>

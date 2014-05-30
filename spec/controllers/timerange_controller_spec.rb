@@ -15,14 +15,14 @@ describe TimerangeController do
 
 	  it "log_range date fields" do
 	  	project.users << @user
-	  	get :log_range, from:(Date.today - 5.days).strftime('%Y-%m-%d'), to:(Date.today).strftime('%Y-%m-%d'), url: "Project", id: project.id, :format => 'js'
+	  	xhr :get, :log_range, from:(Date.today - 5.days).strftime('%Y-%m-%d'), to:(Date.today).strftime('%Y-%m-%d'), url: "Project", id: project.id, :format => 'js'
 	  	assigns(:customers).should == [customer]
 	  	assigns(:all_projects).should == [project]
 	  	assigns(:logs).should == [log]
 	  end
 	  it "log_range select field" do
 	  	project.users << @user
-	  	get :log_range, time: "to_day", url: "Project", id: project.id, :format => 'js'
+	  	xhr :get, :log_range, time: "to_day", url: "Project", id: project.id, :format => 'js'
 	  	assigns(:customers).should == [customer]
 	  	assigns(:all_projects).should == [project]
 	  	assigns(:logs).should == [log]
@@ -37,13 +37,13 @@ describe TimerangeController do
 
 	  it "todo_range" do
 	  	project.users << @user
-	  	get :todo_range,{from: (Date.today - 5.days).to_s, to:Date.today.to_s, url: "Project", id: project.id , :format => 'js'}
+	  	xhr :get, :todo_range,{from: (Date.today - 5.days).to_s, to:Date.today.to_s, url: "Project", id: project.id , :format => 'js'}
 	  	assigns(:done_todos).should == [todo1]
 	  	assigns(:not_done_todos).should == [todo2]
 	  end
 	  it "todo_range" do
 	  	project.users << @user
-	  	get :todo_range, time: "to_day", url: "Project", id: project.id, :format => 'js'
+	  	xhr :get, :todo_range, time: "to_day", url: "Project", id: project.id, :format => 'js'
 	  	assigns(:done_todos).should == [todo1]
 	  	assigns(:not_done_todos).should == [todo2]
 	  end

@@ -1,13 +1,19 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.1.0'
+gem 'activesupport-json_encoder', github: 'rails/activesupport-json_encoder'
 gem 'eventmachine'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'rack-ssl'
 gem 'jquery-rails'
+#activeadmin do
 gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
+gem 'ransack',     github: 'activerecord-hackery/ransack'
+gem 'formtastic',  github: 'justinfrench/formtastic'
+#activeadmin end
 gem 'american_date'
 gem 'paperclip'
 gem 'cancan'
@@ -18,8 +24,8 @@ gem 'pdfkit'
 gem 'newrelic_rpm'
 gem 'whenever', :require => false
 gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
-gem "pg", "~> 0.16.0" 
-gem "queue_classic", "2.2.2"
+gem "pg", "~> 0.17.0 "
+gem "queue_classic", "3.0.0beta"
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
@@ -39,6 +45,8 @@ gem 'paranoia', '~> 2.0'
 
 
 group :development do
+  gem "spring", "1.1.2"
+  gem 'spring-commands-rspec'
   # gem 'rack-mini-profiler'
   gem 'better_errors'
   gem "binding_of_caller" 
@@ -53,18 +61,19 @@ group :development do
  
 end
 group :test do 
+  gem "minitest"
   gem "rspec-rails"
   gem 'shoulda-matchers'
   gem 'capybara'
   gem "factory_girl_rails", "~> 4.0"
   gem 'ruby-prof'
   gem 'guard-rspec'
-  gem 'zeus'
+  # gem 'zeus'
   gem 'database_cleaner'
   gem "selenium-webdriver"
   gem "selenium-client"
   gem "vcr"
-  gem 'chromedriver-helper'
+  # gem 'chromedriver-helper'
   gem 'webmock'
   gem 'headless'
   gem "poltergeist"

@@ -7,7 +7,7 @@ describe TimesheetsHelper do
   	end 
 	let(:firm)          {@user.firm}
 	let(:project)       {FactoryGirl.create(:project, firm:firm)} 
-	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "External user")}
+	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
 	let(:todo)          {FactoryGirl.create(:todo, completed: false, project: project, user: @user, firm: firm)}    
 	let(:log)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Date.today)}
 	let(:log1)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 1.hours, end_time: Time.now,:log_date => Date.today )}

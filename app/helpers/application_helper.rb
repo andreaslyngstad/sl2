@@ -13,11 +13,11 @@ module ApplicationHelper
   end 
    
   def all_projects
-    @all_projects ||= current_user.projects.where(["active = ?", true])
+    @all_projects ||= current_user.projects.where(["active = ?", true]).order('name ASC')
   end 
    
   def all_customers
-    if current_user.role == "External user"
+    if current_user.role == "external_user"
       @all_customers = []
     else
       @all_customers ||= current_firm.customers.order("name")

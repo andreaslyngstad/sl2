@@ -3,6 +3,7 @@ class CustomersController < ApplicationController
   def index
     @customers = current_firm.customers.order_by_name
      authorize! :manage, Customer 
+     
   end
   def show
     @klass = current_firm.customers.find(params[:id])

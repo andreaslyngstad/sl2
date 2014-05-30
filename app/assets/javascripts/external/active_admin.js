@@ -1,6 +1,6 @@
 //= require active_admin/base
 //= require nvd3/lib/d3.v2 
-//= require external/jquery.xcolor.min
+//= require jquery.xcolor.min
 //= require nvd3/src/core
 //= require nvd3/src/utils
 //= require nvd3/src/models/axis

@@ -64,7 +64,7 @@ describe ProjectsController, :type => :controller do
   describe "GET edit" do
     it "should assign project to @project" do
       project = FactoryGirl.create(:project, :firm => @user.firm)
-      get :edit, :id => project, :format => 'js'
+      xhr :get, :edit, :id => project, :format => 'js'
       assigns(:project).should eq(project) 
       assigns(:customers).should eq(@user.firm.customers)
     end 

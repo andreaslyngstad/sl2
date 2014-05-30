@@ -1,3 +1,3 @@
-<%= @invoice.mail_content ? simple_format(@invoice.mail_content) : simple_format(@firm.invoice_email_message) %>
+<%= simple_format( @email.content) %>
 
 <p>This invoice is made in <%= link_to "Squadlink", "https://squadlink.com" %></p>

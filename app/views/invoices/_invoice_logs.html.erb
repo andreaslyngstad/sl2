@@ -6,7 +6,7 @@
  	  <%= link_to image(log.user, "image32"),user_path(log.user), :title => "#{log.user.name}" %>
  	</div>
   <div class="event_on_log_invoice">
-    <%= log.event %>
+    <%= simple_format(log.event, class: 'log_event_paragraf') %>
   </div> 
   <div class="date_and_times_on_log" >
     <div class="date_format_setter" data-date="<%= log.log_date %>"><%= log.log_date %></div>
@@ -24,16 +24,22 @@
   	</div>
   </div>
  <div class="delete_edit">
- 	<% if can? :manage, log %>
+ 	<% if log.invoiced? %>
+  <%= t'economic.invoiced' %>
+   <% else %>
+  <% if can? :manage, log %>
   <span class="open_log_update edit" id="log_update" title="<%= t'edit' %>" data-id="<%= log.id %>"><%= t'edit' %></span>
   <%= link_to (t"delete"), log, data: { confirm: (t'are_you_sure?') }, :title => (t"delete"), :method => :delete, :class => "delete_log", :remote => true%>
+   <% end %>
+   <% end %>
   </div>
+    <% if can? :manage, log %>
   <% if @invoice %>
   <input class="invoice_id_field" id="logs_attributes_<%= log.id %>_invoice_id" name="logs_attributes[<%= log.id %>][invoice_id]" type="hidden" value="<%=  @invoice.id %>">  
   <% end %>
   <input class="tax_field" id="logs_attributes_<%= log.id %>_tax" name="logs_attributes[<%= log.id %>][tax]" type="text" value="<%= log.tax.blank? ? current_firm.tax.try(:prettify) : log.tax.try(:prettify) %>">
    
- <div class="total_on_log total_on_this" data-price="<%= log.user.hourly_rate %>" data-quantity="<%= (log.hours/3600).prettify %>" data-vat="<%= log.tax.blank? ? current_firm.tax.try(:prettify) : log.tax.try(:prettify) %>"></div>
+ <div class="total_on_log total_on_this" data-price="<%= log.rate %>" data-quantity="<%= (log.hours/3600).prettify %>" data-vat="<%= log.tax.blank? ? current_firm.tax.try(:prettify) : log.tax.try(:prettify) %>"></div>
   </div>
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="Update log" style="display:none;" data-id="<%= log.id %>"></div>
   <% end %>

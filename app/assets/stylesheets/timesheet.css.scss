@@ -76,10 +76,10 @@ margin: 0px;
 }
 
 #timesheet_log_menu{
+float:left;
 
-height:32px;
 width:970px;
-padding:10px 5px 10px 0px;
+padding:0px 5px 0px 0px;
 background:#FFFFFF;
 
 }
@@ -93,9 +93,11 @@ background:#FFFFFF;
 table.timesheet_table {
 width:980px;
 margin-top:7px;
-
 float: left;
 border-collapse:collapse;
+ tr{
+ 	border-bottom: 1px solid #F0F5FA;
+ }
 }
 table.timesheet_table td {
 padding:.3em 0em;

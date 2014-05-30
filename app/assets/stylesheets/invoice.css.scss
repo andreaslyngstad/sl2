@@ -1,4 +1,26 @@
+html, body{
+  margin:0;
+  padding:0;
+    font-family: Verdana,Helvetica,sans-serif;
+  // font-family: Verdana,Helvetica,sans-serif; 
+  // background-color: #E6E9F5;
+  
+  }
 
+ 
+input[type=text]:focus, textarea:focus {
+  box-shadow: 0 0 5px rgba(116, 185, 239, 1);
+  border: 1px solid rgba(116, 185, 239, 1);
+}
+textarea{
+	height: 200px;
+	width: 364px;
+  
+}
+
+body a{text-decoration: none; color:#000;}
+body a:hover {text-decoration: underline; color:#000;}
+body, ul, li{list-style-type:none; padding:0; margin:0;}
 .tab_list_invoice{
 	margin-left:1px;
 	margin-bottom:1px;
@@ -11,45 +33,93 @@
 ul li{
 	list-style:none;
 }
-.total_line, .invoice_wrapper .subtotal_invoice {
-    font-size: 170%;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd; }
+// .total_line, .invoice_wrapper .subtotal_invoice {
+//     font-size: 170%;
+//     border-top: 1px solid #ddd;
+//     border-bottom: 1px solid #ddd; }
+.show_invoices_table{
+	width: 100%;
+	td{
+		padding-top: 10px;
+	}
+	td.numbers{
+		text-align: right;
+	}
+	tr.sum_receivable{
+		border-top: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;
+	}
+	
+	
+
+}
+
+.mail_instance_wrapper{
+	box-shadow: 0 0 10px #888;
+	padding: 10px;
+	margin-top: 10px;
+	li{
+		padding-bottom: 5px;
+		word-break:break-all;
+	}
+	li span{
+		float: right;
+	}
+
+}
+.listing_invoices{
+	width: 100%;
+	float:left;
+	margin-left:5px;
+	thead{
+		border-bottom: 1px solid #eee;
+		color:green;
+		
+	}
+	tbody tr:nth-child(even) {
+    background-color: #FAFDFF;
+  border-top: 1px solid #E5EFF8;
+  border-bottom: 1px solid #E5EFF8;
+}
 .status{
 	width: 7%;
 }
 .invoice_number{
-	width: 8%;
-	text-align:center;
+	width: 10%;
+
 }
 .invoice_customer{
 	width: 25%;
 }
 .invoice_amount{
 	width: 13%;
-	text-align:right;
+
 }
 .invoice_dates{
 	width: 14%;
-	text-align:right;
+
 }
 
 .invoice_links{
 	width: 30%;
-	font-size:0.8em;
+
+}}
+.invoice_buttons{
+	font-size: 60%;
 }
-.invoice_list{
-	width: 100%;
-	.status{
-		font-size: 80%;
-		}
-	.invoice_number{
-		font-size: 80%;
-		}
-	div{
-		display:inline-block;
-	}
-}
+// .invoice_list{
+// 	float:left;
+// 	width: 100%;
+// 	.status{
+		
+// 		}
+// 	.invoice_number{
+	
+// 		}
+// 	div{
+// 		float:left;
+// 	}
+// }
 .file_image_container{
 	display:inline-block;
 	background-image: url(/assets/images/ui-icons_222222_256x240.png);
@@ -57,14 +127,15 @@ ul li{
 	height: 16px;
 	width: 16px;
 }
-#invoices_head{
-	padding:10px;
-	font-size: 75%;
- div{
-		display:inline-block;
-	}
-}
-.dialog_invoice_form{
+// #invoices_head{
+// 	width: 100%;
+// 	padding:10px;
+// 	float:left;
+//  div{
+// 		float:left;
+// 	}
+// }
+.dialog_invoice_form, .dialog_credit_note_form{
 
 	padding: 0;
 	margin: 0;
@@ -181,12 +252,7 @@ ul li{
 		width: 98%;
 		
 	}
-	.total_line, .subtotal_invoice{
-		font-size: 20px;
-		border-top: 1px solid #ddd;
-		border-bottom: 1px solid #ddd;
 
-	}
 	// .total_invoice_lable{
 	// 	width: 765px;
 		
@@ -225,14 +291,30 @@ ul li{
   -o-transform:rotate(340deg); 
 
 }
+.invoice_show{
+	width:100%;
+}
+.invoice_show_left{
+	width: 30%; 
+	height:100%;
+	margin-top: 30px;
+	padding:10px;
+	float:left;
+}
+.invoice_show_right{
+
+	float:left;
+}
+
 .invoice_wrapper{
+		float:left;
 	font-size: 75%; 
 	padding: 1cm;
 	height: 21.275cm;  
 	width: 14.75cm;
 	box-shadow: 0 0 10px #888;
 	margin: 0 auto;
-	margin-top: 90px;
+	margin-top: 30px;
 	position:relative;
 	ul{ padding:0;float:left;
 		li{padding-top:1cm;}
@@ -251,6 +333,7 @@ ul li{
 	}
 	.invoice_header{
 		width: 100%;
+		float:left;
 		.logo_wrapper{
 			position:absolute;
 			top:3.1em;
@@ -279,11 +362,7 @@ ul li{
 		}
 	}
 	
-	.total_line, .subtotal_invoice{
-		font-size: 170%;
-		border-top: 1px solid #ddd;
-		border-bottom: 1px solid #ddd;
-	}
+
 	.free_lines_table{
 		width:100%; 
 		border-spacing: 1em;
@@ -375,7 +454,7 @@ ul li{
 	// .listing_logs_invoice_container, .date_format_setter, .clock_format_setter, .total_log_time{
 	// 	float:left;
 	// }
-	// .checking_height{float:left;}
+ .checking_height{float:left;width:100%}
 	
 
 }
@@ -383,3 +462,13 @@ ul li{
 			text-align: right;
 			// width:100px;
 		}
+
+.total_line, .subtotal_invoice{
+		font-size: 170%;
+		border-top: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;
+	}
+
+.total_line_reminder{
+		font-size: 170%;
+	}

@@ -7,7 +7,7 @@
       var lang = "<%= current_firm.language%>"
     </script>
   	<%= stylesheet_link_tag  'application' %>	
-    <%= javascript_include_tag "application"%>
+    <%= javascript_include_tag "application" %>
    	<%= csrf_meta_tag %>
     <%= favicon_link_tag 'favicon.ico' %>
     <%= yield :head %>
@@ -26,7 +26,9 @@
         	<%= yield(:help)%>
           <div id="navigation" class="hor_scroll ver_down_on_help">
           	<ul>
-              <li class="navigation" id="home_navi"><%= link_to (t'navigation.home'), charts_path %></li>
+              <% if can? :read, Firm %>
+              <li class="navigation" id="home_navi"><%= link_to (t'navigation.home'), dashboard_path %></li>
+              <% end %>
             	<li class="navigation" id="logs_navi"><a href="/logs"><%= t 'navigation.logs' %></a></li>
             	<li class="navigation" id="projects_navi"><%= link_to (t 'navigation.projects'), projects_path %></li>
             	<% if can? :read, Customer %>
@@ -50,7 +52,5 @@
     <div id="footer">
       <p><a href="http://www.squadlink.com" target="BLANK">Squadlink</a></p>
     </div>
-    
-   
   </body>
 </html>

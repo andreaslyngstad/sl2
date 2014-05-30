@@ -11,7 +11,7 @@
                   <% end %>
                  <% end %>
           </select>
-          <div><%= n.label :Task %>
+          <div><%= n.label :task %>
           <select class="searchableS_tracking" id="logTodoIdTracking<%= log.id %>" log="<%= log.id %>" name="log[todo_id]">
               <% if log.project.nil? %>
           <option value="" id="value"><%= t'general.select' %> <%= (t'activerecord.models.project.one') %></option>

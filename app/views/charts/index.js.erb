@@ -1,7 +1,5 @@
-var from = $(".one_month_back").data("lastmonth") 
-	var to = $(".one_month_back").data("today")
-	$.getJSON('/users_logs.json', {from: from, to: to}, function(data) {
-	  stackedAndPie(data, users_logsColorArray)      
-	}); 
+ $.getJSON('/users_logs.json', {from: $(".one_month_back").data("lastmonth"), to: $(".one_month_back").data("today")}, function(data) {
+  stackedAndPie(data, users_logsColorArray)      
+}); 
 $("#main_container").replaceWith("<%= j(render("statistics")) %>");
 $(".indicator").hide();

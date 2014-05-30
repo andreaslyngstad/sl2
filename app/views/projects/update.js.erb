@@ -9,4 +9,7 @@ $(".activate_project").activate_projects();
 $(".activate_projects_no_button").activate_projects_no_button();
 $(".open_project_update").UIdialogs_edit_links();
 $(".dialog_form:last").remove();
+$("#description").replaceWith("<%= j( render :partial => 'projects/description') %>")
+$('.budget').replaceWith("<%= j( render :partial => 'projects/budget') %>")
+$(".budget_green").set_buget_width()
 NProgress.done();

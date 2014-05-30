@@ -7,7 +7,7 @@
 </div>
 <% end %>
 <div id="left" class="home_content">
-<table border="0" cellspacing="0" cellpadding="10" class="plans">
+<table border="0" cellspacing="0" cellpadding="10" class="plans" style="float:left">
 	<tr><td></td>
 		
 	</tr>
@@ -52,11 +52,21 @@
 	        <% end %>
 		<% end %>	
 	</tr>
+	<tr><td class="left_column">Invoices</td>
+			<% @plans.each do |plan| %>
+		<% if plan.invoices.nil? %>
+	        	<td class="<%=  current_plan_style(plan) %>">unlimited</td>
+	        <% else %>
+	        	<td class="<%=  current_plan_style(plan) %>"><%=  plan.invoices %></td>
+	        <% end %>
+		<% end %>	
+	</tr>
 	<tr><td class="left_column">Logs</td>
 		<% @plans.each do |plan| %>
 			<td class="<%=  current_plan_style(plan) %>">unlimited</td>
 		<% end %>
 	</tr>
+
 	<tr><td class="left_column">Time tracking</td>
 		<% @plans.each do |plan| %>
 			<td class="<%=  current_plan_style(plan) %>">yes</td>

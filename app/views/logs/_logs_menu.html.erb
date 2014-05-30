@@ -11,9 +11,10 @@
       <% else %>
       <%= link_to t("navigation.list"), logs_path, id: "day_link" %>
       <% end %>
-      <!-- <span id="week_view"><#= t('navigation.week') %></span> -->
+      <% if ["Admin", "Member"].include? current_user.role %>
       <%= link_to t('navigation.week'),  timesheet_week_path( @klass ? string_for_klass(@klass) : "index" , @klass ? @klass.id : "index",time_zone_now.to_date), id: 'week_link'%>
       <%= link_to t('navigation.month'),  timesheet_month_path( @klass ? string_for_klass(@klass) : "index" , @klass ? @klass.id : "index",time_zone_now.to_date), id: 'month_link'%>
+      <% end %>
     </div> 
    <div class="range" >	   
 	    <%= form_tag('/log_range', :id => "range_form", :remote => true, method: :get) do -%>

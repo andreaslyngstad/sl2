@@ -14,7 +14,7 @@
 <% if @logs %>
 <% @logs.each do |log| %>
 <tr>
-<td class="report_event"><%= log.event %></td>
+<td class="report_event"><%= simple_format(log.event, class: 'log_event_paragraf') %></td>
 <td class="report_hours"><%= time_format(log.hours )%></td>
 <td class="report_user"><%= log.user.try(:name) %></td>
 <td class="report_project"><%= log.customer.try(:name) %></td>

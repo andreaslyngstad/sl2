@@ -14,6 +14,7 @@ class TodosController < ApplicationController
   def edit
   end
   def update
+    Rails.logger.info(params)
     if params[:todo][:completed] == "1"
       todo.done_by_user = current_user 
     else

@@ -47,17 +47,18 @@ class ApplicationController < ActionController::Base
        render :template => "shared/access_denied"
      end
   end
+ 
   
   #def can_sign_up?
     # return true if config.allow_account_sign_up is set to true
   	# Used in conjection with is_root_domain? for root domain.
    # is_root_domain? ? true :Account::CAN_SIGN_UP
   #end
-  def current_firm
-   @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
-    # return @current_firm if defined?(@current_firm)
-    # @current_firm = current_user.firm
-  end
+  # def current_firm
+  #  @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
+  #   # return @current_firm if defined?(@current_firm)
+  #   # @current_firm = current_user.firm
+  # end
   
   # def all_users
   #   @all_users ||= current_firm.users.order("name")

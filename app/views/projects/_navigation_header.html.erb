@@ -8,10 +8,7 @@
 
 <nav id="html_tabs" class="orange_bgr">
   <div class="name_and_back_button">
-    <%= truncate(@klass.name, length: 50, omission: "") %>
-    <% if @klass.customer %>
-      @  <%= truncate(@klass.customer.name, length: 50, omission: "") %>
-    <% end %>
+    <%= truncate(@klass.name, length: 100, omission: "") %>
     <% if can? :manage, @klass %>
       <span class="open_project_update edit_text" id="project_update" data-id="<%= @klass.id %>" data-object="project"><%= t('edit') %></span>
     <% end %>
@@ -30,19 +27,22 @@
     <li class="">
     	<%=link_to (t('activerecord.models.milestone.more' ).capitalize), tabs_milestones_path(string_for_klass(@klass), @klass.id), class: "tab_milestones"%>
     </li>
+    <% if can? :manage, User%>
     <li class="">
     	<%=link_to (t('activerecord.models.user.more' ).capitalize), tabs_users_path(string_for_klass(@klass), @klass.id), class: "tab_users"%>
     </li>
+    <% end %>
     <li class="">
     	<%=link_to (t('navigation.statistics' ).capitalize), tabs_statistics_path(string_for_klass(@klass), @klass.id), class: "tab_statistics"%>
     </li>
-    <li class="">
-    	<%=link_to (t('navigation.spendings').capitalize), tabs_spendings_path(string_for_klass(@klass), @klass.id), class: "tab_spendings"%>
-    </li>
-    <% if can? :read, Invoice %>
-	    <li class="">
+    <%# <li class="">
+        <#=link_to (t('navigation.spendings').capitalize), tabs_spendings_path(string_for_klass(@klass), @klass.id), class: "tab_spendings"#>
+    </li> 
+     #%>
+    <%#<% if can? :read, Invoice %>
+	    <%#<li class="">
 	    	<%=link_to (t('activerecord.models.invoice.more' ).capitalize), tabs_invoices_path(string_for_klass(@klass), @klass.id), class: "tab_invoices"%>
-	    </li>
+	    <%#</li>
     <% end %>
   </ul>
 </nav>

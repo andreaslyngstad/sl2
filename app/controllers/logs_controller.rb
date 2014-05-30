@@ -1,14 +1,7 @@
 class LogsController < ApplicationController
   def index 
     @logs = current_firm.logs.where(:log_date => Date.today).order("updated_at DESC").includes({:project => [:users, :firm]} , :todo, :firm, :user, :customer, :employee)
-    if !current_user.logs.blank?
-      @log = current_user.logs.where("end_time IS ?",nil).last
-      if @log.nil?
-         @log_new = Log.new
-      end
- 	  else
- 	    @log_new = Log.new
- 	  end
+    @log = current_user.logs.where("end_time IS ?",nil).last
   end
 
   def edit
@@ -25,8 +18,8 @@ class LogsController < ApplicationController
   end
 
   def update
-    @klass = Log.find(params[:id])
-    if @klass.invoice_id.nil?
+    @klass = current_firm.logs.find(params[:id])
+    if !@klass.invoiced?
       authorize! :manage, @klass
       @pre_hours = @klass.time   
       LogWorker.check_todo_on_log(@klass, current_user, check_done(params[:done])) if !@klass.todo.nil?
@@ -37,11 +30,13 @@ class LogsController < ApplicationController
   def destroy
     @log = Log.find(params[:id])
     authorize! :manage, @log
+    if !@log.invoiced?
     @log.destroy
     respond_to do |format|
       flash[:notice] = flash_helper((t'activerecord.models.log.one') + ' ' + (t'activerecord.flash.deleted'))
       format.js
     end
+  end
   end
 
   def start_tracking

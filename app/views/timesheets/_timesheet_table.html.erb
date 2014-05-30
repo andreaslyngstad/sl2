@@ -1,5 +1,5 @@
 <table class="timesheet_table" data-klass="<%= @klass ? @klass.class.to_s.downcase : "user" %>" data-id="<%= @klass ? @klass.id.to_s : current_user.id.to_s%>">
-<tr>
+<tr class="week_timesheet_header">
 	<th class="timesheet_day"></th>
 	<% @dates.each do |date|%>
 		<th class="timesheet_day">

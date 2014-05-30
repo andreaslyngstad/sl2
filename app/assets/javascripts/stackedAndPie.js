@@ -1,19 +1,16 @@
 function stackedAndPie(data, ColorArray) {
-  	var labels = data.stacked.map(function(d){return d.key});
+  var labels = data.stacked.map(function(d){return d.key});
 	var pieIdIncrement = labels.length;
 	$("text[x='0']").fixDateformat()
 	if(!Array.prototype.last) {
     Array.prototype.last = function() {
         return this[this.length - 1];
     }
-}
+  }
 	data.stacked.map(function(d){
-		
-		
 		});
 	
 	function disableSetter(area, id, graph, label){
-	
 	  var dot = $("#" + id +".node .legend_dot")
 	  d3.select("#nv-series-" + id).attr("data", function(d){
 	    if(!(d3.select(area).selectAll(".nv-series").data().filter(function(e) { return !e.disabled }).length === 1))
@@ -33,6 +30,7 @@ function stackedAndPie(data, ColorArray) {
 		
 			var click = 'elementClick'
 			area.pie.dispatch.on(click, function(e) {
+				console.log("click")
 	    	var id = e.index
 	    	var dot = $("#" + id +".node .legend_dot")
         	var data = d3.select(stacked_svg).selectAll(".nv-series").data()
@@ -49,6 +47,7 @@ function stackedAndPie(data, ColorArray) {
           });
         }else{
         	piedata = piedata.map(function(d, i) {
+        		console.log("click2")
           	d.disabled = (i != e.index);
           	return d
           		});

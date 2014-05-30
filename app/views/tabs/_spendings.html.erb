@@ -19,13 +19,13 @@
 			<%= u[0] %>
 		</td>
 		<td class="currency_to_convert" data-amount="<%= u[1].try(:round,0)%>">
-			 
+			 <%= u[1].try(:round,0)%>
 		</td>
 		<td class="seconds" data-hours="<%= u[2] %>">
-			
+			<%= u[2] %>
 		</td>
 		<td class="user_project_price currency_to_convert" data-amount="<%= u[3].try(:round,0) %>" >
-			 
+			 <%= u[3].try(:round,0) %>
 		</td>	
 	</tr>
 	<% end %>
@@ -33,6 +33,6 @@
 		<td><%= (t'economic.total') %></td>
 		<td></td>
 		<td></td>
-		<td class="currency_to_convert" data-amount="<%= ProjectPrice.get_hours(@klass).try(:round,0)%>"></td>
+		<td class="currency_to_convert" data-amount="<%= ProjectPrice.get_hours(@klass).try(:round,0)%>"><%= ProjectPrice.get_hours(@klass).try(:round,0)%></td>
 	</tr>
 </table>

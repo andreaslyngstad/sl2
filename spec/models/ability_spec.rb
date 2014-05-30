@@ -4,7 +4,7 @@ describe Ability do
 	let(:firm)					{ FactoryGirl.create(:firm)}
   let(:admin_user) 		{ FactoryGirl.create(:user, role: "Admin", firm: firm) }
   let(:member_user) 	{ FactoryGirl.create(:user, role: "Member", firm: firm) }
-  let(:external_user) { FactoryGirl.create(:user, role: 'External user', firm: firm) }
+  let(:external_user) { FactoryGirl.create(:user, role: 'external_user', firm: firm) }
   let!(:project)       { FactoryGirl.create(:project, firm: firm)}
 
   it { Ability.should include(CanCan::Ability) }
@@ -23,6 +23,7 @@ describe Ability do
       Ability.any_instance.should_receive(:can).with(:manage, Log, :firm => {:id => admin_user.firm_id})
       Ability.any_instance.should_receive(:can).with(:manage, Todo, :firm => {:id => admin_user.firm_id})
       Ability.any_instance.should_receive(:can).with(:manage, Invoice, :firm => {:id => admin_user.firm_id})
+      Ability.any_instance.should_receive(:can).with(:manage, Email, :firm => {:id => admin_user.firm_id})
       Ability.new admin_user
     end
   end
@@ -52,6 +53,8 @@ describe Ability do
       Ability.any_instance.should_receive(:cannot).with(:archive, Project)
       Ability.any_instance.should_receive(:can).with(:manage, Log )
       Ability.any_instance.should_receive(:can).with( :read, Log )
+      Ability.any_instance.should_receive(:cannot).with(:read, Invoice)
+      Ability.any_instance.should_receive(:cannot).with(:manage, Invoice)
       Ability.new external_user
    end
   end

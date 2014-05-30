@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
 
   def index
       @project = current_firm.projects.new
-    if current_user.role == "External user"
+    if current_user.role == "external_user"
       @projects = current_user.projects.includes(:firm)
     else
       @projects = current_firm.projects.where(:active => true).includes(:firm).order_by_name

@@ -27,7 +27,7 @@
     <li><%= f.label :project_id %>
        	<select class="searchableTaskCustomer required" name="todo[project_id]">
        		<option value="">Select project</option>
-	          	<% current_firm.projects.each do |project| %>
+	          	<% current_user.projects.each do |project| %>
 	          	<option value="<%=project.id.to_i%>"<%if todo.project == project%> selected="<%=project.id.to_i%>"<%end%>>
 	          		<%= project.name %>
 	          		</option>

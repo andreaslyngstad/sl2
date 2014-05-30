@@ -2,7 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 # require "rails/test_unit/railtie"
-# require 'pdfkit'
+require 'pdfkit'
 # require 'shrimp'
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -18,7 +18,7 @@ module Squadlink
 
      config.middleware.use Devise::SignInInterceptor, { :scope  => :user, :klass => 'User',
                                            :secret =>  SECRETS_CONFIG[Rails.env][:phantomjs_secret_token] }
-    # config.middleware.use PDFKit::Middleware
+    config.middleware.use PDFKit::Middleware
     # config.middleware.use Shrimp::Middleware, :margin => '1cm', :format => 'legal'
     require "#{Rails.root}/lib/extensions.rb"
     config.colorize_logging = true

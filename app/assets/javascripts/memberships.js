@@ -26,7 +26,7 @@ function droppable_members(){
       	$("#not_members").find(".user_info:last")
 	    var user_id =  ui.draggable.attr("user_id");
 	    var project_id = ui.draggable.attr("project_id"); 
-	  	$.post("/membership/" + user_id + "/" + project_id);
+	  	$.post("/membership/" + user_id + "/" + project_id + "?membership=false");
 		}
     });
 }

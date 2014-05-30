@@ -1,6 +1,6 @@
 class Validator < ActiveModel::Validator
    def validate(record)
-     record.errors.add(:firm_id, "is secure!") if
+     record.errors.add(:base, (I18n.translate"errors.messages.firm_is_secure")) if
      check_if_current_firm(record).include?(true) 
    end
 
@@ -25,6 +25,8 @@ class MadeWithInLimit < ActiveModel::Validator
   include ActionView::Helpers::UrlHelper
   def validate(record)
     records = record.class.to_s.downcase.pluralize
+    Rails.logger.info(records)
+    Rails.logger.info(record.firm.name)
     records_count = records + "_count"
     record_string = record.class.to_s.downcase
     record.errors.add(:base, 

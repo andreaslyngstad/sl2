@@ -20,40 +20,45 @@ feature 'user' do
     page.should have_content("was successfully saved")
     page.should have_content("test_new user")
   end 
+  scenario "delete yourself", js: true do
+    sign_in_on_js
+    visit @users
+    page.should have_content("Tiril Pharo")
+    @user.name.should eq ("Tiril Pharo")
+    id = @user.id.to_s
+    
+    li = "li#user_#{id}"
+    within(:css, li) do
+      first(".delete_user").trigger('click')
+    end
+    page.should have_content("You cannot delete yourself") 
+  end
   scenario "Edit user", js: true do
     sign_in_on_js
     visit @users 
     page.should have_content("test_new user")  
-    id = page.evaluate_script("$('.tab_list').find('a:contains(\"test_new user\")').parent().parent().attr('id');")
-    li = "li##{id}"
+    id = User.where(name:"test_new user").first.id.to_s
+    li = "li#user_#{id}"
     within(:css, li) do
       first(".open_user_update").click  
     end 
     page.should have_content("Update user")
     fill_in "user_name", with: "test_new_edit user"
     fill_in "user_password", with: "test_new_edit user"
-    page.find("#edit_#{id}").find(".submit").click
+    page.find("#edit_user_#{id}").find(".submit").click
     page.should have_content("test_new_edit user") 
     page.should have_content("successfully saved") 
   end 
-  scenario "delete yourself", js: true do
-    sign_in_on_js
-    visit @users
-    id = page.evaluate_script("$('.tab_list').find('a:contains(\"#{@user.name}\")').parent().parent().attr('id');")
-    li = "li##{id}"
-    within(:css, li) do
-      first(".delete_user").trigger('click')
-    end
-    page.should have_content("You cannot delete yourself") 
-  end
   scenario "delete user", js: true do
     sign_in_on_js
     visit @users
-    id = page.evaluate_script("$('.tab_list').find('a:contains(\"test_new_edit user\")').parent().parent().attr('id');")
-    li = "li##{id}"
+    id = User.where(name:"test_new_edit user").first.id.to_s
+    li = "li#user_#{id}"
     within(:css, li) do
       first(".delete_user").trigger('click')
     end
     page.should have_content("test_new_edit user was deleted") 
   end
+  
+
 end

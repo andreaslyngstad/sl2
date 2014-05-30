@@ -12,7 +12,7 @@ feature 'the firm is closed due to no payment' do
 	end
 end
 
-feature 'the user is a external user' do
+feature 'the user is a external_user' do
 	get_the_gritty
 	scenario 'what does the user see' do
 		sign_in_on_js
@@ -23,7 +23,7 @@ feature 'the user is a external user' do
 		page.should have_content("test_project")
 		click_link 'Sign out'
 		
-		@user = FactoryGirl.create(:user, role: 'External user', firm: @firm)
+		@user = FactoryGirl.create(:user, role: 'external_user', firm: @firm)
 		
 		sign_in_on_js
 		page.should_not have_content("test_project")

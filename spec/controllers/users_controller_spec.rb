@@ -36,7 +36,7 @@ describe UsersController do
   end
   describe "GET edit" do
     it "should assign user to @user" do
-      get :edit, :id => @user, :format => 'js'
+      xhr :get, :edit, :id => @user, :format => 'js'
       assigns(:user).should eq(@user) 
     end 
   end

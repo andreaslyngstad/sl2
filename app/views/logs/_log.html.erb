@@ -1,11 +1,13 @@
+
 <% if can? :read, log.project or can? :manage, log%>
+<li class="log_list_element">
 <div id="log_<%=log.id%>" > 
  <div id="log_info_<%=log.id%>"  class="info" data-log="<%= log.id %>">
  	<div class="gravatar_on_log">
  	<%= link_to image(log.user, "image32"),user_path(log.user), :title => "#{log.user.name}" %>
  	</div>
   <div class="event_on_log">
-    <%= log.event %>
+    <%= simple_format(log.event, class: 'log_event_paragraf') %>
      </div> 
      <% if !log.end_time.nil? %>
     <div class="date_and_times_on_log" >
@@ -25,20 +27,21 @@
       	</div>
 
  <div class="delete_edit">
- 	<% if can? :manage, log and %>
-  <% if log.invoice_id.nil? %>
+ 	<% if can? :manage, log %>
+  <% if !log.invoiced? %>
   <span class="open_log_update edit" id="log_update" title="<%= t'edit' %>" data-id="<%= log.id %>"><%= t'edit' %></span>
   <%= link_to (t"delete"), log, data: { confirm: ( t'are_you_sure?') }, :title => (t"delete"), :method => :delete, :class => "delete_log", :remote => true%>
   </div>
   </div>
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="<%= t'helpers.submit.update', model: Log.model_name.human %>" style="display:none;" data-id="<%= log.id %>"></div>
-  <% else %>
+    <% else %>
    <%= t'economic.invoiced' %>
+    <% end %>
   <% end %>
-  <% end %>
+  </div>
     <% else %>
     <div class="date_and_times_on_log" >
-    	in progress
+    	<%= t'general.in_progress' %>
     </div>
     <div class="pro_tod_cus_emp_on_log">
       	<div class="pro_tod_on_log">
@@ -52,5 +55,5 @@
       	</div>
      </div>
     <% end %> 
-</div>
+</li>
  <% end %>

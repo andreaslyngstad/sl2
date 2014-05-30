@@ -7,7 +7,7 @@
 	</div>
 	
 	<div id="accordion">
-		<h3>Users</h3>
+		<h3><%= (t'activerecord.models.user.more').capitalize %></h3>
 	  	<div id="signed_in_users">
 		  	<ul>
 			  <% all_users.each do |user|%>
@@ -19,13 +19,13 @@
 			  <%end%>
 		  	</ul>
 		</div>
-		<h4 class="task_accordion">Tasks</h4>
+		<h4 class="task_accordion"><%= (t'activerecord.models.todo.more').capitalize %></h4>
 		<div id="upcomming_tasks">
 			<div id="ajax-loader" style="margin: 0 auto;width:200px">
 			  	<%= image_tag("ajax-loader.gif")%>
 			</div>
 		</div>
-		<h3 class="milestone_accordion">Milestones</h3>
+		<h3 class="milestone_accordion"><%= (t'activerecord.models.milestone.more').capitalize %></h3>
 		<div id="upcomming_milestones">
 			<div id="ajax-loader" style="margin: 0 auto;width:200px">
 			<%= image_tag("ajax-loader.gif")%>

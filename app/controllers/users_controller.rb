@@ -53,6 +53,7 @@ class UsersController < ApplicationController
      authorize! :update, @klass
       respond_to do |format|
     if @klass.update_attributes(permitted_params.user)
+      sign_in(current_user)
       flash[:notice] = flash_helper("#{@klass.name}" + ' ' + (t'activerecord.flash.saved'))
       format.js
       format.html { redirect_to user_path(@klass) }
