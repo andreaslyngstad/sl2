@@ -7,7 +7,7 @@
 # config/server/production/nginx.conf
  
  
-user                          app;
+user                          <%= user%>;
 worker_processes              2;
 worker_priority               -5;
 timer_resolution              100ms;
@@ -42,6 +42,7 @@ http {
     gzip_comp_level           3;
     gzip_proxied              any;
     gzip_types                text/plain text/css application/x-javascript text/xml application/xml;
+    types_hash_max_size       2048;
  
     ssl_certificate       		/etc/ssl/<%= application %>.crt;
   	ssl_certificate_key   		/etc/ssl/<%= application %>.key;

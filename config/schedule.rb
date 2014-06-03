@@ -1,4 +1,5 @@
 set :output, "#{path}/log/cron.log"
+env :GEM_PATH, ENV['GEM_PATH']
 
 every :day, at: '11:30pm' do
   runner "Statistics.write_count"

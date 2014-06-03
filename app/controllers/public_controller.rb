@@ -54,7 +54,7 @@ class PublicController < ApplicationController
             end
           end
           flash[:notice] = "Registration successfull."
-          # QC.enqueue "FirmMailer.sign_up_confirmation", @user.id
+          QC.enqueue "FirmMailer.sign_up_confirmation", @user.id
           sign_out_and_redirect_with_token(@user)
         else
         	flash[:error] = "Registration could not be saved."

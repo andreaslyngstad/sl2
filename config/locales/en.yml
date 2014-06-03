@@ -280,6 +280,7 @@ en:
         bank_account: Bank account
         reminder_fee: Late fee
         tax: VAT%
+        days_to_due: Days to due
         time_zone: Time zone
         time_format: Time format
         date_format: Date format

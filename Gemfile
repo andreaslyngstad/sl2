@@ -48,6 +48,7 @@ group :development do
   gem "spring", "1.1.2"
   gem 'spring-commands-rspec'
   # gem 'rack-mini-profiler'
+  # gem "capistrano-rails"
   gem 'better_errors'
   gem "binding_of_caller" 
   gem 'meta_request'
@@ -82,7 +83,7 @@ end
 # Use unicorn as the web server
 gem 'unicorn'
 
-gem 'capistrano'
+gem 'capistrano', '~> 2.15.5'
 gem 'rvm-capistrano'
 # To use debugger
 # gem 'ruby-debug'

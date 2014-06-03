@@ -10,9 +10,11 @@ namespace :nginx do
     template "nginx_unicorn.erb", "/tmp/nginx_conf"    
     run "#{sudo} mv /tmp/nginx_conf /etc/nginx/sites-enabled/#{application}"
     run "#{sudo} rm -f /etc/nginx/sites-enabled/default"
-    # template "nginxConf.erb", "/tmp/nginxConf"
-    # run "#{sudo} rm -f /etc/nginx/nginx.conf"
-    # run "#{sudo} mv /tmp/nginxConf /etc/nginx/nginx.conf"
+    template "nginxConf.erb", "/tmp/nginxConf"
+    run "#{sudo} rm -f /etc/nginx/nginx.conf"
+    run "#{sudo} mv /tmp/nginxConf /etc/nginx/nginx.conf"
+    run "#{sudo} mkdir -p /usr/share/nginx/logs"
+    run "#{sudo} touch /usr/share/nginx/logs/nginx.error.log"
     restart
   end
   after "deploy:setup", "nginx:setup"

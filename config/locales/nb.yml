@@ -273,6 +273,7 @@ nb:
         reminder_fee: Purregebyr
         vat_number: Organisasjonsnummer
         tax: MVA%
+        days_to_due: Dager til forfall
         time_zone: Tidssone
         time_format: Tidsformat
         date_format: Datoformat

@@ -29,6 +29,7 @@ require 'mail'
 
 	def invoice_to_pdf_and_download(invoice_id)
 		invoice_to_pdf(invoice_id)
+		Rails.logger.info "queue classic FUNGERE"
 		Invoice.find(invoice_id).to_pdf
 		filename = 
 		send_file("#{Rails.root}/tmp/shrimp/" + params[:file], :filename => params[:file],  :type=>"application/pdf" )
