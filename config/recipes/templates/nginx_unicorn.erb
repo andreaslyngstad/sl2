@@ -1,9 +1,9 @@
 upstream unicorn {
-  server unix:/tmp/unicorn.<%= application %>.sock fail_timeout=0;
+  server unix:/tmp/unicorn.<%= fetch(:application)  %>.sock fail_timeout=0;
 }
 server {
   listen              80;
-  server_name         *.<%= application %>.com;
+  server_name         *.<%= fetch(:application)  %>.com;
   rewrite             ^(.*) https://$host$1 permanent;
  
   location ~ \.(php|html)$ {
@@ -16,10 +16,10 @@ server {
  
 server {
   listen                443;
-  server_name           *.<%= application %>.com;
+  server_name           *.<%= fetch(:application)  %>.com;
   ssl                   on;
-  ssl_certificate       /etc/ssl/<%= application %>-unified.crt;
-  ssl_certificate_key   /etc/ssl/<%= application %>.key;
+  ssl_certificate       /etc/ssl/<%= fetch(:application)  %>-unified.crt;
+  ssl_certificate_key   /etc/ssl/<%= fetch(:application)  %>.key;
   ssl_protocols         SSLv3 TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers           HIGH:!aNULL:!MD5;
   ssl_session_cache     shared:SSL:10m;

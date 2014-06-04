@@ -27,11 +27,24 @@ namespace :monit do
     syntax
     reload
   end
-  after "deploy:setup", "monit:setup"
+  # after "deploy:setup", "monit:setup"
   
-  task(:nginx, roles: :web) { monit_config "nginx" }
-  task(:postgresql, roles: :db) { monit_config "postgresql" }
-  task(:unicorn, roles: :app) { monit_config "unicorn" }
+  task(:nginx) do
+    on roles :app do
+       monit_config "nginx"
+     end
+   end
+
+  task(:postgresql) do
+    on roles :app do
+      monit_config "postgresql"
+    end
+   end
+  task(:unicorn) do
+    on roles :app do
+      monit_config "unicorn"
+    end
+   end
 
   %w[start stop restart syntax reload].each do |command|
     desc "Run Monit #{command} script"

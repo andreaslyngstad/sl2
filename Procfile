@@ -1,1 +1,1 @@
-worker: RAILS_ENV=production bundle exec rake qc:work
+worker: RAILS_ENV=production bundle exec rake qc:work export DEBUG="true"

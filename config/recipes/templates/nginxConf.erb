@@ -7,7 +7,7 @@
 # config/server/production/nginx.conf
  
  
-user                          <%= user%>;
+user                          <%= fetch(:user) %>;
 worker_processes              2;
 worker_priority               -5;
 timer_resolution              100ms;
@@ -44,8 +44,8 @@ http {
     gzip_types                text/plain text/css application/x-javascript text/xml application/xml;
     types_hash_max_size       2048;
  
-    ssl_certificate       		/etc/ssl/<%= application %>.crt;
-  	ssl_certificate_key   		/etc/ssl/<%= application %>.key;
+    ssl_certificate       		/etc/ssl/<%= fetch(:application) %>.crt;
+  	ssl_certificate_key   		/etc/ssl/<%= fetch(:application)  %>.key;
     ssl_session_timeout       15m;
     ssl_protocols             SSLv3 TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers               RC4:HIGH:!aNULL:!MD5;

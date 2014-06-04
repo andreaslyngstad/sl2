@@ -1,7 +1,9 @@
 namespace :nodejs do
   desc "Install Node.js"
-  task :install, roles: :app do
+  task :install do
+  	on roles :app do
     run "#{sudo} apt-get -y install nodejs"
   end
-  after "deploy:install", "nodejs:install"
+  end
+  # after "deploy:install", "nodejs:install"
 end

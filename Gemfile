@@ -54,12 +54,17 @@ group :development do
   gem 'meta_request'
   gem 'bullet'
   gem 'quiet_assets'
-  gem 'debugger'
+  # gem 'debugger'
   gem 'puma'
   gem 'guard-livereload', require: false
   gem "rack-livereload"
   # gem 'simplecov', :require => false
- 
+  gem 'capistrano', '~> 3.1', require: false
+  gem 'capistrano-postgresql', '~> 3.0'
+  gem 'capistrano-rails',   '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+  gem 'capistrano-rvm'
+  
 end
 group :test do 
   gem "minitest"
@@ -83,8 +88,8 @@ end
 # Use unicorn as the web server
 gem 'unicorn'
 
-gem 'capistrano', '~> 2.15.5'
-gem 'rvm-capistrano'
+# gem 'capistrano', '~> 2.15.5'
+# gem 'rvm-capistrano'
 # To use debugger
 # gem 'ruby-debug'
 
