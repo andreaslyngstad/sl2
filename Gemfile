@@ -64,6 +64,7 @@ group :development do
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rvm'
+  gem 'capistrano-safe-deploy-to', '~> 1.1'
   
 end
 group :test do 

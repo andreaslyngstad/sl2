@@ -16,4 +16,13 @@ namespace :deploy do
     run "#{sudo} apt-get -y update"
     run "#{sudo} apt-get -y install python-software-properties"
   end
+
+  # desc "Setup up ecverything"
+  # task :Setup do 
+  # 	invoke "monit:setup"
+  # 	nginx:setup
+  # 	shrimp:setup 
+  # 	secrets:setup 
+  # end
+
 end
