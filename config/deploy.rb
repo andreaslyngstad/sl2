@@ -15,7 +15,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :keep_releases, 5
 
 # files we want symlinking to specific entries in shared
-set :linked_files, %w{config/database.yml config/secret.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml}
 
 # dirs we want symlinking to shared
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -92,10 +92,10 @@ namespace :deploy do
   #after 'deploy:setup_config', 'shrimp:setup'
   # Restart monit so it will pick up any monit configurations
   # we've added
-  after 'deploy:setup_config', 'monit:restart'
+  after 'deploy:restart', 'monit:restart'
 
   # As of Capistrano 3.1, the `deploy:restart` task is not called
   # automatically.
   after 'deploy:publishing', 'deploy:restart'
-end
 
+end

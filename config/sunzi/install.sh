@@ -34,6 +34,7 @@ source recipes/nodejs.sh
 source recipes/postgres.sh
 source recipes/monit.sh
 source recipes/certificates.sh
+source recipes/add_rule_queue.sh
 source recipes/adduser.sh
 source recipes/ufw.sh
 # source recipes/rvm.sh

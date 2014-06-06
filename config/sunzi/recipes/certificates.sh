@@ -1,6 +1,6 @@
 #certificates copy
-FILE=/etc/ssl/<%= @attributes.app_name %>.crt
-if  [  -e ${FILE} ]; then
+CERTIFI=/etc/ssl/<%= @attributes.app_name %>.crt
+if  [  -e ${CERTIFI} ]; then
   echo "certificates already copied, skipping."
 else
 	echo "copying certificates"
