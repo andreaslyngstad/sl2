@@ -33,7 +33,7 @@ gem 'sass-rails', :github => 'rails/sass-rails'
 gem 'coffee-rails', :github => "rails/coffee-rails"
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-ui-rails'
-gem 'foreman'
+# gem 'foreman'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'yui-compressor'
