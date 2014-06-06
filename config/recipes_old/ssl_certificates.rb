@@ -12,3 +12,7 @@ namespace :certificate do
   end
  
 end
+
+/home/andreas/ws/sl2/certificates/squadlink.key /etc/ssl/squadlink.key
+/home/andreas/ws/sl2/certificates/squadlink-unified.key /etc/ssl/squadlink-unified.key
+/home/andreas/ws/sl2/certificates/squadlink.crt /etc/ssl/squadlink.crt

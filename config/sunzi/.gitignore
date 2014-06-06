@@ -1,0 +1,6 @@
+/compiled
+
+sunzi.yml
+files/deploy_key
+files/*.crt
+files/*.key

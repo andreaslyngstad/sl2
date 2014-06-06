@@ -63,7 +63,7 @@ group :development do
   gem 'capistrano-postgresql', '~> 3.0'
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
-  gem 'capistrano-rvm'
+  gem 'capistrano-rbenv'
   gem 'capistrano-safe-deploy-to', '~> 1.1'
   
 end

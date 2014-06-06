@@ -7,7 +7,8 @@ namespace :monit do
 
   desc "Setup all Monit configuration"
   task :setup do
-    
+    on roles :app do
+    as :deployer do 
     # run "#{sudo} openssl req -new -x509 -days 365 -nodes -out /etc/monit/monit.pem -keyout /etc/monit/monit.pem"  do |ch, stream, out|
     #   ch.send_data "NO"+"\n" if out =~ /Country Name/
     #   ch.send_data "ostfold"+"\n" if out =~ /State or Province Name/
@@ -26,6 +27,8 @@ namespace :monit do
     unicorn
     syntax
     reload
+  end
+  end
   end
   # after "deploy:setup", "monit:setup"
   
@@ -57,7 +60,7 @@ end
 def monit_config(name, destination = nil)
   destination ||= "/etc/monit/conf.d/#{name}.conf"
   template "monit/#{name}.erb", "/tmp/monit_#{name}"
-  run "#{sudo} mv /tmp/monit_#{name} #{destination}"
-  run "#{sudo} chown root #{destination}"
-  run "#{sudo} chmod 600 #{destination}"
+  execute "mv /tmp/monit_#{name} #{destination}"
+  execute "chown root #{destination}"
+  execute "chmod 600 #{destination}"
 end
