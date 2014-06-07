@@ -17,13 +17,6 @@ GIT
       polyamorous (~> 1.0.0)
 
 GIT
-  remote: git://github.com/andreaslyngstad/paymill-ruby.git
-  revision: b3eea6ba33ff2faee18195be8176618368a0b6f1
-  specs:
-    paymill (0.2.0)
-      json
-
-GIT
   remote: git://github.com/gregbell/active_admin.git
   revision: 65aae6b68e78aad3071b2f85242b19fd3fccf426
   specs:
@@ -284,6 +277,8 @@ GEM
       mime-types
     paranoia (2.0.2)
       activerecord (~> 4.0)
+    paymill (0.4.0)
+      json
     pdfkit (0.6.2)
     pg (0.17.1)
     poltergeist (1.5.0)
@@ -455,7 +450,7 @@ DEPENDENCIES
   newrelic_rpm
   paperclip
   paranoia (~> 2.0)
-  paymill!
+  paymill
   pdfkit
   pg (~> 0.17.0)
   poltergeist

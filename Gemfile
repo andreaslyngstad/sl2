@@ -23,7 +23,7 @@ gem 'shrimp'
 gem 'pdfkit'
 gem 'newrelic_rpm'
 gem 'whenever', :require => false
-gem 'paymill', :git => "git://github.com/andreaslyngstad/paymill-ruby.git"
+gem 'paymill'
 gem "pg", "~> 0.17.0 "
 gem "queue_classic", "3.0.0beta"
 gem 'rails-observers'
