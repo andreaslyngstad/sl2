@@ -11,4 +11,5 @@ else
  	ufw allow http
  	#uncomment the following line to allow https connections
  	ufw allow https 
+ 	ufw allow 28987
 fi

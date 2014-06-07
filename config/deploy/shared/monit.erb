@@ -35,5 +35,5 @@ check process nginx with pidfile /var/run/nginx.pid
   if 5 restarts within 5 cycles then timeout
 
 check process queue_classic with pidfile apps/<%= application %>/shared/tmp/pids/qc.pid
-  start program = "/bin/bash -c 'cd apps/<%= application %>/current/ && ./rule_queue.sh start'" with timeout 60 seconds
-  stop program = "/bin/bash -c 'cd apps/<%= application %>/current/ && ./rule_queue.sh stop'"
+  start program = "/bin/bash -c 'cd apps/<%= application %>/current/ && rule_queue.sh start'" with timeout 60 seconds
+  stop program = "/bin/bash -c 'cd apps/<%= application %>/current/ && rule_queue.sh stop'"
