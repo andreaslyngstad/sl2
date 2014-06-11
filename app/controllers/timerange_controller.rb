@@ -29,7 +29,7 @@ class TimerangeController < ApplicationController
 
   def get_time_range(params)
     if params[:from]
-      ((Date.parse(params[:from]).midnight)..Date.parse(params[:to]).midnight)
+      ((Date.parse(params[:from]))..Date.parse(params[:to]))
     else
       timerange(params[:time])
     end
