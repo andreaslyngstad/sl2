@@ -80,6 +80,7 @@ namespace :deploy do
   # before :deploy, "deploy:run_tests"
   # compile assets locally then rsync
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  after 'deploy:symlink:shared', 'shrimp:setup'
   after :finishing, 'deploy:cleanup'
 
   # remove the default nginx configuration as it will tend
@@ -89,7 +90,7 @@ namespace :deploy do
   # reload nginx to it will pick up any modified vhosts from
   # setup_config
   after 'deploy:setup_config', 'nginx:reload'
-  #after 'deploy:setup_config', 'shrimp:setup'
+  
   # Restart monit so it will pick up any monit configurations
   # we've added
   after 'deploy:restart', 'monit:restart'
