@@ -2,7 +2,6 @@ require 'subdomain'
 Squadlink::Application.routes.draw do
   resources :blogs
   get "/termsofservice" => "public#termsofservice",  :as => :termsofservice
-  get "/imprint" => "public#imprint",  :as => :imprint
   get "/privacy_policy" => "public#privacy_policy",  :as => :privacy_policy
   get "/pricing" => "public#pricing",  :as => :pricing
   get "/index" => "public#index",  :as => :index

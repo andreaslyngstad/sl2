@@ -7,10 +7,8 @@
     </script>
       
       <%= stylesheet_link_tag('invoice', :media => "all") %>
-     <%= stylesheet_link_tag('normalize', :media => "all") %>
-    
+      <%= stylesheet_link_tag('normalize', :media => "all") %>
       <%= javascript_include_tag('invoices/invoice_pdf', :media => "all") %>
- 
        <script type="text/javascript">
      $(document).ready(function() {
       $('.invoice_wrapper').find('.page_counting').count_pages()

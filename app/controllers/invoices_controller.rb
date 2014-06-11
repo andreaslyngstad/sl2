@@ -120,7 +120,7 @@ class InvoicesController < ApplicationController
     @invoice = current_firm.invoices.find(params[:id])
     @klass.set_status_and_currency(current_firm)
     InvoiceSender.give_invoice_number(@klass,Invoice.last_with_number(current_firm)) 
-    @klass.paid = Date.today
+    @klass.paid = Date.current
     @klass.status = 8
     respond_to do |format|
       if @klass.save

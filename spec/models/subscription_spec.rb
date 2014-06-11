@@ -9,7 +9,7 @@ describe Subscription do
   
   describe 'credit card info', :vcr do
     before do
-      # card = { number: '4111111111111111', exp_month: '11', exp_year: (Time.now.year + 1).to_s }
+      # card = { number: '4111111111111111', exp_month: '11', exp_year: (Time.zone.now.year + 1).to_s }
       @subscription = Subscription.new( firm: firm, plan: plan, name: "test", email: "test2@test.no", paymill_card_token: "098f6bcd4621d373cade4e832627b4f6") 
       @subscription.save_with_payment  
     end
@@ -25,7 +25,7 @@ describe Subscription do
     
   end 
   it "test", :vcr do
-    card = { number: '4111111111111111', exp_month: '11', exp_year: (Time.now.year + 1).to_s }
+    card = { number: '4111111111111111', exp_month: '11', exp_year: (Time.zone.now.year + 1).to_s }
       @subscription = Subscription.new( firm: firm, plan: plan, name: "test", email: "test2@test.no", paymill_card_token: "098f6bcd4621d373cade4e832627b4f6") 
       @subscription.save_with_payment  
       firm.subscription.should == @subscription
@@ -46,15 +46,15 @@ describe Subscription do
   end
 end
 describe "cron job for checking payment" do
-    let(:f) { FactoryGirl.create(:firm, created_at: Time.now - 40.days, closed: false) }
+    let(:f) { FactoryGirl.create(:firm, created_at: Time.zone.now - 40.days, closed: false) }
     let(:p) { FactoryGirl.create(:plan, name: "costly", price: 1200) }
     let(:p1) { FactoryGirl.create(:plan, name: "Free", price: 0) }
     let(:user){FactoryGirl.create(:user, firm: f)}
-    let(:s1) { FactoryGirl.create(:subscription, email: user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.today - 1.days )}
-    let(:s2) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.today)}
-    let(:s3) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.today + 1.days )}
-    let(:s4) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.today - 14.days )}
-    let(:s5) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.today - 1.month )}
+    let(:s1) { FactoryGirl.create(:subscription, email: user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.current - 1.days )}
+    let(:s2) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.current)}
+    let(:s3) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.current + 1.days )}
+    let(:s4) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.current - 14.days )}
+    let(:s5) { FactoryGirl.create(:subscription, email:  user.email, firm_id: f.id, plan_id: p.id, next_bill_on: Date.current - 1.month )}
     
  it "should check for unpaid subscriptions" do 
     s1

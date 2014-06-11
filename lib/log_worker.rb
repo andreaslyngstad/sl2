@@ -16,8 +16,8 @@ module LogWorker
     log = LogWorker.create(log,done,user,firm)
     log.tracking = true
     log.rate = user.hourly_rate
-    log.begin_time = Time.now
-    log.log_date = Date.today
+    log.begin_time = Time.zone.now
+    log.log_date = Date.current
     log
   end
   

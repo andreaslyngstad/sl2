@@ -24,9 +24,9 @@ module Squadlink
     config.colorize_logging = true
     # Enable the asset pipeline
     # config.assets.enabled = false
-    config.assets.precompile += %w( invoice.css invoice.pdf invoice.js registration.js registration.css .svg .eot .woff .ttf)
+    config.assets.precompile += %w( normalize.css invoice_pdf.js invoice_pdf.css invoice.css invoice.js registration.js registration.css .svg .eot .woff .ttf)
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = '1.1'
     
     config.to_prepare { 
       Devise::SessionsController.layout "registration" 

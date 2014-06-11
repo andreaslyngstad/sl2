@@ -25,7 +25,7 @@ ActiveAdmin.register User do
       user.last_sign_in_at.try(:strftime, "%d.%m.%Y")
     end                
     column :sign_in_count             
-    default_actions                   
+    actions                   
   end                                 
   
   filter :email 

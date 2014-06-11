@@ -30,13 +30,13 @@ class ChartsController < ApplicationController
   end
   
   def economicstatistics_json
-    range2 = Date.today - 12.months..Date.today
+    range2 = Date.current - 12.months..Date.current
     @income_stack = ChartData.new(current_firm,range2,:invoice).income_per_month
   end
   
   def dashboard_json
     range = params[:from].to_date..params[:to].to_date
-    range2 = Date.today - 12.months..Date.today
+    range2 = Date.current - 12.months..Date.current
     @user_pie = ChartData.new(current_firm,range,:user).pie
     @project_pie = ChartData.new(current_firm,range,:project).pie
     @income_stack = ChartData.new(current_firm,range2,:invoice).income_per_month

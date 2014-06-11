@@ -4,7 +4,7 @@
    			<%= n.text_area :event, :class => "tracking_log_event log_event_recording", :id => "tracking_log_event_field", :data => {:id => @log.id}%> 
    		<div class="clock_rec">
    			<div class="display">
-   				<span class="hr"><%=hours(Time.now - @log.begin_time)%></span>:<span class="min"><%=min(Time.now - @log.begin_time)%></span>:<span class="sec"><%=sec(Time.now - @log.begin_time)%></span>  				
+   				<span class="hr"><%=hours(Time.zone.now - @log.begin_time)%></span>:<span class="min"><%=min(Time.zone.now - @log.begin_time)%></span>:<span class="sec"><%=sec(Time.zone.now - @log.begin_time)%></span>  				
    			</div>
    		</div>
      	<div class="tracking_button">

@@ -1,7 +1,7 @@
 
 describe ProjectPrice do
 
-		let(:time)		{Time.now}
+		let(:time)		{Time.zone.now}
 		let(:firm)		{FactoryGirl.create :firm}
 		let(:project) {FactoryGirl.create :project, firm: firm, budget:1000 }
 		let(:bob)			{FactoryGirl.create :user, name: "bob", hourly_rate: 2, firm: firm }

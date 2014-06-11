@@ -38,6 +38,8 @@ class Firm < ActiveRecord::Base
   validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png']
   
   validates_presence_of :name
+  validates_presence_of :tax
+  validates_numericality_of :tax
   validates_format_of :subdomain, :with => /\A[a-z0-9]+\z/i
   validates :subdomain, :presence => true, :uniqueness => true,  :subdomain_exclutions => :true
   
@@ -61,7 +63,7 @@ class Firm < ActiveRecord::Base
   end
   
   def did_sign_in
-    self.last_sign_in_at = Date.today
+    self.last_sign_in_at = Date.current
     save
   end
 

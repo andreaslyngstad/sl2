@@ -28,16 +28,7 @@ class UsersController < ApplicationController
       if @klass.save
         flash[:notice] = flash_helper("#{@klass.name}" + ' ' + (t'activerecord.flash.saved'))
         format.js
-        $customerio.identify(
-           id: @klass.id,
-           email: @klass.email,
-           created_at: @klass.created_at.to_i,
-           name: @klass.name,
-           firm: @klass.firm.name,
-           firm_subdomain: @klass.firm.subdomain,
-           subscription: @klass.firm.subscription.name,
-           send_welcome_email: params[:send_welcome_email]
-        ) 
+        
       else
         format.js { render "shared/validate_create" }
     end

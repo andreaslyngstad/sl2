@@ -1,6 +1,6 @@
 <%= form_for(@email, remote: true) do |f| %>
 <%= f.hidden_field :invoice_id, value: @invoice.id %>
-<%= f.hidden_field :sent, value: Date.today %>
+<%= f.hidden_field :sent, value: Date.current %>
 <ul>
  	<li><%= f.label :email %><%= f.text_field :address, value: @invoice.customer.email, :class => "required email", :minlength => "2"%></li>
  	<% if @invoice.status == 3 or @invoice.status == 4 %>

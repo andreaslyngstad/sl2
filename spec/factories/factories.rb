@@ -29,6 +29,7 @@ FactoryGirl.define do
   factory :firm_no_plan, class: Firm do
    name
    subdomain
+   tax 25
    closed false
    time_format 1 
    date_format 1
@@ -98,7 +99,7 @@ FactoryGirl.define do
 
   factory :todo do
     name "Todo today"
-    due Date.today.strftime("%d.%m.%y")
+    due Date.current.strftime("%d.%m.%y")
     user
     firm
     project

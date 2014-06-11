@@ -6,10 +6,10 @@ describe Milestone do
   let(:firm)      {FactoryGirl.create(:firm)}
   let(:project)   {FactoryGirl.create(:project, :firm => firm)}
   let(:user) 			{FactoryGirl.create(:user, :firm => firm)}
-  let(:milestone1){FactoryGirl.create(:milestone, :due => Time.now - 1.day, :firm => firm,:project => project)}
-  let(:milestone2){FactoryGirl.create(:milestone, :due => Time.now + 1.day, :firm => firm,:project => project)}
-  let(:milestone3){FactoryGirl.create(:milestone, :due => Time.now + 15.days, :firm => firm,:project => project)}
-  let(:milestone4){FactoryGirl.create(:milestone, :due => Time.now - 15.days, :firm => firm,:project => project)}
+  let(:milestone1){FactoryGirl.create(:milestone, :due => Time.zone.now - 1.day, :firm => firm,:project => project)}
+  let(:milestone2){FactoryGirl.create(:milestone, :due => Time.zone.now + 1.day, :firm => firm,:project => project)}
+  let(:milestone3){FactoryGirl.create(:milestone, :due => Time.zone.now + 15.days, :firm => firm,:project => project)}
+  let(:milestone4){FactoryGirl.create(:milestone, :due => Time.zone.now - 15.days, :firm => firm,:project => project)}
   it 'should be saved on correct firm' do
     firm2 = FactoryGirl.create(:firm)
     test = FactoryGirl.build(:milestone,:project => project, :firm => firm2)

@@ -23,7 +23,7 @@ class TabsController < ApplicationController
     respond_with(@milestones)
   end 
   def todos  
-    time_range = (Time.now.midnight - 7.day)..(Time.now.midnight + 7.day)
+    time_range = (Time.zone.now.midnight - 7.day)..(Time.zone.now.midnight + 7.day)
     get_instance(params)
     authorize! :read, @klass
     @done_todos = get_klass(params[:class]).find(params[:id]).todos.where(["completed = ?", true]).where(:due => time_range).includes( :user, :done_by_user, :logs, :project,:customer).order("due ASC")
@@ -34,7 +34,7 @@ class TabsController < ApplicationController
   def logs
     get_instance(params)
     authorize! :read, @klass
-    @logs = @klass.logs.where(log_date: Date.today).includes([:user, :todo, :employee, :customer, :firm,{:project => [:firm]}])
+    @logs = @klass.logs.where(log_date: Date.current).includes([:user, :todo, :employee, :customer, :firm,{:project => [:firm]}])
     respond_with(@logs)
   end
   def users

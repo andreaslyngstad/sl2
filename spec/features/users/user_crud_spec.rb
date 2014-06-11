@@ -17,7 +17,8 @@ feature 'user' do
     fill_in "user_email", with: "test@tes.no"
     fill_in "user_password", with: "password" 
     page.find('#new_user').find('.submit').click
-    page.should have_content("was successfully saved")
+    sleep 5
+    page.should have_content("was successfully saved") 
     page.should have_content("test_new user")
   end 
   scenario "delete yourself", js: true do

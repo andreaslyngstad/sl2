@@ -17,8 +17,8 @@ feature 'Project' do
       @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
       @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
       @project.users << @user
-      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
-      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
+      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.zone.now - 2.hours, end_time: Time.zone.now,:log_date => Time.zone.now.beginning_of_week)
+      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.zone.now - 2.hours, end_time: Time.zone.now,:log_date => Time.zone.now.beginning_of_week + 1.day)
       Capybara.server_port = 31234 
       sub = @firm.subdomain
       Capybara.app_host = @root_url 

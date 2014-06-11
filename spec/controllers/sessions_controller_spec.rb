@@ -12,7 +12,7 @@ describe SessionsController do
       	get :sign_in_at_subdomain
       	flash[:notice].should == "Signed in successfully."
       	firm.reload
-      	firm.last_sign_in_at.should == Date.today
+      	firm.last_sign_in_at.should == Date.current
       end
     end
     context "with invalid token" do
@@ -21,7 +21,7 @@ describe SessionsController do
       	@request.cookies[:token] = 'false_secret'
       	get :sign_in_at_subdomain
       	flash[:alert].should == "Login could not be validated"
-      	firm.last_sign_in_at.should_not == Date.today
+      	firm.last_sign_in_at.should_not == Date.current
       end
     end
   end

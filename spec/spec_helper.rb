@@ -20,7 +20,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
 require 'factory_girl'
-require 'ruby-debug'
+# require 'ruby-debug'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 
@@ -29,7 +29,7 @@ include Warden::Test::Helpers
 Warden.test_mode!
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-
+Zonebie.set_random_timezone
 RSpec.configure do |config|
 
   config.include Devise::TestHelpers, :type => :controller

@@ -17,26 +17,26 @@ describe Todo do
     test.errors[:base].should be_present 
   end
   it "Can be due to day" do
-    todo = Todo.create!(:name => "Test", :due => Time.now, :completed => false, :firm => firm, :project => project, :user => user)
+    todo = Todo.create!(:name => "Test", :due => Time.zone.now, :completed => false, :firm => firm, :project => project, :user => user)
     todo.due_to_day.should == true
   end
   it "Can be not due to day" do
-    todo = Todo.create!(:name => "Test", :due => Time.now + 1.day, :completed => false, :firm => firm, :project => project, :user => user)
+    todo = Todo.create!(:name => "Test", :due => Time.zone.now + 1.day, :completed => false, :firm => firm, :project => project, :user => user)
     todo.due_to_day.should == false
   end
   
   it "Can be overdue" do
-    todo = Todo.create!(:name => "Test", :due => Time.now - 2.day, :completed => false, :firm => firm, :project => project, :user => user)
+    todo = Todo.create!(:name => "Test", :due => Time.zone.now - 2.day, :completed => false, :firm => firm, :project => project, :user => user)
     todo.overdue.should == true
   end
   it "Can be not overdue" do
-    todo = Todo.create!(:name => "Test", :due => Time.now + 1.day, :completed => false, :firm => firm, :project => project, :user => user)
+    todo = Todo.create!(:name => "Test", :due => Time.zone.now + 1.day, :completed => false, :firm => firm, :project => project, :user => user)
     todo.overdue.should == false
   end
   it "should not save without user" do
-    FactoryGirl.build(:todo, :name => "Test", :due => Time.now + 1.day, :firm => firm, :project => project).should_not be_valid 
+    FactoryGirl.build(:todo, :name => "Test", :due => Time.zone.now + 1.day, :firm => firm, :project => project).should_not be_valid 
   end
   it "should not save without project" do
-    FactoryGirl.build(:todo, :name => "Test", :due => Time.now + 1.day, :firm => firm, :user => user).should_not be_valid 
+    FactoryGirl.build(:todo, :name => "Test", :due => Time.zone.now + 1.day, :firm => firm, :user => user).should_not be_valid 
   end
 end

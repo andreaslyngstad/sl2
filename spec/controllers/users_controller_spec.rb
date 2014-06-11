@@ -42,13 +42,13 @@ describe UsersController do
   end
   describe "POST create" do
     context "with valid attributes" do
-      it "creates a new user" do
+      it "creates a new user", :vcr do
         expect{
           post :create, user: FactoryGirl.attributes_for(:user), :format => 'js'
         }.to change(User,:count).by(1)
       end
       
-      it "redirects to the new user" do
+      it "redirects to the new user", :vcr do
         post :create, user: FactoryGirl.attributes_for(:user), :format => 'js'
         flash[:notice].should_not be_nil 
         

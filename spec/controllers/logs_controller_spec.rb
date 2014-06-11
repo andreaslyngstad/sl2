@@ -14,7 +14,7 @@ describe LogsController do
       subject.current_firm.should_not be_nil
     end
     it "populates an array of logs" do
-      log = FactoryGirl.create(:log, log_date: Time.now.to_date, :user => @user, :firm => @user.firm)
+      log = FactoryGirl.create(:log, log_date: Time.zone.now.to_date, :user => @user, :firm => @user.firm)
       get :index
       assigns(:logs).should == [log]   
     end
@@ -49,12 +49,12 @@ describe LogsController do
     context "with invalid attributes" do
       it "creates a new log" do
         expect{
-          post :create, log: FactoryGirl.attributes_for(:log, begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+          post :create, log: FactoryGirl.attributes_for(:log, begin_time: Time.zone.now, end_time: Time.zone.now - 1.hour), :format => 'js'
         }.to change(Log,:count).by(0)
       end
       
       it "gives flash notice when creating new log" do
-        post :create, log: FactoryGirl.attributes_for(:log, begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+        post :create, log: FactoryGirl.attributes_for(:log, begin_time: Time.zone.now, end_time: Time.zone.now - 1.hour), :format => 'js'
         response.should render_template("shared/validate_create")
       end
     end 
@@ -75,13 +75,13 @@ describe LogsController do
   end
   context "with invalid attributes" do
     it "does not changes a invalid log" do
-      put :update, id: @log, log: FactoryGirl.attributes_for(:log, :event => "something wrong", begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+      put :update, id: @log, log: FactoryGirl.attributes_for(:log, :event => "something wrong", begin_time: Time.zone.now, end_time: Time.zone.now - 1.hour), :format => 'js'
       @log.reload
       @log.event.should eq("customer man")
     end
     
     it "gives error when changes invalid log" do
-      put :update, id: @log, log: FactoryGirl.attributes_for(:log, begin_time: Time.now, end_time: Time.now - 1.hour), :format => 'js'
+      put :update, id: @log, log: FactoryGirl.attributes_for(:log, begin_time: Time.zone.now, end_time: Time.zone.now - 1.hour), :format => 'js'
       response.should render_template("shared/validate_update")
     end
   end

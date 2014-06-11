@@ -16,8 +16,9 @@ describe TodosController do
     context "with valid attributes" do
       it "creates a new contact" do
         expect{ 
-          post :create, todo: FactoryGirl.attributes_for(:todo, :project_id => @project.id, :user_id => @user.id), :format => 'js'
+          post :create, todo: FactoryGirl.attributes_for(:todo, due: Date.current, :project_id => @project.id, :user_id => @user.id), :format => 'js'
         }.to change(Todo,:count).by(1)
+        
       end
       
       it "Should show flash" do

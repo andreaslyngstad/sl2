@@ -34,7 +34,7 @@ describe TimesheetsController do
 	  	firm.users << external_user
 	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.today
 	  	assigns(:users).should =~ [@user, external_user]
-	  	assigns(:dates).should == ((Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date))
+	  	assigns(:dates).should == ((Time.zone.now.beginning_of_week.to_date)..(Time.zone.now.end_of_week.to_date))
     	assigns(:log_project).should == {nil=>60.0, project.id=>60.0}
     	assigns(:log_week).should == {Date.today=>120.0}
     	assigns(:log_week_project).should == {[project.id,Date.today]=>60.0, [nil, Date.today]=>60.0}
@@ -65,7 +65,7 @@ describe TimesheetsController do
   end
   describe "adding logs to timesheet" do
   	let(:firm) {@user.firm}
-  	let(:log)  {FactoryGirl.attributes_for(:log, end_time: Time.now + 2.hours, begin_time: Time.now, user_id: @user.id)}
+  	let(:log)  {FactoryGirl.attributes_for(:log, end_time: Time.zone.now + 2.hours, begin_time: Time.zone.now, user_id: @user.id)}
   	it "should get the user" do
   		post :add_log_timesheet, log: log, :format => 'js'
   		assigns(:user).should == @user

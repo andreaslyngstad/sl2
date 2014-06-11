@@ -17,7 +17,7 @@ ActiveAdmin.register Customer do
     column :name                     
     column :email                     
             
-    default_actions                   
+    actions                   
   end                                 
   
   filter :email 

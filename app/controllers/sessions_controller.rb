@@ -22,10 +22,6 @@ class SessionsController < Devise::SessionsController
       cookies.delete(:token, :domain => :all)
     if token_user
        sign_in(token_user)
-       $customerio.identify(
-           id: token_user.id,
-           last_visited: Date.today,
-        ) 
        token_user.firm.did_sign_in
        flash[:notice] = I18n.t("devise.sessions.signed_in")
       redirect_to root_url(:subdomain => token_user.firm.subdomain )

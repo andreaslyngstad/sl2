@@ -49,7 +49,7 @@ ActiveAdmin.register Firm do
      column "Last sign in", :sortable => :last_sign_in_at do |firm|
       firm.last_sign_in_at.try(:strftime, "%d.%m.%Y")
     end
-    default_actions 
+    actions 
   end
   filter :name 
   filter :subdomain

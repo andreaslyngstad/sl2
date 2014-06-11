@@ -15,8 +15,8 @@ class Todo < ActiveRecord::Base
   validate :user_must_exist
   validate :correct_time
 
-  scope :overdue_and_to_day, -> {not_complete.where(["due <= ?",  Date.today]).order("due").includes(:project)}
-  scope :due_to_day, -> {where(due:  Date.today, :completed => false)}
+  scope :overdue_and_to_day, -> {not_complete.where(["due <= ?",  Date.current]).order("due").includes(:project)}
+  scope :due_to_day, -> {where(due:  Date.current, :completed => false)}
 
   def correct_time
     errors.add(:due, "is wrong format") if !DateTester.new.date?(due)
@@ -35,10 +35,10 @@ class Todo < ActiveRecord::Base
   end
   
   def due_to_day
-    Time.now.strftime("%Y%j") == due.strftime("%Y%j") && completed == false
+    Time.zone.now.strftime("%Y%j") == due.strftime("%Y%j") && completed == false
   end
   
   def overdue
-    Time.now.in_time_zone.strftime("%Y%j") > due.strftime("%Y%j") && completed == false
+    Time.zone.now.in_time_zone.strftime("%Y%j") > due.strftime("%Y%j") && completed == false
   end
 end

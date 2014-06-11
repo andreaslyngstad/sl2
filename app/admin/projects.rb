@@ -15,7 +15,7 @@ ActiveAdmin.register Project do
     column :budget
     column :hour_price
     column :created_at
-    default_actions
+    actions
   end
   filter :name
   filter :firm

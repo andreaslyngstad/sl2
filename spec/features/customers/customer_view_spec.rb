@@ -10,8 +10,9 @@ feature 'customer' do
       @firm = @user.firm
       @plan = FactoryGirl.create(:plan, name: "test", customers: nil, projects: nil)
       @firm.plan = @plan
+      @firm.time_zone = "Berlin"
       @firm.users.should include @user
-      @firm.users.first.should eq @user
+      @firm.users.first.should eq @user  
       @project = FactoryGirl.create :project, name: "test_project", firm: @firm, budget:10  
       @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm, email: "te@test.com"
       @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.today, user: @user)         
@@ -21,8 +22,8 @@ feature 'customer' do
       @invoices = "http://#{@firm.subdomain}.lvh.me:31234/invoices"
       @root_url ="http://#{@firm.subdomain}.lvh.me:31234/"
       @project.users << @user
-      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week)
-      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Time.now.beginning_of_week + 1.day)
+      @log = FactoryGirl.create(:log, event: "test_log", customer: @customer, project: @project, user: @user, firm: @firm, begin_time: Time.zone.now - 2.hours, end_time: Time.zone.now,:log_date => Time.zone.now.beginning_of_week)
+      @log2 = FactoryGirl.create(:log, project: @project, user: @user, firm: @firm, begin_time: Time.zone.now - 2.hours, end_time: Time.zone.now,:log_date => Time.zone.now.beginning_of_week + 1.day)
       Capybara.server_port = 31234 
       sub = @firm.subdomain
       Capybara.app_host = @root_url 
@@ -68,6 +69,7 @@ feature 'customer' do
     find('#todoProjectId_chosen').trigger("mousedown")
     page.execute_script %Q{ $("li:contains('test_project')").trigger("mouseup")}
     find('#dialog_todo_date').click
+    # fill_in "#dialog_todo_date", with: "16.10.2"
     click_link('13')
     # date_str = Date.today.strptime('%m.%y')
     # fill_in 'dialog_todo_date', with: "30.02.2064"

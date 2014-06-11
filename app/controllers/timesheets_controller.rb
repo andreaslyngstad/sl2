@@ -18,7 +18,7 @@ class TimesheetsController < ApplicationController
     if !params[:user_id].blank?
       @user = current_firm.users.find(params[:user_id])
     end
-    date = params[:date] ? Date.parse(params[:date]) : time_zone_now.to_date
+    date = params[:date] ? Time.zone.parse(params[:date]) : time_zone_now.to_date
     @dates = (date.beginning_of_week.to_date)..(date.end_of_week.to_date)
     find_users(current_user)
     variables_bag(@klass, @user)
@@ -28,7 +28,7 @@ class TimesheetsController < ApplicationController
     authorize! :read, Firm
     get_log_for_tracking
     get_instance_if_not_index(params)
-    @date = params[:date] ? Date.parse(params[:date]) : time_zone_now.to_date
+    @date = params[:date] ? Time.zone.parse(params[:date]) : time_zone_now.to_date
     if !params[:user_id].blank?
       @user = current_firm.users.find(params[:user_id])
       if @klass
@@ -49,7 +49,7 @@ class TimesheetsController < ApplicationController
   end
  
   def add_log_timesheet
-    date = params[:log][:log_date] ? Date.parse(params[:log][:log_date]) : time_zone_now.to_date
+    date = params[:log][:log_date] ? Time.zone.parse(params[:log][:log_date]) : time_zone_now.to_date
     @dates = (date.beginning_of_week.to_date)..(date.end_of_week.to_date)
     @user = current_firm.users.find(params[:log][:user_id])
     @log = LogWorker.create(current_firm.logs.new(permitted_params.log), params[:done], @user, current_firm)
@@ -71,7 +71,7 @@ class TimesheetsController < ApplicationController
     @log.user = current_user
     @log.send(select_klass + '=', current_firm.send(params[:select_klass].pluralize).find(params[:select_id]))
     @log.send(klass + '=', current_firm.send(params[:klass].pluralize).find(params[:id]))
-    @dates = (Time.now.beginning_of_week.to_date)..(Time.now.end_of_week.to_date)
+    @dates = (Time.zone.now.beginning_of_week.to_date)..(Time.zone.now.end_of_week.to_date)
     @log.log_date = params[:date]
     @log.event = t('general.timesheet')
     @log.begin_time = @log.log_date.beginning_of_day

@@ -61,14 +61,14 @@ describe Firm do
   end
   
   it "should check payment" do
-    f.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true, next_bill_on: Time.now.to_date - 1.day )
-    f2.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true,  next_bill_on: Time.now.to_date + 1.days)
+    f.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true, next_bill_on: Time.zone.now.to_date - 1.day )
+    f2.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true,  next_bill_on: Time.zone.now.to_date + 1.days)
     f.payment_check?.should == true
     f2.payment_check?.should == false
   end  
   it 'did_sign_in' do
     f.did_sign_in
-    f.last_sign_in_at.should == Date.today
+    f.last_sign_in_at.to_date.should == Date.current
   end
   it "closes down" do
     f.close!

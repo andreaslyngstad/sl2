@@ -15,7 +15,7 @@ ActiveAdmin.register Todo do
     column :due
     column :completed
     column :prior
-   default_actions 
+   actions 
     
   end
   filter :name

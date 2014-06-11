@@ -34,7 +34,7 @@ describe ApplicationHelper do
 
 	it 'returns time now in current firms time zone' do
 
-		helper.time_zone_now.to_i.should == Time.now.in_time_zone.to_i
+		helper.time_zone_now.to_i.should == Time.zone.now.in_time_zone.to_i
 	end
 	it "truncate_string" do
 	  helper.truncate_string("1234567891234567891").should == "123456789123456..."

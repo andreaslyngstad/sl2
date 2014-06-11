@@ -50,7 +50,7 @@ class Log < ActiveRecord::Base
   
   
   def self.logs_for_timesheet(user)
-    user.logs.where(:log_date => (Date.today.beginning_of_week..Date.today.end_of_week)).group("project_id").group("date(log_date)").sum(:hours)
+    user.logs.where(:log_date => (Date.current.beginning_of_week..Date.current.end_of_week)).group("project_id").group("date(log_date)").sum(:hours)
   end
   
   def self.hours_by_day_and_model(firm, range, model)

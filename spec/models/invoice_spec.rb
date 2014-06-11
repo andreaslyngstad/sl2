@@ -11,20 +11,20 @@ describe Invoice do
   
   let(:firm)        {FactoryGirl.create(:firm, bank_account: 12, vat_number: 123)}
   let(:firm1)       {FactoryGirl.create(:firm)}
-  let(:time_now)    {Time.now}
+  let(:time_now)    {Time.zone.now}
   let(:user)        {FactoryGirl.create(:user, :firm => firm)}
-  let(:invoice)     {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm, due: Date.today, total: 200, receivable: 200)}
-  let(:credit_note) {FactoryGirl.create(:invoice, status: 7,  invoice: invoice, customer:customer, firm:firm, due: Date.today, total: -199)}
-  let(:reminder)    {FactoryGirl.create(:invoice, status: 10, reminder_on: invoice, customer: customer, firm:firm, due: Date.today, total: 250, reminder_fee: 50)}
+  let(:invoice)     {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm, due: Date.current, total: 200, receivable: 200)}
+  let(:credit_note) {FactoryGirl.create(:invoice, status: 7,  invoice: invoice, customer:customer, firm:firm, due: Date.current, total: -199)}
+  let(:reminder)    {FactoryGirl.create(:invoice, status: 10, reminder_on: invoice, customer: customer, firm:firm, due: Date.current, total: 250, reminder_fee: 50)}
   let(:log2)        {FactoryGirl.create(:log, invoice: invoice, rate: 101.001, tax: 25, :user => user, :firm => firm, :begin_time => time_now, :end_time => time_now + 2.hours ) }
   let(:log4)        {FactoryGirl.create(:log, invoice: invoice, rate: 11, tax: 25, :user => user, :firm => firm, :begin_time => time_now, :end_time => time_now + 2.hours ) }
   let(:log3)        {FactoryGirl.create(:log, invoice: invoice, rate: 100, tax: 10, :user => user, :firm => firm, :begin_time => time_now, :end_time => time_now + 4.hours ) }
   let(:invoice_line) { FactoryGirl.create(:invoice_line, invoice: invoice, quantity: 2, price: 15, tax: 25) }  
   let(:invoice_line2) { FactoryGirl.create(:invoice_line, invoice: invoice, quantity: 2, price: 6, tax: 10) }
-  let(:invoice1)    {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm , number: 2, due: Date.today + 1.day, paid: nil, receivable: 200 )}
-  let(:invoice2)    {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm , number:3, due: Date.today - 1.day, paid: Date.today, total: 200, lost: 200)}
-  let(:credit_note2) {FactoryGirl.create(:invoice, status: 7,  invoice: invoice2, customer:customer, firm:firm, due: Date.today, total: -199)}
-  let(:reminder2)    {FactoryGirl.create(:invoice, status: 10, reminder_on: invoice2, customer: customer, firm:firm, due: Date.today, total: 250, reminder_fee: 50)}
+  let(:invoice1)    {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm , number: 2, due: Date.current + 1.day, paid: nil, receivable: 200 )}
+  let(:invoice2)    {FactoryGirl.create(:invoice, status: 2, customer:customer, firm:firm , number:3, due: Date.current - 1.day, paid: Date.current, total: 200, lost: 200)}
+  let(:credit_note2) {FactoryGirl.create(:invoice, status: 7,  invoice: invoice2, customer:customer, firm:firm, due: Date.current, total: -199)}
+  let(:reminder2)    {FactoryGirl.create(:invoice, status: 10, reminder_on: invoice2, customer: customer, firm:firm, due: Date.current, total: 250, reminder_fee: 50)}
   let(:customer) {FactoryGirl.create(:customer, firm:firm)}
 
   it 'sets the receivable eq to the total on creation' do
@@ -39,7 +39,7 @@ describe Invoice do
     invoice.set_status_to_reminded("50")
     invoice.reload
     invoice.status.should eq 5
-    invoice.reminder_sent.should eq Date.today 
+    invoice.reminder_sent.to_date.should eq Date.current 
     invoice.receivable.should eq 250
   end
 
@@ -56,7 +56,7 @@ describe Invoice do
   end
 
   it 'validates the presence of customer' do
-    FactoryGirl.build(:invoice, status: 2,  firm:firm , number: 2, due: Date.today + 1.day, paid: nil).should_not be_valid
+    FactoryGirl.build(:invoice, status: 2,  firm:firm , number: 2, due: Date.current + 1.day, paid: nil).should_not be_valid
   end
   
   it "gives translated string for status" do
@@ -66,7 +66,7 @@ describe Invoice do
   end
   it "gives number or string" do
   	invoice.number_string.should eq "No number"
-  	invoice1.number_string.should eq 2
+  	invoice1.number_string.should eq 2 
   end
   # scopes
   it 'gets the last numberd invoice for spesific firm' do 
@@ -76,7 +76,7 @@ describe Invoice do
   end
   it "should return invoices ordered by number" do
     Invoice.destroy_all
-    first = invoice1
+    first = invoice1 
     last = invoice2
     Invoice.order_by_number.should == [invoice, last, first]
   end
@@ -104,7 +104,7 @@ describe Invoice do
   end
   it 'should set paid to day when nil and nil when paid not nil' do
     invoice1.paid!
-    invoice1.paid.should eq Date.today
+    invoice1.paid.to_date.should eq Date.current
     invoice1.status.should eq 6
     invoice1.receivable.should eq 0
     credit_note2

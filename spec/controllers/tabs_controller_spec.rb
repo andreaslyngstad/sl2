@@ -14,8 +14,8 @@ describe TabsController do
 	  end
 	end	
 	describe "todos" do
-	 	let(:todo1)			{FactoryGirl.create(:todo, project: project, firm: @user.firm, user: @user, completed: false, due: Date.today)}
-	 	let(:todo2)			{FactoryGirl.create(:todo, project: project, firm: @user.firm, user: @user, completed: true, due: Date.today)}
+	 	let(:todo1)			{FactoryGirl.create(:todo, project: project, firm: @user.firm, user: @user, completed: false, due: Date.current)}
+	 	let(:todo2)			{FactoryGirl.create(:todo, project: project, firm: @user.firm, user: @user, completed: true, due: Date.current)}
 	  it "should get todos" do
 	  	xhr :get, :todos, id: project.id, class: "projects", :format => 'js'
 	  	assigns(:not_done_todos).should == [todo1]
@@ -24,7 +24,7 @@ describe TabsController do
 	  end
 	end	
 	describe "logs" do	
-	 	let(:log)	{FactoryGirl.create(:log, project: project, firm: @user.firm, user: @user, log_date: Date.today)}
+	 	let(:log)	{FactoryGirl.create(:log, project: project, firm: @user.firm, user: @user, log_date: Date.current)}
 	  it "should get logs" do
 	  	xhr :get, :logs, id: project.id, class: "projects", :format => 'js'
 	  	assigns(:logs).should == [log]
@@ -38,7 +38,7 @@ describe TabsController do
 	  end
 	end	
 	describe "statistics" do
-	 	let(:log)	{FactoryGirl.create(:log, project: project, firm: @user.firm, user: @user, log_date: Date.today)}
+	 	let(:log)	{FactoryGirl.create(:log, project: project, firm: @user.firm, user: @user, log_date: Date.current)}
 
 	  it "should get statistics" do
 	  	xhr :get, :statistics, id: project.id, class: "projects", :format => 'js'
@@ -46,7 +46,7 @@ describe TabsController do
 	  end
 	end	
 	describe "statistics" do
-	 	let(:log)	{FactoryGirl.create(:log, project: project, firm: @user.firm, user: @user, log_date: Date.today)}
+	 	let(:log)	{FactoryGirl.create(:log, project: project, firm: @user.firm, user: @user, log_date: Date.current)}
 
 	  it "should get statistics" do
 	  	project.users << @user

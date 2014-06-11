@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '4.1.0'
+gem 'rails', '4.1.1'
 gem 'activesupport-json_encoder', github: 'rails/activesupport-json_encoder'
 gem 'eventmachine'
 # Bundle edge Rails instead:
@@ -20,6 +20,7 @@ gem 'cancan'
 gem 'shrimp'
 # gem 'wkhtmltopdf-binary'
 # gem 'wicked_pdf'
+gem 'devise', '~> 3.2'
 gem 'pdfkit'
 gem 'newrelic_rpm'
 gem 'whenever', :require => false
@@ -68,6 +69,7 @@ group :development do
   
 end
 group :test do 
+  gem 'zonebie'
   gem "minitest"
   gem "rspec-rails"
   gem 'shoulda-matchers'

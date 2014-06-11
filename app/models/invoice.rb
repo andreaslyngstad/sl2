@@ -48,7 +48,7 @@ class Invoice < ActiveRecord::Base
 
 	def set_status_to_reminded(reminder_fee)
 		self.receivable = self.receivable + reminder_fee.to_f
-		self.reminder_sent = Date.today
+		self.reminder_sent = Date.current
 		self.status = 5
 		save
 	end
@@ -73,11 +73,11 @@ class Invoice < ActiveRecord::Base
   end
   def due_today_or_overdue
   	if status == 2
-  		if due == Date.today and status != 3
+  		if due.to_date == Date.current and status != 3
 		  	self.status = 3
 		  	self.save 
 	  	end
-	  	if due < Date.today and status != 4
+	  	if due.to_date < Date.current and status != 4
 	  		self.status = 4
 	  		self.save 
 	  	end
@@ -86,7 +86,7 @@ class Invoice < ActiveRecord::Base
 
   def paid!
   	if self.paid.nil? 
-  		self.paid = Date.today
+  		self.paid = Date.current
   		self.status = 6
   		self.receivable = 0.0
   	else

@@ -69,6 +69,7 @@ class PermittedParams < Struct.new(:params, :current_user)
         :language,
         :time_format,
         :date_format,
+        :days_to_due,
         :clock_format,
         :closed,
         :invoice_email, 

@@ -20,7 +20,7 @@ ActiveAdmin.register Plan do
     column :users
     column :invoices
     column :paymill_id
-    default_actions 
+    actions 
   end
   filter :name
   

@@ -1,6 +1,6 @@
 class LogsController < ApplicationController
   def index 
-    @logs = current_firm.logs.where(:log_date => Date.today).order("updated_at DESC").includes({:project => [:users, :firm]} , :todo, :firm, :user, :customer, :employee)
+    @logs = current_firm.logs.where(:log_date => Date.current).order("updated_at DESC").includes({:project => [:users, :firm]} , :todo, :firm, :user, :customer, :employee)
     @log = current_user.logs.where("end_time IS ?",nil).last
   end
 
@@ -47,7 +47,7 @@ class LogsController < ApplicationController
   def stop_tracking
     @log_new = Log.new
   	@log = Log.find(params[:id])
-    @log.end_time = Time.now
+    @log.end_time = Time.zone.now
 	  LogWorker.check_todo_on_log(@log, current_user, check_done(params[:done])) unless @log.todo.nil? 
 	  update_responder(@log,permitted_params.log)
   end

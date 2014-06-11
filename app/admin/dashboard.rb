@@ -31,7 +31,7 @@ ActiveAdmin.register_page "Dashboard" do
               link_to firm.name, [:obeqaslksdssdfnfdfysdfxm, firm]
             end
             column "Admin User" do |firm|
-              mail_to firm.users.where(role: "Admin").first.email
+              mail_to firm.users.where(role: "Admin").first.try(:email)
             end      
             column "Subscription", :sortable => :subscription_id do |firm|
               firm.subscription.name

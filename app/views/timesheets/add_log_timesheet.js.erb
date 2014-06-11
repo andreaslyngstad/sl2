@@ -11,7 +11,7 @@ if ($("#calendar").length != 0 ) {
 	field.css("font-size", "20px")
 	field.data("hours", posthours_date_mounth)
 }else if($(".timesheet_table").length != 0){
-<% if (Time.now.beginning_of_week.to_date..Time.now.end_of_week.to_date).cover?(@log.log_date) %>
+<% if (Time.zone.now.beginning_of_week.to_date..Time.zone.now.end_of_week.to_date).cover?(@log.log_date) %>
 <% if @log.project %>
 	if ($(".project_total_<%= j(@log.project.id.to_s)%>").length === 0){
 		$(".project_hours").last().before('<%= j(render :partial => "timesheet_project_row", :locals => {:log => @log} )%>')

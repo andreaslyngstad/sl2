@@ -9,9 +9,9 @@ describe TimesheetsHelper do
 	let(:project)       {FactoryGirl.create(:project, firm:firm)} 
 	let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
 	let(:todo)          {FactoryGirl.create(:todo, completed: false, project: project, user: @user, firm: firm)}    
-	let(:log)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 2.hours, end_time: Time.now,:log_date => Date.today)}
-	let(:log1)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.now - 1.hours, end_time: Time.now,:log_date => Date.today )}
-	let(:log2)           {FactoryGirl.create(:log, project: nil, user: @user, firm: firm, begin_time: Time.now - 0.5.hours, end_time: Time.now,:log_date => Date.today )}
+	let(:log)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.zone.now - 2.hours, end_time: Time.zone.now,:log_date => Date.today)}
+	let(:log1)           {FactoryGirl.create(:log, project: project, user: @user, firm: firm, begin_time: Time.zone.now - 1.hours, end_time: Time.zone.now,:log_date => Date.today )}
+	let(:log2)           {FactoryGirl.create(:log, project: nil, user: @user, firm: firm, begin_time: Time.zone.now - 0.5.hours, end_time: Time.zone.now,:log_date => Date.today )}
 	
 	it 'every_day_log_hour' do
 		helper.every_day_log_hour(@user.logs.where(:log_date => Date.today).group("project_id").group("date(log_date)").sum(:hours), Date.today, project).should == 0

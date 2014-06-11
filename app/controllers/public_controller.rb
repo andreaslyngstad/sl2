@@ -72,8 +72,7 @@ class PublicController < ApplicationController
   end
   def privacy_policy
   end
-  def imprint
-  end
+
   def pricing
     @plans = Plan.all
   end

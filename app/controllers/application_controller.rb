@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   # rescue_from Customerio::Client::InvalidResponse, :with => :do_nothing
 
-
+  around_filter :user_time_zone
 
   include ApplicationHelper
   #rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
@@ -54,11 +54,7 @@ class ApplicationController < ActionController::Base
   	# Used in conjection with is_root_domain? for root domain.
    # is_root_domain? ? true :Account::CAN_SIGN_UP
   #end
-  # def current_firm
-  #  @current_firm ||= Firm.find_by_subdomain!(request.subdomain)
-  #   # return @current_firm if defined?(@current_firm)
-  #   # @current_firm = current_user.firm
-  # end
+
   
   # def all_users
   #   @all_users ||= current_firm.users.order("name")
@@ -109,5 +105,15 @@ class ApplicationController < ActionController::Base
   def record_not_found
     flash[:notice] = "No record found"
     redirect_to action: :index
+  end
+  
+
+
+  def user_time_zone(&block)
+    if current_user
+      Time.use_zone(current_user.firm.time_zone, &block)
+    else
+      Time.use_zone('UTC', &block)
+    end
   end
 end

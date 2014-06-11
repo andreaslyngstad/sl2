@@ -26,7 +26,7 @@ ActiveAdmin.register Log do
         link_to log.customer.name, obeqaslksdssdfnfdfysdfxm_customer_path(log.customer)
       end
     end
-    default_actions 
+    actions 
   end
   filter :event
   filter :project

@@ -9,7 +9,7 @@ describe Log do
   it { should belong_to(:employee) }  
   let(:firm)      {FactoryGirl.create(:firm)}
   let(:user)      {FactoryGirl.create(:user, :firm => firm)}
-  let(:time_now)  {Time.now}
+  let(:time_now)  {Time.zone.now}
   let(:log)       {FactoryGirl.create(:log, :user => user, :firm => firm)}
   let(:log2)      {FactoryGirl.create(:log, rate: 100, 
                                             tax: 25, 
