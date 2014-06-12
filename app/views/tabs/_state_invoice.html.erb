@@ -60,14 +60,12 @@
 		  <%= simple_format(log.event, class: 'log_event_paragraf') %><br/>
 		    <div class="pro_tod_cus_emp_on_log">
 		  	<div class="pro_tod_on_log">
-		  		<div class="pro_cus_on_log"><%= log.project.try(:name) %></div>
-	  	    <div class="tod_emp_on_log"><%= log.todo.try(:name) %></div>
+		  		
 		  	</div>
 		  	<div class="cus_emp_on_log">
-		  		<div class="pro_cus_on_log"><%= log.customer.try(:name) %></div>
-	  	    <div class="tod_emp_on_log"><%=  log.employee.try(:name)%></div>
+		  	
 		  	</div>
-		  </div>
+		  </div> 
 		  </div>
 		 
 		  <div class="hour_price_log_invoice money" data-value="<%= log.rate %>">
