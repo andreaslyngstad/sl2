@@ -12,6 +12,7 @@ FactoryGirl.define do
    name
    subdomain
    plan
+   time_zone "Pacific Time (US & Canada)"
    closed false
    time_format 1 
    date_format 1

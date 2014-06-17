@@ -732,7 +732,8 @@ CREATE TABLE plans (
     firms_count integer DEFAULT 0,
     subscriptions_count integer DEFAULT 0,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    currency character varying(255)
 );
 
 
@@ -1655,4 +1656,6 @@ INSERT INTO schema_migrations (version) VALUES ('20101029201153');
 INSERT INTO schema_migrations (version) VALUES ('20101029201155');
 
 INSERT INTO schema_migrations (version) VALUES ('20101029201156');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201157');
 

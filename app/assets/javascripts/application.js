@@ -86,8 +86,7 @@ function set_date_format_str(){
 
 jQuery.fn.set_date_format = function(){
   	$.each($('.date_format_setter'),function(k,v){
-  		$(v).html(strftime(set_date_format_str(), new Date($(v).data("date"))))
-    
+  		$(v).html(strftimeTZ(set_date_format_str(), new Date($(v).data("date")), -0000))
   	});
 }
 jQuery.fn.delete_firm_link = function(){
@@ -95,6 +94,7 @@ jQuery.fn.delete_firm_link = function(){
 
   })
 }
+
 jQuery.fn.set_clock_format = function(){
   var clockformat = $('.current_firm_data').data("clockformat")
   if (clockformat == 1){

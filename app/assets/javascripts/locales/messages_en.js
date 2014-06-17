@@ -13,7 +13,14 @@ if (lang == "en-US"){
 		    left: "left",
 		    spent: "spent",
 		    nothing_used: "Nothing used",
-		    not_set: "Not set"
+		    not_set: "Not set",
+		    user_cancelled_operation:	"User cancelled operation",
+				invalid_credit_card_number:	"Invalid credit card number",
+				invalid_year_cc:	"Invalid year in your credit card",
+				invalid_month_cc:	"Invalid month in your credit card",
+				credit_card_expired:	"Credit card expired",
+				invalid_security_code:	"Invalid security code (cvc)",
+				invalid_amount:	"Invalid amount for transaction"
     });
 }(jQuery));
 }

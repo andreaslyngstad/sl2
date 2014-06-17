@@ -3,7 +3,7 @@ require 'features/subdomain_login_features'
 include SubdomainLoginFeatures
 feature 'customer' do
    before(:all) do 
-      date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
+      date = Date.current == "Monday".to_date ? Date.current + 1.day : Date.current
       
       Customer.destroy_all
       @user = FactoryGirl.create(:user, hourly_rate: 2)
@@ -15,7 +15,7 @@ feature 'customer' do
       @firm.users.first.should eq @user  
       @project = FactoryGirl.create :project, name: "test_project", firm: @firm, budget:10  
       @customer = FactoryGirl.create :customer, name: "test_customer", firm: @firm, email: "te@test.com"
-      @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.today, user: @user)         
+      @task = Todo.create!(name: 'test_task', firm: @firm, project: @project, due: Date.current, user: @user)         
       @customers = "http://#{@firm.subdomain}.lvh.me:31234/customers"
       @projects = "http://#{@firm.subdomain}.lvh.me:31234/projects"
       @users = "http://#{@firm.subdomain}.lvh.me:31234/users"
@@ -71,15 +71,16 @@ feature 'customer' do
     find('#dialog_todo_date').click
     # fill_in "#dialog_todo_date", with: "16.10.2"
     click_link('13')
+   
     # date_str = Date.today.strptime('%m.%y')
-    # fill_in 'dialog_todo_date', with: "30.02.2064"
+     # fill_in 'dialog_todo_date', with: date
     # page.execute_script %Q{ $("#dialog_todo_date").val("20.02.2064")}
     page.find("#new_todo").find(".submit").click
 
     # find('.task_info')['id'].should == 'todo_1'
     id = find('.task_info')['id'].gsub('todo_', '')
     page.should have_content("This a task")  
-    page.should have_content("13." + Date.today.strftime('%m.%y'))  
+    page.should have_content("13." + Date.current.strftime('%m.%y'))  
     page.should have_content("Task was successfully saved")
     page.find("div#not_done_tasks").first('div')[:id].should eql('todo_' + id )
     within(:css, "#todo_" + id) do 

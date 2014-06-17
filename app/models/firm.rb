@@ -51,7 +51,7 @@ class Firm < ActiveRecord::Base
       self.subscription = Subscription.create(plan_id: free_plan.id) 
       self.plan = free_plan
     else
-      free_plan2 = Plan.create name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, invoices: 2, paymill_id: "free"
+      free_plan2 = Plan.create name: "Free", price: 0, customers: 2, logs: 100, projects: 2, users:2, currency: "$", paymill_id: "free"
       self.subscription = Subscription.create(plan_id: free_plan2.id) 
       self.plan = free_plan2
     end
@@ -93,6 +93,7 @@ class Firm < ActiveRecord::Base
     self.users_count = users.count
     self.customers_count = customers.count
     self.projects_count = projects.count
+    self.invoices_count = invoices.count
     save
   end
   

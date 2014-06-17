@@ -95,7 +95,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   end
   def plan_attributes
     if current_user
-      [:name, :price,:customers, :logs, :projects, :users, :invoices, :paymill_id]
+      [:name, :price,:customers, :logs, :projects, :users, :invoices, :paymill_id, :currency]
     end
   end
   def user

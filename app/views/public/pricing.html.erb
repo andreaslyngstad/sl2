@@ -9,10 +9,18 @@
 		<tr><td></td>
 		<% @plans.each do |plan| %>
         	<td class="">
-        		<p class="price"><%=  prices_to_currency plan.price %></p>
+        		<p class="price"><%=  prices_to_currency plan.price, plan.currency %></p>
         		<p class="per_month">per month</p>
         	</td>
+
 		<% end %>	
+		<td style="text-align:left"><span class="change_price_currency_link">
+			<% if plan.currency == "$" %>
+			<p><%= link_to "Prices in €", pricing_path(:currency => "€") %></p>
+			<% else %>
+			<p><%= link_to "Prices in $", pricing_path(:currency => "$") %></p>
+			<% end %>
+		</span></td>
 	</tr>
 		<tr><td class="left_column">Users</td>
 		<% @plans.each do |plan| %>
@@ -43,24 +51,14 @@
 	</tr>
 	<tr><td class="left_column">Logs</td>
 		<% @plans.each do |plan| %>
+		<% if plan.logs.nil? %>
 			<td class="">unlimited</td>
+			<% else %>
+	        	<td class=""><%=  plan.logs %></td>
+	        <% end %>
 		<% end %>
 	</tr>
-	<tr><td class="left_column">Time tracking</td>
-		<% @plans.each do |plan| %>
-			<td class="">yes</td>
-		<% end %>
-	</tr>
-	<tr><td class="left_column">Timesheets</td>
-		<% @plans.each do |plan| %>
-			<td class="">yes</td>
-		<% end %>
-	</tr>
-	<tr><td class="left_column">Statistics</td>
-		<% @plans.each do |plan| %>
-			<td class="">yes</td>
-		<% end %>
-	</tr>
+	
 	<tr><td class="left_column">Daily backups</td>
 		<% @plans.each do |plan| %>
 			<td class="">yes</td>

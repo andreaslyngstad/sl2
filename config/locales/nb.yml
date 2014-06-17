@@ -14,6 +14,25 @@ nb:
   lost: tapt
   not_lost: ikke tapt
   general:
+    sign_up: Abonner
+    card_number: Kort nummer
+    security_code: Sikkerhets kode (cvc)
+    expiration_date: Utløpsdato
+    delete_firm: Slette konto
+    cancel_plan: Avbryt abonnement?
+    current_plan: Ditt abonnement
+    enter_your_subdomain: Skriv inn ditt subdomene
+    enter_your_name: Skriv inn ditt navn
+    free_plan: Gratis konto
+    do_nothing: Ikke gjør noe
+    upgrading: oppgraderer
+    downgrading: nedgraderer
+    prices_in: Priser i
+    "yes": "ja"
+    pr_month: per måned
+    unlimited: ubegrenset
+    daily_backups: Daglig backup
+    ssl_encryption: SSL kryptering
     latest_activity: Nylig aktivitet
     online: online
     offline: offline
@@ -41,6 +60,7 @@ nb:
     new: Ny
     new_tt: Nytt
     create_new: Lag ny
+    could_not_subscribe: Kunne ikke abonnere
     select: Velg
     none: Ikke valgt
     last: Siste

@@ -55,7 +55,14 @@ jQuery(function($){
     left: "Igjen",
     spent: "Brukt",
     nothing_used: "Ingenting er brukt",
-    not_set: "Ikke satt opp"
+    not_set: "Ikke satt opp",
+    user_cancelled_operation: "Brukeren avbrøt transaksjonen",
+    invalid_credit_card_number: "Ugyldig kort nummer",
+    invalid_year_cc:    "Ugyldig år på kortet",
+    invalid_monthcc:    "Ugyldig måned på kortet",
+    credit_card_expired:    "Kortet har utløpt",
+    invalid_security_code:  "Ugyldig sikkerhetskode (cvc)",
+    invalid_amount: "Ugyldig beløp for transaksjoen"
     });
 }(jQuery));
 }

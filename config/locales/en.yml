@@ -14,6 +14,25 @@ en:
   lost: lost
   not_lost: not lost
   general:
+    sign_up: Subscribe
+    card_number: Card Nummer
+    security_code: Security Code (cvc)
+    expiration_date: Expiration Date
+    delete_firm: Delete Firm
+    cancel_plan: Cancel plan?
+    current_plan: Current plan
+    enter_your_subdomain: Enter your subdomain
+    enter_your_name: Enter your name
+    free_plan: Free plan
+    do_nothing: Do nothing
+    upgrading: upgrading
+    downgrading: downgrading
+    prices_in: Prices in  
+    "yes": "yes"
+    pr_month: per month
+    unlimited: unlimited
+    daily_backups: Daily backup
+    ssl_encryption: SSL encryption
     latest_activity: Latest activity
     online: online
     offline: offline
@@ -41,6 +60,7 @@ en:
     new: New
     new_tt: New
     create_new: Create new
+    could_not_subscribe: Could not subscribe
     select: Select
     none: Not selected
     last: Last

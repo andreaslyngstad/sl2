@@ -1,7 +1,7 @@
 ActiveAdmin.register Plan do
   controller do
     def permitted_params
-      params.permit plan: [:paymill_id,:name,:price,:customers,:logs, :projects, :invoices,:users]
+      params.permit plan: [:paymill_id,:name,:price,:customers,:logs, :projects, :invoices,:users, :currency]
     end
   end
   menu :priority => 3
@@ -20,6 +20,7 @@ ActiveAdmin.register Plan do
     column :users
     column :invoices
     column :paymill_id
+    column :currency
     actions 
   end
   filter :name
@@ -36,6 +37,7 @@ ActiveAdmin.register Plan do
       f.input :projects
       f.input :users
       f.input :invoices
+      f.input :currency
       f.input :paymill_id,:as => :string
         end
       f.actions

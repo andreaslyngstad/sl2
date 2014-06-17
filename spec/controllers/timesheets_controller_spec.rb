@@ -7,10 +7,10 @@ describe TimesheetsController do
     let(:firm)          {@user.firm}
     let(:customer)      {FactoryGirl.create(:customer, firm: firm)}
     let(:project)       {FactoryGirl.create(:project, firm: firm)}
-    let(:log)           {FactoryGirl.create(:log, customer: customer, firm: firm, user: @user, hours:1, log_date: Date.today)}
-    let(:log_no_customer){FactoryGirl.create(:log, firm: firm, user: @user, hours:1,log_date: Date.today)}
+    let(:log)           {FactoryGirl.create(:log, customer: customer, firm: firm, user: @user, hours:1, log_date: Date.current)}
+    let(:log_no_customer){FactoryGirl.create(:log, firm: firm, user: @user, hours:1,log_date: Date.current)}
     let(:external_user) {FactoryGirl.create(:user, firm: firm, role: "external_user")}
-    let(:log_ex)           {FactoryGirl.create(:log,  customer: customer, firm: firm, project:project,user: external_user, hours:1, log_date: Date.today)}
+    let(:log_ex)           {FactoryGirl.create(:log,  customer: customer, firm: firm, project:project,user: external_user, hours:1, log_date: Date.current)}
   
   before(:each) do
     @request.host = "#{@user.firm.subdomain}.example.com" 
@@ -19,8 +19,8 @@ describe TimesheetsController do
   describe "timesheet_day" do	
 	  it "timesheet_week user admin" do
 	  	firm.users << external_user
-	  	get :timesheet_day, class: "customers", id: customer.id, date: Date.today
-	  	assigns(:logs).should == customer.logs.where(:log_date => Date.today)
+	  	get :timesheet_day, class: "customers", id: customer.id, date: Date.current
+	  	assigns(:logs).should == customer.logs.where(:log_date => Date.current)
 	  end
   end
 
@@ -32,13 +32,13 @@ describe TimesheetsController do
       log_no_customer
       log_ex
 	  	firm.users << external_user
-	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.today
+	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.current
 	  	assigns(:users).should =~ [@user, external_user]
 	  	assigns(:dates).should == ((Time.zone.now.beginning_of_week.to_date)..(Time.zone.now.end_of_week.to_date))
     	assigns(:log_project).should == {nil=>60.0, project.id=>60.0}
-    	assigns(:log_week).should == {Date.today=>120.0}
-    	assigns(:log_week_project).should == {[project.id,Date.today]=>60.0, [nil, Date.today]=>60.0}
-    	assigns(:log_week_no_project).should == {Date.today=>60.0}
+    	assigns(:log_week).should == {Date.current=>120.0}
+    	assigns(:log_week_project).should == {[project.id,Date.current]=>60.0, [nil, Date.current]=>60.0}
+    	assigns(:log_week_no_project).should == {Date.current=>60.0}
     	assigns(:projects).should == @user.projects
     	# assigns(:log_total).should == @user.logs.where(:log_date => range).sum(:hours) 
 	  end
@@ -46,7 +46,7 @@ describe TimesheetsController do
   		@user.role = "external_user"
   		@user.save
 	  	firm.users << external_user
-	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.today
+	  	get :timesheet_week, class: "customers", id: customer.id, date: Date.current
 	  	expect(response).to render_template("access_denied")
 	  end
   end
@@ -58,9 +58,9 @@ describe TimesheetsController do
       log_no_customer
       log_ex
 	  	firm.users << external_user
-	  	get :timesheet_month, class: "customers", id: customer.id, date: Date.today
-	  	assigns(:date).should == Date.today
-	  	assigns(:logs_by_date).should == {Date.today=>120.0}
+	  	get :timesheet_month, class: "customers", id: customer.id, date: Date.current
+	  	assigns(:date).should == Date.current
+	  	assigns(:logs_by_date).should == {Date.current=>120.0}
     end
   end
   describe "adding logs to timesheet" do
@@ -81,11 +81,11 @@ describe TimesheetsController do
     let(:project)  {FactoryGirl.create(:project, firm: firm)}
     let(:log)      {FactoryGirl.create(:log, event: "old log", user: @user, project: project, firm: firm)}
     it "With empty field" do
-  		post :add_hour_to_project, select_klass: project.class.to_s.downcase, select_id: project.id, klass: @user.class.to_s.downcase, id: @user.id, date: Date.today, val_input: "3:34", :format => 'js'
+  		post :add_hour_to_project, select_klass: project.class.to_s.downcase, select_id: project.id, klass: @user.class.to_s.downcase, id: @user.id, date: Date.current, val_input: "3:34", :format => 'js'
   		assigns(:log).project.should == project
   	end
   	it "with already typed field" do
-  		 post :add_hour_to_project, log_id: log.id, select_klass: project.class.to_s.downcase, select_id: project.id, klass: @user.class.to_s.downcase, id: @user.id, date: Date.today, val_input: "3:34", :format => 'js'
+  		 post :add_hour_to_project, log_id: log.id, select_klass: project.class.to_s.downcase, select_id: project.id, klass: @user.class.to_s.downcase, id: @user.id, date: Date.current, val_input: "3:34", :format => 'js'
       assigns(:log).project.should == project
       assigns(:log).event.should == "Timesheet"
   	end

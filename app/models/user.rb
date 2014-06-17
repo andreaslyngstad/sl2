@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          # :timeoutable 
     			
-  has_many :recent_logs, -> {  where('log_date > ?', Time.zone.now.beginning_of_week).order("log_date DESC") }, :class_name => "Log"
+  has_many :recent_logs, -> {  where('log_date >= ?', Time.zone.now.beginning_of_week).order("log_date DESC") }, :class_name => "Log"
   has_many :memberships
   has_many :projects, :through => :memberships
   has_many :logs, :dependent => :destroy

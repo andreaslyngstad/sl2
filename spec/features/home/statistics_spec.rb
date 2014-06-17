@@ -30,7 +30,6 @@ feature 'home' do
     
 
     scenario 'Account', js: true do 
-      
       sign_in_on_js
       visit "http://#{@firm.subdomain}.lvh.me:31234/account"
       page.should have_content("Memeber since") 

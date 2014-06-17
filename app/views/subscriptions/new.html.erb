@@ -4,7 +4,7 @@
 <%= render "shared/home_header" %>
 <div id="left" class="home_content">
   <script type="text/javascript">
-  var PAYMILL_PUBLIC_KEY = '2028155948642eecacb7b872c5169aa6';
+  var PAYMILL_PUBLIC_KEY = "<%= SECRETS_CONFIG[Rails.env][:paymill_public_key] %>";
 </script>
 <%= javascript_include_tag "https://bridge.paymill.com/" %>
  <div class="blue2">
@@ -12,17 +12,17 @@
 	<% if @plan.id > current_firm.plan.id %>
  		<p><%= t "message.plan_update_html", :current_plan => current_firm.plan.name, 
  					       :new_plan => @plan.name,
- 						   :current_plan_price =>  (prices_to_currency current_firm.plan.price), 
- 						   :new_plan_price => (prices_to_currency @plan.price),  
- 						   :grad => "upgrading"
+ 						   :current_plan_price =>  (prices_to_currency(current_firm.plan.price, current_firm.plan.currency)), 
+ 						   :new_plan_price => (prices_to_currency @plan.price, @plan.currency),  
+ 						   :grad => (t"general.upgrading")
  						   %>
  		<p><%= t "message.thank_you" %></p>
  	<% elsif @plan.id < current_firm.plan.id %>
  	<p><%= t "message.plan_update_html", :current_plan => current_firm.plan.name, 
  					       :new_plan => @plan.name,
- 						   :current_plan_price =>  (prices_to_currency current_firm.plan.price), 
- 						   :new_plan_price => (prices_to_currency @plan.price),
- 						   :grad => "downgrading"  %>
+ 						   :current_plan_price =>  (prices_to_currency(current_firm.plan.price , current_firm.plan.currency)), 
+ 						   :new_plan_price => (prices_to_currency @plan.price, @plan.currency),
+ 						   :grad => (t"general.downgrading")  %>
  	</p>
   <% else %>
   <p><%= t "message.opening_closed" %>
@@ -60,7 +60,7 @@
 <%= form_for @subscription,  :html => { :class => "credit_card_form"} do |f| %>
   <% if @subscription.errors.any? %>
     <div class="error_messages">
-      <h2><%= pluralize(@subscription.errors.count, "error") %> prohibited this subscription from being saved:</h2>
+      <h2><%= t"general.could_not_subscribe"%></h2>
       <ul>
       <% @subscription.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -76,15 +76,15 @@
     Credit card has been provided.
   <% else %>
   <div class="signup-form-field">
-      <%= label_tag :card_number, "Credit Card Number" %>
-      <%= text_field_tag :card_number, nil, name: nil %>
+      <%= label_tag :card_number, (t"general.card_number" )%>
+      <%= text_field_tag :card_number, nil, name: nil, class: "card-number required", :creditcard => "true"%>
     </div>
    <div class="signup-form-field">
-      <%= label_tag :card_code, "Security Code on Card (cvc)" %>
-      <%= text_field_tag :card_code, nil, name: nil %>
+      <%= label_tag :card_code, (t"general.security_code" ) %>
+      <%= text_field_tag :card_code, nil, name: nil, class: "required" %>
     </div>
     <div class="signup-form-field">
-      <%= label_tag :card_month, "Card Expiration" %>
+      <%= label_tag :card_month, (t"general.expiration_date" ) %>
      <div class="card_expiration_right">
            <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month", class: "mini_selector"} %>
            <%= select_year nil, {start_year: time_zone_now.to_date.year, end_year: time_zone_now.to_date.year+15}, {name: nil, id: "card_year", class: "mini_selector"} %>
@@ -95,7 +95,7 @@
     <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
   </div>
   <div class="signup-form-field">
-    <%= f.submit "Subscribe", :class => "submit" %>
+    <%= f.submit t("general.sign_up"), :class => "submit" %>
   </div>
 <% end %>
 </div>	 

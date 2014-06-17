@@ -20,10 +20,11 @@ describe Firm do
   
   let(:f)               {FactoryGirl.create(:firm_no_plan, plan_id: p.id)}
 
-  let(:p1)              {FactoryGirl.create(:plan, name: "cheep", price: 12)}
+  let(:p1)              {FactoryGirl.create(:plan, name: "cheep", price: 12, customers: nil)}
   let(:customer_list)   {FactoryGirl.create_list(:customer,20, firm: f)}
   let(:user_list)       {FactoryGirl.create_list(:user,20, firm: f)}
   let(:project_list)    {FactoryGirl.create_list(:project,20, firm: f)}
+  let(:invoice_list)    {FactoryGirl.create_list(:invoice,20, firm: f, customer: f.customers.first)}
  
   it "should be created with a plan" do
     f_no_plan.subscription.should_not == nil 
@@ -52,14 +53,33 @@ describe Firm do
     customer_list
     user_list
     project_list
+    invoice_list
     f.update_firm_counters
+    f.invoices.count.should == 20
     p2 = Plan.where(name: "Free").first
     f.remove_associations_when_downgrading(p2.id) 
     f.customers.count.should == 2
     f.projects_count.should == 2
     f.users_count.should == 2
+    f.invoices_count.should == 20
   end
   
+   it "should remove associations when downgrading" do
+    f.plan = p
+    customer_list
+    user_list
+    project_list
+    invoice_list
+    f.update_firm_counters
+    f.invoices.count.should == 20
+    
+    f.remove_associations_when_downgrading(p1.id) 
+    f.customers.count.should == 20
+    f.projects_count.should == 20
+    f.users_count.should == 20
+    f.invoices_count.should == 20
+  end
+
   it "should check payment" do
     f.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true, next_bill_on: Time.zone.now.to_date - 1.day )
     f2.subscription = FactoryGirl.create(:subscription, card_type: "visa", last_four: "1111", active: true,  next_bill_on: Time.zone.now.to_date + 1.days)

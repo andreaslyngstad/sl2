@@ -39,6 +39,7 @@ jQuery.fn.open_not_required = function(){
   });
 };
 
+
 $(document).ready(function() {
 	if (document.all && !document.addEventListener ) {
     alert('Hello and welcome to squadlink! We are really happy to have you here.\n\nSadly we are not happy about you browser.\nThe browser is the application you use to view internet sites. You are using Internet Explorer version 8 or older.\nThis browser will not work well in the squadlink application.\n\nPlease upgrade your browser to the newest Internet Explorer version.\nAlternatively  you can use a different browser like Chrome, Firefox or Opera.');

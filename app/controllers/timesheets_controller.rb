@@ -28,7 +28,7 @@ class TimesheetsController < ApplicationController
     authorize! :read, Firm
     get_log_for_tracking
     get_instance_if_not_index(params)
-    @date = params[:date] ? Time.zone.parse(params[:date]) : time_zone_now.to_date
+    @date = params[:date] ? Time.zone.parse(params[:date]).to_date : time_zone_now.to_date
     if !params[:user_id].blank?
       @user = current_firm.users.find(params[:user_id])
       if @klass

@@ -82,7 +82,7 @@ ActiveAdmin.register Firm do
       f.input :language,:as => :string
       f.input :closed, :as => :boolean
         end
-      f.buttons
+       f.actions
     end
 
 end

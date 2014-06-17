@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'features/subdomain_login_features'
 include SubdomainLoginFeatures
 feature 'Project' do
-     before(:all) do 
+    before(:all) do 
       date = Date.today == "Monday".to_date ? Date.today + 1.day : Date.today
       @user = FactoryGirl.create(:user, hourly_rate: 2)
       @firm = @user.firm
@@ -29,6 +29,7 @@ feature 'Project' do
 
     visit @projects
     id = @project.id
+
     page.should have_content("test_project")
     id = page.evaluate_script("$('.tab_list').first().attr('id')")
     li = "li#project_#{id.gsub(/project_/, '')}"
@@ -118,13 +119,13 @@ feature 'Project' do
     page.should have_content("This a log")
     page.should have_content("13." + Date.today.strftime('%m.%y'))
     page.should have_content("1:30")
-    find('.open_log_update').click
+    first('.open_log_update').click
     
     page.should have_content('Update log')
     fill_in "log_event", with: "This a log edit"
     find('#log_edit_submit').click
     page.should have_content("This a log edit")
-    find('.delete_log').click
+    first('.delete_log').click
     page.should have_content("log was deleted")
     page.should_not have_content("This a log edit")
   end

@@ -74,7 +74,12 @@ class PublicController < ApplicationController
   end
 
   def pricing
-    @plans = Plan.all
+    if params[:currency] == "FULL_FREE"
+      currency =  "$"
+    else
+      currency = params[:currency] || "$"
+  end
+    @plans = Plan.where(currency: currency).order("price")
   end
   def contact
   end
