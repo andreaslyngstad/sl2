@@ -3,7 +3,7 @@ Squadlink::Application.configure do
  config.middleware.use ExceptionNotification::Rack,
   :email => {
     :email_prefix => "[ERROR] ",
-    :sender_address => %{no_reply@squadlink.com>},
+    :sender_address => %{"notifier" <no_reply@squadlink.com>},
     :exception_recipients => %w{andreas@squadlink.com}
   }
   # The production environment is meant for finished, "live" apps.
