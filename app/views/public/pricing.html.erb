@@ -15,7 +15,7 @@
 
 		<% end %>	
 		<td style="text-align:left"><span class="change_price_currency_link">
-			<% if plan.currency == "$" %>
+			<% if @plans.first.currency == "$" %>
 			<p><%= link_to "Prices in €", pricing_path(:currency => "€") %></p>
 			<% else %>
 			<p><%= link_to "Prices in $", pricing_path(:currency => "$") %></p>

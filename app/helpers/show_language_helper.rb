@@ -8,7 +8,7 @@ module ShowLanguageHelper
 	end
 	def language
 		[["English", "en-US"],
-     ["Deutsch", "de-DE"],
+   # ["Deutsch", "de-DE"],
      ["Norwegian", "nb-NO"],
    # ["Danish", "da-DK"],
    # ["Dutch", "nl-NL"],
