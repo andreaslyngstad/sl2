@@ -26,7 +26,7 @@ gem 'newrelic_rpm'
 gem 'whenever', :require => false
 gem 'paymill'
 gem "pg", "~> 0.17.0 "
-gem "queue_classic", "3.0.0beta"
+gem "queue_classic", "~> 3.0.0"
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'

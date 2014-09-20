@@ -6,7 +6,7 @@ class PlansController < ApplicationController
   	else
   		currency = params[:currency] || current_firm.plan.currency
 	end
-    @plans = Plan.where(currency: currency).order("price")
+    @plans = Plan.where(currency: currency).order("price").where.not(name: "SercretFREE")
   end
   def cancel
   	authorize! :manage, Firm

@@ -34,6 +34,7 @@ check process nginx with pidfile /var/run/nginx.pid
   if children > 250 then restart
   if 5 restarts within 5 cycles then timeout
 
-check process queue_classic with pidfile apps/<%= application %>/shared/tmp/pids/qc.pid
-  start program = "/bin/bash -c 'cd /home/deploy/apps/squadlink_production/current/ && rule_queue.sh start'" with timeout 60 seconds
-  stop program = "/bin/bash -c 'cd /home/deploy/apps/squadlink_production/current/ && rule_queue.sh stop'"
+check process queue_classic
+  with pidfile /home/deploy/apps/squadlink_production/current/tmp/pids/qc.pid
+  start program = "/bin/su - deploy -c '/home/deploy/apps/squadlink_production/current/rule_queue.sh start'" with timeout 60 seconds
+  stop program = "/home/deploy/apps/squadlink_production/current/ && rule_queue.sh stop"

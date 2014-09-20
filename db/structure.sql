@@ -38,6 +38,8 @@ CREATE TABLE queue_classic_jobs (
     method text NOT NULL,
     args text NOT NULL,
     locked_at timestamp with time zone,
+    locked_by integer,
+    created_at timestamp with time zone DEFAULT now(),
     CONSTRAINT queue_classic_jobs_method_check CHECK ((length(method) > 0)),
     CONSTRAINT queue_classic_jobs_q_name_check CHECK ((length(q_name) > 0))
 );
@@ -73,7 +75,9 @@ BEGIN
   -- for more workers. Would love to see some optimization here...
 
   EXECUTE 'SELECT count(*) FROM '
-    || '(SELECT * FROM queue_classic_jobs WHERE q_name = '
+    || '(SELECT * FROM queue_classic_jobs '
+    || ' WHERE locked_at IS NULL'
+    || ' AND q_name = '
     || quote_literal(q_name)
     || ' LIMIT '
     || quote_literal(top_boundary)
@@ -106,7 +110,8 @@ BEGIN
   END LOOP;
 
   RETURN QUERY EXECUTE 'UPDATE queue_classic_jobs '
-    || ' SET locked_at = (CURRENT_TIMESTAMP)'
+    || ' SET locked_at = (CURRENT_TIMESTAMP),'
+    || ' locked_by = (select pg_backend_pid())'
     || ' WHERE id = $1'
     || ' AND locked_at is NULL'
     || ' RETURNING *'
@@ -115,18 +120,6 @@ BEGIN
   RETURN;
 END;
 $_$;
-
-
---
--- Name: queue_classic_notify(); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION queue_classic_notify() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$ begin
-  perform pg_notify(new.q_name, '');
-  return null;
-end $$;
 
 
 --
@@ -1593,13 +1586,6 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
--- Name: queue_classic_notify; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER queue_classic_notify AFTER INSERT ON queue_classic_jobs FOR EACH ROW EXECUTE PROCEDURE queue_classic_notify();
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -1658,4 +1644,6 @@ INSERT INTO schema_migrations (version) VALUES ('20101029201155');
 INSERT INTO schema_migrations (version) VALUES ('20101029201156');
 
 INSERT INTO schema_migrations (version) VALUES ('20101029201157');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201158');
 
