@@ -37,4 +37,4 @@ check process nginx with pidfile /var/run/nginx.pid
 check process queue_classic
   with pidfile /home/deploy/apps/squadlink_production/current/tmp/pids/qc.pid
   start program = "/bin/su - deploy -c '/home/deploy/apps/squadlink_production/current/rule_queue.sh start'" with timeout 60 seconds
-  stop program = "/home/deploy/apps/squadlink_production/current/ && rule_queue.sh stop"
+  stop program = "/bin/su - deploy -c '/home/deploy/apps/squadlink_production/current/rule_queue.sh stop'"
