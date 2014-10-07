@@ -7,8 +7,8 @@ class ProjectsController < ApplicationController
     else
       @projects = current_firm.projects.where(:active => true).includes(:firm).order_by_name
     end
-
   end
+  
   def edit
     @project = Project.find(params[:id]) 
     authorize! :manage, @project
