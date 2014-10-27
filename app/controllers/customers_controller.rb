@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
  
   def index
     @customers = current_firm.customers.order_by_name
-     authorize! :manage, Customer 
+     authorize! :read, Customer 
      
   end
   def show

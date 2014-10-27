@@ -17,10 +17,12 @@ class Ability
      end
      if user.role == "Member"
         can :read, Firm, :firm => {:id => user.firm_id}
+        cannot :create, User
         can :manage, User do |member|
           member.firm == user.firm && member == user
         end
-        can :manage, Customer, :firm => {:id => user.firm_id}
+
+        can :read, Customer, :firm => {:id => user.firm_id}
         can :read, Project, :firm => {:id => user.firm_id}
         can :manage, Todo do |todo|
           todo.firm == user.firm && todo.user == user

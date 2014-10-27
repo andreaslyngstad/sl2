@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def create
     @klass = current_firm.users.new(permitted_params.user)
-    authorize! :manage, User
+    authorize! :manage, @klass 
     @klass.firm = current_firm 
      respond_to do |format|
       if @klass.save
