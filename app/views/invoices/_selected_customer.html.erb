@@ -3,5 +3,5 @@
 		<%= @customer.name %><br/>
 		<%= @customer.try(:email) %><br/>
 		<%= simple_format(@customer.try(:address), class: 'log_event_paragraf') %><br/>
-		<a href="#" style="color:blue; font-size:75%;" id="change_customer" data-object="customer" data-other-object="project">Change</a>
+		<a href="#" style="color:blue; font-size:75%;" id="change_customer" data-object="customer" data-other-object="project"><%= t('activerecord.attributes.invoice.change') %></a>
 </span> 

@@ -324,6 +324,7 @@ nb:
         invoice_date: Fakturadato
         invoice_due: Forfallsdato
         sent: Sendt
+        change: endre
       invoice_lines:
         quantity: Antall
         description: Beskrivelse

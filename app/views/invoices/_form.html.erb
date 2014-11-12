@@ -33,8 +33,8 @@
 	<%= f.text_field :date, :value => date_format(time_zone_now.to_date), :class => "invoice_date date", :id => "invoice_date_" %>
 	<%= f.text_field :due, :value => date_format(time_zone_now.to_date + current_firm.days_to_due.days), :class => "invoice_due date", :id => "invoice_due_" %>
 	<% else %>
-	<%= f.text_field :date, :value => date_format(@invoice.date), :class => "invoice_date date", :id => "invoice_date_" %>
-	<%= f.text_field :due, :value => date_format(@invoice.due), :class => "invoice_due date", :id => "invoice_due_" %>
+	<%= f.text_field :date, :value => date_format(@invoice.date), :class => "invoice_date date", :id => "invoice_date_" + @invoice.id.to_s %>
+	<%= f.text_field :due, :value => date_format(@invoice.due), :class => "invoice_due date", :id => "invoice_due_" + @invoice.id.to_s %>
 	<% end %>
 </td>
 		</tr>

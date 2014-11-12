@@ -331,6 +331,7 @@ en:
         invoice_date: Invoice date
         invoice_due: Due
         sent: Sent
+        change: change
       invoice_lines:
         quantity: Quantity
         description: Description

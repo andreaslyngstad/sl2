@@ -397,7 +397,7 @@ $.ajaxSetup({
   });
 
 $(document).ready(function() {
-$("#invoices_table").tablesorter();
+  $("#invoices_table").tablesorter();
   $('.delete_link').delete_firm_link()
   $('.delete_subdomain_validation').delete_subdomain_validation()
   $('.delete_name_validation').delete_name_validation()
