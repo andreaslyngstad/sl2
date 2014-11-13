@@ -33,13 +33,14 @@ describe Ability do
     it "can not manage all" do
     	Ability.any_instance.should_receive(:can).with(:read, Firm, :firm => {:id => member_user.firm_id})
       Ability.any_instance.should_receive(:can).with(:manage, User )
-      Ability.any_instance.should_receive(:can).with(:manage, Customer, :firm => {:id => member_user.firm_id})
+      Ability.any_instance.should_receive(:can).with(:read, Customer, :firm => {:id => member_user.firm_id})
       Ability.any_instance.should_receive(:can).with(:read, Project, :firm => {:id => member_user.firm_id})
       Ability.any_instance.should_receive(:can).with(:manage, Todo )
       Ability.any_instance.should_receive(:can).with(:manage, Project)
       Ability.any_instance.should_receive(:can).with(:create, Project )
       Ability.any_instance.should_receive(:can).with(:manage, Log )
       Ability.any_instance.should_receive(:can).with(:read, Log, :firm => {:id => member_user.firm_id})
+      Ability.any_instance.should_receive(:cannot).with(:create, User)
       Ability.any_instance.should_receive(:cannot).with(:archive, Project)
       Ability.any_instance.should_receive(:cannot).with( :activate_projects, Project)
       Ability.new member_user

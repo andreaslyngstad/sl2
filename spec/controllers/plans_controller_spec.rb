@@ -21,7 +21,7 @@ login_user
       plan = Plan.where(name: "Factories_test")
       plans = [plan,@user.firm.plan]
       get :index
-      expect(assigns(:plans)).to eq(Plan.where(currency: "$").order("price"))
+      assigns(:plans).should eq(Plan.where(currency: "$").where.not(name: "SecretFREE").order("price"))
     end
   end
   describe "get canel" do

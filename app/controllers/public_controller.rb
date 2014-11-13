@@ -78,10 +78,14 @@ class PublicController < ApplicationController
       currency =  "$"
     else
       currency = params[:currency] || "$"
+    end
+    if ['$', '€'].include?  params[:currency]
+      @plans = Plan.where(currency: currency).where.not(name: "SecretFREE").order("price")
+    else
+      @plans = Plan.where(currency: "$").where.not(name: "SecretFREE").order("price")
+    end
   end
-    @plans = Plan.where(currency: currency).where.not(name: "SecretFREE").order("price")
-  end
+  
   def contact
   end
-
 end
