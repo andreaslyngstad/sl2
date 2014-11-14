@@ -76,6 +76,9 @@ class TimesheetsController < ApplicationController
     @log.event = t('general.timesheet')
     @log.begin_time = @log.log_date.beginning_of_day
     @log.firm = current_firm
+    if !@log.project.nil? && !@log.project.customer.nil?
+      @log.customer = @log.project.customer
+    end
     if params[:val_input].include?(":")
       a = params[:val_input].split(":")
       b = a[0].to_f + a[1].to_f/60

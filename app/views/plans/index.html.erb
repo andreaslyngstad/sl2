@@ -26,7 +26,7 @@
 
 		<% end %>	
 		<td style="text-align:left"><span class="change_price_currency_link">
-			<% if @plans.last.currency == "$" %>
+			<% if @plans.last.try(:currency) == "$" %>
 			<p><%= link_to(t("general.prices_in") + " €?", plans_path(:currency => "€")) %></p>
 			<% else %>
 			<p><%= link_to(t("general.prices_in") + " $?", plans_path(:currency => "$")) %></p>
