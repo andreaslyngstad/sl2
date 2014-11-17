@@ -11,6 +11,7 @@ ActiveAdmin.register Subscription do
     #   link_to firm.name, obeqaslksdssdfnfdfysdfxm_firm_path(firm)
     # end
     column :firm
+    column :plan
     column :email
     column :name
     column :last_four

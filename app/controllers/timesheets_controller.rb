@@ -174,7 +174,7 @@ class TimesheetsController < ApplicationController
   end
   def get_instance_if_not_index(params)
     if params[:id] != "index"
-      get_instance(params)
+      @klass = current_firm.send(params[:class].downcase.pluralize).find(params[:id])
     end
   end
 end

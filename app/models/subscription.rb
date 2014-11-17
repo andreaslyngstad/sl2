@@ -21,7 +21,10 @@ class Subscription < ActiveRecord::Base
         set_properties(subscription) 
         firm.open!
         Subscription.delete_old_subscription(firm, id)
+        firm.update_plan(plan_id)
       end
+
+      
       save!
     end
   rescue Paymill::PaymillError => e
