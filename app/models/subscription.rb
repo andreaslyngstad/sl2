@@ -21,6 +21,7 @@ class Subscription < ActiveRecord::Base
         set_properties(subscription) 
         firm.open!
         Subscription.delete_old_subscription(firm, id)
+        Subscription.delete_old_paymill_sub(subscription_create.id)
         firm.update_plan(plan_id)
       end
 
