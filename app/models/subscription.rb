@@ -85,7 +85,7 @@ class Subscription < ActiveRecord::Base
       when 50500 then errors.add :base, "General timeout."; return false
       when 50501 then errors.add :base, "Timeout on side of the acquirer."; return false
       when 50502 then errors.add :base, "Risk management transaction timeout."; return false
-      when 50600 then errors.add :base, "Duplicate transaction." return false 
+      when 50600 then errors.add :base, "Duplicate transaction."; return false 
       else errors.add :base, "Something whent wrong."; return false
     end
   end
