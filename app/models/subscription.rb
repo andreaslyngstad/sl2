@@ -13,7 +13,9 @@ class Subscription < ActiveRecord::Base
       client = Paymill::Client.create email: email, description: name
       payment = Paymill::Payment.create token: paymill_card_token, client: client.id
       subscription_create = Paymill::Subscription.create offer: plan.paymill_id, client: client.id, payment: payment.id
+      check_transaction?
       subscription = Paymill::Subscription.find(subscription_create.id)
+
       if subscription
         if plan_id < firm.plan.id
           firm.remove_associations_when_downgrading(plan_id)
@@ -34,6 +36,62 @@ class Subscription < ActiveRecord::Base
     false
   end
   
+  def check_transaction?
+    case Paymill::Transaction.all({client: client.id, order: "created_at_desc"})[0].response_code
+      when 20000 then true
+      # when 10001 then errors.add :base, "General undefined response." false
+      # when 10002 then errors.add :base, "Still waiting on something." false
+      
+      # when 40000 then errors.add :base, "General problem with data." false
+      # when 40001 then errors.add :base, "General problem with payment data." false
+      # when 40100 then errors.add :base, "Problem with credit card data." false
+      # when 40101 then errors.add :base, "Problem with cvv." false
+      # when 40102 then errors.add :base, "Card expired or not yet valid." false
+      # when 40103 then errors.add :base, "Limit exceeded." false
+      # when 40104 then errors.add :base, "Card invalid." false
+      # when 40105 then errors.add :base, "Expiry date not valid." false
+      when 40106 then errors.add :base, "Credit card brand required."; return false
+      # when 40200 then errors.add :base, "Problem with bank account data." false
+      # when 40201 then errors.add :base, "Bank account data combination mismatch." false
+      # when 40202 then errors.add :base, "User authentication failed." false
+      # when 40300 then errors.add :base, "Problem with 3d secure data." false
+      # when 40301 then errors.add :base, "Currency / amount mismatch" false
+      # when 40400 then errors.add :base, "Problem with input data." false
+      # when 40401 then errors.add :base, "Amount too low or zero." false
+      # when 40402 then errors.add :base, "Usage field too long." false
+      # when 40403 then errors.add :base, "Currency not allowed." false
+      # when 50000 then errors.add :base, "General problem with backend." false
+      # when 50001 then errors.add :base, "Country blacklisted." false
+      # when 50002 then errors.add :base, "IP address blacklisted." false
+      # when 50003 then errors.add :base, "Anonymous IP proxy used." false
+      # when 50100 then errors.add :base, "Technical error with credit card." false
+      # when 50101 then errors.add :base, "Error limit exceeded." false
+      # when 50102 then errors.add :base, "Card declined by authorization system." false
+      # when 50103 then errors.add :base, "Manipulation or stolen card." false
+      # when 50104 then errors.add :base, "Card restricted." false
+      # when 50105 then errors.add :base, "Invalid card configuration data." false
+      # when 50200 then errors.add :base, "Technical error with bank account." false
+      # when 50201 then errors.add :base, "Card blacklisted." false
+      # when 50300 then errors.add :base, "Technical error with 3D secure." false
+      # when 50400 then errors.add :base, "Decline because of risk issues." false
+      # when 50401 then errors.add :base, "Checksum was wrong." false
+      # when 50402 then errors.add :base, "Bank account number was invalid (formal check)." false
+      # when 50403 then errors.add :base, "Technical error with risk check." false
+      # when 50404 then errors.add :base, "Unknown error with risk check." false
+      # when 50405 then errors.add :base, "Unknown bank code." false
+      # when 50406 then errors.add :base, "Open chargeback." false
+      # when 50407 then errors.add :base, "Historical chargeback." false
+      # when 50408 then errors.add :base, "Institution / public bank account (NCA)." false
+      # when 50409 then errors.add :base, "KUNO/Fraud." false
+      # when 50410 then errors.add :base, "Personal Account Protection (PAP)." false
+      # when 50500 then errors.add :base, "General timeout." false
+      # when 50501 then errors.add :base, "Timeout on side of the acquirer." false
+      # when 50502 then errors.add :base, "Risk management transaction timeout." false
+      # when 50600 then errors.add :base, "Duplicate transaction." return false 
+      else errors.add :base, "Something whent wrong."; return false
+    end
+  end
+
   def self.delete_old_subscription(firm, id) 
     self.where(firm_id: firm.id).where.not(id:id).destroy_all 
   end

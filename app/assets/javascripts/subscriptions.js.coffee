@@ -26,6 +26,9 @@ subscription =
     paymill.createToken(card, subscription.handlePaymillResponse)
 
   handlePaymillResponse: (error, result) ->
+    console.log(result)
+    console.log(error)
+    console.dir(result)
     if error
       custom_message = switch       
         when error.apierror == "3ds_cancelled"                then [$.jsi18n.messages.user_cancelled_operation, ""]
