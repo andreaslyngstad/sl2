@@ -90,12 +90,15 @@
            <%= select_year nil, {start_year: time_zone_now.to_date.year, end_year: time_zone_now.to_date.year+15}, {name: nil, id: "card_year", class: "mini_selector"} %>
           </div>
     </div>
+    <div class="signup-form-field">
+    <%= f.submit t("general.sign_up"), :class => "submit" %>
+  </div>
   <% end %>
   <div id="paymill_error">
     <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
   </div>
   <div class="signup-form-field">
-    <%= f.submit t("general.sign_up"), :class => "submit" %>
+    <%= link_to t("general.sign_up"), plans_path, :class => "submit" %>
   </div>
 <% end %>
 </div>	 

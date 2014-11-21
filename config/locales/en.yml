@@ -60,7 +60,7 @@ en:
     new: New
     new_tt: New
     create_new: Create new
-    could_not_subscribe: Could not subscribe
+    could_not_subscribe: Could not subscribe, please try again. 
     select: Select
     none: Not selected
     last: Last

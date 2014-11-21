@@ -60,7 +60,7 @@ nb:
     new: Ny
     new_tt: Nytt
     create_new: Lag ny
-    could_not_subscribe: Kunne ikke abonnere
+    could_not_subscribe: Kunne ikke abonnere, prøv igjen.
     select: Velg
     none: Ikke valgt
     last: Siste
