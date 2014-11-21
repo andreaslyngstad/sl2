@@ -14,6 +14,7 @@ nb:
   lost: tapt
   not_lost: ikke tapt
   general:
+    try_again: Prøv igjen
     sign_up: Abonner
     card_number: Kort nummer
     security_code: Sikkerhets kode (cvc)

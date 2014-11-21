@@ -14,6 +14,7 @@ en:
   lost: lost
   not_lost: not lost
   general:
+    try_again: Try again
     sign_up: Subscribe
     card_number: Card Nummer
     security_code: Security Code (cvc)

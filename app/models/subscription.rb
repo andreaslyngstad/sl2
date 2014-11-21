@@ -38,8 +38,7 @@ class Subscription < ActiveRecord::Base
     case Paymill::Transaction.all({client: client.id, order: "created_at_desc"})[0].response_code
       when 20000 then; return true
       when 10001 then errors.add :base, "General undefined response."; return false
-      when 10002 then errors.add :base, "Still waiting on something."; return false
-      
+      when 10002 then errors.add :base, "Still waiting on something."; return false 
       when 40000 then errors.add :base, "General problem with data."; return false
       when 40001 then errors.add :base, "General problem with payment data."; return false
       when 40100 then errors.add :base, "Problem with credit card data."; return false

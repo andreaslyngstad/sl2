@@ -73,7 +73,9 @@
   <%= f.hidden_field :email, :value => current_user.email%>
   <%= f.hidden_field :paymill_card_token %>
   <% if @subscription.paymill_card_token.present? %>
-    Credit card has been provided.
+    <div class="signup-form-field">
+    <%= link_to t("general.try_again"), plans_path, :class => "submit" %>
+  </div>
   <% else %>
   <div class="signup-form-field">
       <%= label_tag :card_number, (t"general.card_number" )%>
@@ -96,9 +98,6 @@
   <% end %>
   <div id="paymill_error">
     <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
-  </div>
-  <div class="signup-form-field">
-    <%= link_to t("general.sign_up"), plans_path, :class => "submit" %>
   </div>
 <% end %>
 </div>	 
