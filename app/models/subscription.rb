@@ -46,7 +46,7 @@ class Subscription < ActiveRecord::Base
       # when 40101 then errors.add :base, "Problem with cvv." false
       # when 40102 then errors.add :base, "Card expired or not yet valid." false
       # when 40103 then errors.add :base, "Limit exceeded." false
-      # when 40104 then errors.add :base, "Card invalid." false
+      when 40104 then errors.add :base, "Card invalid."; return false
       # when 40105 then errors.add :base, "Expiry date not valid." false
       when 40106 then errors.add :base, "Credit card brand required."; return false
       # when 40200 then errors.add :base, "Problem with bank account data." false
