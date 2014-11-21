@@ -13,22 +13,20 @@ class Subscription < ActiveRecord::Base
       client = Paymill::Client.create email: email, description: name
       payment = Paymill::Payment.create token: paymill_card_token, client: client.id
       subscription_create = Paymill::Subscription.create offer: plan.paymill_id, client: client.id, payment: payment.id
-      check_transaction?
+      if check_transaction?(client)
       subscription = Paymill::Subscription.find(subscription_create.id)
-
-      if subscription
-        if plan_id < firm.plan.id
-          firm.remove_associations_when_downgrading(plan_id)
+        if subscription
+          if plan_id < firm.plan.id
+            firm.remove_associations_when_downgrading(plan_id)
+          end
+          set_properties(subscription) 
+          firm.open!
+          Subscription.delete_old_subscription(firm, id)
+          Subscription.delete_old_paymill_sub(subscription_create.id)
+          firm.update_plan(plan_id)
         end
-        set_properties(subscription) 
-        firm.open!
-        Subscription.delete_old_subscription(firm, id)
-        Subscription.delete_old_paymill_sub(subscription_create.id)
-        firm.update_plan(plan_id)
-      end
-
-      
       save!
+      end
     end
   rescue Paymill::PaymillError => e
     logger.error "Paymill error while creating customer: #{e.message}"
@@ -36,7 +34,7 @@ class Subscription < ActiveRecord::Base
     false
   end
   
-  def check_transaction?
+  def check_transaction?(client)
     case Paymill::Transaction.all({client: client.id, order: "created_at_desc"})[0].response_code
       when 20000 then true
       # when 10001 then errors.add :base, "General undefined response." false
