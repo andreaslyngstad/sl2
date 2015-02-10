@@ -177,13 +177,16 @@ class Invoice < ActiveRecord::Base
 	end
 	def to_pdf
 	  host        = Rails.env.production? ? 'squadlink.com' : 'lvh.me:3000'
-	  url         = Rails.application.routes.url_helpers.show_pdf_url(:id => id, :host => host, :subdomain => firm.subdomain)
+	  protocol		= Rails.env.production? ? 'https' : 'http'
+	  url         = Rails.application.routes.url_helpers.show_pdf_url(:id => id, :host => host, :subdomain => firm.subdomain, :protocol => protocol)
 	  cookie      = { SECRETS_CONFIG[Rails.env][:phantomjs_secret_token] => firm.users.first.id } # must be admin user
+
 	  if status == 10 
 	  	res         = Shrimp::Phantom.new(url, {}, cookie).to_pdf("#{Rails.root}/tmp/shrimp/#{I18n.translate('economic.email_reminder').downcase}_#{firm.subdomain}_#{self.reminder_on.number}.pdf")
 	  else
 	  	res         = Shrimp::Phantom.new(url, {}, cookie).to_pdf("#{Rails.root}/tmp/shrimp/#{firm.subdomain}_#{self.number}.pdf")
 	  end
+	  
 	  puts(url)
 	end
   # def invoice(id)
