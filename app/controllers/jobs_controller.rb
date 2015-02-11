@@ -3,12 +3,14 @@ class JobsController < ApplicationController
   layout :resolve_layout
   include InvoiceSender
 	def show_pdf 
+    newrelic_ignore
     @klass = current_firm.invoices.find(params[:id])
     authorize! :read, @klass
     @logs = @klass.logs.order(:log_date).includes(:user, :project, :todo, :customer, :employee)
     
   end
   def download_invoice
+    newrelic_ignore
     @klass = current_firm.invoices.find(params[:id])
     @logs = @klass.logs.order(:log_date).includes(:user, :project, :todo, :customer, :employee)
     html = render_to_string(:action => '../jobs/download_invoice', :layout => false)
