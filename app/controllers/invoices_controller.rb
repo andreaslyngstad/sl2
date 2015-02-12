@@ -95,7 +95,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     if @invoice.status == 1
       @invoice.logs.each do |l|
-        l.invoice_id = nil
+        l.invoice_id = 0
         l.save
       end
       @invoice.destroy   

@@ -18,8 +18,8 @@ module Squadlink
 
      config.middleware.use Devise::SignInInterceptor, { :scope  => :user, :klass => 'User',
                                            :secret =>  SECRETS_CONFIG[Rails.env][:phantomjs_secret_token] }
-    # config.middleware.use PDFKit::Middleware
-    config.middleware.use Shrimp::Middleware, :margin => '1cm', :format => 'legal'
+    config.middleware.use PDFKit::Middleware
+    # config.middleware.use Shrimp::Middleware, :margin => '1cm', :format => 'legal'
     require "#{Rails.root}/lib/extensions.rb"
     config.colorize_logging = true
     # Enable the asset pipeline

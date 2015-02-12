@@ -1,7 +1,7 @@
 class PlansController < ApplicationController
   def index
   	authorize! :manage, Firm
-  	if params[:currency] == "FULL_FREE"
+  	if params[:currency] == "&"
   		currency =  "$"
   	else
   		currency = params[:currency] || current_firm.plan.currency

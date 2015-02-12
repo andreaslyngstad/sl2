@@ -79,5 +79,5 @@ $(document).ready(function() {
   $('.quick_send_invoice').send_invoice()
   // $('.download_invoice').download_invoice()
   // $('.quick_send_invoice').sending_to_handeling_invoice("sending")
-  $('.download_invoice').sending_to_handeling_invoice("download")
+  //$('.download_invoice').sending_to_handeling_invoice("download")
 });
