@@ -391,7 +391,11 @@ http_interactions:
       Server:
       - nginx
       Date:
+<<<<<<< HEAD
       - Thu, 12 Feb 2015 09:46:49 GMT
+=======
+      - Thu, 12 Feb 2015 13:31:07 GMT
+>>>>>>> rails417
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -402,15 +406,25 @@ http_interactions:
       - max-age=16070400; includeSubDomains
     body:
       encoding: UTF-8
+<<<<<<< HEAD
       string: "{\n\t\"data\":{\n\t\t\"id\":\"client_07aa476e976854d67cff\",\n\t\t\"email\":\"test2@test.no\",\n\t\t\"description\":\"test\",\n\t\t\"app_id\":null,\n\t\t\"updated_at\":1423734409,\n\t\t\"created_at\":1423734409,\n\t\t\"payment\":[\n\n\t\t],\n\t\t\"subscription\":null\n\t},\n\t\"mode\":\"live\"\n}"
     http_version: 
   recorded_at: Thu, 12 Feb 2015 09:46:49 GMT
+=======
+      string: "{\n\t\"data\":{\n\t\t\"id\":\"client_c247abc967324f9acd25\",\n\t\t\"email\":\"test2@test.no\",\n\t\t\"description\":\"test\",\n\t\t\"app_id\":null,\n\t\t\"updated_at\":1423747867,\n\t\t\"created_at\":1423747867,\n\t\t\"payment\":[\n\n\t\t],\n\t\t\"subscription\":null\n\t},\n\t\"mode\":\"live\"\n}"
+    http_version: 
+  recorded_at: Thu, 12 Feb 2015 13:31:07 GMT
+>>>>>>> rails417
 - request:
     method: post
     uri: https://e182c1a46cfaf1b70308d973d940b970:@api.paymill.com/v2/payments
     body:
       encoding: US-ASCII
+<<<<<<< HEAD
       string: token=098f6bcd4621d373cade4e832627b4f6&client=client_07aa476e976854d67cff
+=======
+      string: token=098f6bcd4621d373cade4e832627b4f6&client=client_c247abc967324f9acd25
+>>>>>>> rails417
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -428,7 +442,11 @@ http_interactions:
       Server:
       - nginx
       Date:
+<<<<<<< HEAD
       - Thu, 12 Feb 2015 09:47:05 GMT
+=======
+      - Thu, 12 Feb 2015 13:31:09 GMT
+>>>>>>> rails417
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -439,5 +457,9 @@ http_interactions:
       encoding: UTF-8
       string: "{\n\t\"exception\":\"token_not_found\",\n\t\"error\":\"Token not Found\"\n}"
     http_version: 
+<<<<<<< HEAD
   recorded_at: Thu, 12 Feb 2015 09:47:06 GMT
+=======
+  recorded_at: Thu, 12 Feb 2015 13:31:09 GMT
+>>>>>>> rails417
 recorded_with: VCR 2.9.0
