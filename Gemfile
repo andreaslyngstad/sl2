@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.9'
 gem 'activesupport-json_encoder', github: 'rails/activesupport-json_encoder'
 gem 'eventmachine'
 # Bundle edge Rails instead:

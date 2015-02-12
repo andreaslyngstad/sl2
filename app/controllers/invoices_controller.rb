@@ -16,7 +16,7 @@ class InvoicesController < ApplicationController
       if klass == 'project'
         @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, :project, :todo, :user, :firm)
       elsif klass == 'customer'
-        @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, {:customer => :employee}, :project, {:project =>:todo}, :user)
+        @logs = @instance.logs.where("end_time IS NOT NULL").order("log_date DESC").includes(:customer, {:customer => :employees}, :project, {:project =>:todo}, :user)
       end
       @invoice.send(klass+'=', @instance)
     end
