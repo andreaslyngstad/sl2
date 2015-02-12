@@ -69,6 +69,7 @@ class TimesheetsController < ApplicationController
     select_klass = params[:select_klass]
     klass        = params[:klass]
     @log.user = current_user
+    @log.rate = current_user.hourly_rate
     @log.send(select_klass + '=', current_firm.send(params[:select_klass].pluralize).find(params[:select_id]))
     @log.send(klass + '=', current_firm.send(params[:klass].pluralize).find(params[:id]))
     @dates = (Time.zone.now.beginning_of_week.to_date)..(Time.zone.now.end_of_week.to_date)

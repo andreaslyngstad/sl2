@@ -13,6 +13,7 @@ jQuery.fn.UIdialogs_invoices_link = function(){
 };
 jQuery.fn.UIdialogs_edit_invoices_links = function(){
   $(this).click(function(){
+    console.log("test")
     var data_id = $(this).attr('data-id')
     var object = $(this).attr("data-object")
     $.get("/"+ object +"s/" + data_id + "/edit/")

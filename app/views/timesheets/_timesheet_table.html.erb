@@ -34,6 +34,7 @@
 <td class="project_total_ total" data-hours="0"></td>
 </tr>
 <% end %>
+<% if @user.nil? or @user == current_user %>
 <% klass = @projects.first.class.to_s.downcase %>
 <td class="timesheet_project"><%= select_tag return_symbol(@projects.first), options_from_collection_for_select(@projects, "id", "name"), 
   		:id => "timeheet_project_select", :prompt => (t'general.select') + ' ' + (t'activerecord.models.' +  (klass != 'nilclass' ? klass : 'project') + '.one'), :data =>{klass: klass}%></td>
@@ -44,6 +45,7 @@
 		<% end %>	
 		<td class="number"> </td>			
 <tr>
+<% end %>
 	  <tfoot>
 	<td class="timesheet_project"><b><%= t'economic.total' %></b></td>
 	<% @dates.each do |date| %>
