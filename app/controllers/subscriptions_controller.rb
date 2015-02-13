@@ -30,11 +30,16 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.find(params[:id])
     plan = Plan.where(name: "Free").first
     current_firm.remove_associations_when_downgrading(plan.id)
+    
+    
+      Paymill::Subscription.delete(@subscription.paymill_id)
+      rescue Paymill::APIError
+   
     @subscription.delete
     current_firm.plan = plan
-    s = Subscription.new(plan_id: plan.id, last_four: "0000", card_type: "NONE")
-    s.firm = current_firm
-    s.save!
+    # s = Subscription.new(plan_id: plan.id, last_four: "0000", card_type: "NONE")
+    # s.firm = current_firm
+    # s.save!
     current_firm.save
     flash[:notice] = flash_helper(t'subscription.you_are_now_on_the_free_plan')  
     redirect_to plans_path

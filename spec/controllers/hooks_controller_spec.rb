@@ -14,7 +14,7 @@ describe HooksController do
       subscription.next_bill_on = DateTime.now.to_date
       subscription.save!
       firm.subscription.should == subscription
-      event = {event: {event_type: "subscription.succeeded",event_resource: { subscription: subscription.paymill_id,transaction: "Object"},created_at: "1358027174"}}
+      event = {event: {event_type: "subscription.succeeded",event_resource: { subscription: { id: subscription.paymill_id},transaction: "Object"},created_at: "1358027174"}}
       request.env['RAW_POST_DATA'] = event.to_json  
       post 'receiver', event 
       response.code.should eq("200") 

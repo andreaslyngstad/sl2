@@ -61,7 +61,7 @@ describe SubscriptionsController do
     let(:subscription)  { FactoryGirl.create(:subscription, last_four: "1234", card_type: "VISA", firm_id: firm.id, paymill_id: "test")}
     let(:plan)          { FactoryGirl.create(:plan, name: 'Free')}
    
-    it "deletes the subscription" do
+    it "deletes the subscription", :vcr do
       old_subscription = firm.subscription
       delete :destroy, id: old_subscription
       Subscription.where(firm_id: @user.firm.id).first.plan.name.should == 'Free'

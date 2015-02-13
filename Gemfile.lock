@@ -275,7 +275,7 @@ GEM
       mime-types
     paranoia (2.0.2)
       activerecord (~> 4.0)
-    paymill (0.4.0)
+    paymill (0.5.1)
       json
     pdfkit (0.6.2)
     pg (0.17.1)
