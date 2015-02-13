@@ -15,6 +15,7 @@
 	<td class="invoice_links">
 		<%= link_to(t('show'), invoice_path(invoice), class: 'invoice_buttons button') %>
 		<span class='download_invoice edit button invoice_buttons' data-id="<%= invoice.id %>"  title="<%= t'download' %> <%= t'activerecord.models.invoice.one' %>"><%= t'download' %></span>
+	
 		<% case invoice.status  %>
 			<% when 1 then %>
 			<% if !invoice.customer.email.blank? %>
