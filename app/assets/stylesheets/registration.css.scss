@@ -401,3 +401,71 @@ margin: 0 auto;
 	margin:0px;
 	font-size:13px;
 }
+
+.share-button-bar-toggle.share-button-bar{display:none;z-index:100;position:absolute;right:0;top:0;bottom:0;width:160px;padding-left:10px;padding-top:4px}
+.article-share-buttons .share-button-bar > a.share-button {
+width: 40px;
+height: 40px;}
+.share-button-bar > a.share-button {
+position: relative;
+display: block;
+float: left;
+height: 30px;
+width: 30px;
+line-height: 30px;
+border-bottom: none;
+margin-right: 10px;
+margin-bottom: 10px;
+}
+.share-button-bar > a.share-button:after {
+display: block;
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+background: transparent;
+}
+svg[Attributes Style] {
+shape-rendering: auto;
+}
+svg:not(:root) {
+overflow: hidden;
+}
+.share-button svg {
+color: transparent;
+}
+.share-button .normal {
+opacity: 1;
+-webkit-transition: all 150ms;
+transition: all 150ms;
+}
+.skin-fill {
+fill: #37c;
+}
+.share-button svg {
+color: transparent;
+}
+.share-button-bar > a.share-button {
+position: relative;
+display: block;
+float: left;
+height: 30px;
+width: 30px;
+line-height: 30px;
+border-bottom: none;
+margin-right: 10px;
+margin-bottom: 10px;
+}
+.sr-only {
+display: block;
+position: absolute;
+overflow: hidden;
+width: 1px;
+height: 1px;
+clip: rect(0 0 0 0);
+border: 0;
+padding: 0;
+margin: 0 -1px -1px 0;
+}

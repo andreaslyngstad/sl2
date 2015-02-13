@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   belongs_to :firm, :counter_cache => true
   belongs_to :customer
   has_many :todos, :dependent => :destroy
-  has_many :logs, :dependent => :destroy
+  has_many :logs
   has_many :recent_logs, -> {  where('log_date >= ?', Time.zone.now.beginning_of_week).order("log_date DESC") }, :class_name => "Log"
   has_many :milestones, :dependent => :destroy
   has_many :invoices

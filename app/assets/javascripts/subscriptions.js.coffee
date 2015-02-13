@@ -10,6 +10,7 @@ paymillErrorHandler = (error_message) ->
 subscription =
   setupForm: ->
     $('#new_subscription').submit ->
+      NProgress.start()
       $('input[type=submit]').attr('disabled', true)
       if $('#card_number').length
         subscription.processCard()
@@ -29,6 +30,7 @@ subscription =
     console.log(result)
     console.log(error)
     console.dir(result)
+    NProgress.done()
     if error
       custom_message = switch       
         when error.apierror == "3ds_cancelled"                then [$.jsi18n.messages.user_cancelled_operation, ""]
