@@ -20,7 +20,8 @@ if (lang == "en-US"){
 				invalid_month_cc:	"Invalid month in your credit card",
 				credit_card_expired:	"Credit card expired",
 				invalid_security_code:	"Invalid security code (cvc)",
-				invalid_amount:	"Invalid amount for transaction"
+				invalid_amount:	"Invalid amount for transaction",
+				generating_file: "Generating file..."
     });
 }(jQuery));
 }

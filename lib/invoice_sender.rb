@@ -18,13 +18,16 @@ require 'mail'
 		address.format
 	end
 	
-	def invoice_to_pdf(invoice_id)
+	def invoice_to_pdf(invoice_id) 
 		Invoice.find(invoice_id).to_pdf
 	end
 
 	def invoice_to_pdf_and_send(invoice_id, email_id)
 		invoice_to_pdf(invoice_id)
 		InvoiceMailer.invoice(invoice_id, email_id)
+	end
+	def tester_dete(test)
+		puts test
 	end
 
 	def invoice_to_pdf_and_download(invoice_id)

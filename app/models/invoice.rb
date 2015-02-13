@@ -182,11 +182,11 @@ class Invoice < ActiveRecord::Base
 	  cookie      = { SECRETS_CONFIG[Rails.env][:phantomjs_secret_token] => firm.users.first.id } # must be admin user
 
 	  if status == 10 
-	  	res = PDFKit.new(url, {}, cookie)
+	  	res = Shrimp::Phantom.new(url, {}, cookie)
 	  	res.to_pdf("#{Rails.root}/tmp/shrimp/#{I18n.translate('economic.email_reminder').downcase}_#{firm.subdomain}_#{self.reminder_on.number}.pdf")
 	  	error = res.error
 	  else
-	  	res = PDFKit.new(url, {}, cookie)
+	  	res = Shrimp::Phantom.new(url, {}, cookie)
 			res.to_pdf("#{Rails.root}/tmp/shrimp/#{firm.subdomain}_#{self.number}.pdf")
 	  	error = res.error
 	  end

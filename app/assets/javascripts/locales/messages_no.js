@@ -62,7 +62,9 @@ jQuery(function($){
     invalid_monthcc:    "Ugyldig måned på kortet",
     credit_card_expired:    "Kortet har utløpt",
     invalid_security_code:  "Ugyldig sikkerhetskode (cvc)",
-    invalid_amount: "Ugyldig beløp for transaksjoen"
+    invalid_amount: "Ugyldig beløp for transaksjoen",
+    generating_file: "Genererer fil...."
+
     });
 }(jQuery));
 }

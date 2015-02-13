@@ -25,7 +25,7 @@ describe InvoiceSender do
 	it "should get number after last invoice" do
 		invoice.should_receive(:number).nil?
 		invoice.should_receive(:number=).with(101)
-		InvoiceSender.give_invoice_number(invoice,invoice2)
+		InvoiceSender.give_invoice_number(invoice,invoice2) 
 	end
 	
 	it "should return the firms invoice email if it exists" do

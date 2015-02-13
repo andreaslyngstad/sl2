@@ -16,10 +16,10 @@ function pollJob(jobId, url) {
                       data: {id: jobId, file: data.file},
                       })
                 }else{
-                  window.location.href = "/jobs/" + url + "?file=" + data.file + "&id=" + jobId;  $('.flash_notice').empty() 
+                  window.location.href = "/jobs/" + url + "?file=" + data.file + "&id=" + jobId;  $('.flash_notice').empty()  
                 }
               },
-              202: function(data) { setTimeout(poll, 2000); $('.flash_notice').empty() },
+              202: function(data) { setTimeout(poll, 2000); $('.flash_notice').text($.jsi18n.messages.generating_file)},
               500: function(data) { console.log('Error!'); }
             }
         });

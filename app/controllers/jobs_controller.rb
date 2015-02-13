@@ -45,6 +45,7 @@ class JobsController < ApplicationController
   def fetch_job
     invoice = current_firm.invoices.find(params[:id])
     if InvoiceSender.pdf_finished?(invoice)
+      
        render :status => 200, :json => {file: "#{current_firm.subdomain}_#{invoice.number}.pdf", id: params[:id] }
     else
       render :status => 202, :text => ''
