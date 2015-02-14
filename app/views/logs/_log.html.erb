@@ -35,7 +35,7 @@
   </div>
   <div class="dialog_form" id="log_update_<%= log.id %>_form" title="<%= t'helpers.submit.update', model: Log.model_name.human %>" style="display:none;" data-id="<%= log.id %>"></div>
     <% else %>
-   <%= t'economic.invoiced' %>
+   <%= link_to( t('economic.invoice'), invoice_path(log.invoice) )%>
     <% end %>
   <% end %>
   </div>

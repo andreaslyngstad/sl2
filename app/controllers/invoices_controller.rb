@@ -24,7 +24,11 @@ class InvoicesController < ApplicationController
 
   def show  
     @klass = current_firm.invoices.find(params[:id])
-    @logs = @klass.logs.includes(:customer, :project, :user)
+    if @klass.invoice_id.nil?
+    @logs = @klass.logs.includes(:customer, :project, :user) 
+  else
+    @logs = @klass.credit_logs.includes(:customer, :project, :user) 
+  end
     # @invoice_lines = @klass.invoice_lines
     @tax_lines = @klass.tax_lines
     authorize! :read, @klass

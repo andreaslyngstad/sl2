@@ -14,6 +14,7 @@ class Invoice < ActiveRecord::Base
 	belongs_to :reminder_on, class_name: "Invoice"
 	belongs_to :invoice, class_name: "Invoice"
 	has_many 	 :logs
+	has_many 	 :credit_logs, class_name: "Log", foreign_key: 'credit_note_id'
 	has_many	 :invoice_lines, dependent: :destroy
 	has_many	 :emails
 	

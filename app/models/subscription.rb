@@ -97,8 +97,7 @@ class Subscription < ActiveRecord::Base
     Paymill::Subscription.delete(sub_paymill_id)
   end
    
-  def update_firm_plan
-    Payment.make(self) 
+  def update_firm_plan 
     self.firm.update_plan(plan_id)
   end
   

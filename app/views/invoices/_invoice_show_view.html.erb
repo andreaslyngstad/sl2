@@ -73,7 +73,7 @@
 		    <div class="total_log_time_print"><%= time_format(log.hours) %></div>  
 		  </div>
 			<div class="tax_field" id="logs_attributes_<%= log.id %>_tax"><%= log.tax.prettify %></div>
-			<div class="total_on_log total_on_this" data-price="<%= log.rate %>" data-quantity="<%= (log.hours/3600).prettify %>" data-vat="<%= log.tax.prettify %>"><%= currency_converter(log.total_price) %></div>
+			<div class="total_on_log total_on_this" data-price="<%= log.rate * -1 %>" data-quantity="<%= (log.hours/3600).prettify %>" data-vat="<%= log.tax.prettify %>"><%= klass.invoice_id.nil? ? currency_converter(log.total_price) : currency_converter(-log.total_price) %></div>
 			</div>
 		<% end %>
   </div>

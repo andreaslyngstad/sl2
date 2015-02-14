@@ -22,7 +22,7 @@
 <tr>
 <td><%= link_to((t 'economic.invoice').capitalize, invoice_path(@klass.invoice))  %> </td>
 <td><%= @klass.invoice.number %> </td>
-<td class="numbers"></td>
+<td class="numbers"><%= currency_converter( @klass.invoice.total.to_s) %></td>
 </tr>
 <% end %>
 <%  @klass.credit_notes.each do |cn| %>

@@ -11,7 +11,7 @@ class Log < ActiveRecord::Base
   belongs_to :todo
   belongs_to :employee
   belongs_to :invoice
-  belongs_to :credit_note, class_name: "Invoice"
+  belongs_to :credit_note, class_name: "Invoice", foreign_key: 'credit_note_id'
   before_save :set_hours 
   validate :log_made_on_project
   validate :end_time_before_begin_time
