@@ -25,9 +25,10 @@ class InvoicesController < ApplicationController
   def show  
     @klass = current_firm.invoices.find(params[:id])
     if @klass.invoice_id.nil?
-    @logs = @klass.logs.includes(:customer, :project, :user) 
+    @logs = Log.credit_noted.where(firm: current_firm).where(invoice: @klass)
+    # .includes(:customer, :project, :user) 
   else
-    @logs = @klass.credit_logs.includes(:customer, :project, :user) 
+    @logs = Log.credit_noted.where(firm: current_firm).where(credit_note: @klass)
   end
     # @invoice_lines = @klass.invoice_lines
     @tax_lines = @klass.tax_lines
@@ -132,8 +133,8 @@ class InvoicesController < ApplicationController
         if @logs
           @logs.each do |k,v|
             log = current_firm.logs.find(k.to_i)
-            log.credit_note_id = @klass.id
-            log.save
+            log.credit_note_log(@klass.id)
+
           end
         end
         @invoice.status = 7

@@ -87,11 +87,13 @@ class Invoice < ActiveRecord::Base
 
   def paid!
   	if self.paid.nil? 
+  		self.paid_amount = self.receivable
   		self.paid = Date.current
   		self.status = 6
   		self.receivable = 0.0
   	else
 	  	self.paid = nil
+	  	self.paid_amount = nil
 	  	if !reminders.empty? and credit_notes.empty?
 	  		self.status = 5
 	  	elsif !credit_notes.empty?
@@ -228,7 +230,11 @@ class Invoice < ActiveRecord::Base
 	private
 	
 	def total_to_receivable
-  	self.receivable = self.total
+		if status == 8
+			self.receivable = 0
+		else
+  		self.receivable = self.total
+  	end
   end
 
   def due_to_last_due

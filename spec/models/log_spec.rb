@@ -20,6 +20,9 @@ describe Log do
                                             firm: firm, 
                                             invoice_id: 1)}
   let(:log3)      {FactoryGirl.create(:log, :log_date => Date.today.beginning_of_week - 1.day, :begin_time => time_now, :end_time => time_now + 1.hours, :user => user, :firm => firm)}
+  let(:log4)       {FactoryGirl.create(:log, event: 'new_log_without_credit_note',:user => user, :firm => firm, 
+                                            invoice_id: 1, 
+                                            credit_note_id: 1)}
   let(:log_uninvoiced) {FactoryGirl.create(:log, invoice_id: 0, :user => user, :firm => firm, :rate => 889.0)}
   let(:log_uninvoiced_in_progress) {FactoryGirl.create(:log, invoice_id: nil, :user => user, :firm => firm, end_time: nil, tracking: true)}
   let(:project)   {FactoryGirl.create(:project, :firm => firm)}
@@ -55,6 +58,20 @@ describe Log do
   end
   it 'Should set hour spent in right format before save' do 
     log.hours.should == log.end_time - log.begin_time
+  end
+
+  it 'returns a new log with nil in invoice_id and credit_note_id' do 
+    log4.duplicate_credit_note_log
+    Log.where(event: 'new_log_without_credit_note').first.invoice_id.should eq nil 
+    Log.where(event: 'new_log_without_credit_note').first.credit_note_id.should eq nil 
+  end
+
+  it 'returns a credited log', focus: true do
+    id = log2.id
+    log2.credit_note_log(4)
+    l = Log.credit_noted.first
+    l.credit_note_id.should == 4
+
   end
 
   it "returns true if invoiced" do

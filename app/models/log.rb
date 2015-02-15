@@ -3,7 +3,8 @@ class Log < ActiveRecord::Base
   include ActiveModel::Validations
   validates_with Validator
   validates_with MadeWithInLimit, on: :create
-  
+  default_scope { where(credit_note: nil ) }
+  scope :credit_noted, -> { unscope(:where) }
   belongs_to :customer
   belongs_to :user
   belongs_to :firm, :counter_cache => true
@@ -40,6 +41,19 @@ class Log < ActiveRecord::Base
     end
   end
   
+  def credit_note_log(credit_id)
+    self.credit_note_id = credit_id
+    self.save
+    duplicate_credit_note_log
+  end
+
+  def duplicate_credit_note_log
+    new_log = dup
+    new_log.invoice_id = 0
+    new_log.credit_note_id = nil
+    new_log.save
+  end
+
   
   def end_time_before_begin_time
     errors.add(:end_time, "You end before you begin.") if

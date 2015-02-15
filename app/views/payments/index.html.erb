@@ -24,7 +24,7 @@
 		<td><%= p.card_type%></td>
 		<td>**** **** **** <%= p.last_four%></td>		
 		<td><%= p.plan_name %></td>	
-		<td><%= p.amount %></td>
+		<td><%= payment_currency(p) %></td>
 		<td><%=link_to 'show', payment_path(p)  %></td>
 		<td><%=link_to 'pdf', download_pdf_path(p)  %></td>
 		</tr>

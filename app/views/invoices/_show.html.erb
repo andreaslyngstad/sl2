@@ -29,7 +29,7 @@
 <tr>
 <td><%= link_to((t 'economic.credit_note').capitalize, invoice_path(cn))  %> </td>
 <td><%= cn.number %> </td>
-<td class="numbers"><%= currency_converter(cn.receivable.to_s) %></td>
+<td class="numbers"><%= currency_converter(cn.total.to_s) %></td>
 </tr>
 <% end %>
 
@@ -48,6 +48,13 @@
 <td class="numbers">-<%= currency_converter(@klass.lost.to_s) %></td>
 </tr>
 <% end %>
+<% if @klass.status == 6 %>
+<tr style="color: green;">
+<td><%= t 'economic.invoice_paid' %> </td>
+<td></td>
+<td class="numbers">-<%= currency_converter(@klass.paid_amount.to_s) %></td>
+</tr>
+<% end %>
 <tr class="sum_receivable">
 <td><%= t'activerecord.attributes.invoice.receivable' %> </td>
 <td></td>
@@ -64,7 +71,7 @@
 </tr>
 <% end %>
 <% if @klass.paid != nil and @klass.status != 8 %>
-<tr style="color: green;">
+<tr >
 	<td>
 		<%= t'economic.invoice_paid' %>
 	</td>
@@ -96,7 +103,7 @@
 <% @klass.emails.order('created_at DESC').each do |e| %>
 	<li>
 		<ul class="mail_instance_wrapper">
-			<li><span style='color:<%=  e.status_string[0] %>; float:left;'><%= e.status_string[1] %></span><span><%= date_format(e.created_at )%></span></li>
+			<li><span style='color:<%=  e.status_string[0] %>; float:left;'><%= e.status_string[1] %></span><span><%= date_format(e.created_at )%></span></li><br>
 			<li><%= e.address %></li>
 			<li><b><%= e.subject %></b></li>
 			<li><%= simple_format(e.content, class: 'log_event_paragraf' )%></li>

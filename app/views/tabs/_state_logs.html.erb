@@ -10,7 +10,7 @@
 	    <div class="state_last_logs_text">
 	    <%= simple_format(log.event, class: 'log_event_paragraf') %> 
 	    <% if log.end_time.nil? %>
-	    	<span style="font-size: 60%"><%= t'general.in_progress' %></span>
+	    	<span style="font-size: 60%"><%=link_to( t('general.in_progress'), logs_path) %></span>
 	    <% end %>
 	    </div>
     <% end %>

@@ -43,7 +43,7 @@
 	    	<div class="db_log_header">
 	    	<span class="date_format_setter" style="font-weight:bold;" data-date="<%= log.log_date %>"><%= log.log_date %></span>|
 	  		<% if log.end_time.nil? %>
-	  			<span style=""><%= t'general.in_progress' %></span>
+	  			<span style=""><%=link_to( t('general.in_progress'), logs_path) %></span>
 				<% else %>
 				<div class="total_log_time in_db" data-hours="<%= log.hours %>">0:00</div><%= t'times.hour.more' %>
 					

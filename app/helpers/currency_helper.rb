@@ -28,6 +28,13 @@ module CurrencyHelper
     currency + p + cent_seperator + after_cent
   end
 
+  def payment_currency(payment)
+    if payment.currency == "USD"
+      number_to_currency(payment.amount, unit: "$", format: "%u %n")
+    else
+      number_to_currency(payment.amount, unit: "€", format: "%n %u")
+    end
+  end
   def after_cent(cent)
     if cent 
       if cent == "0"

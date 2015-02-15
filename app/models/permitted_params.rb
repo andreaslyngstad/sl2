@@ -119,7 +119,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   end
   def log_attributes
     if current_user
-      [:event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,
+      [:event,:customer_id,:user_id,:project_id,:employee_id,:todo_id,:tracking,:begin_time,:end_time,:log_date,:invoice_id,:credit_note_id,
 	 :hours,:project,:customer,:user,:todo, :rate, :firm, :log_attributes]
     end
   end
@@ -171,7 +171,7 @@ class PermittedParams < Struct.new(:params, :current_user)
   end
   def invoice_attributes
     if current_user
-      [:number,:content,:project_id, :mail_to, :mail_subject, :mail_content, :customer_id,:firm_id, :paid, :reminder_sent, :reminder_fee, :due, :status, :date, :total, :invoice_id,
+      [:number,:content,:project_id, :invoice_receivable, :mail_to, :mail_subject, :mail_content, :customer_id,:firm_id, :paid, :reminder_sent, :reminder_fee, :due, :status, :date, :total, :invoice_id,
         logs_attributes: [:tax],
       invoice_lines_attributes: [:_destroy, :description, :quantity, :price, :tax, :id]
       ]

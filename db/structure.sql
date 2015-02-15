@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -36,7 +37,7 @@ CREATE TABLE queue_classic_jobs (
     id bigint NOT NULL,
     q_name text NOT NULL,
     method text NOT NULL,
-    args text NOT NULL,
+    args json NOT NULL,
     locked_at timestamp with time zone,
     locked_by integer,
     created_at timestamp with time zone DEFAULT now(),
@@ -120,6 +121,18 @@ BEGIN
   RETURN;
 END;
 $_$;
+
+
+--
+-- Name: queue_classic_notify(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION queue_classic_notify() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$ begin
+  perform pg_notify(new.q_name, '');
+  return null;
+end $$;
 
 
 --
@@ -537,7 +550,8 @@ CREATE TABLE invoices (
     lost double precision,
     currency text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    paid_amount double precision
 );
 
 
@@ -685,7 +699,8 @@ CREATE TABLE payments (
     card_type text,
     last_four text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    currency character varying(255)
 );
 
 
@@ -1586,6 +1601,13 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: queue_classic_notify; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER queue_classic_notify AFTER INSERT ON queue_classic_jobs FOR EACH ROW EXECUTE PROCEDURE queue_classic_notify();
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1646,4 +1668,8 @@ INSERT INTO schema_migrations (version) VALUES ('20101029201156');
 INSERT INTO schema_migrations (version) VALUES ('20101029201157');
 
 INSERT INTO schema_migrations (version) VALUES ('20101029201158');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201159');
+
+INSERT INTO schema_migrations (version) VALUES ('20101029201160');
 
