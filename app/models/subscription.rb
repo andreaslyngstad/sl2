@@ -22,7 +22,6 @@ class Subscription < ActiveRecord::Base
           set_properties(subscription) 
           firm.open!
           Subscription.delete_old_subscription(firm, id)
-          Subscription.delete_old_paymill_sub(subscription_create.id)
           firm.update_plan(plan_id)
         end
       save!
@@ -90,12 +89,15 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.delete_old_subscription(firm, id) 
-    self.where(firm_id: firm.id).where.not(id:id).destroy_all 
+    self.where(firm_id: firm.id).where.not(id:id).each do |s|
+      Paymill::Subscription.delete(s.paymill_id)
+      s.delete
+    end 
   end
   
-  def self.delete_old_paymill_sub(sub_paymill_id)
-    Paymill::Subscription.delete(sub_paymill_id)
-  end
+  # def self.delete_old_paymill_sub(sub_paymill_id)
+  #   Paymill::Subscription.delete(sub_paymill_id)
+  # end
    
   def update_firm_plan 
     self.firm.update_plan(plan_id)
