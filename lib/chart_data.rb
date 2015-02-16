@@ -112,7 +112,7 @@ class ChartData
   def income_per_month
     months_with_income = Hash.new #{|h, k| h[k] = Hash.new(&h.default_proc)}
     months_without_income = Hash.new
-    firm.invoices.where.not(paid: nil).select("date_trunc( 'month', paid ) as month, sum(total) as total").group('month').each { |v|months_with_income[I18n.l(v.month.to_date, format: :month_n)] = v.total.to_f}
+    firm.invoices.where.not(paid: nil).select("date_trunc( 'month', paid ) as month, sum(paid_amount) as total").group('month').each { |v|months_with_income[I18n.l(v.month.to_date, format: :month_n)] = v.total.to_f}
     
     range.map(&:beginning_of_month).uniq.map{|b| I18n.l(b, format: :month_n)}.each { |x| months_without_income[x] = 0.0} 
     output = '[' 
