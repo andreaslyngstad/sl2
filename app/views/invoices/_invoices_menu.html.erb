@@ -12,7 +12,7 @@
 		<%= hidden_field_tag "url", @klass ? @klass.class : "index"  %>
 		<%= hidden_field_tag "id", @klass ? @klass.id : "index"%>
 		<div id="range_date_fields_invoice">
-		  <%= text_field_tag 'from', date_format(time_zone_now - 1.week), :class => "invoice_range_date"%>
+		  <%= text_field_tag 'from', date_format(time_zone_now - 6.months), :class => "invoice_range_date"%>
 			<%= text_field_tag 'to',date_format(time_zone_now), :class => "invoice_range_date"  %>
 		</div>
 		<div class="invoices_pr_status">

@@ -47,24 +47,28 @@ firm1 = Firm.create! name: "Lizz",
                       clock_format: 1
 
 puts 'New firm created: ' << firm1.name
-firm2 = Firm.create! :name => "Lekk betong", :subdomain => "lekkbetong", plan: gold_plan
+firm2 = Firm.create! :name => "video", :subdomain => "video", plan: gold_plan
 puts 'New firm created: ' << firm2.name
 puts 'SETTING UP EXAMPLE USERS'
 user1 = User.new :name => 'Andreas Lyngstad', hourly_rate: 1000.0, :email => 'andreas@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 user1.firm = firm1
 user1.save
 puts 'New user created: ' << user1.name
-user2 = User.new :name => 'Axel pharo', :email => 'axel@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
+user2 = User.new :name => 'Agnes Whittington', :email => 'axel@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 user2.firm = firm1
 user2.save
 puts 'New user created: ' << user2.name
-user3 = User.new :name => 'Tiril Pharo', :email => 'tiril@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
+user3 = User.new :name => 'Christoffer Banes', :email => 'tiril@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 user3.firm = firm1
 user3.save
 puts 'New user created: ' << user3.name
-user4 = User.new :name => 'Astrid pharo', :email => 'astrid@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
+user4 = User.new :name => 'Dorian Gaughan', :email => 'astrid@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
 user4.firm = firm1
 user4.save
+puts 'New user created: ' << user4.name
+user5 = User.new :name => 'Jeanett Meaux', :email => 'astrid@lizz.no', :password => 'lekmedmeg', :password_confirmation => 'lekmedmeg', :role => "Admin"
+user5.firm = firm1
+user5.save
 puts 'New user created: ' << user4.name
 n = 1
 100.times do |n|

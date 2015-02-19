@@ -2,7 +2,7 @@ class InvoicesController < ApplicationController
   respond_to :html, :js, :json
   def index
     authorize! :read, Invoice
-    @invoices = current_firm.invoices.where(date: ((time_zone_now - 1.week)..time_zone_now) ).where.not(status: 10).includes(:customer).order_by_date
+    @invoices = current_firm.invoices.where(date: ((time_zone_now - 6.months)..time_zone_now) ).where.not(status: 10).includes(:customer).order_by_date
     @invoice = current_firm.invoices.new
     @logs = current_firm.logs.includes(:customer, {:customer => :employee}, :project, {:project =>:todo}, :user)
   end

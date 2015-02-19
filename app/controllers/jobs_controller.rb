@@ -93,7 +93,7 @@ class JobsController < ApplicationController
       QC.enqueue "InvoiceSender.invoice_to_pdf", invoice.id
       render :status => 200, :json => { id: invoice.id }
     else
-      Rails.logger.info(invoice.errors.first)
+
       render :status => 202, :json => {flash: invoice.errors.first}
     end   
   end
@@ -108,10 +108,8 @@ class JobsController < ApplicationController
   def resolve_layout
     case action_name
     when "show_pdf"
-      Rails.logger.info(action_name)
       "pdf"
     when "download_invoice"
-      Rails.logger.info(action_name)
       "pdf"
     else
       "application"

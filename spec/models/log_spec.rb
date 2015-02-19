@@ -11,6 +11,7 @@ describe Log do
   let(:user)      {FactoryGirl.create(:user, :firm => firm)}
   let(:time_now)  {Time.zone.now}
   let(:log)       {FactoryGirl.create(:log, :user => user, :firm => firm)}
+  let(:customer)  {FactoryGirl.create(:customer, :firm => firm)}
   let(:log2)      {FactoryGirl.create(:log, rate: 100, 
                                             tax: 25, 
                                             log_date: Date.today.beginning_of_week + 1.day, 
@@ -62,11 +63,11 @@ describe Log do
 
   it 'returns a new log with nil in invoice_id and credit_note_id' do 
     log4.duplicate_credit_note_log
-    Log.where(event: 'new_log_without_credit_note').first.invoice_id.should eq nil 
-    Log.where(event: 'new_log_without_credit_note').first.credit_note_id.should eq nil 
+    Log.where(event: 'new_log_without_credit_note').first.invoice_id.should eq 0 
+    Log.where(event: 'new_log_without_credit_note').first.credit_note_id.should eq nil
   end
 
-  it 'returns a credited log', focus: true do
+  it 'returns a credited log' do
     id = log2.id
     log2.credit_note_log(4)
     l = Log.credit_noted.first
@@ -124,9 +125,12 @@ describe Log do
   end
   it 'should find logs' do
     log4 = FactoryGirl.create(:log, :user => user, :firm => firm, :project => project)
+
     log5 = FactoryGirl.create(:log, :user => user, :firm => firm, :project => project)
-    Log.try_find_logs(user_id: user.id,project_id: project.id).should =~ [log4,log5]
+    log6 = FactoryGirl.create(:log, :user => user, :firm => firm, :project => project, customer:customer)
+    Log.try_find_logs(user_id: user.id,project_id: project.id).should =~ [log4,log5, log6]
     Log.try_find_logs(user_id: user.id,project_id: project.id).should_not == [log]
+    Log.try_find_logs(user_id: user.id,project_id: project.id, customer: customer.id).should == [log6]
   end
 
   it 'should return total price' do

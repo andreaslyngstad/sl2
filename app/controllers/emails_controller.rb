@@ -19,7 +19,6 @@ class EmailsController < ApplicationController
       flash[:notice] = flash_helper((t'activerecord.models.email.one').capitalize + ' ' + (t'activerecord.attributes.email.was_sent'))
       respond_with @email
       else
-        Rails.logger.info(@invoice.errors.first)
         flash[:notice] = flash_helper(@invoice.errors.first[1].to_s)
         render "error" 
       end

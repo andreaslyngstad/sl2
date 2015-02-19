@@ -5,8 +5,6 @@ class TabsController < ApplicationController
     get_instance(params)
      authorize! :read, @klass 
     if params[:class] == "projects"
-      Rails.logger.info(params)
-     
       @milestone = @klass.milestones.next
       @logs = @klass.logs.order("log_date DESC").limit(3).includes(:user)
       @logs_uninvoiced = @klass.logs.uninvoiced.sum(:hours)

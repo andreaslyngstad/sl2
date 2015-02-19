@@ -25,8 +25,8 @@ class MadeWithInLimit < ActiveModel::Validator
   include ActionView::Helpers::UrlHelper
   def validate(record)
     records = record.class.to_s.downcase.pluralize
-    Rails.logger.info(records)
-    Rails.logger.info(record.firm.name)
+    # Rails.logger.info(records)
+    # Rails.logger.info(record.firm.name)
     records_count = records + "_count"
     record_string = record.class.to_s.downcase
     record.errors.add(:base, 
