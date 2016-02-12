@@ -32,7 +32,11 @@ class TabsController < ApplicationController
   def logs
     get_instance(params)
     authorize! :read, @klass
-    @logs = @klass.logs.where(log_date: Date.current).includes([:user, :todo, :employee, :customer, :firm,{:project => [:firm]}])
+    if @klass.logs.where(log_date: Date.current).empty?
+      @logs = @klass.logs.last
+    else  
+      @logs = @klass.logs.where(log_date: Date.current).includes([:user, :todo, :employee, :customer, :firm,{:project => [:firm]}])
+    end
     respond_with(@logs)
   end
   def users

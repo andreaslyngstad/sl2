@@ -87,7 +87,7 @@ first_customer.save
 
 open("db/seeds/customers") do |customers|
   customers.read.each_line do |customer|
-    customer_made = Customer.new(:name => customer)
+    customer_made = Customer.new(:name => customer.gsub(/\t/, ' ').rstrip)
     customer_made.firm = firm1
     customer_made.email = "andreaslyngstad@gmail.com"
     customer_made.save
@@ -169,15 +169,19 @@ firm1.logs.new(customer: first_customer, :user_id => user3.id, rate: 100.0, :pro
 firm1.logs.new(customer: first_customer, :user_id => user3.id, rate: 100.0, :project_id => projects1.id, :todo_id => todo6.id, :tracking => false, :log_date => SeedHelpers.time_setter(8), 	:begin_time => SeedHelpers.time_setter(8),  :end_time => SeedHelpers.time_setter(6), :event => "Minor HTML fixes").save
 firm1.logs.new(customer: first_customer, :user_id => user2.id, rate: 100.0, :project_id => projects1.id, :todo_id => todo9.id, :tracking => false, :log_date => SeedHelpers.time_setter(40), 	:begin_time => SeedHelpers.time_setter(40), :end_time => SeedHelpers.time_setter(36), :event => "Convertion to saas").save
 firm1.logs.new(customer: first_customer, :user_id => user2.id, rate: 100.0, :project_id => projects1.id, :todo_id => todo9.id, :tracking => false, :log_date => SeedHelpers.time_setter(50), 	:begin_time => SeedHelpers.time_setter(50), :end_time => SeedHelpers.time_setter(46), :event => "Convertion to saas").save
+customers = Customer.limit(15)
+a = []
+customers.each {|c| a << c.id}
 
 100.times do |n|
   n + 1
 random = rand(30.days).seconds.ago
 random_prize = rand(150.50..3500.50)
-log = firm1.logs.new customer: first_customer, 
-:user => User.order("RANDOM()").first, 
+
+
+log = firm1.logs.new :user => User.order("RANDOM()").first, 
 rate: 100.0, 
-customer:  Customer.order("RANDOM()").first,
+customer:  Customer.find(a.sample),
 :project => Project.order("RANDOM()").first, 
 :tracking => false, 
 :log_date => random,  

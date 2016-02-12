@@ -26,12 +26,12 @@ html{
   font-size: 62.5%;
 }
 
-// @media (max-width: 1000px) {
-//   body { font-size: 62.5%; }
-// }
-// @media (max-width: 500px) {
-//   body { font-size: 32.5%; }
-// }
+@media (max-width: 900px) {
+  body { font-size: 100%; }
+}
+@media (max-width: 500px) {
+  body { font-size: 32.5%; }
+}
 html, body{
   margin:0;
   padding:0;
