@@ -57,8 +57,8 @@ group :development do
   gem 'quiet_assets'
   # gem 'debugger'
   gem 'puma'
-  gem 'guard-livereload', require: false
-  gem "rack-livereload"
+  # gem 'guard-livereload', require: false
+  # gem "rack-livereload"
   # gem 'simplecov', :require => false
   gem 'capistrano', '~> 3.1', require: false
   gem 'capistrano-postgresql', '~> 3.0'

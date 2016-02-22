@@ -39,7 +39,7 @@ puts "Plans added"
 puts "setting up first firm"
 firm1 = Firm.create! name: "Lizz", 
                       subdomain: "lizz", 
-                      plan_id: gold_plan.id, currency: "USD",
+                      plan_id: 4,
                       language: "en-US",
                       time_zone: "Berlin",
                       tax: 25.0,

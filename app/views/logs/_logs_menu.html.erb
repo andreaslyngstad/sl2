@@ -5,6 +5,7 @@
    <div id="dialog_log_form" class="dialog_form" title="<%= t('helpers.submit.create', model: Log.model_name.human) %>" style="display:none;">
     <%= render 'logs/log_menu_form_tags' %>
    </div>
+   <div class="selector_wrapper">
     <div class="view_selector" data-klass="<%=  @klass ? @klass.class : "index"  %>" data-id="<%= @klass ? @klass.id : "index"%>" data-date="<%= time_zone_now.to_date %>" data-user="<%=  @user.try(:id) %>">
       <% if @klass %>
       <%= link_to t("navigation.list"), timesheet_day_path( @klass ? string_for_klass(@klass) : "index" , @klass ? @klass.id : "index",time_zone_now.to_date), id: "day_link" %>
@@ -39,4 +40,5 @@
            <option value="last_year"><%= t'times.last_year' %></option> 
           </select>
     </div> 
+    </div>
 </div>

@@ -16,8 +16,10 @@ margin-top:-32767px;/* thank you Erik J - negate effect of float*/
 	font-family: magneto, Verdana, Arial, sans-serif;
 }	
 .front_logo{
-	font-size:86px;
+	font-size:6em;
 }
+
+
 /* IMPORTANT
 
 You also need to include this conditional style in the <head> of your HTML file to feed this style to IE 6 and lower and 8 and higher.
@@ -29,6 +31,7 @@ You also need to include this conditional style in the <head> of your HTML file 
 <![endif]-->
 
 */
+
 html,body {
 	
 	margin:0;
@@ -43,12 +46,13 @@ img {border:none;}
 	font-size:70%;
 	cursor:pointer;
 }
+.fixed {position:fixed; top:0; left:0;}
 .container_registration {
 	font-size:1.6em;
 text-align:center;
 min-height:95%;
 background: white;
-width: 900px;
+width: 90%;
 margin:0;
 margin: 0 auto;
 
@@ -61,8 +65,16 @@ margin: 0 auto;
 		text-decoration:none;
 		color:grey;
 	}
+	.front_logo a{
+	color:#000;
+	}
+	.front_logo a:hover{
+		
+		text-decoration:none;
+		color:#000;
+	}
 	#main_registration {
-		width: 900px;
+		width: 100%;
 		display:inline-block;
 		padding-bottom: 80px;}
 
@@ -87,8 +99,8 @@ margin: 0 auto;
 
 
 	.start_video{
-		margin-top:150px;
-		margin-bottom:20px;
+		margin-top:10%;
+		margin-bottom:2%;
 		cursor:pointer;
 	}
 	.on{
@@ -99,7 +111,7 @@ margin: 0 auto;
 		
 	}
 	.signup_wrapper{
-	margin-top:200px;
+	// margin-top:200px;
 	}
 	.signup_button_link{
 	background: #0230BA;
@@ -131,32 +143,7 @@ margin: 0 auto;
 		text-align: left;
 	}
 	
-	#register_container{
-	text-align:left;
-	width:600px;
-	margin: 0 auto 0 auto;
-	}
-	#registration{
-	border:1px solid #999;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	float:left;
-	 width: 560px;
-	padding: 20px;
-	color: white;
-	background: #0230BA;
-
-	}
-
-	.signup_firm, .signup_user{
-	float:left;
-	width: 600px;
-	background: #fff;
-	margin-top:20px;
-
-	padding: 20px 0 0 0 ;
-	border:1px solid #999;
-	}
+	
 	.register_firm, .first_user{
 		
 	}
@@ -231,6 +218,9 @@ margin: 0 auto;
 	#login_link{
 		cursor: pointer;
 	}
+	.sign_in_header{
+		margin: 0 40px;
+	}
 	.login_form{
 		
 		text-align: left;
@@ -241,7 +231,7 @@ margin: 0 auto;
 		box-shadow: 0 0 25px #444,inset 0 0 0 #000;
 		border:1px solid #999;
 		position:absolute;
-		top: 130px;
+		top: 7%;
 		left: 50%;
     margin-left: -145px;
 		z-index: 10;
@@ -306,7 +296,7 @@ margin: 0 auto;
 	line-height: 30px;
 	}
 	.signup .submit, .update .submit{
-	width:auto;margin-left:150px;cursor:pointer;padding:2px 15px 2px 15px;border:1px solid #999; font-size:20px;background:#fff;
+	width:auto;margin-top:10px;cursor:pointer;padding:2px 15px 2px 15px;border:1px solid #999; font-size:20px;background:#fff;
 	background:#3ea60b;
 	border: 1px solid #2E8D11;
 	color: white;
@@ -330,7 +320,7 @@ margin: 0 auto;
 	}	
 }
 #footer_registration {
-		width:900px;
+		width:100%;
 		margin:0 auto;
 		position: relative;
 		margin-top: -80px; /* negative value of footer height */
@@ -344,11 +334,11 @@ margin: 0 auto;
 	// text-align: left;
 	// }
 		.footer_col{
-		font-size: 13px;
+		font-size: 1.6em;
 		color: #777;
 		float: left;
-		width: 185px;
-		margin: 15px 20px 20px 20px;
+		width: 23%;
+		margin: 15px 1% 20px 1%;
 
 		}
 		.footer_col ul li a{
@@ -360,7 +350,7 @@ margin: 0 auto;
 		}
 	}
 .instruction_1{
- width: 500px;
+ width: 100%;
  height: 200px;
  float:left;
  text-align:left;
@@ -371,21 +361,21 @@ margin: 0 auto;
 }
 .guides_left{
 	float: left;
-	width:200px;
+	width:20%;
 }
 .guides_left ul{
-	padding:0px 0px 20px 20px;
+	padding:0px 0px 20px 2%;
 	list-style:none;
 }
 .guides_left ul li{
-	font-size: 20px;
+	font-size: 1.3em;
 }
 .guides_left ul li ul li{
-	font-size: 15px;
+	font-size: 0.8em;
 }
 .guides_right{
 	float: left;
-	width:700px;
+	width:70%;
 }
 
 .blogs{
@@ -401,71 +391,215 @@ margin: 0 auto;
 	margin:0px;
 	font-size:13px;
 }
-
-.share-button-bar-toggle.share-button-bar{display:none;z-index:100;position:absolute;right:0;top:0;bottom:0;width:160px;padding-left:10px;padding-top:4px}
-.article-share-buttons .share-button-bar > a.share-button {
-width: 40px;
-height: 40px;}
-.share-button-bar > a.share-button {
-position: relative;
-display: block;
-float: left;
-height: 30px;
-width: 30px;
-line-height: 30px;
-border-bottom: none;
-margin-right: 10px;
-margin-bottom: 10px;
+.navbar-header {
+	display:none;
+	background-color: #FFF;
+    border-color: #5FB0E4;
+    border-radius: 0;
+    margin-bottom: 0;
+    z-index: 100;
+	
+    
+	    width: 100%;
+    padding:0 2% 0 0;
+    border: 1px solid transparent;
 }
-.share-button-bar > a.share-button:after {
-display: block;
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-background: transparent;
+.navbar-header:hover{
+	cursor:pointer;
 }
-svg[Attributes Style] {
-shape-rendering: auto;
+.animbrand{
+	float:right;
+	color: #d3360b;
+	line-height: 22px;
 }
-svg:not(:root) {
-overflow: hidden;
-}
-.share-button svg {
-color: transparent;
-}
-.share-button .normal {
-opacity: 1;
--webkit-transition: all 150ms;
-transition: all 150ms;
-}
-.skin-fill {
-fill: #37c;
-}
-.share-button svg {
-color: transparent;
-}
-.share-button-bar > a.share-button {
-position: relative;
-display: block;
-float: left;
-height: 30px;
-width: 30px;
-line-height: 30px;
-border-bottom: none;
-margin-right: 10px;
-margin-bottom: 10px;
+.navbar-toggle {
+    position: relative;
+    float: right;
+    margin: 0 20px 0 20px;
+    
 }
 .sr-only {
-display: block;
-position: absolute;
-overflow: hidden;
-width: 1px;
-height: 1px;
-clip: rect(0 0 0 0);
-border: 0;
-padding: 0;
-margin: 0 -1px -1px 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+.icon-bar {
+    background-color: #d3360b;
+     margin-top: 4px;
+}
+.icon-bar {
+   
+}
+.navbar-toggle .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+}
+// #############################################################################
+@media only screen  
+and (min-width : 1000px) {
+	.container_registration{
+		width:980px;
+		margin:auto;
+	}
+		.guides_right {
+    float: left;
+    width: 600px;
+	}
+}
+@media only screen  
+and (min-width : 700px) {
+#register_container{
+	text-align:left;
+	width:600px;
+	margin: 0 auto 0 auto;
+	}
+	#registration{
+	border:1px solid #999;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	float:left;
+	 width: 560px;
+	padding: 20px;
+	color: white;
+	background: #0230BA;
+
+	}
+
+	.signup_firm, .signup_user{
+	float:left;
+	width: 600px;
+	background: #fff;
+	margin-top:20px;
+
+	padding: 20px 0 0 0 ;
+	border:1px solid #999;
+	}
+
+}
+@media only screen  
+and (max-width : 699px) {
+.container_registration {
+	width: 98%;
+	padding: 1%;
+	.signup {
+		.signup-form-field-subdomain,{
+		
+		height: 60px;
+		width: 98%;
+		margin-left: 2%;
+	
+		}
+		.signup-form-field-subdomain #loggyit_sub{
+		display:none;
+		}
+		.signup-form-field-subdomain input{
+		width: 98%;
+		}
+
+	}
+		
+		.signup-form-field {
+    display: block;
+    position: relative;
+    height: 60px;
+    width: 98%;
+    margin-left: 2%;
+		}
+		.signup-form-field textarea{
+			width: 98%;
+		}
+		.signup-form-field .chosen-container{
+			width: 98% !important;
+		}
+		.signup input, .update input{
+		width: 98%;padding:2px; font-size:20px;
+		line-height: 1.2em;
+		background:#fff;
+	}
+	}
+	.front_logo {
+    font-size: 3em;
+}
+.guide_left_menu_button{
+
+}
+.menu_button{
+	display:block;
+}
+.guides_left {
+	display:none;
+	float: left;
+	width: 40%;
+	overflow: hidden;
+	background-color: #fff;
+	}
+.guides_left ul li {
+   font-size: 1.3em; 
+}
+.navbar-header{
+	display:block;
+}
+.guides_right {
+    float: left;
+    width: 98%;
+    padding:2%;
+    margin-top: 20px;
+}
+#register_container{
+	text-align:left;
+	width:90%;
+	margin: 0 auto 0 auto;
+	}
+	#registration{
+	border:1px solid #999;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	float:left;
+	 width: 96%;
+	padding: 0 2% 0 2%;
+	color: white;
+	background: #0230BA;
+
+	}
+
+	.signup_firm, .signup_user{
+	float:left;
+	width: 100%;
+	background: #fff;
+	margin-top:20px;
+
+	padding: 20px 0 0 0 ;
+	border:1px solid #999;
+	}
+	.register_firm, .first_user{
+		
+	}
+	.preferences{
+		margin-left: 20px;
+		width: 515px;
+	}
+	.hide{
+		display:none;
+	}
+
+	.edit_firm .signup-form-field{
+		height: 45px;
+	}
+	.edit_firm .submit{
+		margin-left:-170px;
+	}
+	.signup .background_style,.signup .text_style,  {
+
+	position: relative;
+	width: 330px;
+
+	}
+	
 }

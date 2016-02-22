@@ -396,7 +396,37 @@ $.ajaxSetup({
   }
   });
 
+  function resize() { 
+    if (document.documentElement.clientWidth < 699) {
+  $('.tracking_button').insertBefore('.stopwatch');
+  $('.stopwatch').addClass('stopwatch_left');
+  $('.stopwatch').css({'height': '25px',
+      'background': 'none',
+      'color': '#000',
+      'letter-spacing': '0px',
+      'font-size': '1em',
+      'padding': '0px 0px  0px 0px',
+      'margin-right': '0px',
+      'float':'left',
+      'margin-left':' 6%'});
+  }
+  if (document.documentElement.clientWidth > 699) {
+  $('.stopwatch').insertBefore('.tracking_button');
+       $('.stopwatch').css({'height': '35px',
+  'background': 'white',
+  'font-family':'arial',
+  'color': '#bbb',
+  'letter-spacing': '-1px',
+  'font-size': '24px',
+  'padding': '13px 5px 2px 5px',
+  'float':'left',
+  'margin-right':'7px',
+  'margin-left':'0'});
+  }
+  }
 $(document).ready(function() {
+  window.onresize = resize
+  resize()
   $("#invoices_table").tablesorter();
   $('.delete_link').delete_firm_link()
   $('.delete_subdomain_validation').delete_subdomain_validation()

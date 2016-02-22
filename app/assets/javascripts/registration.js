@@ -48,6 +48,18 @@ $(document).ready(function() {
     alert('Hello and welcome to squadlink! We are really happy to have you here.\n\nSadly we are not happy about you browser.\nThe browser is the application you use to view internet sites. You are using Internet Explorer version 8 or Internet Explorer version 9 and higher in Internet Explorer 8 compatibility mode \nThis will not work well in the squadlink application.\n\nPlease upgrade your browser to the newest Internet Explorer version.\nAlternatively  you can use a different browser like Chrome, Firefox or Opera.');
 	
 	}
+	if (document.documentElement.clientWidth < 699) {
+	$(window).scroll(function(){
+      if ($(this).scrollTop() > 100) {
+          $('.navbar-header').addClass('fixed');
+      } else {
+          $('.navbar-header').removeClass('fixed');
+      		}
+       });
+  $('.navbar-header').on('click', function(){ 	
+  	$('.guides_left').toggle();
+  })
+	}
 	$(".start").hover(function(){
 		$(this).toggleClass("on")
 	})

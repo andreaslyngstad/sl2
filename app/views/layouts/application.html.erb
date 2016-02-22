@@ -16,32 +16,48 @@
   	<span class="current_firm_data" data-clockFormat="<%= current_firm.clock_format%>" data-timeFormat="<%= current_firm.time_format %>" data-dateFormat="<%= current_firm.date_format %>" data-currency="<%= current_firm.currency%>" data-language="<%= current_firm.language%>"></span>
     <div id="centering_main">
       <div id="main">
-      <%= render "layouts/header" %>    
+      <div id="header" >
         <div id="all_container">
+      <div class="common_header"><div class="squadlink_logo">Squadlink</div></div>
+     
+      <div id="navigation" class="hor_scroll ver_down_on_help">
+            <ul>
+              <% if can? :read, Firm %>
+              <li class="navigation" id="home_navi"><%= link_to (t'navigation.home'), dashboard_path %></li>
+              <% end %>
+              <li class="navigation" id="logs_navi"><a href="/logs"><%= t 'navigation.logs' %></a></li>
+              <li class="navigation" id="projects_navi"><%= link_to (t 'navigation.projects'), projects_path %></li>
+              <% if can? :read, Customer %>
+               <li class="navigation" id="customers_navi"><a href="/customers"><%= t 'navigation.customers' %></a></li>
+              <% end %>
+              <% if can? :read, User %>
+               <li class="navigation" id="users_navi"><a href="/users"><%= t 'navigation.users' %></a></li>
+              <% end %>
+              <% if can? :read, Invoice %>
+               <li class="navigation" id="invoices_navi"><a href="/invoices"><%= t 'navigation.invoices' %></a></li>
+              <% end %>
+              </ul>
+          </div>
+        <div class="messages">
+        <span class="spinning" style="display:none;"></span>
+        <div id="flash_messages"> 
+          <span class="flash_notice"><%= flash[:notice] %></span>
+          <span class="flash_error"><%= flash[:error] %></span>   
+        </div>
+        <div id="user_nav_header">
+          <%= link_to (t"general.sign_out"), sign_out_path, :method => :delete %>
+        <span class="display_help" style="display: none" title="View page help">?</span>  
+        </div>
+      </div>
+    </div>    
+        
           <% if current_firm.closed %>
             <div class="not_paid_announcement">
               <p style="font-size:15px"><%= t "message.closed_message_html", plan: current_firm.plan.name %></p>
             </div>
           <% end %>
         	<%= yield(:help)%>
-          <div id="navigation" class="hor_scroll ver_down_on_help">
-          	<ul>
-              <% if can? :read, Firm %>
-              <li class="navigation" id="home_navi"><%= link_to (t'navigation.home'), dashboard_path %></li>
-              <% end %>
-            	<li class="navigation" id="logs_navi"><a href="/logs"><%= t 'navigation.logs' %></a></li>
-            	<li class="navigation" id="projects_navi"><%= link_to (t 'navigation.projects'), projects_path %></li>
-            	<% if can? :read, Customer %>
-          	   <li class="navigation" id="customers_navi"><a href="/customers"><%= t 'navigation.customers' %></a></li>
-          	  <% end %>
-          	  <% if can? :read, User %>
-          	   <li class="navigation" id="users_navi"><a href="/users"><%= t 'navigation.users' %></a></li>
-          	  <% end %>
-              <% if can? :read, Invoice %>
-               <li class="navigation" id="invoices_navi"><a href="/invoices"><%= t 'navigation.invoices' %></a></li>
-              <% end %>
-              </ul>
-          </div>
+          
           <div id="main_container">
             <%= yield %>
           </div>	

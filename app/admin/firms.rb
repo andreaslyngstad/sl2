@@ -27,7 +27,9 @@ ActiveAdmin.register Firm do
       firm.plan.name
     end
     column "Subscription", :sortable => :plan_id do |firm|
+      if firm.subscription.id?
       link_to firm.subscription.id, obeqaslksdssdfnfdfysdfxm_subscription_path(firm.subscription)
+      end
     end
     column "Customers", :sortable => :customers_count  do |firm|
       link_to firm.customers_count, customers_obeqaslksdssdfnfdfysdfxm_firm_path(firm)

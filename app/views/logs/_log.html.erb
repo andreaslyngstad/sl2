@@ -3,13 +3,17 @@
 <li class="log_list_element">
 <div id="log_<%=log.id%>" > 
  <div id="log_info_<%=log.id%>"  class="info" data-log="<%= log.id %>">
- 	<div class="gravatar_on_log">
- 	<%= link_to image(log.user, "image32"),user_path(log.user), :title => "#{log.user.name}" %>
- 	</div>
-  <div class="event_on_log">
+ 	<div class="log_event_gravatar">
+    <div class="gravatar_on_log">
+   	<%= link_to image(log.user, "image32"),user_path(log.user), :title => "#{log.user.name}" %>
+   	</div>
+    <div class="event_on_log">
     <%= simple_format(log.event, class: 'log_event_paragraf') %>
-     </div> 
+    </div> 
+  </div>
+     <div class="all_except_event_on_log">
      <% if !log.end_time.nil? %>
+   
     <div class="date_and_times_on_log" >
 	    <div class="date_format_setter" data-date="<%= log.log_date %>"><%= log.log_date %></div>
 	    <div class="clock_format_setter" data-time="<%= log.begin_time.strftime("%Y/%m/%d %H:%M:%S")%>"></div>-<div class="clock_format_setter" data-time="<%= log.end_time.strftime("%Y/%m/%d %H:%M:%S")%>"></div>
@@ -55,5 +59,6 @@
       	</div>
      </div>
     <% end %> 
+</div>
 </li>
  <% end %>

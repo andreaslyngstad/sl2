@@ -1,0 +1,27 @@
+
+	<div class="navbar-header">
+      <div class="navbar-toggle collapsed" >
+        
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </div>
+      <div class="animbrand">
+       Menu
+      </div>
+    </div>
+	<div class="guides_left">
+		<ul>
+		<% @guidescat.each do |cat| %>
+			<li><%= cat.title %>
+				<ul>
+					<% cat.guides.each do |guide| %>
+						<li>
+							<%= link_to_unless_current guide.title, guide_path(guide) %>
+						</li>
+					<% end %>
+				</ul>
+			</li>
+		<% end %>
+		</ul>
+	</div>

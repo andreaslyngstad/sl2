@@ -124,18 +124,6 @@ $_$;
 
 
 --
--- Name: queue_classic_notify(); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION queue_classic_notify() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$ begin
-  perform pg_notify(new.q_name, '');
-  return null;
-end $$;
-
-
---
 -- Name: active_admin_comments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1159,11 +1147,11 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: admin_notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: active_admin_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY active_admin_comments
-    ADD CONSTRAINT admin_notes_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT active_admin_comments_pkey PRIMARY KEY (id);
 
 
 --
@@ -1598,13 +1586,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
--- Name: queue_classic_notify; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER queue_classic_notify AFTER INSERT ON queue_classic_jobs FOR EACH ROW EXECUTE PROCEDURE queue_classic_notify();
 
 
 --
