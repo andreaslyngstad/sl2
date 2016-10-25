@@ -76,7 +76,7 @@ group :test do
   gem 'capybara'
   gem "factory_girl_rails", "~> 4.0"
   gem 'ruby-prof'
-  gem 'guard-rspec'
+  # gem 'guard-rspec'
   # gem 'zeus'
   gem 'database_cleaner'
   gem "selenium-webdriver"
